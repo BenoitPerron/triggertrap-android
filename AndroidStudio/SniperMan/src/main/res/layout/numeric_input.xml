@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<at.photosniper.widget.NumericView android:id="@+id/numericView"
+                                   xmlns:android="http://schemas.android.com/apk/res/android"
+                                   android:layout_width="match_parent"
+                                   android:layout_height="wrap_content"
+                                   android:background="@color/tt_black"
+                                   android:orientation="horizontal">
+
+    <at.photosniper.view.ZeroTopPaddingTextView
+        android:id="@+id/numericValue"
+        style="@style/medium_bold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:maxLength="5"
+        android:maxLines="1"
+        android:text="0"
+
+        />
+
+</at.photosniper.widget.NumericView>

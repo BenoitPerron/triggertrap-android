@@ -1,5 +1,6 @@
-include ':pEBBLE_KIT'
+include ':sony-camera-remote-lib'
+include ':SonySupportLib'
 include ':pickerlibrary'
 include ':styledDialogsLib'
 include ':viewPagerIndicatorLib'
-include ':mainActivity'
+include ':SniperMan'

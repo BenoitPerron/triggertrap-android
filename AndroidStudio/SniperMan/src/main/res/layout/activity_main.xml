@@ -1,0 +1,47 @@
+<android.support.v4.widget.DrawerLayout android:id="@+id/drawer_layout"
+                                        xmlns:android="http://schemas.android.com/apk/res/android"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+
+    <!-- The main content view -->
+
+    <FrameLayout
+        android:id="@+id/mainView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:id="@+id/content_frame"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/tt_black"></FrameLayout>
+
+        <include
+            android:id="@+id/status"
+            layout="@layout/status_bar"/>
+
+        <include
+            android:id="@+id/dialPad"
+            layout="@layout/dial_pad"
+            android:visibility="gone"/>
+
+        <include
+            android:id="@+id/warningMessage"
+            layout="@layout/warning_message"
+            android:visibility="gone"/>
+    </FrameLayout>
+
+    <!-- The navigation drawer -->
+
+    <ExpandableListView
+        android:id="@+id/left_drawer"
+        android:layout_width="280dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@color/tt_black"
+        android:choiceMode="singleChoice"
+        android:divider="@null"
+        android:dividerHeight="0dp"
+        android:groupIndicator="@null"/>
+
+</android.support.v4.widget.DrawerLayout>

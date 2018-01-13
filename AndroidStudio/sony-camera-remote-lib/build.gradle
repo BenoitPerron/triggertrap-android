@@ -1,0 +1,32 @@
+apply plugin: 'java'
+
+//idea.module.scopes.PROVIDED.plus += configurations.providedCompile
+
+compileJava {
+    sourceCompatibility = 1.7
+    targetCompatibility = 1.7
+}
+
+repositories {
+    mavenCentral()
+}
+
+jar {
+    baseName = 'sony-camera-remote-lib'
+    version = '0.1.0'
+}
+
+configurations {
+    providedCompile
+}
+
+sourceSets {
+    main.compileClasspath += configurations.providedCompile
+    test.compileClasspath += configurations.providedCompile
+    test.runtimeClasspath += configurations.providedCompile
+}
+
+dependencies {
+    compile 'com.google.code.gson:gson:2.2.4'
+
+}
