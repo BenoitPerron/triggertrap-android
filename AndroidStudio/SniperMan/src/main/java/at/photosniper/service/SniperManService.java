@@ -26,29 +26,29 @@ import com.praetoriandroid.cameraremote.rpc.ActTakePictureResponse;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import at.photosniper.PhotoSniperApp;
 import at.photosniper.R;
-import at.photosniper.TTApp;
 import at.photosniper.activities.MainActivity;
 import at.photosniper.inputs.MicVolumeMonitor;
-import at.photosniper.location.TTLocationService;
+import at.photosniper.location.SniperManLocationService;
 import at.photosniper.outputs.OutputDispatcher;
 import at.photosniper.outputs.OutputDispatcher.OutputListener;
 import at.photosniper.util.PulseGenerator;
-import at.photosniper.util.RPC;
+import at.photosniper.util.SonyWiFiRPC;
 import at.photosniper.util.StopwatchTimer;
 import at.photosniper.wifi.IZeroConf;
 import at.photosniper.wifi.SlaveSocket;
-import at.photosniper.wifi.TTServiceInfo;
-import at.photosniper.wifi.TTSlaveInfo;
+import at.photosniper.wifi.PhotoSniperServiceInfo;
+import at.photosniper.wifi.PhotoSniperSlaveInfo;
 import at.photosniper.wifi.ZeroConfJmdns;
 
 //import com.at.the.gogo.photosniper.util.PebbleController;
 
-public class TriggertrapService extends Service implements OutputListener, SlaveSocket.SlaveListener, MicVolumeMonitor.VolumeListener, TTLocationService.LocationListener
+public class SniperManService extends Service implements OutputListener, SlaveSocket.SlaveListener, MicVolumeMonitor.VolumeListener, SniperManLocationService.LocationListener
 //        ,PebbleController.PebbleTriggerListener
 {
 
-    private static final String TAG = TriggertrapService.class.getSimpleName();
+    private static final String TAG = SniperManService.class.getSimpleName();
     private static final String STOP_SERVICE_ACTION = "stop_service_action";
 
     // Binder given to clients
@@ -57,7 +57,7 @@ public class TriggertrapService extends Service implements OutputListener, Slave
     // Can't find a way to get at Service flags directly so track status here.
     private boolean mIsRunningInForeground = false;
     private TriggertrapServiceListener mListener = null;
-    private int mOnGoingAction = TTApp.OnGoingAction.NONE;
+    private int mOnGoingAction = PhotoSniperApp.OnGoingAction.NONE;
 
     private PowerManager mPowerManager;
 
@@ -86,7 +86,7 @@ public class TriggertrapService extends Service implements OutputListener, Slave
     // Wifi vars
     private IZeroConf mZeroConf;
     private SlaveSocket mSlaveSocket;
-    private final ArrayList<TTServiceInfo> mAvailableMasters = new ArrayList<>();
+    private final ArrayList<PhotoSniperServiceInfo> mAvailableMasters = new ArrayList<>();
     private String mConnectedMasterName = "";
     private boolean mIsWifiMasterOn = false;
 
@@ -94,8 +94,8 @@ public class TriggertrapService extends Service implements OutputListener, Slave
     private MicVolumeMonitor mMicVolumeMonitor;
 
     // Distance Lapse
-    private TTLocationService mLocationService = null;
-    private int mTriggerDistance = TTApp.DISTANCELAPSE_DISTANCE_DEFAULT;
+    private SniperManLocationService mLocationService = null;
+    private int mTriggerDistance = PhotoSniperApp.DISTANCELAPSE_DISTANCE_DEFAULT;
     private float mAccumulativeDistance = 0;
     private float mSpeed;
 
@@ -191,7 +191,7 @@ public class TriggertrapService extends Service implements OutputListener, Slave
     public void goToForeground() {
         Log.d(TAG, "Moving service to Foreground");
         String notificationText = getNotifcationText(mOnGoingAction);
-        if (mOnGoingAction == TTApp.OnGoingAction.WI_FI_SLAVE) {
+        if (mOnGoingAction == PhotoSniperApp.OnGoingAction.WI_FI_SLAVE) {
             notificationText = getWifiSlaveNotification();
         }
         // mNotificationBuilder.setContentText(notificationText);
@@ -221,31 +221,31 @@ public class TriggertrapService extends Service implements OutputListener, Slave
     public boolean isFragmentActive(String tag) {
         boolean isActive = false;
 
-        if (tag.equals(TTApp.FragmentTags.TIMELAPSE) && mOnGoingAction == TTApp.OnGoingAction.TIMELAPSE) {
+        if (tag.equals(PhotoSniperApp.FragmentTags.TIMELAPSE) && mOnGoingAction == PhotoSniperApp.OnGoingAction.TIMELAPSE) {
             isActive = true;
-        } else if (tag.equals(TTApp.FragmentTags.HDR) && mOnGoingAction == TTApp.OnGoingAction.HDR) {
+        } else if (tag.equals(PhotoSniperApp.FragmentTags.HDR) && mOnGoingAction == PhotoSniperApp.OnGoingAction.HDR) {
             isActive = true;
-        } else if (tag.equals(TTApp.FragmentTags.TIMED) && mOnGoingAction == TTApp.OnGoingAction.TIMED) {
+        } else if (tag.equals(PhotoSniperApp.FragmentTags.TIMED) && mOnGoingAction == PhotoSniperApp.OnGoingAction.TIMED) {
             isActive = true;
-        } else if (tag.equals(TTApp.FragmentTags.PRESS_TO_START) && mOnGoingAction == TTApp.OnGoingAction.PRESS_START_STOP) {
+        } else if (tag.equals(PhotoSniperApp.FragmentTags.PRESS_TO_START) && mOnGoingAction == PhotoSniperApp.OnGoingAction.PRESS_START_STOP) {
             isActive = true;
-        } else if (tag.equals(TTApp.FragmentTags.SELF_TIMER) && mOnGoingAction == TTApp.OnGoingAction.SELF_TIMER) {
+        } else if (tag.equals(PhotoSniperApp.FragmentTags.SELF_TIMER) && mOnGoingAction == PhotoSniperApp.OnGoingAction.SELF_TIMER) {
             isActive = true;
-        } else if (tag.equals(TTApp.FragmentTags.BANG) && mOnGoingAction == TTApp.OnGoingAction.BANG) {
+        } else if (tag.equals(PhotoSniperApp.FragmentTags.BANG) && mOnGoingAction == PhotoSniperApp.OnGoingAction.BANG) {
             isActive = true;
-        } else if (tag.equals(TTApp.FragmentTags.STARTRAIL) && mOnGoingAction == TTApp.OnGoingAction.STAR_TRAIL) {
+        } else if (tag.equals(PhotoSniperApp.FragmentTags.STARTRAIL) && mOnGoingAction == PhotoSniperApp.OnGoingAction.STAR_TRAIL) {
             isActive = true;
-        } else if (tag.equals(TTApp.FragmentTags.BRAMPING) && mOnGoingAction == TTApp.OnGoingAction.BRAMPING) {
+        } else if (tag.equals(PhotoSniperApp.FragmentTags.BRAMPING) && mOnGoingAction == PhotoSniperApp.OnGoingAction.BRAMPING) {
             isActive = true;
-        } else if (tag.equals(TTApp.FragmentTags.DISTANCE_LAPSE) && mOnGoingAction == TTApp.OnGoingAction.DISTANCE_LAPSE) {
+        } else if (tag.equals(PhotoSniperApp.FragmentTags.DISTANCE_LAPSE) && mOnGoingAction == PhotoSniperApp.OnGoingAction.DISTANCE_LAPSE) {
             isActive = true;
-        } else if (tag.equals(TTApp.FragmentTags.HDR_LAPSE) && mOnGoingAction == TTApp.OnGoingAction.HDR_TIMELAPSE) {
+        } else if (tag.equals(PhotoSniperApp.FragmentTags.HDR_LAPSE) && mOnGoingAction == PhotoSniperApp.OnGoingAction.HDR_TIMELAPSE) {
             isActive = true;
-        } else if (tag.equals(TTApp.FragmentTags.TIMEWARP) && mOnGoingAction == TTApp.OnGoingAction.TIMEWARP) {
+        } else if (tag.equals(PhotoSniperApp.FragmentTags.TIMEWARP) && mOnGoingAction == PhotoSniperApp.OnGoingAction.TIMEWARP) {
             isActive = true;
-        } else if (tag.equals(TTApp.FragmentTags.WIFI_SLAVE) && mOnGoingAction == TTApp.OnGoingAction.WI_FI_SLAVE) {
+        } else if (tag.equals(PhotoSniperApp.FragmentTags.WIFI_SLAVE) && mOnGoingAction == PhotoSniperApp.OnGoingAction.WI_FI_SLAVE) {
             isActive = true;
-        } else if (tag.equals(TTApp.FragmentTags.PEBBLE) && mOnGoingAction == TTApp.OnGoingAction.PEBBLE) {
+        } else if (tag.equals(PhotoSniperApp.FragmentTags.PEBBLE) && mOnGoingAction == PhotoSniperApp.OnGoingAction.PEBBLE) {
             isActive = true;
         }
 
@@ -258,33 +258,33 @@ public class TriggertrapService extends Service implements OutputListener, Slave
 
     public void stopCurrentAction() {
         switch (mOnGoingAction) {
-            case TTApp.OnGoingAction.PRESS_START_STOP:
+            case PhotoSniperApp.OnGoingAction.PRESS_START_STOP:
                 stopStopWatch();
                 break;
-            case TTApp.OnGoingAction.SELF_TIMER:
+            case PhotoSniperApp.OnGoingAction.SELF_TIMER:
                 stopSelfTimerMode();
                 break;
-            case TTApp.OnGoingAction.TIMED:
+            case PhotoSniperApp.OnGoingAction.TIMED:
                 stopTimedMode();
                 break;
-            case TTApp.OnGoingAction.BANG:
+            case PhotoSniperApp.OnGoingAction.BANG:
                 disableSoundThreshold();
                 break;
-            case TTApp.OnGoingAction.DISTANCE_LAPSE:
+            case PhotoSniperApp.OnGoingAction.DISTANCE_LAPSE:
                 stopLocationUpdates();
                 break;
-            case TTApp.OnGoingAction.WI_FI_SLAVE:
+            case PhotoSniperApp.OnGoingAction.WI_FI_SLAVE:
                 unWatchMasterWifi();
                 break;
-            case TTApp.OnGoingAction.PEBBLE:
+            case PhotoSniperApp.OnGoingAction.PEBBLE:
                 stopPebble();
                 break;
-            case TTApp.OnGoingAction.BRAMPING:
-            case TTApp.OnGoingAction.TIMEWARP:
-            case TTApp.OnGoingAction.HDR_TIMELAPSE:
-            case TTApp.OnGoingAction.TIMELAPSE:
-            case TTApp.OnGoingAction.HDR:
-            case TTApp.OnGoingAction.STAR_TRAIL:
+            case PhotoSniperApp.OnGoingAction.BRAMPING:
+            case PhotoSniperApp.OnGoingAction.TIMEWARP:
+            case PhotoSniperApp.OnGoingAction.HDR_TIMELAPSE:
+            case PhotoSniperApp.OnGoingAction.TIMELAPSE:
+            case PhotoSniperApp.OnGoingAction.HDR:
+            case PhotoSniperApp.OnGoingAction.STAR_TRAIL:
                 stopSequence();
                 break;
         }
@@ -353,7 +353,7 @@ public class TriggertrapService extends Service implements OutputListener, Slave
             Log.d(TAG, "End of pulse sequence");
             updatePulseListenerStop();
             mState = State.IDLE;
-            mOnGoingAction = TTApp.OnGoingAction.NONE;
+            mOnGoingAction = PhotoSniperApp.OnGoingAction.NONE;
             mOutputDispatcher.stop();
             if (mIsRunningInForeground) {
                 goTobackground();
@@ -421,31 +421,31 @@ public class TriggertrapService extends Service implements OutputListener, Slave
         if (mIsRunningInForeground && mPowerManager.isScreenOn()) {
             String notificationText = "";
             switch (mOnGoingAction) {
-                case TTApp.OnGoingAction.SELF_TIMER:
+                case PhotoSniperApp.OnGoingAction.SELF_TIMER:
                     notificationText = getNotifcationText(mOnGoingAction) + " " + formatMilliSecondsTime(millisUntilFinished);
                     break;
-                case TTApp.OnGoingAction.PRESS_START_STOP:
+                case PhotoSniperApp.OnGoingAction.PRESS_START_STOP:
                     notificationText = getNotifcationText(mOnGoingAction) + " " + formatMilliSecondsTime(millisUntilFinished);
                     break;
-                case TTApp.OnGoingAction.TIMED:
+                case PhotoSniperApp.OnGoingAction.TIMED:
                     notificationText = getNotifcationText(mOnGoingAction) + " " + formatMilliSecondsTime(millisUntilFinished);
                     break;
-                case TTApp.OnGoingAction.TIMELAPSE:
+                case PhotoSniperApp.OnGoingAction.TIMELAPSE:
                     notificationText = getNotifcationText(mOnGoingAction) + " " + mSequenceInterationCount + " " + formatMilliSecondsTime(millisUntilFinished);
                     break;
-                case TTApp.OnGoingAction.WI_FI_SLAVE:
+                case PhotoSniperApp.OnGoingAction.WI_FI_SLAVE:
                     notificationText = getWifiSlaveNotification();
                     break;
-                case TTApp.OnGoingAction.PEBBLE:
+                case PhotoSniperApp.OnGoingAction.PEBBLE:
                     notificationText = "Triggertrap Connect to Pebble";
                     break;
-                case TTApp.OnGoingAction.STAR_TRAIL:
-                case TTApp.OnGoingAction.HDR:
-                case TTApp.OnGoingAction.BRAMPING:
-                case TTApp.OnGoingAction.TIMEWARP:
+                case PhotoSniperApp.OnGoingAction.STAR_TRAIL:
+                case PhotoSniperApp.OnGoingAction.HDR:
+                case PhotoSniperApp.OnGoingAction.BRAMPING:
+                case PhotoSniperApp.OnGoingAction.TIMEWARP:
                     notificationText = getNotifcationText(mOnGoingAction) + " " + mSequenceCount + " " + formatMilliSecondsTime(mRemainingSequenceTime);
                     break;
-                case TTApp.OnGoingAction.HDR_TIMELAPSE:
+                case PhotoSniperApp.OnGoingAction.HDR_TIMELAPSE:
                     notificationText = getNotifcationText(mOnGoingAction) + " " + mSequenceInterationCount + " " + formatMilliSecondsTime(mRemainingSequenceTime);
                 default:
                     // Do nothing
@@ -460,22 +460,22 @@ public class TriggertrapService extends Service implements OutputListener, Slave
 
     private void updatePulseListenerStart() {
         switch (mOnGoingAction) {
-            case TTApp.OnGoingAction.TIMELAPSE:
+            case PhotoSniperApp.OnGoingAction.TIMELAPSE:
                 mListener.onPulseStart(mSequenceInterationCount, 0, mTimeToNextExposure, 0);
                 break;
-            case TTApp.OnGoingAction.HDR:
+            case PhotoSniperApp.OnGoingAction.HDR:
                 mListener.onPulseStart(mSequenceCount, (mSequence.length / 2), mTimeToNextExposure, mTotalTimeForSequence);
                 break;
-            case TTApp.OnGoingAction.HDR_TIMELAPSE:
+            case PhotoSniperApp.OnGoingAction.HDR_TIMELAPSE:
                 mListener.onPulseStart(mSequenceInterationCount, (mSequence.length / 2), mTimeToNextExposure, mTotalTimeForSequence);
                 break;
-            case TTApp.OnGoingAction.STAR_TRAIL:
+            case PhotoSniperApp.OnGoingAction.STAR_TRAIL:
                 mListener.onPulseStart(mSequenceCount, (mSequence.length / 2), mTimeToNextExposure, mTotalTimeForSequence);
                 break;
-            case TTApp.OnGoingAction.BRAMPING:
+            case PhotoSniperApp.OnGoingAction.BRAMPING:
                 mListener.onPulseStart(mSequenceCount, (mSequence.length / 2), mTimeToNextExposure, mTotalTimeForSequence);
                 break;
-            case TTApp.OnGoingAction.TIMEWARP:
+            case PhotoSniperApp.OnGoingAction.TIMEWARP:
                 mListener.onPulseStart(mSequenceCount, (mSequence.length / 2), mTimeToNextExposure, mTotalTimeForSequence);
                 break;
             default:
@@ -486,24 +486,24 @@ public class TriggertrapService extends Service implements OutputListener, Slave
 
     private void updatePulseListenerProgress(long remainingPulseTime) {
         switch (mOnGoingAction) {
-            case TTApp.OnGoingAction.TIMELAPSE:
+            case PhotoSniperApp.OnGoingAction.TIMELAPSE:
                 mListener.onPulseUpdate(mSequence, mSequenceInterationCount, mTimeToNextExposure, remainingPulseTime, 0);
                 break;
-            case TTApp.OnGoingAction.HDR:
-            case TTApp.OnGoingAction.HDR_TIMELAPSE:
+            case PhotoSniperApp.OnGoingAction.HDR:
+            case PhotoSniperApp.OnGoingAction.HDR_TIMELAPSE:
                 mListener.onPulseUpdate(mSequence, mSequenceCount, mTimeToNextExposure, remainingPulseTime, mRemainingSequenceTime);
                 break;
-            case TTApp.OnGoingAction.STAR_TRAIL:
+            case PhotoSniperApp.OnGoingAction.STAR_TRAIL:
                 // The remaining sequence time is the remain time of the iterations
                 // minus the expired time of the current iteration.
                 mListener.onPulseUpdate(mSequence, mSequenceCount, mTimeToNextExposure, remainingPulseTime, mRemainingSequenceTime);
                 break;
-            case TTApp.OnGoingAction.BRAMPING:
+            case PhotoSniperApp.OnGoingAction.BRAMPING:
                 // The remaining sequence time is the remain time of the iterations
                 // minus the expired time of the current iteration.
                 mListener.onPulseUpdate(mSequence, mSequenceCount, mTimeToNextExposure, remainingPulseTime, mRemainingSequenceTime);
                 break;
-            case TTApp.OnGoingAction.TIMEWARP:
+            case PhotoSniperApp.OnGoingAction.TIMEWARP:
                 // The remaining sequence time is the remain time of the iterations
                 // minus the expired time of the current iteration.
                 mListener.onPulseUpdate(mSequence, mSequenceCount, mTimeToNextExposure, remainingPulseTime, mRemainingSequenceTime);
@@ -524,7 +524,7 @@ public class TriggertrapService extends Service implements OutputListener, Slave
         String[] notifcations = getResources().getStringArray(R.array.tt_notifications);
         String notifcationText = notifcations[onGoingAction];
 
-        if (mOnGoingAction == TTApp.OnGoingAction.DISTANCE_LAPSE) {
+        if (mOnGoingAction == PhotoSniperApp.OnGoingAction.DISTANCE_LAPSE) {
             int distanceToTrigger = mTriggerDistance - (int) mAccumulativeDistance;
             notifcationText += " " + distanceToTrigger + " m to trigger";
         }
@@ -538,41 +538,41 @@ public class TriggertrapService extends Service implements OutputListener, Slave
         // stackBuilder.addParentStack(MainActivity.class);
 
         switch (mOnGoingAction) {
-            case TTApp.OnGoingAction.PRESS_START_STOP:
-                notificationIntent.putExtra(MainActivity.FRAGMENT_TAG, TTApp.FragmentTags.PRESS_TO_START);
+            case PhotoSniperApp.OnGoingAction.PRESS_START_STOP:
+                notificationIntent.putExtra(MainActivity.FRAGMENT_TAG, PhotoSniperApp.FragmentTags.PRESS_TO_START);
                 break;
-            case TTApp.OnGoingAction.TIMED:
-                notificationIntent.putExtra(MainActivity.FRAGMENT_TAG, TTApp.FragmentTags.TIMED);
+            case PhotoSniperApp.OnGoingAction.TIMED:
+                notificationIntent.putExtra(MainActivity.FRAGMENT_TAG, PhotoSniperApp.FragmentTags.TIMED);
                 break;
-            case TTApp.OnGoingAction.TIMELAPSE:
-                notificationIntent.putExtra(MainActivity.FRAGMENT_TAG, TTApp.FragmentTags.TIMELAPSE);
+            case PhotoSniperApp.OnGoingAction.TIMELAPSE:
+                notificationIntent.putExtra(MainActivity.FRAGMENT_TAG, PhotoSniperApp.FragmentTags.TIMELAPSE);
                 break;
-            case TTApp.OnGoingAction.TIMEWARP:
-                notificationIntent.putExtra(MainActivity.FRAGMENT_TAG, TTApp.FragmentTags.TIMEWARP);
+            case PhotoSniperApp.OnGoingAction.TIMEWARP:
+                notificationIntent.putExtra(MainActivity.FRAGMENT_TAG, PhotoSniperApp.FragmentTags.TIMEWARP);
                 break;
-            case TTApp.OnGoingAction.BANG:
-                notificationIntent.putExtra(MainActivity.FRAGMENT_TAG, TTApp.FragmentTags.BANG);
+            case PhotoSniperApp.OnGoingAction.BANG:
+                notificationIntent.putExtra(MainActivity.FRAGMENT_TAG, PhotoSniperApp.FragmentTags.BANG);
                 break;
-            case TTApp.OnGoingAction.HDR:
-                notificationIntent.putExtra(MainActivity.FRAGMENT_TAG, TTApp.FragmentTags.HDR);
+            case PhotoSniperApp.OnGoingAction.HDR:
+                notificationIntent.putExtra(MainActivity.FRAGMENT_TAG, PhotoSniperApp.FragmentTags.HDR);
                 break;
-            case TTApp.OnGoingAction.HDR_TIMELAPSE:
-                notificationIntent.putExtra(MainActivity.FRAGMENT_TAG, TTApp.FragmentTags.HDR_LAPSE);
+            case PhotoSniperApp.OnGoingAction.HDR_TIMELAPSE:
+                notificationIntent.putExtra(MainActivity.FRAGMENT_TAG, PhotoSniperApp.FragmentTags.HDR_LAPSE);
                 break;
-            case TTApp.OnGoingAction.STAR_TRAIL:
-                notificationIntent.putExtra(MainActivity.FRAGMENT_TAG, TTApp.FragmentTags.STARTRAIL);
+            case PhotoSniperApp.OnGoingAction.STAR_TRAIL:
+                notificationIntent.putExtra(MainActivity.FRAGMENT_TAG, PhotoSniperApp.FragmentTags.STARTRAIL);
                 break;
-            case TTApp.OnGoingAction.BRAMPING:
-                notificationIntent.putExtra(MainActivity.FRAGMENT_TAG, TTApp.FragmentTags.BRAMPING);
+            case PhotoSniperApp.OnGoingAction.BRAMPING:
+                notificationIntent.putExtra(MainActivity.FRAGMENT_TAG, PhotoSniperApp.FragmentTags.BRAMPING);
                 break;
-            case TTApp.OnGoingAction.DISTANCE_LAPSE:
-                notificationIntent.putExtra(MainActivity.FRAGMENT_TAG, TTApp.FragmentTags.DISTANCE_LAPSE);
+            case PhotoSniperApp.OnGoingAction.DISTANCE_LAPSE:
+                notificationIntent.putExtra(MainActivity.FRAGMENT_TAG, PhotoSniperApp.FragmentTags.DISTANCE_LAPSE);
                 break;
-            case TTApp.OnGoingAction.WI_FI_SLAVE:
-                notificationIntent.putExtra(MainActivity.FRAGMENT_TAG, TTApp.FragmentTags.WIFI_SLAVE);
+            case PhotoSniperApp.OnGoingAction.WI_FI_SLAVE:
+                notificationIntent.putExtra(MainActivity.FRAGMENT_TAG, PhotoSniperApp.FragmentTags.WIFI_SLAVE);
                 break;
-            case TTApp.OnGoingAction.PEBBLE:
-                notificationIntent.putExtra(MainActivity.FRAGMENT_TAG, TTApp.FragmentTags.PEBBLE);
+            case PhotoSniperApp.OnGoingAction.PEBBLE:
+                notificationIntent.putExtra(MainActivity.FRAGMENT_TAG, PhotoSniperApp.FragmentTags.PEBBLE);
                 break;
             default:
                 // Do nothing don't add a tag.
@@ -587,7 +587,7 @@ public class TriggertrapService extends Service implements OutputListener, Slave
 
     public void stopSequence() {
 
-        mOnGoingAction = TTApp.OnGoingAction.NONE;
+        mOnGoingAction = PhotoSniperApp.OnGoingAction.NONE;
         mRepeatSequence = false;
         mOutputDispatcher.stop();
         if (mCountDownTimer != null) {
@@ -608,7 +608,7 @@ public class TriggertrapService extends Service implements OutputListener, Slave
             mListener.onServiceStartSimple();
         }
 
-        trigger(TTApp.getInstance(this).getBeepLength());
+        trigger(PhotoSniperApp.getInstance(this).getBeepLength());
 
 
     }
@@ -621,7 +621,7 @@ public class TriggertrapService extends Service implements OutputListener, Slave
         if (mListener != null) {
             mListener.onServiceStartSimple();
         }
-        trigger(TTApp.getInstance(this).getBeepLength());
+        trigger(PhotoSniperApp.getInstance(this).getBeepLength());
     }
 
     /*
@@ -631,7 +631,7 @@ public class TriggertrapService extends Service implements OutputListener, Slave
         if (checkInProgressState()) {
             return;
         }
-        mOnGoingAction = TTApp.OnGoingAction.TIMED;
+        mOnGoingAction = PhotoSniperApp.OnGoingAction.TIMED;
         mListener.onServiceTimedStart(time);
         mCountDownTimer = new CountDownTimer(time, 5) {
             private final int FIVE_TENTHS_INTERVAL = 9;
@@ -651,7 +651,7 @@ public class TriggertrapService extends Service implements OutputListener, Slave
 
             public void onFinish() {
                 mState = State.IDLE;
-                mOnGoingAction = TTApp.OnGoingAction.NONE;
+                mOnGoingAction = PhotoSniperApp.OnGoingAction.NONE;
 
                 if (mListener != null) {
                     mListener.onServiceTimedStop();
@@ -686,7 +686,7 @@ public class TriggertrapService extends Service implements OutputListener, Slave
         mCountDownTimer.cancel();
         mListener.onServiceTimedStop();
         mState = State.IDLE;
-        mOnGoingAction = TTApp.OnGoingAction.NONE;
+        mOnGoingAction = PhotoSniperApp.OnGoingAction.NONE;
         mOutputDispatcher.stop();
     }
 
@@ -698,7 +698,7 @@ public class TriggertrapService extends Service implements OutputListener, Slave
         if (checkInProgressState()) {
             return;
         }
-        mOnGoingAction = TTApp.OnGoingAction.SELF_TIMER;
+        mOnGoingAction = PhotoSniperApp.OnGoingAction.SELF_TIMER;
         mListener.onServiceTimedStart(time);
         mCountDownTimer = new CountDownTimer(time, 5) {
             private final int FIVE_TENTHS_INTERVAL = 9;
@@ -726,7 +726,7 @@ public class TriggertrapService extends Service implements OutputListener, Slave
     }
 
     private void finishSelfTimerMode() {
-        trigger(TTApp.getInstance(this).getBeepLength());
+        trigger(PhotoSniperApp.getInstance(this).getBeepLength());
 
         stopSelfTimerMode();
     }
@@ -735,7 +735,7 @@ public class TriggertrapService extends Service implements OutputListener, Slave
         mCountDownTimer.cancel();
 
         mState = State.IDLE;
-        mOnGoingAction = TTApp.OnGoingAction.NONE;
+        mOnGoingAction = PhotoSniperApp.OnGoingAction.NONE;
 
         if (mListener != null) {
             mListener.onServiceTimedStop();
@@ -754,7 +754,7 @@ public class TriggertrapService extends Service implements OutputListener, Slave
         if (checkInProgressState()) {
             return;
         }
-        mOnGoingAction = TTApp.OnGoingAction.PRESS_START_STOP;
+        mOnGoingAction = PhotoSniperApp.OnGoingAction.PRESS_START_STOP;
         mListener.onServiceStopwatchStart();
         mStopwatchTimer = new StopwatchTimer() {
             private final int FIVE_TENTHS_INTERVAL = 9;
@@ -782,7 +782,7 @@ public class TriggertrapService extends Service implements OutputListener, Slave
         mStopwatchTimer.cancel();
         mListener.onServiceStopwatchStop();
         mState = State.IDLE;
-        mOnGoingAction = TTApp.OnGoingAction.NONE;
+        mOnGoingAction = PhotoSniperApp.OnGoingAction.NONE;
         mOutputDispatcher.stop();
     }
 
@@ -790,7 +790,7 @@ public class TriggertrapService extends Service implements OutputListener, Slave
         if (checkInProgressState()) {
             return;
         }
-        mOnGoingAction = TTApp.OnGoingAction.PRESS_AND_HOLD;
+        mOnGoingAction = PhotoSniperApp.OnGoingAction.PRESS_AND_HOLD;
         mListener.onServicePressStart();
         mStopwatchTimer = new StopwatchTimer() {
             @Override
@@ -808,7 +808,7 @@ public class TriggertrapService extends Service implements OutputListener, Slave
         mStopwatchTimer.cancel();
         mListener.onServicePressStop();
         mState = State.IDLE;
-        mOnGoingAction = TTApp.OnGoingAction.NONE;
+        mOnGoingAction = PhotoSniperApp.OnGoingAction.NONE;
         mOutputDispatcher.stop();
     }
 
@@ -820,7 +820,7 @@ public class TriggertrapService extends Service implements OutputListener, Slave
         if (checkInProgressState()) {
             return;
         }
-        mOnGoingAction = TTApp.OnGoingAction.QUICK_RELEASE;
+        mOnGoingAction = PhotoSniperApp.OnGoingAction.QUICK_RELEASE;
         mListener.onServicePressStart();
         mStopwatchTimer = new StopwatchTimer() {
             @Override
@@ -835,11 +835,11 @@ public class TriggertrapService extends Service implements OutputListener, Slave
     }
 
     public void onQuickStopPress() {
-        trigger(TTApp.getInstance(this).getBeepLength());
+        trigger(PhotoSniperApp.getInstance(this).getBeepLength());
         mStopwatchTimer.cancel();
         mListener.onServicePressStop();
         mState = State.IDLE;
-        mOnGoingAction = TTApp.OnGoingAction.NONE;
+        mOnGoingAction = PhotoSniperApp.OnGoingAction.NONE;
     }
 
     /**
@@ -863,7 +863,7 @@ public class TriggertrapService extends Service implements OutputListener, Slave
 
     @Override
     public void onExceedThreshold(int amplitude) {
-        trigger(TTApp.getInstance(this).getBeepLength());
+        trigger(PhotoSniperApp.getInstance(this).getBeepLength());
         if (mListener != null && !mIsRunningInForeground) {
             mListener.onSoundExceedThreshold(amplitude);
         }
@@ -878,7 +878,7 @@ public class TriggertrapService extends Service implements OutputListener, Slave
 
     public void stopSoundSensor() {
         // Only stop the mic monitor is we are not watching it
-        if (mOnGoingAction != TTApp.OnGoingAction.BANG) {
+        if (mOnGoingAction != PhotoSniperApp.OnGoingAction.BANG) {
             mMicVolumeMonitor.stop();
         }
     }
@@ -887,7 +887,7 @@ public class TriggertrapService extends Service implements OutputListener, Slave
         if (checkInProgressState()) {
             return;
         }
-        mOnGoingAction = TTApp.OnGoingAction.BANG;
+        mOnGoingAction = PhotoSniperApp.OnGoingAction.BANG;
         mMicVolumeMonitor.enabledThreshold();
         mState = State.IN_PROGRESS;
     }
@@ -895,7 +895,7 @@ public class TriggertrapService extends Service implements OutputListener, Slave
     public void disableSoundThreshold() {
         mMicVolumeMonitor.disableThreshold();
         mState = State.IDLE;
-        mOnGoingAction = TTApp.OnGoingAction.NONE;
+        mOnGoingAction = PhotoSniperApp.OnGoingAction.NONE;
     }
 
     public void setMicSensitivity(int sensitivity) {
@@ -923,7 +923,7 @@ public class TriggertrapService extends Service implements OutputListener, Slave
 
         if (mAccumulativeDistance >= mTriggerDistance) {
             // Trigger a beep if we travel greater than the Trigger distance.
-            trigger(TTApp.getInstance(this).getBeepLength());
+            trigger(PhotoSniperApp.getInstance(this).getBeepLength());
             mAccumulativeDistance = mAccumulativeDistance % mTriggerDistance;
         }
 
@@ -950,7 +950,7 @@ public class TriggertrapService extends Service implements OutputListener, Slave
     /*
      * DistanceLapse methods
      */
-    public void setTTLocationService(TTLocationService locationService) {
+    public void setTTLocationService(SniperManLocationService locationService) {
         mLocationService = locationService;
     }
 
@@ -959,7 +959,7 @@ public class TriggertrapService extends Service implements OutputListener, Slave
             return;
         }
         Log.d(TAG, "Starting location services: " + mLocationService.toString());
-        mOnGoingAction = TTApp.OnGoingAction.DISTANCE_LAPSE;
+        mOnGoingAction = PhotoSniperApp.OnGoingAction.DISTANCE_LAPSE;
         mState = State.IN_PROGRESS;
         mTriggerDistance = triggerDistance;
         mAccumulativeDistance = 0;
@@ -974,18 +974,18 @@ public class TriggertrapService extends Service implements OutputListener, Slave
             Log.d(TAG, "Stopping location services: " + mLocationService.toString());
             mLocationService.stopLocationService();
         }
-        mOnGoingAction = TTApp.OnGoingAction.NONE;
+        mOnGoingAction = PhotoSniperApp.OnGoingAction.NONE;
         mState = State.IDLE;
     }
 
     /*
      * Wifi methods
      */
-    public ArrayList<TTServiceInfo> getAvailableMasters() {
+    public ArrayList<PhotoSniperServiceInfo> getAvailableMasters() {
         return mAvailableMasters;
     }
 
-    public ArrayList<TTSlaveInfo> getConnectedSlaves() {
+    public ArrayList<PhotoSniperSlaveInfo> getConnectedSlaves() {
         return mZeroConf.getConnectedSlaves();
     }
 
@@ -1006,7 +1006,7 @@ public class TriggertrapService extends Service implements OutputListener, Slave
     public void watchMasterWifi() {
 
         mZeroConf.watch();
-        mOnGoingAction = TTApp.OnGoingAction.WI_FI_SLAVE;
+        mOnGoingAction = PhotoSniperApp.OnGoingAction.WI_FI_SLAVE;
         mState = State.IN_PROGRESS;
 
     }
@@ -1015,7 +1015,7 @@ public class TriggertrapService extends Service implements OutputListener, Slave
         mZeroConf.unwatch();
         // Close any sockets that might be open.
         disconnectFromMaster();
-        mOnGoingAction = TTApp.OnGoingAction.NONE;
+        mOnGoingAction = PhotoSniperApp.OnGoingAction.NONE;
         mState = State.IDLE;
 
     }
@@ -1047,7 +1047,7 @@ public class TriggertrapService extends Service implements OutputListener, Slave
         mZeroConf.disconnectSlaveFromMaster(uniqueName);
     }
 
-    public void onWifiMasterRegistered(TTServiceInfo info) {
+    public void onWifiMasterRegistered(PhotoSniperServiceInfo info) {
         mIsWifiMasterOn = true;
         //if (mListener != null) {
         mListener.onWifiMasterRegsitered(info);
@@ -1094,14 +1094,14 @@ public class TriggertrapService extends Service implements OutputListener, Slave
     }
 
     public void startPebble() {
-        mOnGoingAction = TTApp.OnGoingAction.PEBBLE;
+        mOnGoingAction = PhotoSniperApp.OnGoingAction.PEBBLE;
         mState = State.IN_PROGRESS;
         //mPebbleController.startPebble();
     }
 
     private void stopPebble() {
         //mPebbleController.stopPebble();
-        mOnGoingAction = TTApp.OnGoingAction.NONE;
+        mOnGoingAction = PhotoSniperApp.OnGoingAction.NONE;
         mState = State.IDLE;
     }
 
@@ -1115,14 +1115,14 @@ public class TriggertrapService extends Service implements OutputListener, Slave
     }
 
     public void wiFiMasterAdded(String name, String ipAddress, int port) {
-        TTServiceInfo masterInfo = new TTServiceInfo(name, ipAddress, port);
+        PhotoSniperServiceInfo masterInfo = new PhotoSniperServiceInfo(name, ipAddress, port);
         mAvailableMasters.add(masterInfo);
 
         if (!mIsRunningInForeground) {
             mListener.onWifiMasterAdded(masterInfo);
         }
 
-        if (masterInfo.getName().equals(TTApp.getInstance(this).getSlaveLastMaster())) {
+        if (masterInfo.getName().equals(PhotoSniperApp.getInstance(this).getSlaveLastMaster())) {
 
             connectToMaster(masterInfo.getName(), masterInfo.getIpAddress(), masterInfo.getPort());
         }
@@ -1132,9 +1132,9 @@ public class TriggertrapService extends Service implements OutputListener, Slave
 
     public void wiFiMasterRemoved(String name, String ipAddress, int port) {
         // Log.d(TAG,"wiFiMasterRemoved");
-        TTServiceInfo masterInfo = new TTServiceInfo(name, ipAddress, port);
+        PhotoSniperServiceInfo masterInfo = new PhotoSniperServiceInfo(name, ipAddress, port);
         // mAvailableMasters.remove(masterInfo);
-        for (TTServiceInfo serviceInfo : mAvailableMasters) {
+        for (PhotoSniperServiceInfo serviceInfo : mAvailableMasters) {
             if (serviceInfo.getName().equals(name)) {
                 mAvailableMasters.remove(serviceInfo);
                 break;
@@ -1191,8 +1191,8 @@ public class TriggertrapService extends Service implements OutputListener, Slave
         mOutputDispatcher.trigger(length);
 
         // this is a quick hack for SONY ...........
-        if (TTApp.getInstance(this).isSonyRPCAvailable()) {
-            TTApp.getInstance(this).getRpc().sendRequest(new ActTakePictureRequest(), null, new RPC.ResponseHandler<ActTakePictureResponse>() {
+        if (PhotoSniperApp.getInstance(this).isSonyRPCAvailable()) {
+            PhotoSniperApp.getInstance(this).getSonyWiFiRpc().sendRequest(new ActTakePictureRequest(), null, new SonyWiFiRPC.ResponseHandler<ActTakePictureResponse>() {
 
                 @Override
                 public void onSuccess(ActTakePictureResponse response) {
@@ -1205,6 +1205,11 @@ public class TriggertrapService extends Service implements OutputListener, Slave
 
                 }
             });
+        }
+
+        // ... and for BLE
+        if (PhotoSniperApp.getInstance(this).getBLEgattClient() != null) {
+            PhotoSniperApp.getInstance(this).getBLEgattClient().writeInteractor();
         }
 
 
@@ -1303,12 +1308,12 @@ public class TriggertrapService extends Service implements OutputListener, Slave
         void onPulseSequenceIterate(long[] sequence);
 
         // Listeners for wifi slave
-        void onWifiMasterAdded(TTServiceInfo info);
+        void onWifiMasterAdded(PhotoSniperServiceInfo info);
 
-        void onWifiMasterRemoved(TTServiceInfo info);
+        void onWifiMasterRemoved(PhotoSniperServiceInfo info);
 
         // Listeners for wifi master
-        void onWifiMasterRegsitered(TTServiceInfo info);
+        void onWifiMasterRegsitered(PhotoSniperServiceInfo info);
 
         void onWifiMasterUnregister();
 
@@ -1324,10 +1329,10 @@ public class TriggertrapService extends Service implements OutputListener, Slave
     }
 
     public class TiggertrapServiceBinder extends Binder {
-        public TriggertrapService getService() {
+        public SniperManService getService() {
             // Return this instance of LocalService so clients can call public
             // methods
-            return TriggertrapService.this;
+            return SniperManService.this;
         }
     }
 

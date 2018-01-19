@@ -10,12 +10,12 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
+import at.photosniper.PhotoSniperApp;
 import at.photosniper.R;
 
 import antistatic.spinnerwheel.AbstractWheel;
 import antistatic.spinnerwheel.OnWheelScrollListener;
 import antistatic.spinnerwheel.adapters.ArrayWheelAdapter;
-import at.photosniper.TTApp;
 import at.photosniper.fragments.dialog.HDRErrorDialog;
 import at.photosniper.util.PulseGenerator;
 import at.photosniper.view.CircleTimerView;
@@ -56,7 +56,7 @@ public class HdrFragment extends PulseSequenceFragment {
     private boolean mSyncCircle = false;
 
     public HdrFragment() {
-        mRunningAction = TTApp.OnGoingAction.HDR;
+        mRunningAction = PhotoSniperApp.OnGoingAction.HDR;
     }
 
     @Override
@@ -108,9 +108,9 @@ public class HdrFragment extends PulseSequenceFragment {
     public void onStop() {
         super.onStop();
         //Persist the state of the star trail mode
-        TTApp.getInstance(getActivity()).setHDRMiddleExposure(mCurrentMiddleSpeed);
-        TTApp.getInstance(getActivity()).setHDRNumExposures(mCurrentNumExposures);
-        TTApp.getInstance(getActivity()).setHDREvStep(mCurrentEvValue);
+        PhotoSniperApp.getInstance(getActivity()).setHDRMiddleExposure(mCurrentMiddleSpeed);
+        PhotoSniperApp.getInstance(getActivity()).setHDRNumExposures(mCurrentNumExposures);
+        PhotoSniperApp.getInstance(getActivity()).setHDREvStep(mCurrentEvValue);
     }
 
     private void setUpMiddleExposure(final AbstractWheel hdrMiddle) {
@@ -126,7 +126,7 @@ public class HdrFragment extends PulseSequenceFragment {
             }
         });
 
-        mCurrentMiddleSpeed = TTApp.getInstance(getActivity()).getHDRMiddleExposure();
+        mCurrentMiddleSpeed = PhotoSniperApp.getInstance(getActivity()).getHDRMiddleExposure();
         Log.d(TAG, "Getting Middle exposure of:" + mCurrentMiddleSpeed);
         Log.d(TAG, "Current middle exposure index:" + hdrMiddle.getCurrentItem());
         int i = 0;
@@ -153,7 +153,7 @@ public class HdrFragment extends PulseSequenceFragment {
             }
         });
 
-        mCurrentNumExposures = TTApp.getInstance(getActivity()).getHDRNumExposures();
+        mCurrentNumExposures = PhotoSniperApp.getInstance(getActivity()).getHDRNumExposures();
         int i = 0;
         for (int numberExp : mNumExposures) {
             if (mCurrentNumExposures == numberExp) {
@@ -179,7 +179,7 @@ public class HdrFragment extends PulseSequenceFragment {
             }
         });
 
-        mCurrentEvValue = TTApp.getInstance(getActivity()).getHDREvStep();
+        mCurrentEvValue = PhotoSniperApp.getInstance(getActivity()).getHDREvStep();
         int i = 0;
         for (float evValue : mEvValues) {
             if (evValue == mCurrentEvValue) {
@@ -379,7 +379,7 @@ public class HdrFragment extends PulseSequenceFragment {
             mCircleTimerView.setPassedTime(0, false);
 
 
-            mPulseSeqListener.onPulseSequenceCreated(TTApp.OnGoingAction.HDR, mPulseSequence, false);
+            mPulseSeqListener.onPulseSequenceCreated(PhotoSniperApp.OnGoingAction.HDR, mPulseSequence, false);
             logSequence(mPulseSequence);
 
             long mTotaltime = PulseGenerator.getSequenceTime(mPulseSequence);

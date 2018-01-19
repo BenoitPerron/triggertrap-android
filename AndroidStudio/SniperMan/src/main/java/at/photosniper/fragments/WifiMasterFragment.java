@@ -31,13 +31,13 @@ import android.widget.ViewSwitcher;
 
 import java.util.ArrayList;
 
+import at.photosniper.PhotoSniperApp;
 import at.photosniper.R;
-import at.photosniper.TTApp;
 import at.photosniper.fragments.dialog.DisconnectSlaveDialogFrag;
-import at.photosniper.wifi.TTServiceInfo;
-import at.photosniper.wifi.TTSlaveInfo;
+import at.photosniper.wifi.PhotoSniperServiceInfo;
+import at.photosniper.wifi.PhotoSniperSlaveInfo;
 
-public class WifiMasterFragment extends TriggertrapFragment {
+public class WifiMasterFragment extends PhotoSniperBaseFragment {
 
     private static final int DIALOG_FRAGMENT = 1;
     private static final String TAG = WifiMasterFragment.class.getSimpleName();
@@ -59,7 +59,7 @@ public class WifiMasterFragment extends TriggertrapFragment {
     private WifiMasterListener mlistener;
 
     public WifiMasterFragment() {
-        mRunningAction = TTApp.OnGoingAction.WI_FI_MASTER;
+        mRunningAction = PhotoSniperApp.OnGoingAction.WI_FI_MASTER;
     }
 
     @Override
@@ -86,7 +86,7 @@ public class WifiMasterFragment extends TriggertrapFragment {
             }
         };
 
-        //boolean isWifOn  = TTApp.getInstance(getActivity()).isMasterOn();
+        //boolean isWifOn  = PhotoSniperApp.getInstance(getActivity()).isMasterOn();
     }
 
     @Override
@@ -229,12 +229,12 @@ public class WifiMasterFragment extends TriggertrapFragment {
         }
     }
 
-    public void wifimasterRegistered(TTServiceInfo serviceInfo) {
+    public void wifimasterRegistered(PhotoSniperServiceInfo serviceInfo) {
         String masterName = serviceInfo.getName();
         Log.d(TAG, "Registered master: " + masterName);
         mMasterConnectProgress.setVisibility(View.GONE);
         mBroadcastingTextSwitch.setText(getActivity().getResources().getString(R.string.my_name_is) + ": " + serviceInfo.getName());
-        TTApp.getInstance(getActivity()).setMasterOn(true);
+        PhotoSniperApp.getInstance(getActivity()).setMasterOn(true);
 
         if (!mButton.isChecked()) {
             uiSwitchInteraction = false;
@@ -247,7 +247,7 @@ public class WifiMasterFragment extends TriggertrapFragment {
     public void wifiMasterUnregister() {
         mMasterConnectProgress.setVisibility(View.GONE);
         mBroadcastingTextSwitch.setText("");
-        TTApp.getInstance(getActivity()).setMasterOn(false);
+        PhotoSniperApp.getInstance(getActivity()).setMasterOn(false);
     }
 
     private void startWifiMaster() {
@@ -301,11 +301,11 @@ public class WifiMasterFragment extends TriggertrapFragment {
 
     }
 
-    public void addConnectedSlaves(ArrayList<TTSlaveInfo> slaves) {
+    public void addConnectedSlaves(ArrayList<PhotoSniperSlaveInfo> slaves) {
 
         clearSlaveList();
 
-        for (TTSlaveInfo slaveInfo : slaves) {
+        for (PhotoSniperSlaveInfo slaveInfo : slaves) {
             createSlaveView(slaveInfo.getName(), slaveInfo.getUniqueName());
         }
     }

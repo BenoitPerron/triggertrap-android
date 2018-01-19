@@ -15,7 +15,7 @@ import at.photosniper.R;
 import at.photosniper.adapter.GettingStartedAdapter;
 
 
-public class GettingStartedFragment extends TriggertrapFragment {
+public class GettingStartedFragment extends PhotoSniperBaseFragment {
 
     private static final String TAG = GettingStartedFragment.class.getSimpleName();
     private static final int PAGER_INTERVAL = 5000;

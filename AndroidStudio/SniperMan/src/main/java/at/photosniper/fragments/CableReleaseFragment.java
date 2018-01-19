@@ -13,7 +13,7 @@ import at.photosniper.R;
 import at.photosniper.widget.OngoingButton;
 
 
-public class CableReleaseFragment extends TriggertrapFragment {
+public class CableReleaseFragment extends PhotoSniperBaseFragment {
 
     private static final String TAG = CableReleaseFragment.class.getSimpleName();
     private OngoingButton mShutterButton;

@@ -15,7 +15,7 @@ import android.widget.LinearLayout;
 
 import at.photosniper.R;
 
-import at.photosniper.TTApp;
+import at.photosniper.PhotoSniperApp;
 import at.photosniper.fragments.HdrTimeLapseFragment;
 
 public class DialpadManager implements Button.OnClickListener, Button.OnLongClickListener {
@@ -60,7 +60,7 @@ public class DialpadManager implements Button.OnClickListener, Button.OnLongClic
 
         //make sure we update values in the hdr timelapse fragment
         Activity activity = (Activity) mContext;
-        HdrTimeLapseFragment hdrFragment = (HdrTimeLapseFragment) activity.getFragmentManager().findFragmentByTag(TTApp.FragmentTags.HDR_LAPSE);
+        HdrTimeLapseFragment hdrFragment = (HdrTimeLapseFragment) activity.getFragmentManager().findFragmentByTag(PhotoSniperApp.FragmentTags.HDR_LAPSE);
         if (hdrFragment != null) {
             hdrFragment.checkInterval();
         }

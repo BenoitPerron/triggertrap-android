@@ -15,7 +15,7 @@ import antistatic.spinnerwheel.AbstractWheel;
 import antistatic.spinnerwheel.OnWheelScrollListener;
 import antistatic.spinnerwheel.adapters.ArrayWheelAdapter;
 import at.photosniper.R;
-import at.photosniper.TTApp;
+import at.photosniper.PhotoSniperApp;
 import at.photosniper.view.ZeroTopPaddingTextView;
 import at.photosniper.widget.ArrayWheelDoubleAdapter;
 import at.photosniper.widget.TimerView;
@@ -27,7 +27,7 @@ import at.photosniper.widget.TimerView;
  * @author scottmellors
  * @since 2.2
  */
-public class NdCalculatorFragment extends TriggertrapFragment {
+public class NdCalculatorFragment extends PhotoSniperBaseFragment {
 
     private static final double TWELFTH_OF_A_MS = 0.12;
     private static final double SIXTEENTH_OF_A_MS = 0.16;
@@ -150,7 +150,7 @@ public class NdCalculatorFragment extends TriggertrapFragment {
         AbstractWheel shutterSpeedWheel = (AbstractWheel) shutterSpeedView.findViewById(R.id.wheelHorizontalView);
         shutterSpeedAdapter.setItemResource(R.layout.wheel_text_centered);
         shutterSpeedAdapter.setItemTextResource();
-        TTApp app = TTApp.getInstance(getActivity());
+        PhotoSniperApp app = PhotoSniperApp.getInstance(getActivity());
 
         shutterSpeedWheel.addScrollingListener(new OnWheelScrollListener() {
             public void onScrollingStarted(AbstractWheel wheel) {
@@ -160,7 +160,7 @@ public class NdCalculatorFragment extends TriggertrapFragment {
             public void onScrollingFinished(AbstractWheel wheel) {
                 mCurrentBaseShutterSpeed = wheel.getCurrentItem();
 
-                TTApp.getInstance(getActivity()).setDefaultShutterSpeedVal(wheel.getCurrentItem());
+                PhotoSniperApp.getInstance(getActivity()).setDefaultShutterSpeedVal(wheel.getCurrentItem());
 
                 mResultTextView.setText(getNdTime(mCurrentStops, mCurrentBaseShutterSpeed));
             }

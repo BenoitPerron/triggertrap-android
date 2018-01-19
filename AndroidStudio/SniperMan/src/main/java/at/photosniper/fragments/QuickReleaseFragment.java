@@ -19,7 +19,7 @@ import at.photosniper.widget.OngoingButton;
 /**
  * Created by scottmellors on 20/08/2014.
  */
-public class QuickReleaseFragment extends TriggertrapFragment {
+public class QuickReleaseFragment extends PhotoSniperBaseFragment {
 
     private static final int TIME_INTERVAL = 1000;
     private View mRootView;

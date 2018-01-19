@@ -154,12 +154,12 @@ public class MasterServer {
         clientSocketUniqueNames.remove(index);
     }
 
-    public ArrayList<TTSlaveInfo> getConnectedSlaves() {
-        ArrayList<TTSlaveInfo> connectedSlaves = new ArrayList<>();
+    public ArrayList<PhotoSniperSlaveInfo> getConnectedSlaves() {
+        ArrayList<PhotoSniperSlaveInfo> connectedSlaves = new ArrayList<>();
         int index = 0;
         if (clientSocketNames != null) {
             for (String name : clientSocketNames) {
-                TTSlaveInfo slaveInfo = new TTSlaveInfo(name, clientSocketUniqueNames.get(index));
+                PhotoSniperSlaveInfo slaveInfo = new PhotoSniperSlaveInfo(name, clientSocketUniqueNames.get(index));
                 connectedSlaves.add(slaveInfo);
                 index++;
             }

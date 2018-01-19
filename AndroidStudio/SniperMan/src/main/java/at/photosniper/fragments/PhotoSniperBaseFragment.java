@@ -5,17 +5,17 @@ import android.app.Fragment;
 import android.graphics.Typeface;
 import android.os.Bundle;
 
-import at.photosniper.TTApp;
+import at.photosniper.PhotoSniperApp;
 
-public class TriggertrapFragment extends Fragment {
+public class PhotoSniperBaseFragment extends Fragment {
 
     Typeface SAN_SERIF_LIGHT = null;
     Typeface SAN_SERIF_THIN = null;
-    int mRunningAction = TTApp.OnGoingAction.NONE;
+    int mRunningAction = PhotoSniperApp.OnGoingAction.NONE;
     Bundle mStateBundle;
     int mState = State.STOPPED;
 
-    public TriggertrapFragment() {
+    public PhotoSniperBaseFragment() {
 
 
     }
@@ -39,7 +39,7 @@ public class TriggertrapFragment extends Fragment {
 
     Bundle getStateBundle() {
         mStateBundle = new Bundle();
-        mStateBundle.putString(TriggertrapFragment.BundleKey.FRAGMENT_TAG, getTag());
+        mStateBundle.putString(PhotoSniperBaseFragment.BundleKey.FRAGMENT_TAG, getTag());
         return mStateBundle;
     }
 

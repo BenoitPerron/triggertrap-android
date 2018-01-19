@@ -12,9 +12,8 @@ import android.preference.PreferenceFragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
+import at.photosniper.PhotoSniperApp;
 import at.photosniper.R;
-
-import at.photosniper.TTApp;
 
 
 public class SettingsFragment extends PreferenceFragment implements OnSharedPreferenceChangeListener {
@@ -69,7 +68,7 @@ public class SettingsFragment extends PreferenceFragment implements OnSharedPref
             case PULSE_LENGTH_SETTING: {
                 ListPreference connectionPref = (ListPreference) findPreference(key);
                 connectionPref.setSummary(connectionPref.getEntry());
-                TTApp.getInstance(getActivity()).setBeepLength(Long.parseLong(sharedPrefs.getString(key, "")));
+                PhotoSniperApp.getInstance(getActivity()).setBeepLength(Long.parseLong(sharedPrefs.getString(key, "")));
                 //Create Distance update event and broadcast it
                 Intent intent = new Intent(SETTINGS_UPDATE_EVENT);
                 intent.putExtra(SettingsEvent.EVENT_TYPE, SettingsType.PULSE_LENGTH);
@@ -81,19 +80,19 @@ public class SettingsFragment extends PreferenceFragment implements OnSharedPref
             case SENSOR_RESET_DELAY_SETTING: {
                 ListPreference connectionPref = (ListPreference) findPreference(key);
                 connectionPref.setSummary(connectionPref.getEntry());
-                TTApp.getInstance(getActivity()).setSensorResetDelay(Integer.parseInt(sharedPrefs.getString(key, "")));
+                PhotoSniperApp.getInstance(getActivity()).setSensorResetDelay(Integer.parseInt(sharedPrefs.getString(key, "")));
                 break;
             }
             case SENSOR_DELAY_SETTING: {
                 ListPreference connectionPref = (ListPreference) findPreference(key);
                 connectionPref.setSummary(connectionPref.getEntry());
-                TTApp.getInstance(getActivity()).setSensorDelay(Integer.parseInt(sharedPrefs.getString(key, "")));
+                PhotoSniperApp.getInstance(getActivity()).setSensorDelay(Integer.parseInt(sharedPrefs.getString(key, "")));
                 break;
             }
             case DISTANCE_SPEED_SETTING: {
                 ListPreference connectionPref = (ListPreference) findPreference(key);
                 connectionPref.setSummary(connectionPref.getEntry());
-                TTApp.getInstance(getActivity()).setDistancLapseSpeedUnit(Integer.parseInt(sharedPrefs.getString(key, "")));
+                PhotoSniperApp.getInstance(getActivity()).setDistancLapseSpeedUnit(Integer.parseInt(sharedPrefs.getString(key, "")));
 
                 //Create Distance update event and broadcast it
                 Intent intent = new Intent(SETTINGS_UPDATE_EVENT);
@@ -106,7 +105,7 @@ public class SettingsFragment extends PreferenceFragment implements OnSharedPref
             case DISTANCE_UNIT_SETTING: {
                 ListPreference connectionPref = (ListPreference) findPreference(key);
                 connectionPref.setSummary(connectionPref.getEntry());
-                TTApp.getInstance(getActivity()).setDistancLapseUnit(Integer.parseInt(sharedPrefs.getString(key, "")));
+                PhotoSniperApp.getInstance(getActivity()).setDistancLapseUnit(Integer.parseInt(sharedPrefs.getString(key, "")));
 
                 Log.d(TAG, "Sending broadcast");
                 //Create Distance update event and broadcast it

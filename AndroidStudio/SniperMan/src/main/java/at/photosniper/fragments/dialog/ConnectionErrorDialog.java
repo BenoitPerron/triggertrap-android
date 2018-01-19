@@ -7,7 +7,7 @@ import android.view.View;
 
 import at.photosniper.R;
 
-import at.photosniper.location.TTLocationService;
+import at.photosniper.location.SniperManLocationService;
 import eu.inmite.android.lib.dialogs.BaseDialogFragment;
 import eu.inmite.android.lib.dialogs.SimpleDialogFragment;
 
@@ -21,17 +21,17 @@ import eu.inmite.android.lib.dialogs.SimpleDialogFragment;
 public class ConnectionErrorDialog extends SimpleDialogFragment {
 
     private Dialog mServiceErrorDialog;
-    private TTLocationService mLocationService;
+    private SniperManLocationService mLocationService;
 
     private void setDialog(Dialog serviceErrorDialog) {
         this.mServiceErrorDialog = serviceErrorDialog;
     }
 
-    private void setLocationService(TTLocationService locService) {
+    private void setLocationService(SniperManLocationService locService) {
         this.mLocationService = locService;
     }
 
-    public void show(Activity activity, TTLocationService locService, Dialog dialog) {
+    public void show(Activity activity, SniperManLocationService locService, Dialog dialog) {
         ConnectionErrorDialog connectionDialog = new ConnectionErrorDialog();
 
         connectionDialog.setDialog(dialog);

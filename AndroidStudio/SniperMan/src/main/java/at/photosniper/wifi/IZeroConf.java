@@ -14,7 +14,7 @@ public interface IZeroConf {
 
     void disconnectSlaveFromMaster(String uniqueSlaveName);
 
-    ArrayList<TTSlaveInfo> getConnectedSlaves();
+    ArrayList<PhotoSniperSlaveInfo> getConnectedSlaves();
 
     void close();
 }

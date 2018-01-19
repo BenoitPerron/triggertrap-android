@@ -7,9 +7,10 @@ import android.graphics.Typeface;
 import android.preference.PreferenceManager;
 
 import at.photosniper.fragments.preference.SettingsFragment;
-import at.photosniper.util.RPC;
+import at.photosniper.util.GattClient;
+import at.photosniper.util.SonyWiFiRPC;
 
-public class TTApp {
+public class PhotoSniperApp {
 
     private static final int TIMELASPE_INTERVAL_DEFAULT = 1000;
     private static final int TIME_MODE_TIME_DEFAULT = 30000;
@@ -89,7 +90,7 @@ public class TTApp {
     // Gap between beeps in millisconds
     private static final long BEEP_GAP = 750;
     private static final long HDR_GAP = 1000;
-    private static TTApp mInstance;
+    private static PhotoSniperApp mInstance;
     private final String LAST_ACTION_BAR_LABEL_DEFAULT;
     // Typefaces
     public Typeface SAN_SERIF_LIGHT = null;
@@ -148,22 +149,29 @@ public class TTApp {
     private Boolean mIsMasterON = UNINITIALIZED_BOOL;
     // ND Filter Values
     private int mDefaultShutterSpeed = UNINITIALIZED;
-    private RPC rpc;
+
+    // SONY WLAN Comm
+    private SonyWiFiRPC sonyWiFiRpc;
     private boolean sonyRPCAvailable = false;
 
-    private TTApp(Context ctx) {
+    //PhotoSniper Box COntrol BLE
+    private GattClient BLEgattClient;
+
+
+    private PhotoSniperApp(Context ctx) {
         mAppContext = ctx.getApplicationContext();
         LAST_ACTION_BAR_LABEL_DEFAULT = mAppContext.getResources().getString(R.string.getting_started);
     }
 
-    public static TTApp getInstance(Context context) {
+    public static PhotoSniperApp getInstance(Context context) {
         if (mInstance == null) {
-            mInstance = new TTApp(context);
+            mInstance = new PhotoSniperApp(context);
             mInstance.init();
         }
         return mInstance;
     }
 
+    // SONY + BLE ---------------------------
     public boolean isSonyRPCAvailable() {
         return sonyRPCAvailable;
     }
@@ -172,13 +180,24 @@ public class TTApp {
         this.sonyRPCAvailable = sonyRPCAvailable;
     }
 
-    public RPC getRpc() {
-        return rpc;
+    public SonyWiFiRPC getSonyWiFiRpc() {
+        return sonyWiFiRpc;
     }
 
-    public void setRpc(RPC rpc) {
-        this.rpc = rpc;
+    public void setSonyWiFiRpc(SonyWiFiRPC sonyWiFiRpc) {
+        this.sonyWiFiRpc = sonyWiFiRpc;
     }
+
+    public GattClient getBLEgattClient() {
+        return BLEgattClient;
+    }
+
+    public void setBLEgattClient(GattClient BLEgattClient) {
+        this.BLEgattClient = BLEgattClient;
+    }
+
+// SONY + BLE ---------------------------
+
 
     private void init() {
         // Load values store in the shares prefs

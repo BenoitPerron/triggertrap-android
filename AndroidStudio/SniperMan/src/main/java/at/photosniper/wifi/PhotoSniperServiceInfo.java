@@ -1,11 +1,11 @@
 package at.photosniper.wifi;
 
-public class TTServiceInfo {
+public class PhotoSniperServiceInfo {
     private String name;
     private String ipAddress;
     private int port;
 
-    public TTServiceInfo(String name, String ipAddress, int port) {
+    public PhotoSniperServiceInfo(String name, String ipAddress, int port) {
         this.name = name;
         this.ipAddress = ipAddress;
         this.port = port;

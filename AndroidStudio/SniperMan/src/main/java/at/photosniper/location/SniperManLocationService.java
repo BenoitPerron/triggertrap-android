@@ -18,12 +18,12 @@ import at.photosniper.fragments.dialog.AlertErrorDialog;
 import at.photosniper.fragments.dialog.ConnectionErrorDialog;
 import at.photosniper.fragments.dialog.ServiceErrorDialogFragment;
 
-public class TTLocationService implements GooglePlayServicesClient.ConnectionCallbacks, GooglePlayServicesClient.OnConnectionFailedListener, LocationListener {
+public class SniperManLocationService implements GooglePlayServicesClient.ConnectionCallbacks, GooglePlayServicesClient.OnConnectionFailedListener, LocationListener {
 
     public final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
     // Update frequency in seconds
     private static final int UPDATE_INTERVAL_IN_SECONDS = 1;
-    private static final String TAG = TTLocationService.class.getSimpleName();
+    private static final String TAG = SniperManLocationService.class.getSimpleName();
     // Milliseconds per second
     private static final int MILLISECONDS_PER_SECOND = 1000;
     // Update frequency in milliseconds
@@ -41,7 +41,7 @@ public class TTLocationService implements GooglePlayServicesClient.ConnectionCal
     private LocationListener mListener;
 
 
-    public TTLocationService(Activity parentActivity) {
+    public SniperManLocationService(Activity parentActivity) {
         mParentActivty = parentActivity;
     }
 

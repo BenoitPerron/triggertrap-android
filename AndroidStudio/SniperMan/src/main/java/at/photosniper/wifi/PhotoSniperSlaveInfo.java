@@ -1,11 +1,11 @@
 package at.photosniper.wifi;
 
-public class TTSlaveInfo {
+public class PhotoSniperSlaveInfo {
 
     private String name;
     private String uniqueName;
 
-    public TTSlaveInfo(String name, String uniqueName) {
+    public PhotoSniperSlaveInfo(String name, String uniqueName) {
         this.name = name;
         this.uniqueName = uniqueName;
     }

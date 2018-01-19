@@ -30,9 +30,9 @@ import java.util.Set;
  * Created by johannes on 29.12.2017.
  */
 
-public class RPC {
+public class SonyWiFiRPC {
 
-    private static final String RPC_NETWORK = "RPC network";
+    private static final String RPC_NETWORK = "SonyWiFiRPC network";
     private static final int SSDP_TIMEOUT = 1000;
 
     private final Set<ConnectionListener> connectionListeners = new HashSet<>();
@@ -44,7 +44,7 @@ public class RPC {
     private volatile boolean liveViewInProgress;
     private List<Integer> availableSelfTimers = Collections.emptyList();
 
-    public RPC() {
+    public SonyWiFiRPC() {
         liveViewFetcher.setConnectionTimeout(RpcClient.CONNECTION_TIMEOUT);
     }
 
@@ -87,7 +87,7 @@ public class RPC {
 
     //    @UiThread
     private void onConnectionFailed(Throwable e) {
-        Log.e("@@@@@", "RPC connect failed", e);
+        Log.e("@@@@@", "SonyWiFiRPC connect failed", e);
         initialized = true;
         initializationError = e;
         for (ConnectionListener callback : connectionListeners) {

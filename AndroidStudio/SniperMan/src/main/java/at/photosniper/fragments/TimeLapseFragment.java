@@ -20,9 +20,9 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import at.photosniper.PhotoSniperApp;
 import at.photosniper.R;
 
-import at.photosniper.TTApp;
 import at.photosniper.fragments.preference.SettingsFragment;
 import at.photosniper.util.DialpadManager;
 import at.photosniper.widget.ErrorPopup;
@@ -71,7 +71,7 @@ public class TimeLapseFragment extends TimeFragment implements DialpadManager.In
     };
 
     public TimeLapseFragment() {
-        mRunningAction = TTApp.OnGoingAction.TIMELAPSE;
+        mRunningAction = PhotoSniperApp.OnGoingAction.TIMELAPSE;
     }
 
     @Override
@@ -81,11 +81,11 @@ public class TimeLapseFragment extends TimeFragment implements DialpadManager.In
 
         Bundle fragmentState = getArguments();
         if (fragmentState != null) {
-            String tag = fragmentState.getString(TriggertrapFragment.BundleKey.FRAGMENT_TAG);
+            String tag = fragmentState.getString(PhotoSniperBaseFragment.BundleKey.FRAGMENT_TAG);
             // Is this bundle for this Fragment?
             if (tag.equals(getTag())) {
-                mInterval = fragmentState.getLong(TriggertrapFragment.BundleKey.PULSE_INTERVAL, 1000);
-                boolean isActive = fragmentState.getBoolean(TriggertrapFragment.BundleKey.IS_ACTION_ACTIVE, false);
+                mInterval = fragmentState.getLong(PhotoSniperBaseFragment.BundleKey.PULSE_INTERVAL, 1000);
+                boolean isActive = fragmentState.getBoolean(PhotoSniperBaseFragment.BundleKey.IS_ACTION_ACTIVE, false);
                 if (isActive) {
                     mState = State.STARTED;
                 } else {
@@ -95,7 +95,7 @@ public class TimeLapseFragment extends TimeFragment implements DialpadManager.In
 
         } else {
             // Restore state of time lapse from persistent storage
-            mInterval = TTApp.getInstance(getActivity()).getTimeLapseInterval();
+            mInterval = PhotoSniperApp.getInstance(getActivity()).getTimeLapseInterval();
         }
         // Register mMessageReceiver to receive messages.
         LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mMessageReceiver, new IntentFilter(SettingsFragment.SETTINGS_UPDATE_EVENT));
@@ -123,7 +123,7 @@ public class TimeLapseFragment extends TimeFragment implements DialpadManager.In
         mTimeView.setUpdateListener(this);
         mErrorIcon = (ImageView) mRootView.findViewById(R.id.errorIcon);
 
-        if (mTimeView.getTime() < TTApp.getInstance(getActivity()).getBeepLength()) {
+        if (mTimeView.getTime() < PhotoSniperApp.getInstance(getActivity()).getBeepLength()) {
             mErrorIcon.setRotationY(0);
             mErrorIcon.setVisibility(View.VISIBLE);
             mValidState = ValidState.IN_VALID;
@@ -220,7 +220,7 @@ public class TimeLapseFragment extends TimeFragment implements DialpadManager.In
         // Persist the state of the timelapse interval
         Log.d(TAG, "Stopping timelapse: " + mTimeView.getTime());
         mInterval = mTimeView.getTime();
-        TTApp.getInstance(getActivity()).setTimeLapseInterval(mInterval);
+        PhotoSniperApp.getInstance(getActivity()).setTimeLapseInterval(mInterval);
         super.onStop();
 
     }
@@ -228,11 +228,11 @@ public class TimeLapseFragment extends TimeFragment implements DialpadManager.In
     @Override
     public Bundle getStateBundle() {
         super.getStateBundle();
-        mStateBundle.putLong(TriggertrapFragment.BundleKey.PULSE_INTERVAL, mInterval);
+        mStateBundle.putLong(PhotoSniperBaseFragment.BundleKey.PULSE_INTERVAL, mInterval);
         if (mState == State.STARTED) {
-            mStateBundle.putBoolean(TriggertrapFragment.BundleKey.IS_ACTION_ACTIVE, true);
+            mStateBundle.putBoolean(PhotoSniperBaseFragment.BundleKey.IS_ACTION_ACTIVE, true);
         } else {
-            mStateBundle.putBoolean(TriggertrapFragment.BundleKey.IS_ACTION_ACTIVE, false);
+            mStateBundle.putBoolean(PhotoSniperBaseFragment.BundleKey.IS_ACTION_ACTIVE, false);
         }
         return mStateBundle;
     }
@@ -302,7 +302,7 @@ public class TimeLapseFragment extends TimeFragment implements DialpadManager.In
             mCircleTimerView.setIntervalTime(timeMilliSeconds);
             mTimerText.setTime(timeMilliSeconds, false);
             mPulseSequence = mPulseGenerator.getTimeLapseSequence(timeMilliSeconds);
-            mPulseSeqListener.onPulseSequenceCreated(TTApp.OnGoingAction.TIMELAPSE, mPulseSequence, true);
+            mPulseSeqListener.onPulseSequenceCreated(PhotoSniperApp.OnGoingAction.TIMELAPSE, mPulseSequence, true);
 
         }
     }
@@ -397,7 +397,7 @@ public class TimeLapseFragment extends TimeFragment implements DialpadManager.In
 
     @Override
     public void onInputUpdated() {
-        if (mTimeView.getTime() < TTApp.getInstance(getActivity()).getBeepLength()) {
+        if (mTimeView.getTime() < PhotoSniperApp.getInstance(getActivity()).getBeepLength()) {
             if (mValidState != ValidState.IN_VALID) {
                 mErrorIcon.setVisibility(View.VISIBLE);
                 mErrorIcon.setRotationY(90);

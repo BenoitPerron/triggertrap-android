@@ -10,15 +10,15 @@ import android.view.ViewGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import at.photosniper.PhotoSniperApp;
 import at.photosniper.R;
 
-import at.photosniper.TTApp;
 import at.photosniper.inputs.MicVolumeMonitor.VolumeListener;
 import at.photosniper.view.ArcProgress;
 import at.photosniper.widget.OngoingButton;
 import at.photosniper.widget.SeekArc;
 
-public class SoundSensorFragment extends TriggertrapFragment implements VolumeListener {
+public class SoundSensorFragment extends PhotoSniperBaseFragment implements VolumeListener {
 
     private static final String TAG = SoundSensorFragment.class.getSimpleName();
 
@@ -34,7 +34,7 @@ public class SoundSensorFragment extends TriggertrapFragment implements VolumeLi
     private SoundSensorListener mListener = null;
 
     public SoundSensorFragment() {
-        mRunningAction = TTApp.OnGoingAction.BANG;
+        mRunningAction = PhotoSniperApp.OnGoingAction.BANG;
     }
 
     @Override
@@ -52,8 +52,8 @@ public class SoundSensorFragment extends TriggertrapFragment implements VolumeLi
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mThresholdProgress = TTApp.getInstance(getActivity()).getSoundSensorThreshold();
-        mSensitivityProgress = TTApp.getInstance(getActivity()).getSoundSensorSensitivity();
+        mThresholdProgress = PhotoSniperApp.getInstance(getActivity()).getSoundSensorThreshold();
+        mSensitivityProgress = PhotoSniperApp.getInstance(getActivity()).getSoundSensorSensitivity();
     }
 
     @Override
@@ -176,8 +176,8 @@ public class SoundSensorFragment extends TriggertrapFragment implements VolumeLi
         Log.d(TAG, "onstop");
         super.onStop();
         stopVolumeMonitor();
-        TTApp.getInstance(getActivity()).setSoundSensorSensitivity(mSensitivityProgress);
-        TTApp.getInstance(getActivity()).setSoundSensorThreshold(mThresholdProgress);
+        PhotoSniperApp.getInstance(getActivity()).setSoundSensorSensitivity(mSensitivityProgress);
+        PhotoSniperApp.getInstance(getActivity()).setSoundSensorThreshold(mThresholdProgress);
     }
 
     @Override

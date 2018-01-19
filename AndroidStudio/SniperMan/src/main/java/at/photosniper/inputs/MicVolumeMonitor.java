@@ -5,7 +5,7 @@ import android.media.AudioRecord;
 import android.media.MediaRecorder;
 import android.os.Handler;
 
-import at.photosniper.TTApp;
+import at.photosniper.PhotoSniperApp;
 
 public class MicVolumeMonitor {
 
@@ -74,7 +74,7 @@ public class MicVolumeMonitor {
                                 mListener.onVolumeUpdate(percentAmplitude);
                             }
                             if (rmsAmplitude > mThreshold && mIsThresholdEnabled) {
-                                if (currentTime - lastTriggerTime > TTApp.getInstance(null).getSensorResetDelay()) {
+                                if (currentTime - lastTriggerTime > PhotoSniperApp.getInstance(null).getSensorResetDelay()) {
                                     lastTriggerTime = currentTime;
 
                                     //Trigger the output after the sensor delay
@@ -82,7 +82,7 @@ public class MicVolumeMonitor {
                                         public void run() {
                                             mListener.onExceedThreshold(percentAmplitude);
                                         }
-                                    }, TTApp.getInstance(null).getSensorDelay());
+                                    }, PhotoSniperApp.getInstance(null).getSensorDelay());
 
                                 }
                             }

@@ -4,7 +4,7 @@ import android.app.Activity;
 
 import at.photosniper.util.PulseGenerator;
 
-public class PulseSequenceFragment extends TriggertrapFragment {
+public class PulseSequenceFragment extends PhotoSniperBaseFragment {
 
     PulseSequenceListener mPulseSeqListener;
     PulseGenerator mPulseGenerator;

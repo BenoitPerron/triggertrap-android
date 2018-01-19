@@ -11,16 +11,16 @@ public class PulseHandler implements AudioBeeper.AudioBeeperListener {
     private int count = 0;
     private long[] sequence;
 
-    private final AudioBeeper mBeeper;
+//    private final AudioBeeper mBeeper;
 
     private PulseListener mListener;
 
     private PulseHandler() {
-        mBeeper = new AudioBeeper(this, null);
+//        mBeeper = new AudioBeeper(this, null);
     }
 
     public PulseHandler(PulseListener listener, Context context) {
-        mBeeper = new AudioBeeper(this, context);
+//        mBeeper = new AudioBeeper(this, context);
         WifiBeeper mWifiBeeper = new WifiBeeper(context);
         mListener = listener;
     }
@@ -45,7 +45,7 @@ public class PulseHandler implements AudioBeeper.AudioBeeperListener {
     public void playNextPulseInSequence() {
 
         if (sequence == null || sequence.length < cursor + 2) {
-            mBeeper.stop();
+//            mBeeper.stop();
             return;
         }
         if (sequence[cursor] > 0) {
@@ -58,11 +58,11 @@ public class PulseHandler implements AudioBeeper.AudioBeeperListener {
     }
 
     public void stop() {
-        mBeeper.stop();
+//        mBeeper.stop();
     }
 
     public void close() {
-        mBeeper.close();
+//        mBeeper.close();
     }
 
     //ListenerMethods for the Audio Beeper

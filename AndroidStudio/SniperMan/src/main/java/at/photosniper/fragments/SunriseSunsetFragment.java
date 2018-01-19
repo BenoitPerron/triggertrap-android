@@ -38,7 +38,7 @@ import uk.me.jstott.sun.Time;
  * @version 1
  * @since 2.1
  */
-public class SunriseSunsetFragment extends TriggertrapFragment implements LocationListener {
+public class SunriseSunsetFragment extends PhotoSniperBaseFragment implements LocationListener {
 
     private static final int PERCENTAGE_PROGRESS = 1;
     private static final int TIME_LIMIT = 30000;

@@ -47,8 +47,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import at.photosniper.PhotoSniperApp;
 import at.photosniper.R;
-import at.photosniper.TTApp;
 import at.photosniper.fragments.BrampingFragment;
 import at.photosniper.fragments.CableReleaseFragment;
 import at.photosniper.fragments.DistanceLapseFragment;
@@ -57,6 +57,7 @@ import at.photosniper.fragments.HdrFragment;
 import at.photosniper.fragments.HdrTimeLapseFragment;
 import at.photosniper.fragments.NdCalculatorFragment;
 import at.photosniper.fragments.PebbleFragment;
+import at.photosniper.fragments.PhotoSniperBaseFragment;
 import at.photosniper.fragments.PlaceHolderFragment;
 import at.photosniper.fragments.PressHoldFragment;
 import at.photosniper.fragments.PulseSequenceFragment;
@@ -70,23 +71,22 @@ import at.photosniper.fragments.SunriseSunsetFragment;
 import at.photosniper.fragments.TimeLapseFragment;
 import at.photosniper.fragments.TimeWarpFragment;
 import at.photosniper.fragments.TimedFragment;
-import at.photosniper.fragments.TriggertrapFragment;
 import at.photosniper.fragments.WifiMasterFragment;
 import at.photosniper.fragments.WifiSlaveFragment;
 import at.photosniper.fragments.dialog.ErrorPlayServicesFragment;
 import at.photosniper.fragments.dialog.RunningActionDialog;
 import at.photosniper.fragments.handler.DrawerFragmentHandler;
 import at.photosniper.inputs.HeadsetWatcher;
-import at.photosniper.location.TTLocationService;
-import at.photosniper.service.TriggertrapService;
-import at.photosniper.service.TriggertrapService.TiggertrapServiceBinder;
-import at.photosniper.service.TriggertrapService.TriggertrapServiceListener;
+import at.photosniper.location.SniperManLocationService;
+import at.photosniper.service.SniperManService;
+import at.photosniper.service.SniperManService.TiggertrapServiceBinder;
+import at.photosniper.service.SniperManService.TriggertrapServiceListener;
 import at.photosniper.util.AppRater;
 import at.photosniper.util.DialpadManager;
 import at.photosniper.util.GattClient;
-import at.photosniper.util.RPC;
+import at.photosniper.util.SonyWiFiRPC;
 import at.photosniper.util.WarningMessageManager;
-import at.photosniper.wifi.TTServiceInfo;
+import at.photosniper.wifi.PhotoSniperServiceInfo;
 import no.nordicsemi.android.support.v18.scanner.BluetoothLeScannerCompat;
 import no.nordicsemi.android.support.v18.scanner.ScanCallback;
 import no.nordicsemi.android.support.v18.scanner.ScanFilter;
@@ -103,7 +103,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
         // WifiMasterListener,
         TriggertrapServiceListener, TimedFragment.TimedListener, StartStopListener, SoundSensorFragment.SoundSensorListener, SelfTimerFragment.SelfTimerListener, PressHoldFragment.PressHoldListener, CableReleaseFragment.SimpleModeListener, QuickReleaseFragment.QuickReleaseListener, DialpadManager.InputSelectionListener, DistanceLapseFragment.DistanceLapseListener
         // ,PebbleListener
-        , RPC.ConnectionListener, RPC.ResponseHandler, RPC.LiveViewCallback
+        , SonyWiFiRPC.ConnectionListener, SonyWiFiRPC.ResponseHandler, SonyWiFiRPC.LiveViewCallback
 
 {
 
@@ -131,16 +131,16 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
     private View mStatusBar;
     private TextView mStatusBarText;
     private HeadsetWatcher mWhatcher;
-    private TTLocationService mLocationService = null;
+    private SniperManLocationService mLocationService = null;
     private DrawerFragmentHandler mDrawerFragHandler = null;
-    private String mInitialFragmentTag = TTApp.FragmentTags.GETTING_STARTED;
+    private String mInitialFragmentTag = PhotoSniperApp.FragmentTags.GETTING_STARTED;
     private final Bundle mInitialFragmentState = null;
 
 
     // BLE --- start
     // Service params
     private Dialog serviceErrorDialog = null;
-    private TriggertrapService mService;
+    private SniperManService mService;
     private boolean mTriggertrapServiceBound = false;
     private DialpadManager mDialPadManager = null;
     private WarningMessageManager mWarningMessageManager;
@@ -193,7 +193,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
             // Make sure the service is stopped just in case we started it in
             // foreground.
             // when we left the Main Activity
-            Intent intent = new Intent(MainActivity.this, TriggertrapService.class);
+            Intent intent = new Intent(MainActivity.this, SniperManService.class);
             mService.goTobackground();
             stopService(intent);
             mService.setListener(MainActivity.this);
@@ -203,7 +203,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
             setFragmentTransientState();
 
             // Make sure the WifMaster is turned on if that was it last state.
-            boolean isWifMasterOn = TTApp.getInstance(getApplicationContext()).isMasterOn();
+            boolean isWifMasterOn = PhotoSniperApp.getInstance(getApplicationContext()).isMasterOn();
             if (isWifMasterOn) {
                 mService.registerWifiMaster();
             }
@@ -253,12 +253,12 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
             String activeFragTag = extras.getString(FRAGMENT_TAG);
             Log.d(TAG, "Got extras from Intent setting initial Fragment: " + activeFragTag);
             if (activeFragTag != null) {
-                if (!activeFragTag.equals(TTApp.FragmentTags.NONE)) {
+                if (!activeFragTag.equals(PhotoSniperApp.FragmentTags.NONE)) {
                     mInitialFragmentTag = activeFragTag;
                 }
             }
         } else {
-//       !!!!!!!!!!!!!!!!     mInitialFragmentTag = TTApp.getInstance(getApplicationContext()).getLastFragmentTag();
+//       !!!!!!!!!!!!!!!!     mInitialFragmentTag = PhotoSniperApp.getInstance(getApplicationContext()).getLastFragmentTag();
         }
 
         Log.d(TAG, "onCreate mInitialFragmentState: " + mInitialFragmentState);
@@ -280,16 +280,16 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
         mWarningMessageManager.startListening();
 
         // Initialise App settings;
-        TTApp.getInstance(this);
+        PhotoSniperApp.getInstance(this);
 
         // Start Headset whatcher
 //        mWhatcher = new HeadsetWatcher(this, null);
 
         // Initialise Location service
-        mLocationService = new TTLocationService(this);
+        mLocationService = new SniperManLocationService(this);
 
         if (!mTriggertrapServiceBound) {
-            Intent intent = new Intent(this, TriggertrapService.class);
+            Intent intent = new Intent(this, SniperManService.class);
             bindService(intent, mTriggertrapServiceConnection, Activity.BIND_AUTO_CREATE);
         }
 
@@ -315,13 +315,13 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
     protected void onStart() {
         super.onStart();
 
-        TTApp.getInstance(this).setRpc(new RPC());
-        TTApp.getInstance(this).getRpc().registerInitCallback(this);
+        PhotoSniperApp.getInstance(this).setSonyWiFiRpc(new SonyWiFiRPC());
+        PhotoSniperApp.getInstance(this).getSonyWiFiRpc().registerInitCallback(this);
 
         // Bind to the Triggertrap service when the actvity is shown.
         Log.d(TAG, "Service bound is: " + mTriggertrapServiceBound);
 
-        Intent intent = new Intent(MainActivity.this, TriggertrapService.class);
+        Intent intent = new Intent(MainActivity.this, SniperManService.class);
         if (mService != null) {
             mService.goTobackground();
             stopService(intent);
@@ -339,12 +339,12 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
     private void attemptSonyConnect() {
 
 
-        if (!TTApp.getInstance(this).isSonyRPCAvailable()) {
+        if (!PhotoSniperApp.getInstance(this).isSonyRPCAvailable()) {
             AsyncTask<Void, Void, String> task = new AsyncTask<Void, Void, String>() {
                 @Override
                 protected String doInBackground(Void... params) {
 
-                    TTApp.getInstance(MainActivity.this).getRpc().connect();
+                    PhotoSniperApp.getInstance(MainActivity.this).getSonyWiFiRpc().connect();
 
                     return "";
                 }
@@ -368,8 +368,8 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
 //                currentFragTag);
 //        Bundle fragmentState = null;
 //        if (fragment != null && fragment.isVisible()) {
-//            if (fragment instanceof TriggertrapFragment) {
-//                TriggertrapFragment ttFragment = (TriggertrapFragment) fragment;
+//            if (fragment instanceof PhotoSniperBaseFragment) {
+//                PhotoSniperBaseFragment ttFragment = (PhotoSniperBaseFragment) fragment;
 //                fragmentState = ttFragment.getStateBundle();
 //            }
 //        }
@@ -380,13 +380,13 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
     protected void onStop() {
         super.onStop();
 
-        TTApp.getInstance(this).getRpc().unregisterInitCallback(this);
-        TTApp.getInstance(this).getRpc().stopLiveView();
+        PhotoSniperApp.getInstance(this).getSonyWiFiRpc().unregisterInitCallback(this);
+        PhotoSniperApp.getInstance(this).getSonyWiFiRpc().stopLiveView();
 
         // Save the last shown Fragment Tag
-        TTApp.getInstance(this).setLastFragmentTag(mDrawerFragHandler.getCurrentFragmentTag());
-        TTApp.getInstance(this).setLastActionBarLabel(mSelectedItemName);
-        TTApp.getInstance(this).setLastListItemChecked(mDrawerList.getCheckedItemPosition());
+        PhotoSniperApp.getInstance(this).setLastFragmentTag(mDrawerFragHandler.getCurrentFragmentTag());
+        PhotoSniperApp.getInstance(this).setLastActionBarLabel(mSelectedItemName);
+        PhotoSniperApp.getInstance(this).setLastListItemChecked(mDrawerList.getCheckedItemPosition());
 
         if (isFinishing()) {
             Log.d(TAG, "MainActivity is Finishing");
@@ -395,18 +395,18 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
         // Make sure we reset the intent data
         setIntent(new Intent());
 
-        // if (mService.getState() == TriggertrapService.State.IN_PROGRESS ) {
+        // if (mService.getState() == SniperManService.State.IN_PROGRESS ) {
         // Keep the service alive we are just rotating.
         if (isChangingConfigurations()) {
             Log.d(TAG, "Starting in progress service to keep it alive");
-            Intent intent = new Intent(this, TriggertrapService.class);
+            Intent intent = new Intent(this, SniperManService.class);
             startService(intent);
         }
 
         // If not changing configuration, Activity is not visible so run service
         // in foreground
-        if (!isChangingConfigurations() && mService.getState() == TriggertrapService.State.IN_PROGRESS) {
-            Intent intent = new Intent(this, TriggertrapService.class);
+        if (!isChangingConfigurations() && mService.getState() == SniperManService.State.IN_PROGRESS) {
+            Intent intent = new Intent(this, SniperManService.class);
             startService(intent);
             mService.goToForeground();
         }
@@ -463,7 +463,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
                 break;
 
             // Handle the result of checking the Location service.
-            case TTLocationService.CONNECTION_FAILURE_RESOLUTION_REQUEST:
+            case SniperManLocationService.CONNECTION_FAILURE_RESOLUTION_REQUEST:
                 if (serviceErrorDialog != null) {
                     serviceErrorDialog.dismiss();
                     serviceErrorDialog = null;
@@ -474,7 +474,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
                 switch (resultCode) {
                     case Activity.RESULT_OK:
                         // Call servicesConnected again to check that all is ok now.
-                        DistanceLapseFragment distanceFragment = (DistanceLapseFragment) getFragmentManager().findFragmentByTag(TTApp.FragmentTags.DISTANCE_LAPSE);
+                        DistanceLapseFragment distanceFragment = (DistanceLapseFragment) getFragmentManager().findFragmentByTag(PhotoSniperApp.FragmentTags.DISTANCE_LAPSE);
                         if (mLocationService.servicesConnected(serviceErrorDialog)) {
                             if (mService != null) {
                                 mService.setTTLocationService(mLocationService);
@@ -534,39 +534,39 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
     }
 
     private void setUpFragmentHandler(boolean hasBeenRotated) {
-        mDrawerFragHandler = new DrawerFragmentHandler(getFragmentManager());
-        mDrawerFragHandler.addDrawerPane(TTApp.FragmentTags.PLACEHOLDER, PlaceHolderFragment.class, mInitialFragmentState);
-        mDrawerFragHandler.addDrawerPane(TTApp.FragmentTags.GETTING_STARTED, GettingStartedFragment.class, mInitialFragmentState);
+        mDrawerFragHandler = new DrawerFragmentHandler(getFragmentManager(), R.id.content_frame);
+        mDrawerFragHandler.addDrawerPane(PhotoSniperApp.FragmentTags.PLACEHOLDER, PlaceHolderFragment.class, mInitialFragmentState);
+        mDrawerFragHandler.addDrawerPane(PhotoSniperApp.FragmentTags.GETTING_STARTED, GettingStartedFragment.class, mInitialFragmentState);
 
-//        mDrawerFragHandler.addDrawerPane(TTApp.FragmentTags.BUY_DONGLE,
+//        mDrawerFragHandler.addDrawerPane(PhotoSniperApp.FragmentTags.BUY_DONGLE,
 //                CableSelectorFragment.class, mInitialFragmentState);
 
-        mDrawerFragHandler.addDrawerPane(TTApp.FragmentTags.SIMPLE, CableReleaseFragment.class, mInitialFragmentState);
-        mDrawerFragHandler.addDrawerPane(TTApp.FragmentTags.QUICK_RELEASE, QuickReleaseFragment.class, mInitialFragmentState);
-        mDrawerFragHandler.addDrawerPane(TTApp.FragmentTags.PRESS_AND_HOLD, PressHoldFragment.class, mInitialFragmentState);
-        mDrawerFragHandler.addDrawerPane(TTApp.FragmentTags.PRESS_TO_START, StartStopFragment.class, mInitialFragmentState);
-        mDrawerFragHandler.addDrawerPane(TTApp.FragmentTags.TIMED, TimedFragment.class, mInitialFragmentState);
-        mDrawerFragHandler.addDrawerPane(TTApp.FragmentTags.SELF_TIMER, SelfTimerFragment.class, mInitialFragmentState);
-        mDrawerFragHandler.addDrawerPane(TTApp.FragmentTags.TIMELAPSE, TimeLapseFragment.class, mInitialFragmentState);
-        mDrawerFragHandler.addDrawerPane(TTApp.FragmentTags.TIMEWARP, TimeWarpFragment.class, mInitialFragmentState);
-        mDrawerFragHandler.addDrawerPane(TTApp.FragmentTags.STARTRAIL, StarTrailFragment.class, mInitialFragmentState);
-        mDrawerFragHandler.addDrawerPane(TTApp.FragmentTags.BRAMPING, BrampingFragment.class, mInitialFragmentState);
-        mDrawerFragHandler.addDrawerPane(TTApp.FragmentTags.BANG, SoundSensorFragment.class, mInitialFragmentState);
-        mDrawerFragHandler.addDrawerPane(TTApp.FragmentTags.DISTANCE_LAPSE, DistanceLapseFragment.class, mInitialFragmentState);
-        mDrawerFragHandler.addDrawerPane(TTApp.FragmentTags.HDR, HdrFragment.class, mInitialFragmentState);
-        mDrawerFragHandler.addDrawerPane(TTApp.FragmentTags.HDR_LAPSE, HdrTimeLapseFragment.class, mInitialFragmentState);
-//        mDrawerFragHandler.addDrawerPane(TTApp.FragmentTags.WIFI_SLAVE,
+        mDrawerFragHandler.addDrawerPane(PhotoSniperApp.FragmentTags.SIMPLE, CableReleaseFragment.class, mInitialFragmentState);
+        mDrawerFragHandler.addDrawerPane(PhotoSniperApp.FragmentTags.QUICK_RELEASE, QuickReleaseFragment.class, mInitialFragmentState);
+        mDrawerFragHandler.addDrawerPane(PhotoSniperApp.FragmentTags.PRESS_AND_HOLD, PressHoldFragment.class, mInitialFragmentState);
+        mDrawerFragHandler.addDrawerPane(PhotoSniperApp.FragmentTags.PRESS_TO_START, StartStopFragment.class, mInitialFragmentState);
+        mDrawerFragHandler.addDrawerPane(PhotoSniperApp.FragmentTags.TIMED, TimedFragment.class, mInitialFragmentState);
+        mDrawerFragHandler.addDrawerPane(PhotoSniperApp.FragmentTags.SELF_TIMER, SelfTimerFragment.class, mInitialFragmentState);
+        mDrawerFragHandler.addDrawerPane(PhotoSniperApp.FragmentTags.TIMELAPSE, TimeLapseFragment.class, mInitialFragmentState);
+        mDrawerFragHandler.addDrawerPane(PhotoSniperApp.FragmentTags.TIMEWARP, TimeWarpFragment.class, mInitialFragmentState);
+        mDrawerFragHandler.addDrawerPane(PhotoSniperApp.FragmentTags.STARTRAIL, StarTrailFragment.class, mInitialFragmentState);
+        mDrawerFragHandler.addDrawerPane(PhotoSniperApp.FragmentTags.BRAMPING, BrampingFragment.class, mInitialFragmentState);
+        mDrawerFragHandler.addDrawerPane(PhotoSniperApp.FragmentTags.BANG, SoundSensorFragment.class, mInitialFragmentState);
+        mDrawerFragHandler.addDrawerPane(PhotoSniperApp.FragmentTags.DISTANCE_LAPSE, DistanceLapseFragment.class, mInitialFragmentState);
+        mDrawerFragHandler.addDrawerPane(PhotoSniperApp.FragmentTags.HDR, HdrFragment.class, mInitialFragmentState);
+        mDrawerFragHandler.addDrawerPane(PhotoSniperApp.FragmentTags.HDR_LAPSE, HdrTimeLapseFragment.class, mInitialFragmentState);
+//        mDrawerFragHandler.addDrawerPane(PhotoSniperApp.FragmentTags.WIFI_SLAVE,
 //                WifiSlaveFragment.class, mInitialFragmentState);
-//        mDrawerFragHandler.addDrawerPane(TTApp.FragmentTags.WIFI_MASTER,
+//        mDrawerFragHandler.addDrawerPane(PhotoSniperApp.FragmentTags.WIFI_MASTER,
 //                WifiMasterFragment.class, mInitialFragmentState);
-//        mDrawerFragHandler.addDrawerPane(TTApp.FragmentTags.PEBBLE,
+//        mDrawerFragHandler.addDrawerPane(PhotoSniperApp.FragmentTags.PEBBLE,
 //                PebbleFragment.class, mInitialFragmentState);
-        mDrawerFragHandler.addDrawerPane(TTApp.FragmentTags.SUNRISESUNSET, SunriseSunsetFragment.class, mInitialFragmentState);
-        mDrawerFragHandler.addDrawerPane(TTApp.FragmentTags.ND_CALCULATOR, NdCalculatorFragment.class, mInitialFragmentState);
+        mDrawerFragHandler.addDrawerPane(PhotoSniperApp.FragmentTags.SUNRISESUNSET, SunriseSunsetFragment.class, mInitialFragmentState);
+        mDrawerFragHandler.addDrawerPane(PhotoSniperApp.FragmentTags.ND_CALCULATOR, NdCalculatorFragment.class, mInitialFragmentState);
 
         mDrawerFragHandler.onDrawerSelected(this, mInitialFragmentTag, false, hasBeenRotated);
 
-        // if(TTApp.getInstance(this).isFirstStarted()) {
+        // if(PhotoSniperApp.getInstance(this).isFirstStarted()) {
         // mDrawerFragHandler.addBackstackFragment(this, WelcomeFragment.class);
         // }
 
@@ -627,9 +627,9 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
         }
 
         mDrawerList.setOnChildClickListener(new DrawerItemClickListener());
-        int index = TTApp.getInstance(this).getLastListItemChecked();
+        int index = PhotoSniperApp.getInstance(this).getLastListItemChecked();
         mDrawerList.setItemChecked(index, true);
-        mSelectedItemName = TTApp.getInstance(getApplicationContext()).getLastActionBarLabel();
+        mSelectedItemName = PhotoSniperApp.getInstance(getApplicationContext()).getLastActionBarLabel();
         setTitle(mSelectedItemName);
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -736,88 +736,88 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
         switch (group) {
             case DrawerGroups.WELCOME:
                 if (position == 0) {
-                    mDrawerFragHandler.onDrawerSelected(this, TTApp.FragmentTags.GETTING_STARTED, true, false);
+                    mDrawerFragHandler.onDrawerSelected(this, PhotoSniperApp.FragmentTags.GETTING_STARTED, true, false);
 //                } else {
 //                    mDrawerFragHandler.onDrawerSelected(this,
-//                            TTApp.FragmentTags.BUY_DONGLE, true, false);
+//                            PhotoSniperApp.FragmentTags.BUY_DONGLE, true, false);
                 }
                 break;
             case DrawerGroups.CABLE_MODES:
                 if (position == 0) {
-                    mDrawerFragHandler.onDrawerSelected(this, TTApp.FragmentTags.SIMPLE, true, false);
+                    mDrawerFragHandler.onDrawerSelected(this, PhotoSniperApp.FragmentTags.SIMPLE, true, false);
                 } else if (position == 1) {
-                    mDrawerFragHandler.onDrawerSelected(this, TTApp.FragmentTags.QUICK_RELEASE, true, false);
+                    mDrawerFragHandler.onDrawerSelected(this, PhotoSniperApp.FragmentTags.QUICK_RELEASE, true, false);
                 } else if (position == 2) {
-                    mDrawerFragHandler.onDrawerSelected(this, TTApp.FragmentTags.PRESS_AND_HOLD, true, false);
+                    mDrawerFragHandler.onDrawerSelected(this, PhotoSniperApp.FragmentTags.PRESS_AND_HOLD, true, false);
                 } else if (position == 3) {
-                    mDrawerFragHandler.onDrawerSelected(this, TTApp.FragmentTags.PRESS_TO_START, true, false);
+                    mDrawerFragHandler.onDrawerSelected(this, PhotoSniperApp.FragmentTags.PRESS_TO_START, true, false);
                 } else if (position == 4) {
-                    mDrawerFragHandler.onDrawerSelected(this, TTApp.FragmentTags.TIMED, true, false);
+                    mDrawerFragHandler.onDrawerSelected(this, PhotoSniperApp.FragmentTags.TIMED, true, false);
                 } else if (position == 5) {
-                    mDrawerFragHandler.onDrawerSelected(this, TTApp.FragmentTags.SELF_TIMER, true, false);
+                    mDrawerFragHandler.onDrawerSelected(this, PhotoSniperApp.FragmentTags.SELF_TIMER, true, false);
                 }
                 break;
             case DrawerGroups.TIME_MODE:
                 if (position == 0) {
-                    mDrawerFragHandler.onDrawerSelected(this, TTApp.FragmentTags.TIMELAPSE, true, false);
+                    mDrawerFragHandler.onDrawerSelected(this, PhotoSniperApp.FragmentTags.TIMELAPSE, true, false);
                 } else if (position == 1) {
-                    mDrawerFragHandler.onDrawerSelected(this, TTApp.FragmentTags.TIMEWARP, true, false);
+                    mDrawerFragHandler.onDrawerSelected(this, PhotoSniperApp.FragmentTags.TIMEWARP, true, false);
                 } else if (position == 2) {
-                    mDrawerFragHandler.onDrawerSelected(this, TTApp.FragmentTags.DISTANCE_LAPSE, true, false);
+                    mDrawerFragHandler.onDrawerSelected(this, PhotoSniperApp.FragmentTags.DISTANCE_LAPSE, true, false);
                     if (mLocationService.servicesConnected(serviceErrorDialog)) {
                         if (mService != null) {
                             mService.setTTLocationService(mLocationService);
                         }
-                        DistanceLapseFragment distanceFragment = (DistanceLapseFragment) getFragmentManager().findFragmentByTag(TTApp.FragmentTags.DISTANCE_LAPSE);
+                        DistanceLapseFragment distanceFragment = (DistanceLapseFragment) getFragmentManager().findFragmentByTag(PhotoSniperApp.FragmentTags.DISTANCE_LAPSE);
                         if (distanceFragment != null) {
                             distanceFragment.setDistanceLapseState();
                         }
                     }
                 } else if (position == 3) {
-                    mDrawerFragHandler.onDrawerSelected(this, TTApp.FragmentTags.STARTRAIL, true, false);
+                    mDrawerFragHandler.onDrawerSelected(this, PhotoSniperApp.FragmentTags.STARTRAIL, true, false);
                 } else if (position == 4) {
-                    mDrawerFragHandler.onDrawerSelected(this, TTApp.FragmentTags.BRAMPING, true, false);
+                    mDrawerFragHandler.onDrawerSelected(this, PhotoSniperApp.FragmentTags.BRAMPING, true, false);
                 }
                 break;
             case DrawerGroups.SOUND_MODES:
                 if (position == 0) {
-                    mDrawerFragHandler.onDrawerSelected(this, TTApp.FragmentTags.BANG, true, false);
+                    mDrawerFragHandler.onDrawerSelected(this, PhotoSniperApp.FragmentTags.BANG, true, false);
                 }
                 break;
 
             case DrawerGroups.HDR_MODES:
                 if (position == 0) {
-                    mDrawerFragHandler.onDrawerSelected(this, TTApp.FragmentTags.HDR, true, false);
+                    mDrawerFragHandler.onDrawerSelected(this, PhotoSniperApp.FragmentTags.HDR, true, false);
                 } else if (position == 1) {
-                    mDrawerFragHandler.onDrawerSelected(this, TTApp.FragmentTags.HDR_LAPSE, true, false);
+                    mDrawerFragHandler.onDrawerSelected(this, PhotoSniperApp.FragmentTags.HDR_LAPSE, true, false);
                 }
                 break;
 //            case DrawerGroups.REMOTE_MODES:
 //                if (position == 0) {
 //                    mDrawerFragHandler.onDrawerSelected(this,
-//                            TTApp.FragmentTags.WIFI_SLAVE, true, false);
+//                            PhotoSniperApp.FragmentTags.WIFI_SLAVE, true, false);
 //                } else if (position == 1) {
 //                    mDrawerFragHandler.onDrawerSelected(this,
-//                            TTApp.FragmentTags.PEBBLE, true, false);
+//                            PhotoSniperApp.FragmentTags.PEBBLE, true, false);
 //                }
 //                break;
 //            case DrawerGroups.SETTINGS:
 //                if (position == 0) {
 //
 //                    mDrawerFragHandler.onDrawerSelected(this,
-//                            TTApp.FragmentTags.WIFI_MASTER, true, false);
+//                            PhotoSniperApp.FragmentTags.WIFI_MASTER, true, false);
 //                }
 //                break;
 
             case DrawerGroups.CALCULATORS:
                 if (position == 0) {
-                    mDrawerFragHandler.onDrawerSelected(this, TTApp.FragmentTags.SUNRISESUNSET, true, false);
+                    mDrawerFragHandler.onDrawerSelected(this, PhotoSniperApp.FragmentTags.SUNRISESUNSET, true, false);
                 } else if (position == 1) {
-                    mDrawerFragHandler.onDrawerSelected(this, TTApp.FragmentTags.ND_CALCULATOR, true, false);
+                    mDrawerFragHandler.onDrawerSelected(this, PhotoSniperApp.FragmentTags.ND_CALCULATOR, true, false);
                 }
                 break;
             default:
-                mDrawerFragHandler.onDrawerSelected(this, TTApp.FragmentTags.PLACEHOLDER, true, false);
+                mDrawerFragHandler.onDrawerSelected(this, PhotoSniperApp.FragmentTags.PLACEHOLDER, true, false);
         }
     }
 
@@ -825,7 +825,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
         String currentFragTag = mDrawerFragHandler.getCurrentFragmentTag();
         Fragment fragment = getFragmentManager().findFragmentByTag(currentFragTag);
         if (fragment != null) {
-            TriggertrapFragment ttFragment = (TriggertrapFragment) fragment;
+            PhotoSniperBaseFragment ttFragment = (PhotoSniperBaseFragment) fragment;
             ttFragment.dismissError();
 
         }
@@ -839,7 +839,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
         String currentFragTag = mDrawerFragHandler.getCurrentFragmentTag();
         Fragment fragment = getFragmentManager().findFragmentByTag(currentFragTag);
         if (fragment != null) {
-            TriggertrapFragment ttFragment = (TriggertrapFragment) fragment;
+            PhotoSniperBaseFragment ttFragment = (PhotoSniperBaseFragment) fragment;
             ttFragment.setActionState(mService.isFragmentActive(currentFragTag));
 
             // If we are showing the sound sensor make sure we are running the
@@ -856,7 +856,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
                         Log.d(TAG, "Setting Location Service");
                         mService.setTTLocationService(mLocationService);
                     }
-                    DistanceLapseFragment distanceFragment = (DistanceLapseFragment) getFragmentManager().findFragmentByTag(TTApp.FragmentTags.DISTANCE_LAPSE);
+                    DistanceLapseFragment distanceFragment = (DistanceLapseFragment) getFragmentManager().findFragmentByTag(PhotoSniperApp.FragmentTags.DISTANCE_LAPSE);
                     if (distanceFragment != null) {
                         distanceFragment.setDistanceLapseState();
                     }
@@ -890,7 +890,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
 
     public void setWifiState() {
         String currentFragTag = mDrawerFragHandler.getCurrentFragmentTag();
-        if (currentFragTag.equals(TTApp.FragmentTags.WIFI_SLAVE)) {
+        if (currentFragTag.equals(PhotoSniperApp.FragmentTags.WIFI_SLAVE)) {
             Log.d(TAG, "Watching wifi master....");
             mService.watchMasterWifi();
         } else {
@@ -899,13 +899,13 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
     }
 
     private void displaySatusBar() {
-        if (mService.getState() == TriggertrapService.State.IN_PROGRESS) {
+        if (mService.getState() == SniperManService.State.IN_PROGRESS) {
             Log.d(TAG, "Service State is IN_PROGRESS");
             String currentFragTag = mDrawerFragHandler.getCurrentFragmentTag();
             Fragment fragment = getFragmentManager().findFragmentByTag(currentFragTag);
             if (fragment != null) {
-                if (fragment instanceof TriggertrapFragment) {
-                    TriggertrapFragment triggertrapFrag = (TriggertrapFragment) fragment;
+                if (fragment instanceof PhotoSniperBaseFragment) {
+                    PhotoSniperBaseFragment triggertrapFrag = (PhotoSniperBaseFragment) fragment;
                     if (triggertrapFrag.getRunningAction() != mService.getOnGoingAction()) {
                         mStatusBar.setVisibility(View.VISIBLE);
                         mStatusBarText.setText(getNotifcationText(mService.getOnGoingAction()));
@@ -992,7 +992,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
         Fragment fragment = getFragmentManager().findFragmentByTag(currentFragTag);
 
         switch (mService.getOnGoingAction()) {
-            case TTApp.OnGoingAction.TIMEWARP:
+            case PhotoSniperApp.OnGoingAction.TIMEWARP:
 
                 TimeWarpFragment timewarpFrag = (TimeWarpFragment) fragment;
                 if (timewarpFrag != null) {
@@ -1008,7 +1008,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
 //                    tracker.trackEvent(AnalyticTracker.Event.SEQUENCE_COMPLETED);
                 }
                 break;
-            case TTApp.OnGoingAction.STAR_TRAIL:
+            case PhotoSniperApp.OnGoingAction.STAR_TRAIL:
                 StarTrailFragment startFrag = (StarTrailFragment) fragment;
                 if (startFrag != null) {
 
@@ -1025,7 +1025,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
                 }
 
                 break;
-            case TTApp.OnGoingAction.BRAMPING:
+            case PhotoSniperApp.OnGoingAction.BRAMPING:
                 BrampingFragment brampFrag = (BrampingFragment) fragment;
                 if (brampFrag != null) {
                     brampFrag.onPulseStop();
@@ -1041,7 +1041,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
                 }
 
                 break;
-            case TTApp.OnGoingAction.HDR:
+            case PhotoSniperApp.OnGoingAction.HDR:
                 HdrFragment hdrFragment = (HdrFragment) fragment;
                 if (hdrFragment != null) {
                     long sequenceMillis = Calendar.getInstance().getTimeInMillis() - mService.getSequenceStartStopTime().getTimeInMillis();
@@ -1055,7 +1055,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
                 }
 
                 break;
-            case TTApp.OnGoingAction.HDR_TIMELAPSE:
+            case PhotoSniperApp.OnGoingAction.HDR_TIMELAPSE:
 
                 HdrTimeLapseFragment hdrTimeLapseFragment = (HdrTimeLapseFragment) fragment;
                 if (hdrTimeLapseFragment != null) {
@@ -1070,7 +1070,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
                 }
                 break;
 
-            case TTApp.OnGoingAction.TIMELAPSE:
+            case PhotoSniperApp.OnGoingAction.TIMELAPSE:
 
                 long sequenceMillis = Calendar.getInstance().getTimeInMillis() - mService.getSequenceStartStopTime().getTimeInMillis();
 
@@ -1081,7 +1081,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
 //                tracker.addProperty(AnalyticTracker.Property.NO_EXPOSURES_TAKEN,
 //                        timeLapseFragment.getCurrentExposureCount());
 //                tracker.addProperty(AnalyticTracker.Property.EXPOSURE_DURATION,
-//                        TTApp.getInstance(this).getBeepLength());
+//                        PhotoSniperApp.getInstance(this).getBeepLength());
 //                tracker.addProperty(AnalyticTracker.Property.SEQUENCE_DURATION, sequenceMillis);
 //                tracker.trackEvent(AnalyticTracker.Event.SEQUENCE_COMPLETED);
 
@@ -1201,11 +1201,11 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
 //        tracker.addProperty(AnalyticTracker.Property.NO_EXPOSURES_TAKEN,
 //                mShotsTakenCount);
 //        tracker.addProperty(AnalyticTracker.Property.SENSOR_DELAY,
-//                TTApp.getInstance(this).getSensorDelay());
+//                PhotoSniperApp.getInstance(this).getSensorDelay());
 //        tracker.addProperty(AnalyticTracker.Property.SENSOR_RESET_DELAY,
-//                TTApp.getInstance(this).getSensorResetDelay());
+//                PhotoSniperApp.getInstance(this).getSensorResetDelay());
 //        tracker.addProperty(AnalyticTracker.Property.EXPOSURE_DURATION,
-//                TTApp.getInstance(this).getBeepLength());
+//                PhotoSniperApp.getInstance(this).getBeepLength());
 //        tracker.addProperty(AnalyticTracker.Property.SEQUENCE_DURATION, sequenceMillis);
 //        tracker.trackEvent(AnalyticTracker.Event.SEQUENCE_COMPLETED);
 
@@ -1243,7 +1243,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
         if (mService != null) {
             mService.stopLocationUpdates();
 
-            Fragment fragment = getFragmentManager().findFragmentByTag(TTApp.FragmentTags.DISTANCE_LAPSE);
+            Fragment fragment = getFragmentManager().findFragmentByTag(PhotoSniperApp.FragmentTags.DISTANCE_LAPSE);
 
             DistanceLapseFragment distanceLapsefragment = (DistanceLapseFragment) fragment;
 
@@ -1252,11 +1252,11 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
 //            AnalyticTracker tracker = AnalyticTracker.getInstance(this);
 //            tracker.addProperty(AnalyticTracker.Property.MODE, "DistanceLapse");
 //            tracker.addProperty(AnalyticTracker.Property.NO_EXPOSURES_TAKEN, distanceLapsefragment.getExposureCount());
-//            tracker.addProperty(AnalyticTracker.Property.EXPOSURE_DURATION, TTApp.getInstance(this).getBeepLength());
+//            tracker.addProperty(AnalyticTracker.Property.EXPOSURE_DURATION, PhotoSniperApp.getInstance(this).getBeepLength());
 //            tracker.addProperty(AnalyticTracker.Property.SEQUENCE_DURATION, sequenceMillis);
-//            tracker.addProperty(AnalyticTracker.Property.SPEED_UNIT, TTApp.getInstance(this).getDistlapseSpeedUnit());
+//            tracker.addProperty(AnalyticTracker.Property.SPEED_UNIT, PhotoSniperApp.getInstance(this).getDistlapseSpeedUnit());
 //            tracker.addProperty(AnalyticTracker.Property.DISTANCE_UNIT,
-//                    TTApp.getInstance(this).getDistlapseUnit());
+//                    PhotoSniperApp.getInstance(this).getDistlapseUnit());
 //            tracker.trackEvent(AnalyticTracker.Event.SEQUENCE_COMPLETED);
         }
     }
@@ -1267,7 +1267,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
     @Override
     public void onServiceActionRunning(String action) {
         String currentFragTag = mDrawerFragHandler.getCurrentFragmentTag();
-        TriggertrapFragment ttFragment = (TriggertrapFragment) getFragmentManager().findFragmentByTag(currentFragTag);
+        PhotoSniperBaseFragment ttFragment = (PhotoSniperBaseFragment) getFragmentManager().findFragmentByTag(currentFragTag);
         if (ttFragment != null) {
             ttFragment.setActionState(false);
         }
@@ -1278,12 +1278,12 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
     @Override
     public void onServiceStartSimple() {
         String currentFragTag = mDrawerFragHandler.getCurrentFragmentTag();
-//        if (currentFragTag.equals(TTApp.FragmentTags.SIMPLE)) {
+//        if (currentFragTag.equals(PhotoSniperApp.FragmentTags.SIMPLE)) {
 //            AnalyticTracker tracker = AnalyticTracker.getInstance(this);
 //            tracker.addProperty(AnalyticTracker.Property.MODE, "Simple Cable Release");
 //            tracker.addProperty(AnalyticTracker.Property.NO_EXPOSURES_TAKEN, 1);
 //            tracker.addProperty(AnalyticTracker.Property.EXPOSURE_DURATION,
-//                    TTApp.getInstance(this).getBeepLength());
+//                    PhotoSniperApp.getInstance(this).getBeepLength());
 //            tracker.trackEvent(AnalyticTracker.Event.SEQUENCE_COMPLETED);
 //        }
 
@@ -1303,11 +1303,11 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
     @Override
     public void onServicePressStart() {
         String currentFragTag = mDrawerFragHandler.getCurrentFragmentTag();
-        if (currentFragTag.equals(TTApp.FragmentTags.PRESS_AND_HOLD) && mService.getOnGoingAction() == TTApp.OnGoingAction.PRESS_AND_HOLD) {
+        if (currentFragTag.equals(PhotoSniperApp.FragmentTags.PRESS_AND_HOLD) && mService.getOnGoingAction() == PhotoSniperApp.OnGoingAction.PRESS_AND_HOLD) {
             Fragment fragment = getFragmentManager().findFragmentByTag(currentFragTag);
             PressHoldFragment pressHoldFragment = (PressHoldFragment) fragment;
             pressHoldFragment.startStopwatch();
-        } else if (currentFragTag.equals(TTApp.FragmentTags.QUICK_RELEASE) && mService.getOnGoingAction() == TTApp.OnGoingAction.QUICK_RELEASE) {
+        } else if (currentFragTag.equals(PhotoSniperApp.FragmentTags.QUICK_RELEASE) && mService.getOnGoingAction() == PhotoSniperApp.OnGoingAction.QUICK_RELEASE) {
             Fragment fragment = getFragmentManager().findFragmentByTag(currentFragTag);
             QuickReleaseFragment quickReleaseFragment = (QuickReleaseFragment) fragment;
             quickReleaseFragment.startStopwatch();
@@ -1319,13 +1319,13 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
     public void onServicePressUpdate(long time) {
         String currentFragTag = mDrawerFragHandler.getCurrentFragmentTag();
 
-        if (currentFragTag.equals(TTApp.FragmentTags.PRESS_AND_HOLD) && mService.getOnGoingAction() == TTApp.OnGoingAction.PRESS_AND_HOLD) {
+        if (currentFragTag.equals(PhotoSniperApp.FragmentTags.PRESS_AND_HOLD) && mService.getOnGoingAction() == PhotoSniperApp.OnGoingAction.PRESS_AND_HOLD) {
             Fragment fragment = getFragmentManager().findFragmentByTag(currentFragTag);
             if (fragment != null) {
                 PressHoldFragment pressHoldFragment = (PressHoldFragment) fragment;
                 pressHoldFragment.updateStopwatch(time);
             }
-        } else if (currentFragTag.equals((TTApp.FragmentTags.QUICK_RELEASE))) {
+        } else if (currentFragTag.equals((PhotoSniperApp.FragmentTags.QUICK_RELEASE))) {
             Fragment fragment = getFragmentManager().findFragmentByTag(currentFragTag);
             if (fragment != null) {
                 QuickReleaseFragment quickReleaseFragmentFragment = (QuickReleaseFragment) fragment;
@@ -1340,7 +1340,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
     public void onServicePressStop() {
         String currentFragTag = mDrawerFragHandler.getCurrentFragmentTag();
 
-        if (currentFragTag.equals(TTApp.FragmentTags.PRESS_AND_HOLD)) {
+        if (currentFragTag.equals(PhotoSniperApp.FragmentTags.PRESS_AND_HOLD)) {
             Fragment fragment = getFragmentManager().findFragmentByTag(currentFragTag);
             if (fragment != null) {
                 PressHoldFragment pressHoldFragment = (PressHoldFragment) fragment;
@@ -1355,7 +1355,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
             }
             // Check if we need to remove the status bar
             // displaySatusBar();
-        } else if (currentFragTag.equals((TTApp.FragmentTags.QUICK_RELEASE))) {
+        } else if (currentFragTag.equals((PhotoSniperApp.FragmentTags.QUICK_RELEASE))) {
             Fragment fragment = getFragmentManager().findFragmentByTag(currentFragTag);
             if (fragment != null) {
                 QuickReleaseFragment quickReleaseFragmentFragment = (QuickReleaseFragment) fragment;
@@ -1365,7 +1365,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
 //                tracker.addProperty(AnalyticTracker.Property.MODE, "Quick Release");
 //                tracker.addProperty(AnalyticTracker.Property.NO_EXPOSURES_TAKEN, 1);
 //                tracker.addProperty(AnalyticTracker.Property.EXPOSURE_DURATION,
-//                        TTApp.getInstance(this).getBeepLength());
+//                        PhotoSniperApp.getInstance(this).getBeepLength());
 //                tracker.trackEvent(AnalyticTracker.Event.SEQUENCE_COMPLETED);
             }
         }
@@ -1374,7 +1374,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
     @Override
     public void onServiceStopwatchStart() {
         String currentFragTag = mDrawerFragHandler.getCurrentFragmentTag();
-        if (currentFragTag.equals(TTApp.FragmentTags.PRESS_TO_START) && mService.getOnGoingAction() == TTApp.OnGoingAction.PRESS_START_STOP) {
+        if (currentFragTag.equals(PhotoSniperApp.FragmentTags.PRESS_TO_START) && mService.getOnGoingAction() == PhotoSniperApp.OnGoingAction.PRESS_START_STOP) {
             Fragment fragment = getFragmentManager().findFragmentByTag(currentFragTag);
             StartStopFragment startFragment = (StartStopFragment) fragment;
             startFragment.startStopwatch();
@@ -1385,7 +1385,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
     @Override
     public void onServiceStopwatchUpdate(long time) {
         String currentFragTag = mDrawerFragHandler.getCurrentFragmentTag();
-        if (currentFragTag.equals(TTApp.FragmentTags.PRESS_TO_START) && mService.getOnGoingAction() == TTApp.OnGoingAction.PRESS_START_STOP) {
+        if (currentFragTag.equals(PhotoSniperApp.FragmentTags.PRESS_TO_START) && mService.getOnGoingAction() == PhotoSniperApp.OnGoingAction.PRESS_START_STOP) {
             Fragment fragment = getFragmentManager().findFragmentByTag(currentFragTag);
             if (fragment != null) {
                 StartStopFragment startStopFrag = (StartStopFragment) fragment;
@@ -1397,7 +1397,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
 
     @Override
     public void onServiceStopwatchStop() {
-        String startStopFragTag = TTApp.FragmentTags.PRESS_TO_START;
+        String startStopFragTag = PhotoSniperApp.FragmentTags.PRESS_TO_START;
         Fragment fragment = getFragmentManager().findFragmentByTag(startStopFragTag);
         if (fragment != null) {
             StartStopFragment startStopFrag = (StartStopFragment) fragment;
@@ -1418,11 +1418,11 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
     @Override
     public void onServiceTimedStart(long time) {
         String currentFragTag = mDrawerFragHandler.getCurrentFragmentTag();
-        if (currentFragTag.equals(TTApp.FragmentTags.TIMED) && mService.getOnGoingAction() == TTApp.OnGoingAction.TIMED) {
+        if (currentFragTag.equals(PhotoSniperApp.FragmentTags.TIMED) && mService.getOnGoingAction() == PhotoSniperApp.OnGoingAction.TIMED) {
             Fragment fragment = getFragmentManager().findFragmentByTag(currentFragTag);
             TimedFragment timedFrag = (TimedFragment) fragment;
             timedFrag.startTimer(time);
-        } else if (currentFragTag.equals(TTApp.FragmentTags.SELF_TIMER) && mService.getOnGoingAction() == TTApp.OnGoingAction.SELF_TIMER) {
+        } else if (currentFragTag.equals(PhotoSniperApp.FragmentTags.SELF_TIMER) && mService.getOnGoingAction() == PhotoSniperApp.OnGoingAction.SELF_TIMER) {
             Fragment fragment = getFragmentManager().findFragmentByTag(currentFragTag);
             SelfTimerFragment timedFrag = (SelfTimerFragment) fragment;
             timedFrag.startTimer(time);
@@ -1433,13 +1433,13 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
     @Override
     public void onServiceTimedUpdate(long time) {
         String currentFragTag = mDrawerFragHandler.getCurrentFragmentTag();
-        if (currentFragTag.equals(TTApp.FragmentTags.TIMED) && mService.getOnGoingAction() == TTApp.OnGoingAction.TIMED) {
+        if (currentFragTag.equals(PhotoSniperApp.FragmentTags.TIMED) && mService.getOnGoingAction() == PhotoSniperApp.OnGoingAction.TIMED) {
             Fragment fragment = getFragmentManager().findFragmentByTag(currentFragTag);
             if (fragment != null) {
                 TimedFragment timedFrag = (TimedFragment) fragment;
                 timedFrag.updateTimer(time);
             }
-        } else if (currentFragTag.equals(TTApp.FragmentTags.SELF_TIMER) && mService.getOnGoingAction() == TTApp.OnGoingAction.SELF_TIMER) {
+        } else if (currentFragTag.equals(PhotoSniperApp.FragmentTags.SELF_TIMER) && mService.getOnGoingAction() == PhotoSniperApp.OnGoingAction.SELF_TIMER) {
             Fragment fragment = getFragmentManager().findFragmentByTag(currentFragTag);
             if (fragment != null) {
                 SelfTimerFragment timerFrag = (SelfTimerFragment) fragment;
@@ -1456,7 +1456,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
         String currentFragTag = mDrawerFragHandler.getCurrentFragmentTag();
         Fragment fragment = getFragmentManager().findFragmentByTag(currentFragTag);
 
-        if (currentFragTag.equals(TTApp.FragmentTags.TIMED)) {
+        if (currentFragTag.equals(PhotoSniperApp.FragmentTags.TIMED)) {
 
             if (fragment != null) {
                 TimedFragment timedFrag = (TimedFragment) fragment;
@@ -1471,10 +1471,10 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
             }
 
 
-        } else if (currentFragTag.equals(TTApp.FragmentTags.SELF_TIMER)) {
+        } else if (currentFragTag.equals(PhotoSniperApp.FragmentTags.SELF_TIMER)) {
 
 
-            String selfTimerFragTag = TTApp.FragmentTags.SELF_TIMER;
+            String selfTimerFragTag = PhotoSniperApp.FragmentTags.SELF_TIMER;
             fragment = getFragmentManager().findFragmentByTag(selfTimerFragTag);
 
             if (fragment != null) {
@@ -1485,13 +1485,13 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
 //                tracker.addProperty(AnalyticTracker.Property.MODE, "Self Timer");
 //                tracker.addProperty(AnalyticTracker.Property.NO_EXPOSURES_TAKEN, 1);
 //                tracker.addProperty(AnalyticTracker.Property.EXPOSURE_DURATION,
-//                        TTApp.getInstance(this).getBeepLength());
+//                        PhotoSniperApp.getInstance(this).getBeepLength());
 //                tracker.addProperty(AnalyticTracker.Property.SEQUENCE_DURATION, timerFrag.getTimerDuration());
 //                tracker.trackEvent(AnalyticTracker.Event.SEQUENCE_COMPLETED);
             }
         }
 
-        if (!currentFragTag.equals(TTApp.FragmentTags.TIMED) && !currentFragTag.equals(TTApp.FragmentTags.SELF_TIMER)) {
+        if (!currentFragTag.equals(PhotoSniperApp.FragmentTags.TIMED) && !currentFragTag.equals(PhotoSniperApp.FragmentTags.SELF_TIMER)) {
             removeStatusBar();
         }
 
@@ -1500,7 +1500,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
     @Override
     public void onSoundVolumeUpdate(int amplitude) {
         String currentFragTag = mDrawerFragHandler.getCurrentFragmentTag();
-        if (currentFragTag.equals(TTApp.FragmentTags.BANG)) {
+        if (currentFragTag.equals(PhotoSniperApp.FragmentTags.BANG)) {
             Fragment fragment = getFragmentManager().findFragmentByTag(currentFragTag);
             if (fragment != null) {
                 SoundSensorFragment soundFrag = (SoundSensorFragment) fragment;
@@ -1513,7 +1513,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
     @Override
     public void onSoundExceedThreshold(int amplitude) {
         String currentFragTag = mDrawerFragHandler.getCurrentFragmentTag();
-        if (currentFragTag.equals(TTApp.FragmentTags.BANG) && mService.getOnGoingAction() == TTApp.OnGoingAction.BANG) {
+        if (currentFragTag.equals(PhotoSniperApp.FragmentTags.BANG) && mService.getOnGoingAction() == PhotoSniperApp.OnGoingAction.BANG) {
             Fragment fragment = getFragmentManager().findFragmentByTag(currentFragTag);
             if (fragment != null) {
                 SoundSensorFragment soundFrag = (SoundSensorFragment) fragment;
@@ -1529,7 +1529,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
     public void onDistanceUpdated(float distanceTraveled, float speed) {
         Log.d(TAG, "onDistanceUpdated: " + distanceTraveled);
         String currentFragTag = mDrawerFragHandler.getCurrentFragmentTag();
-        if (currentFragTag.equals(TTApp.FragmentTags.DISTANCE_LAPSE) && mService.getOnGoingAction() == TTApp.OnGoingAction.DISTANCE_LAPSE) {
+        if (currentFragTag.equals(PhotoSniperApp.FragmentTags.DISTANCE_LAPSE) && mService.getOnGoingAction() == PhotoSniperApp.OnGoingAction.DISTANCE_LAPSE) {
             Fragment fragment = getFragmentManager().findFragmentByTag(currentFragTag);
             if (fragment != null) {
                 DistanceLapseFragment disrFrag = (DistanceLapseFragment) fragment;
@@ -1541,7 +1541,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
 
     public void ignoreGPS() {
         String currentFragTag = mDrawerFragHandler.getCurrentFragmentTag();
-        if (currentFragTag.equals(TTApp.FragmentTags.DISTANCE_LAPSE)) {
+        if (currentFragTag.equals(PhotoSniperApp.FragmentTags.DISTANCE_LAPSE)) {
             Fragment fragment = getFragmentManager().findFragmentByTag(currentFragTag);
             if (fragment != null) {
                 DistanceLapseFragment disrFrag = (DistanceLapseFragment) fragment;
@@ -1559,40 +1559,40 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
             return;
         }
         switch (mService.getOnGoingAction()) {
-            case TTApp.OnGoingAction.TIMELAPSE:
+            case PhotoSniperApp.OnGoingAction.TIMELAPSE:
                 // Is the timelapse fragment currently active?
-                if (currentFragTag.equals(TTApp.FragmentTags.TIMELAPSE)) {
+                if (currentFragTag.equals(PhotoSniperApp.FragmentTags.TIMELAPSE)) {
                     TimeLapseFragment timeLapseFrag = (TimeLapseFragment) fragment;
                     timeLapseFrag.onPulseStarted(exposures, timeToNextExposure);
                 }
                 break;
-            case TTApp.OnGoingAction.TIMEWARP:
+            case PhotoSniperApp.OnGoingAction.TIMEWARP:
                 // Is the timelapse fragment currently active?
-                if (currentFragTag.equals(TTApp.FragmentTags.TIMEWARP)) {
+                if (currentFragTag.equals(PhotoSniperApp.FragmentTags.TIMEWARP)) {
                     TimeWarpFragment timewarpFrag = (TimeWarpFragment) fragment;
                     timewarpFrag.onPulseStarted(exposures, totalExposures, (int) timeToNextExposure, timeRemaining);
                 }
                 break;
-            case TTApp.OnGoingAction.HDR:
-                if (currentFragTag.equals(TTApp.FragmentTags.HDR)) {
+            case PhotoSniperApp.OnGoingAction.HDR:
+                if (currentFragTag.equals(PhotoSniperApp.FragmentTags.HDR)) {
                     HdrFragment hdrFrag = (HdrFragment) fragment;
                     hdrFrag.onPulseStarted(exposures, totalExposures, (int) timeToNextExposure, timeRemaining);
                 }
                 break;
-            case TTApp.OnGoingAction.HDR_TIMELAPSE:
-                if (currentFragTag.equals(TTApp.FragmentTags.HDR_LAPSE)) {
+            case PhotoSniperApp.OnGoingAction.HDR_TIMELAPSE:
+                if (currentFragTag.equals(PhotoSniperApp.FragmentTags.HDR_LAPSE)) {
                     HdrTimeLapseFragment hdrFrag = (HdrTimeLapseFragment) fragment;
                     hdrFrag.onPulseStarted(exposures, totalExposures, (int) timeToNextExposure, timeRemaining);
                 }
                 break;
-            case TTApp.OnGoingAction.STAR_TRAIL:
-                if (currentFragTag.equals(TTApp.FragmentTags.STARTRAIL)) {
+            case PhotoSniperApp.OnGoingAction.STAR_TRAIL:
+                if (currentFragTag.equals(PhotoSniperApp.FragmentTags.STARTRAIL)) {
                     StarTrailFragment startFrag = (StarTrailFragment) fragment;
                     startFrag.onPulseStarted(exposures, totalExposures, (int) timeToNextExposure, timeRemaining);
                 }
                 break;
-            case TTApp.OnGoingAction.BRAMPING:
-                if (currentFragTag.equals(TTApp.FragmentTags.BRAMPING)) {
+            case PhotoSniperApp.OnGoingAction.BRAMPING:
+                if (currentFragTag.equals(PhotoSniperApp.FragmentTags.BRAMPING)) {
                     BrampingFragment brampFrag = (BrampingFragment) fragment;
                     brampFrag.onPulseStarted(exposures, totalExposures, (int) timeToNextExposure, timeRemaining);
                 }
@@ -1618,40 +1618,40 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
         }
 
         switch (mService.getOnGoingAction()) {
-            case TTApp.OnGoingAction.TIMELAPSE:
+            case PhotoSniperApp.OnGoingAction.TIMELAPSE:
                 // Is the timelapse fragment currently active?
-                if (currentFragTag.equals(TTApp.FragmentTags.TIMELAPSE)) {
+                if (currentFragTag.equals(PhotoSniperApp.FragmentTags.TIMELAPSE)) {
                     TimeLapseFragment timeLapseFrag = (TimeLapseFragment) fragment;
                     timeLapseFrag.onPulseUpdate(exposures, timeToNext, remainingPulseTime);
                 }
                 break;
-            case TTApp.OnGoingAction.TIMEWARP:
+            case PhotoSniperApp.OnGoingAction.TIMEWARP:
                 // Is the timelapse fragment currently active?
-                if (currentFragTag.equals(TTApp.FragmentTags.TIMEWARP)) {
+                if (currentFragTag.equals(PhotoSniperApp.FragmentTags.TIMEWARP)) {
                     TimeWarpFragment timeWarpFrag = (TimeWarpFragment) fragment;
                     timeWarpFrag.onPulseUpdate(sequence, exposures, timeToNext, remainingPulseTime, remainingSequenceTime);
                 }
                 break;
-            case TTApp.OnGoingAction.HDR:
-                if (currentFragTag.equals(TTApp.FragmentTags.HDR)) {
+            case PhotoSniperApp.OnGoingAction.HDR:
+                if (currentFragTag.equals(PhotoSniperApp.FragmentTags.HDR)) {
                     HdrFragment hdrFrag = (HdrFragment) fragment;
                     hdrFrag.onPulseUpdate(sequence, exposures, timeToNext, remainingPulseTime, remainingSequenceTime);
                 }
                 break;
-            case TTApp.OnGoingAction.HDR_TIMELAPSE:
-                if (currentFragTag.equals(TTApp.FragmentTags.HDR_LAPSE)) {
+            case PhotoSniperApp.OnGoingAction.HDR_TIMELAPSE:
+                if (currentFragTag.equals(PhotoSniperApp.FragmentTags.HDR_LAPSE)) {
                     HdrTimeLapseFragment hdrFrag = (HdrTimeLapseFragment) fragment;
                     hdrFrag.onPulseUpdate(sequence, exposures, timeToNext, remainingPulseTime, remainingSequenceTime);
                 }
                 break;
-            case TTApp.OnGoingAction.STAR_TRAIL:
-                if (currentFragTag.equals(TTApp.FragmentTags.STARTRAIL)) {
+            case PhotoSniperApp.OnGoingAction.STAR_TRAIL:
+                if (currentFragTag.equals(PhotoSniperApp.FragmentTags.STARTRAIL)) {
                     StarTrailFragment startFrag = (StarTrailFragment) fragment;
                     startFrag.onPulseUpdate(sequence, exposures, timeToNext, remainingPulseTime, remainingSequenceTime);
                 }
                 break;
-            case TTApp.OnGoingAction.BRAMPING:
-                if (currentFragTag.equals(TTApp.FragmentTags.BRAMPING)) {
+            case PhotoSniperApp.OnGoingAction.BRAMPING:
+                if (currentFragTag.equals(PhotoSniperApp.FragmentTags.BRAMPING)) {
                     BrampingFragment brampFrag = (BrampingFragment) fragment;
                     brampFrag.onPulseUpdate(sequence, exposures, timeToNext, remainingPulseTime, remainingSequenceTime);
                 }
@@ -1667,11 +1667,11 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
         String currentFragTag = mDrawerFragHandler.getCurrentFragmentTag();
 
         switch (mService.getOnGoingAction()) {
-            case TTApp.OnGoingAction.TIMELAPSE:
+            case PhotoSniperApp.OnGoingAction.TIMELAPSE:
                 Log.i(TAG, "&&TImelapse finish");
                 break;
-            case TTApp.OnGoingAction.TIMEWARP:
-                if (currentFragTag.equals(TTApp.FragmentTags.TIMEWARP)) {
+            case PhotoSniperApp.OnGoingAction.TIMEWARP:
+                if (currentFragTag.equals(PhotoSniperApp.FragmentTags.TIMEWARP)) {
                     Fragment fragment = getFragmentManager().findFragmentByTag(currentFragTag);
                     TimeWarpFragment timewarpFrag = (TimeWarpFragment) fragment;
                     if (timewarpFrag != null) {
@@ -1681,8 +1681,8 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
                     removeStatusBar();
                 }
                 break;
-            case TTApp.OnGoingAction.STAR_TRAIL:
-                if (currentFragTag.equals(TTApp.FragmentTags.STARTRAIL)) {
+            case PhotoSniperApp.OnGoingAction.STAR_TRAIL:
+                if (currentFragTag.equals(PhotoSniperApp.FragmentTags.STARTRAIL)) {
                     Fragment fragment = getFragmentManager().findFragmentByTag(currentFragTag);
                     StarTrailFragment startFrag = (StarTrailFragment) fragment;
                     if (startFrag != null) {
@@ -1692,8 +1692,8 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
                     removeStatusBar();
                 }
                 break;
-            case TTApp.OnGoingAction.BRAMPING:
-                if (currentFragTag.equals(TTApp.FragmentTags.BRAMPING)) {
+            case PhotoSniperApp.OnGoingAction.BRAMPING:
+                if (currentFragTag.equals(PhotoSniperApp.FragmentTags.BRAMPING)) {
                     Fragment fragment = getFragmentManager().findFragmentByTag(currentFragTag);
                     BrampingFragment brampFrag = (BrampingFragment) fragment;
                     if (brampFrag != null) {
@@ -1703,8 +1703,8 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
                     removeStatusBar();
                 }
                 break;
-            case TTApp.OnGoingAction.HDR:
-                if (currentFragTag.equals(TTApp.FragmentTags.HDR)) {
+            case PhotoSniperApp.OnGoingAction.HDR:
+                if (currentFragTag.equals(PhotoSniperApp.FragmentTags.HDR)) {
                     Fragment fragment = getFragmentManager().findFragmentByTag(currentFragTag);
                     HdrFragment startFrag = (HdrFragment) fragment;
                     if (startFrag != null) {
@@ -1714,8 +1714,8 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
                     removeStatusBar();
                 }
                 break;
-            case TTApp.OnGoingAction.HDR_TIMELAPSE:
-                if (currentFragTag.equals(TTApp.FragmentTags.HDR_LAPSE)) {
+            case PhotoSniperApp.OnGoingAction.HDR_TIMELAPSE:
+                if (currentFragTag.equals(PhotoSniperApp.FragmentTags.HDR_LAPSE)) {
                     Fragment fragment = getFragmentManager().findFragmentByTag(currentFragTag);
                     HdrTimeLapseFragment startFrag = (HdrTimeLapseFragment) fragment;
                     if (startFrag != null) {
@@ -1734,8 +1734,8 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
     public void onPulseSequenceIterate(long[] sequence) {
         String currentFragTag = mDrawerFragHandler.getCurrentFragmentTag();
         switch (mService.getOnGoingAction()) {
-            case TTApp.OnGoingAction.HDR_TIMELAPSE:
-                if (currentFragTag.equals(TTApp.FragmentTags.HDR_LAPSE)) {
+            case PhotoSniperApp.OnGoingAction.HDR_TIMELAPSE:
+                if (currentFragTag.equals(PhotoSniperApp.FragmentTags.HDR_LAPSE)) {
                     Fragment fragment = getFragmentManager().findFragmentByTag(currentFragTag);
                     HdrTimeLapseFragment startFrag = (HdrTimeLapseFragment) fragment;
                     if (startFrag != null) {
@@ -1746,12 +1746,12 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
     }
 
     @Override
-    public void onWifiMasterAdded(final TTServiceInfo info) {
+    public void onWifiMasterAdded(final PhotoSniperServiceInfo info) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 String currentFragTag = mDrawerFragHandler.getCurrentFragmentTag();
-                if (currentFragTag.equals(TTApp.FragmentTags.WIFI_SLAVE)) {
+                if (currentFragTag.equals(PhotoSniperApp.FragmentTags.WIFI_SLAVE)) {
                     Fragment fragment = getFragmentManager().findFragmentByTag(currentFragTag);
                     WifiSlaveFragment slaveFrag = (WifiSlaveFragment) fragment;
                     slaveFrag.addMaster(info);
@@ -1763,13 +1763,13 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
     }
 
     @Override
-    public void onWifiMasterRemoved(final TTServiceInfo info) {
+    public void onWifiMasterRemoved(final PhotoSniperServiceInfo info) {
         // Log.d(TAG,"onWifiMasterRemoved");
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 String currentFragTag = mDrawerFragHandler.getCurrentFragmentTag();
-                if (currentFragTag.equals(TTApp.FragmentTags.WIFI_SLAVE)) {
+                if (currentFragTag.equals(PhotoSniperApp.FragmentTags.WIFI_SLAVE)) {
                     Fragment fragment = getFragmentManager().findFragmentByTag(currentFragTag);
                     WifiSlaveFragment slaveFrag = (WifiSlaveFragment) fragment;
                     slaveFrag.removeMaster(info);
@@ -1781,13 +1781,13 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
     }
 
     @Override
-    public void onWifiMasterRegsitered(final TTServiceInfo info) {
+    public void onWifiMasterRegsitered(final PhotoSniperServiceInfo info) {
 
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 String currentFragTag = mDrawerFragHandler.getCurrentFragmentTag();
-                if (currentFragTag.equals(TTApp.FragmentTags.WIFI_MASTER)) {
+                if (currentFragTag.equals(PhotoSniperApp.FragmentTags.WIFI_MASTER)) {
                     Fragment fragment = getFragmentManager().findFragmentByTag(currentFragTag);
                     WifiMasterFragment masterFrag = (WifiMasterFragment) fragment;
                     masterFrag.wifimasterRegistered(info);
@@ -1805,7 +1805,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
                 if (mDrawerFragHandler != null) {
                     try {
                         String currentFragTag = mDrawerFragHandler.getCurrentFragmentTag();
-                        if (currentFragTag.equals(TTApp.FragmentTags.WIFI_MASTER)) {
+                        if (currentFragTag.equals(PhotoSniperApp.FragmentTags.WIFI_MASTER)) {
                             Fragment fragment = getFragmentManager().findFragmentByTag(currentFragTag);
                             WifiMasterFragment masterFrag = (WifiMasterFragment) fragment;
                             masterFrag.wifiMasterUnregister();
@@ -1826,7 +1826,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
             @Override
             public void run() {
                 String currentFragTag = mDrawerFragHandler.getCurrentFragmentTag();
-                if (currentFragTag.equals(TTApp.FragmentTags.WIFI_MASTER)) {
+                if (currentFragTag.equals(PhotoSniperApp.FragmentTags.WIFI_MASTER)) {
                     Fragment fragment = getFragmentManager().findFragmentByTag(currentFragTag);
                     WifiMasterFragment masterFrag = (WifiMasterFragment) fragment;
                     masterFrag.onClientConnected(name, uniqueName);
@@ -1843,7 +1843,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
             @Override
             public void run() {
                 String currentFragTag = mDrawerFragHandler.getCurrentFragmentTag();
-                if (currentFragTag.equals(TTApp.FragmentTags.WIFI_MASTER)) {
+                if (currentFragTag.equals(PhotoSniperApp.FragmentTags.WIFI_MASTER)) {
                     Fragment fragment = getFragmentManager().findFragmentByTag(currentFragTag);
                     WifiMasterFragment masterFrag = (WifiMasterFragment) fragment;
                     masterFrag.onClientDisconnected(name, uniqueName);
@@ -1859,7 +1859,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
         Log.d(TAG, "onPebbleTrigger");
         String currentFragTag = mDrawerFragHandler.getCurrentFragmentTag();
         Log.d(TAG, currentFragTag);
-        if (currentFragTag.equals(TTApp.FragmentTags.PEBBLE)) {
+        if (currentFragTag.equals(PhotoSniperApp.FragmentTags.PEBBLE)) {
             Fragment fragment = getFragmentManager().findFragmentByTag(currentFragTag);
             PebbleFragment pebbleFrag = (PebbleFragment) fragment;
             if (pebbleFrag != null) {
@@ -1901,7 +1901,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
     @Override
     public void onConnected() {
 
-        TTApp.getInstance(getApplicationContext()).setSonyRPCAvailable(true);
+        PhotoSniperApp.getInstance(getApplicationContext()).setSonyRPCAvailable(true);
 
     }
 
@@ -1926,7 +1926,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
     @Override
     public void onConnectionFailed(Throwable e) {
 
-        TTApp.getInstance(getApplicationContext()).setSonyRPCAvailable(false);
+        PhotoSniperApp.getInstance(getApplicationContext()).setSonyRPCAvailable(false);
     }
 
 
@@ -2128,8 +2128,8 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
                 view = inflater.inflate(R.layout.drawer_list_item, null);
                 textView = (TextView) view.findViewById(R.id.drawListItemTextTitle);
                 subText = (TextView) view.findViewById(R.id.drawListItemTextSubtitle);
-                textView.setTypeface(TTApp.getInstance(getApplicationContext()).SAN_SERIF_LIGHT);
-                subText.setTypeface(TTApp.getInstance(getApplicationContext()).SAN_SERIF_LIGHT);
+                textView.setTypeface(PhotoSniperApp.getInstance(getApplicationContext()).SAN_SERIF_LIGHT);
+                subText.setTypeface(PhotoSniperApp.getInstance(getApplicationContext()).SAN_SERIF_LIGHT);
 
                 icon = (ImageView) view.findViewById(R.id.drawlist_item_icon);
             }

@@ -96,32 +96,27 @@ public class AudioBeeper implements IBeeper {
 
     }
 
-    public void play(long length) {
-
-        play(length);
-    }
-
-    public void play(long length) {
-//		   spool.play(soundID, volume, volume, 1, 0, 1f);
-
-        long cycles = length * 441 / 5;
-        long pauseCycles = pauseLength * 441 / 5;
-
-        if (pauseCycles == 0) {
-            pauseCycles = FOREVER;
-        }
-        if (cycles == 0) {
-            cycles = 1;
-        }
-//		   Log.i("Beeper", "Channel: " + channel + " cycles: " + cycles + " pause: " + pauseCycles);
-
-        limit = cycles;
-        pause = pauseCycles;
-        pausingAudioWrite = false;
-        if (mListener != null) {
-            mListener.onAudioPlayStart();
-        }
-    }
+//    public void play(long length) {
+////		   spool.play(soundID, volume, volume, 1, 0, 1f);
+//
+//        long cycles = length * 441 / 5;
+//        long pauseCycles = pauseLength * 441 / 5;
+//
+//        if (pauseCycles == 0) {
+//            pauseCycles = FOREVER;
+//        }
+//        if (cycles == 0) {
+//            cycles = 1;
+//        }
+////		   Log.i("Beeper", "Channel: " + channel + " cycles: " + cycles + " pause: " + pauseCycles);
+//
+//        limit = cycles;
+//        pause = pauseCycles;
+//        pausingAudioWrite = false;
+//        if (mListener != null) {
+//            mListener.onAudioPlayStart();
+//        }
+//    }
 
     public long timeRemaining(int channel) {
         if (limit == FOREVER) {
@@ -214,5 +209,8 @@ public class AudioBeeper implements IBeeper {
         void onAudioPlayPauseDone();
     }
 
+    @Override
+    public void play(long length) {
 
+    }
 }

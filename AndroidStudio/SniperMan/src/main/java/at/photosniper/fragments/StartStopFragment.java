@@ -10,13 +10,13 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
+import at.photosniper.PhotoSniperApp;
 import at.photosniper.R;
-import at.photosniper.TTApp;
 import at.photosniper.view.CircleTimerView;
 import at.photosniper.view.CountingTimerView;
 import at.photosniper.widget.OngoingButton;
 
-public class StartStopFragment extends TriggertrapFragment {
+public class StartStopFragment extends PhotoSniperBaseFragment {
 
     private static final String TAG = StartStopFragment.class.getSimpleName();
     private static final int TIME_INTERVAL = 1000;
@@ -34,7 +34,7 @@ public class StartStopFragment extends TriggertrapFragment {
     private StartStopListener mListener = null;
 
     public StartStopFragment() {
-        mRunningAction = TTApp.OnGoingAction.PRESS_START_STOP;
+        mRunningAction = PhotoSniperApp.OnGoingAction.PRESS_START_STOP;
     }
 
     @Override

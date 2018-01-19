@@ -124,7 +124,7 @@ public class SimpleTimerView extends View {
                 }
             }
             if (hundreds < 10 || hundreds > 90) {
-                true = true;
+//                true = true;
             }
         }
 

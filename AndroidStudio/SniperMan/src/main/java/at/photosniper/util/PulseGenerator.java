@@ -3,7 +3,7 @@ package at.photosniper.util;
 import android.content.Context;
 import android.util.Log;
 
-import at.photosniper.TTApp;
+import at.photosniper.PhotoSniperApp;
 
 public class PulseGenerator {
 
@@ -38,9 +38,9 @@ public class PulseGenerator {
 
     public long[] getTimeLapseSequence(long gap) {
         long[] sequence = new long[2];
-        sequence[0] = TTApp.getInstance(mAppContext).getBeepLength();
-        //sequence[1] = gap - TTApp.getInstance(mAppContext).getGapLenth();
-        sequence[1] = gap - TTApp.getInstance(mAppContext).getBeepLength();
+        sequence[0] = PhotoSniperApp.getInstance(mAppContext).getBeepLength();
+        //sequence[1] = gap - PhotoSniperApp.getInstance(mAppContext).getGapLenth();
+        sequence[1] = gap - PhotoSniperApp.getInstance(mAppContext).getBeepLength();
         return sequence;
     }
 
@@ -87,12 +87,12 @@ public class PulseGenerator {
             long exposure = Math.round(Math.pow(Math.pow(2, ev), i) * middle);
             //Log.d(TAG, "Exposure time: " + exposure);
             sequence[j] = exposure;
-            sequence[j + 1] = TTApp.getInstance(mAppContext).getHDRGapLength();
+            sequence[j + 1] = PhotoSniperApp.getInstance(mAppContext).getHDRGapLength();
             j += 2;
         }
         if (interval > 0) {
             long totaltime = PulseGenerator.getSequenceTime(sequence);
-            sequence[sequence.length - 1] = interval - totaltime + TTApp.getInstance(mAppContext).getHDRGapLength();
+            sequence[sequence.length - 1] = interval - totaltime + PhotoSniperApp.getInstance(mAppContext).getHDRGapLength();
         }
 
         return sequence;
@@ -113,11 +113,11 @@ public class PulseGenerator {
 
     public long[] getTimeWarpSequence(int count, long sequenceDuration, CubicBezierInterpolator interpolator) {
 
-        long[] pauses = interpolator.getPauses(sequenceDuration, count, TTApp.getInstance(mAppContext).getBeepLength());
+        long[] pauses = interpolator.getPauses(sequenceDuration, count, PhotoSniperApp.getInstance(mAppContext).getBeepLength());
         long[] sequence = new long[(pauses.length) * 2];
 
         for (int i = 0; i < pauses.length; i++) {
-            sequence[i * 2] = TTApp.getInstance(mAppContext).getBeepLength();
+            sequence[i * 2] = PhotoSniperApp.getInstance(mAppContext).getBeepLength();
             if (pauses[i] >= 0) {
                 sequence[(i * 2) + 1] = pauses[i];
             } else {
@@ -132,8 +132,8 @@ public class PulseGenerator {
     public long[] getEasedTimeLapSequence(double exponent, int frames, int duration, int easingType) {
         //extra buffer in milliseconds
         final int buffer = 10;
-        long min = TTApp.getInstance(mAppContext).getBeepLength();
-        long pulseLength = TTApp.getInstance(mAppContext).getBeepLength();
+        long min = PhotoSniperApp.getInstance(mAppContext).getBeepLength();
+        long pulseLength = PhotoSniperApp.getInstance(mAppContext).getBeepLength();
         long[] sequence = new long[frames * 2];
         long gap;
         min += buffer;

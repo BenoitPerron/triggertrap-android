@@ -3,7 +3,7 @@ package at.photosniper.util;
 import android.app.Activity;
 import android.content.Context;
 
-import at.photosniper.TTApp;
+import at.photosniper.PhotoSniperApp;
 import at.photosniper.fragments.dialog.ScopeFeelingsDialog;
 
 /**
@@ -21,7 +21,7 @@ public class AppRater {
 
     public static void appLaunched(Context mContext, Activity mActivity) {
 
-        TTApp app = TTApp.getInstance(mContext);
+        PhotoSniperApp app = PhotoSniperApp.getInstance(mContext);
 
         if (!app.getShowAgain()) {
             return;

@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import at.photosniper.R;
 
-import at.photosniper.TTApp;
+import at.photosniper.PhotoSniperApp;
 import at.photosniper.util.DialpadManager;
 import at.photosniper.util.PulseGenerator;
 import at.photosniper.view.CircleTimerView;
@@ -55,7 +55,7 @@ public class StarTrailFragment extends PulseSequenceFragment {
 
 
     public StarTrailFragment() {
-        mRunningAction = TTApp.OnGoingAction.STAR_TRAIL;
+        mRunningAction = PhotoSniperApp.OnGoingAction.STAR_TRAIL;
     }
 
     @Override
@@ -116,9 +116,9 @@ public class StarTrailFragment extends PulseSequenceFragment {
     public void onStop() {
         super.onStop();
         //Persist the state of the star trail mode
-        TTApp.getInstance(getActivity()).setStarTrailIterations(mNumericInput.getValue());
-        TTApp.getInstance(getActivity()).setStarTrailExposure(mExposureTimeInput.getTime());
-        TTApp.getInstance(getActivity()).setStarTrailGap(mGapTimeInput.getTime());
+        PhotoSniperApp.getInstance(getActivity()).setStarTrailIterations(mNumericInput.getValue());
+        PhotoSniperApp.getInstance(getActivity()).setStarTrailExposure(mExposureTimeInput.getTime());
+        PhotoSniperApp.getInstance(getActivity()).setStarTrailGap(mGapTimeInput.getTime());
     }
 
     private void setUpIterations() {
@@ -147,10 +147,10 @@ public class StarTrailFragment extends PulseSequenceFragment {
 
         } else {
             //Restore state of time lapse from persistent storage
-            mInitialIterations = TTApp.getInstance(getActivity()).getStarTrailIterations();
+            mInitialIterations = PhotoSniperApp.getInstance(getActivity()).getStarTrailIterations();
             Log.d(TAG, "Initial Interations: " + mInitialIterations);
-            mExposure = TTApp.getInstance(getActivity()).getStarTrailExposure();
-            mGap = TTApp.getInstance(getActivity()).getStarTrailGap();
+            mExposure = PhotoSniperApp.getInstance(getActivity()).getStarTrailExposure();
+            mGap = PhotoSniperApp.getInstance(getActivity()).getStarTrailGap();
         }
         mNumericInput.initValue(mInitialIterations);
 
@@ -292,7 +292,7 @@ public class StarTrailFragment extends PulseSequenceFragment {
 
 
             mPulseSequence = mPulseGenerator.getStarTrailSequence(mNumericInput.getValue(), mExposureTimeInput.getTime(), mGapTimeInput.getTime());
-            mPulseSeqListener.onPulseSequenceCreated(TTApp.OnGoingAction.STAR_TRAIL, mPulseSequence, false);
+            mPulseSeqListener.onPulseSequenceCreated(PhotoSniperApp.OnGoingAction.STAR_TRAIL, mPulseSequence, false);
 
             long totaltime = PulseGenerator.getSequenceTime(mPulseSequence);
             Log.d(TAG, "Total time Circle: " + totaltime);

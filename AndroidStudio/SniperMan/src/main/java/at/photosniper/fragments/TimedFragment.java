@@ -15,14 +15,14 @@ import android.widget.TextView;
 
 import at.photosniper.R;
 
-import at.photosniper.TTApp;
+import at.photosniper.PhotoSniperApp;
 import at.photosniper.util.DialpadManager;
 import at.photosniper.view.CircleTimerView;
 import at.photosniper.view.CountingTimerView;
 import at.photosniper.widget.OngoingButton;
 import at.photosniper.widget.TimerView;
 
-public class TimedFragment extends TriggertrapFragment {
+public class TimedFragment extends PhotoSniperBaseFragment {
 
     private static final String TAG = TimedFragment.class.getSimpleName();
     private View mRootView;
@@ -49,7 +49,7 @@ public class TimedFragment extends TriggertrapFragment {
 
 
     public TimedFragment() {
-        mRunningAction = TTApp.OnGoingAction.TIMED;
+        mRunningAction = PhotoSniperApp.OnGoingAction.TIMED;
     }
 
     @Override
@@ -113,7 +113,7 @@ public class TimedFragment extends TriggertrapFragment {
     public void onStop() {
         super.onStop();
         //Persist the state of the timed mode time setting
-        TTApp.getInstance(getActivity()).setTimedModeTime(mTimeView.getTime());
+        PhotoSniperApp.getInstance(getActivity()).setTimedModeTime(mTimeView.getTime());
     }
 
     private void setUpButton() {
@@ -217,7 +217,7 @@ public class TimedFragment extends TriggertrapFragment {
 
         } else {
             //Restore state of time lapse from persistent storage
-            mInitialTime = TTApp.getInstance(getActivity()).getTimedModeTime();
+            mInitialTime = PhotoSniperApp.getInstance(getActivity()).getTimedModeTime();
             Log.d(TAG, "Initial Time: " + mInitialTime);
         }
         mTimeView.setTextInputTime(mInitialTime);

@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import at.photosniper.R;
 
-import at.photosniper.TTApp;
+import at.photosniper.PhotoSniperApp;
 import at.photosniper.util.DialpadManager;
 import at.photosniper.view.CircleTimerView;
 import at.photosniper.view.CountingTimerView;
@@ -24,7 +24,7 @@ import at.photosniper.widget.TimerView;
 /**
  * Created by scottmellors on 20/08/2014.
  */
-public class SelfTimerFragment extends TriggertrapFragment {
+public class SelfTimerFragment extends PhotoSniperBaseFragment {
 
     private static final String TAG = SelfTimerFragment.class.getSimpleName();
     private View mRootView;
@@ -48,7 +48,7 @@ public class SelfTimerFragment extends TriggertrapFragment {
     private DialpadManager.InputSelectionListener mInputListener = null;
 
     public SelfTimerFragment() {
-        mRunningAction = TTApp.OnGoingAction.SELF_TIMER;
+        mRunningAction = PhotoSniperApp.OnGoingAction.SELF_TIMER;
     }
 
     @Override
@@ -192,7 +192,7 @@ public class SelfTimerFragment extends TriggertrapFragment {
 
         } else {
             //Restore state of time lapse from persistent storage
-            mInitialTime = TTApp.getInstance(getActivity()).getSelfTimedModeTime();
+            mInitialTime = PhotoSniperApp.getInstance(getActivity()).getSelfTimedModeTime();
             Log.d(TAG, "Initial Time: " + mInitialTime);
         }
         mTimeView.setTextInputTime(mInitialTime);
@@ -229,7 +229,7 @@ public class SelfTimerFragment extends TriggertrapFragment {
     public void onStop() {
         super.onStop();
         //Persist the state of the timed mode time setting
-        TTApp.getInstance(getActivity()).setSelfTimedModeTime(mTimeView.getTime());
+        PhotoSniperApp.getInstance(getActivity()).setSelfTimedModeTime(mTimeView.getTime());
     }
 
     @Override

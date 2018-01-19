@@ -10,14 +10,14 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
+import at.photosniper.PhotoSniperApp;
 import at.photosniper.R;
 
-import at.photosniper.TTApp;
 import at.photosniper.view.CircleTimerView;
 import at.photosniper.view.CountingTimerView;
 import at.photosniper.widget.OngoingButton;
 
-public class PressHoldFragment extends TriggertrapFragment {
+public class PressHoldFragment extends PhotoSniperBaseFragment {
 
     private static final int TIME_INTERVAL = 1000;
     private View mRootView;
@@ -34,7 +34,7 @@ public class PressHoldFragment extends TriggertrapFragment {
     private PressHoldListener mListener = null;
 
     public PressHoldFragment() {
-        mRunningAction = TTApp.OnGoingAction.PRESS_AND_HOLD;
+        mRunningAction = PhotoSniperApp.OnGoingAction.PRESS_AND_HOLD;
     }
 
     @Override
@@ -54,7 +54,7 @@ public class PressHoldFragment extends TriggertrapFragment {
         super.onDetach();
 
         if (mState == State.STARTED) {
-            mRunningAction = TTApp.OnGoingAction.NONE;
+            mRunningAction = PhotoSniperApp.OnGoingAction.NONE;
             mListener.onPressStopped();
             mState = State.STOPPED;
         }

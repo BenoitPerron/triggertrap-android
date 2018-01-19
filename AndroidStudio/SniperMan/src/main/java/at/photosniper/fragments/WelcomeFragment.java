@@ -11,7 +11,7 @@ import android.widget.TextView;
 import at.photosniper.R;
 
 
-public class WelcomeFragment extends TriggertrapFragment {
+public class WelcomeFragment extends PhotoSniperBaseFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

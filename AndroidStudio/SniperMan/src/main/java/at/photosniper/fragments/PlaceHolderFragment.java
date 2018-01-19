@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import at.photosniper.R;
 
 
-public class PlaceHolderFragment extends TriggertrapFragment {
+public class PlaceHolderFragment extends PhotoSniperBaseFragment {
 
     public PlaceHolderFragment() {
     }

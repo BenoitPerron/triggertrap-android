@@ -12,7 +12,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
-import at.photosniper.service.TriggertrapService;
+import at.photosniper.service.SniperManService;
 
 public class ZeroConfNds implements IZeroConf {
 
@@ -23,7 +23,7 @@ public class ZeroConfNds implements IZeroConf {
 
     private String mServiceName;
 
-    private final TriggertrapService mParentService;
+    private final SniperManService mParentService;
     private final Handler handler = new Handler(Looper.getMainLooper()) {
         public void handleMessage(Message msg) {
 
@@ -52,7 +52,7 @@ public class ZeroConfNds implements IZeroConf {
     private ResolveListener mResolveListener = null;
     private final NsdManager mNsdManager;
 
-    private ZeroConfNds(TriggertrapService parentService) {
+    private ZeroConfNds(SniperManService parentService) {
         mParentService = parentService;
         mNsdManager = (NsdManager) parentService.getSystemService(Context.NSD_SERVICE);
     }
@@ -192,7 +192,7 @@ public class ZeroConfNds implements IZeroConf {
 
     }
 
-    public ArrayList<TTSlaveInfo> getConnectedSlaves() {
+    public ArrayList<PhotoSniperSlaveInfo> getConnectedSlaves() {
         return new ArrayList<>();
     }
 }

@@ -23,11 +23,11 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import at.photosniper.PhotoSniperApp;
 import at.photosniper.R;
 
 import java.util.ArrayList;
 
-import at.photosniper.TTApp;
 import at.photosniper.util.CubicBezierInterpolator;
 import at.photosniper.util.DialpadManager;
 import at.photosniper.util.PulseGenerator;
@@ -79,7 +79,7 @@ public class TimeWarpFragment extends TimeFragment implements DialpadManager.Inp
     private int mPreviewState = PreviewState.PREVIEW_STOPPED;
 
     public TimeWarpFragment() {
-        mRunningAction = TTApp.OnGoingAction.TIMEWARP;
+        mRunningAction = PhotoSniperApp.OnGoingAction.TIMEWARP;
     }
 
     @Override
@@ -175,14 +175,14 @@ public class TimeWarpFragment extends TimeFragment implements DialpadManager.Inp
     public void onStop() {
         super.onStop();
 
-        TTApp.getInstance(getActivity()).setTimeWarpIterations(mTimewarpIterationsView.getValue());
-        TTApp.getInstance(getActivity()).setTimewarpDuration(mTimewarpDurationView.getTime());
+        PhotoSniperApp.getInstance(getActivity()).setTimeWarpIterations(mTimewarpIterationsView.getValue());
+        PhotoSniperApp.getInstance(getActivity()).setTimewarpDuration(mTimewarpDurationView.getTime());
 
         float[] pts = mBezierView.getControlPoints();
-        TTApp.getInstance(getActivity()).setTimewarpControl1X(pts[0]);
-        TTApp.getInstance(getActivity()).setTimewarpControl1Y(pts[1]);
-        TTApp.getInstance(getActivity()).setTimewarpControl2X(pts[2]);
-        TTApp.getInstance(getActivity()).setTimewarpControl2Y(pts[3]);
+        PhotoSniperApp.getInstance(getActivity()).setTimewarpControl1X(pts[0]);
+        PhotoSniperApp.getInstance(getActivity()).setTimewarpControl1Y(pts[1]);
+        PhotoSniperApp.getInstance(getActivity()).setTimewarpControl2X(pts[2]);
+        PhotoSniperApp.getInstance(getActivity()).setTimewarpControl2Y(pts[3]);
     }
 
     private void setUpButton() {
@@ -260,9 +260,9 @@ public class TimeWarpFragment extends TimeFragment implements DialpadManager.Inp
 
         } else {
             //Restore state of timewarp from persistent storage
-            mInitialIterations = TTApp.getInstance(getActivity()).getTimeWarpIterations();
+            mInitialIterations = PhotoSniperApp.getInstance(getActivity()).getTimeWarpIterations();
             Log.d(TAG, "Initial Interations: " + mInitialIterations);
-            mDuration = TTApp.getInstance(getActivity()).getTimewarpDuration();
+            mDuration = PhotoSniperApp.getInstance(getActivity()).getTimewarpDuration();
         }
         mTimewarpIterationsView.initValue(mInitialIterations);
         mExposureValue1.setText(String.valueOf(mTimewarpIterationsView.getValue()));
@@ -306,10 +306,10 @@ public class TimeWarpFragment extends TimeFragment implements DialpadManager.Inp
 
         } else {
             //Restore state of timewarp from persistent storage
-            mControl1X = TTApp.getInstance(getActivity()).getTimewarpControl1X();
-            mControl1Y = TTApp.getInstance(getActivity()).getTimewarpControl1Y();
-            mControl2X = TTApp.getInstance(getActivity()).getTimewarpControl2X();
-            mControl2Y = TTApp.getInstance(getActivity()).getTimewarpControl2Y();
+            mControl1X = PhotoSniperApp.getInstance(getActivity()).getTimewarpControl1X();
+            mControl1Y = PhotoSniperApp.getInstance(getActivity()).getTimewarpControl1Y();
+            mControl2X = PhotoSniperApp.getInstance(getActivity()).getTimewarpControl2X();
+            mControl2Y = PhotoSniperApp.getInstance(getActivity()).getTimewarpControl2Y();
         }
 
         final ViewTreeObserver vto = mRootView.getViewTreeObserver();
@@ -336,10 +336,10 @@ public class TimeWarpFragment extends TimeFragment implements DialpadManager.Inp
 
         } else {
             //Restore state of timewarp from persistent storage
-            mControl1X = TTApp.getInstance(getActivity()).getTimewarpControl1X();
-            mControl1Y = TTApp.getInstance(getActivity()).getTimewarpControl1Y();
-            mControl2X = TTApp.getInstance(getActivity()).getTimewarpControl2X();
-            mControl2Y = TTApp.getInstance(getActivity()).getTimewarpControl2Y();
+            mControl1X = PhotoSniperApp.getInstance(getActivity()).getTimewarpControl1X();
+            mControl1Y = PhotoSniperApp.getInstance(getActivity()).getTimewarpControl1Y();
+            mControl2X = PhotoSniperApp.getInstance(getActivity()).getTimewarpControl2X();
+            mControl2Y = PhotoSniperApp.getInstance(getActivity()).getTimewarpControl2Y();
         }
 
         mInterpolator = new CubicBezierInterpolator(mControl1X, mControl1Y, mControl2X, mControl2Y);
@@ -639,7 +639,7 @@ public class TimeWarpFragment extends TimeFragment implements DialpadManager.Inp
         }
 
         protected ArrayList<Float> doInBackground(Void... arg0) {
-            long[] pauses = mInterpolator.getOriginalPauses(mTimewarpDurationView.getTime(), mTimewarpIterationsView.getValue(), TTApp.getInstance(getActivity()).getBeepLength());
+            long[] pauses = mInterpolator.getOriginalPauses(mTimewarpDurationView.getTime(), mTimewarpIterationsView.getValue(), PhotoSniperApp.getInstance(getActivity()).getBeepLength());
 
             overlapCoords.clear();
             int MAXIMUM_OVERLAPS = 150;

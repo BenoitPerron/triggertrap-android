@@ -22,13 +22,13 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import at.photosniper.PhotoSniperApp;
 import at.photosniper.R;
-import at.photosniper.TTApp;
 import at.photosniper.fragments.dialog.MasterRunningDialog;
 import at.photosniper.widget.OngoingButton;
-import at.photosniper.wifi.TTServiceInfo;
+import at.photosniper.wifi.PhotoSniperServiceInfo;
 
-public class WifiSlaveFragment extends TriggertrapFragment {
+public class WifiSlaveFragment extends PhotoSniperBaseFragment {
 
     private static final int DIALOG_FRAGMENT = 1;
     private static final String TAG = WifiSlaveListener.class.getSimpleName();
@@ -43,7 +43,7 @@ public class WifiSlaveFragment extends TriggertrapFragment {
     private Animation mSlideOutToTop;
 
     public WifiSlaveFragment() {
-        mRunningAction = TTApp.OnGoingAction.WI_FI_SLAVE;
+        mRunningAction = PhotoSniperApp.OnGoingAction.WI_FI_SLAVE;
     }
 
     @Override
@@ -85,10 +85,10 @@ public class WifiSlaveFragment extends TriggertrapFragment {
 
         Bundle fragmentState = getArguments();
         if (fragmentState != null) {
-            String tag = fragmentState.getString(TriggertrapFragment.BundleKey.FRAGMENT_TAG);
+            String tag = fragmentState.getString(PhotoSniperBaseFragment.BundleKey.FRAGMENT_TAG);
             // Is this bundle for this Fragment?
             if (tag.equals(getTag())) {
-                boolean isActive = fragmentState.getBoolean(TriggertrapFragment.BundleKey.IS_ACTION_ACTIVE, false);
+                boolean isActive = fragmentState.getBoolean(PhotoSniperBaseFragment.BundleKey.IS_ACTION_ACTIVE, false);
                 if (isActive) {
                     mState = State.STARTED;
                 } else {
@@ -107,7 +107,7 @@ public class WifiSlaveFragment extends TriggertrapFragment {
         } else {
             // Restore state of wifi slave from persistent storage e.g..
             // mInterval =
-            // TTApp.getInstance(getActivity()).getTimeLapseInterval();
+            // PhotoSniperApp.getInstance(getActivity()).getTimeLapseInterval();
         }
 
         setUpAnimations();
@@ -160,7 +160,7 @@ public class WifiSlaveFragment extends TriggertrapFragment {
                         clickedcheckBoxInfo.isChecked = true;
                         clickedCheckBox.setChecked(true);
                         Log.d(TAG, "Connecting to Master " + checkboxInfo.name);
-                        TTApp.getInstance(getActivity()).setSlaveLastMaster(checkboxInfo.name);
+                        PhotoSniperApp.getInstance(getActivity()).setSlaveLastMaster(checkboxInfo.name);
                         if (mlistener != null) {
                             mlistener.onConnectSlave(checkboxInfo.name, checkboxInfo.ipAddress, checkboxInfo.port);
                         }
@@ -171,7 +171,7 @@ public class WifiSlaveFragment extends TriggertrapFragment {
                         if (mlistener != null) {
                             mlistener.onDisconnectSlave();
                         }
-                        TTApp.getInstance(getActivity()).setSlaveLastMaster("");
+                        PhotoSniperApp.getInstance(getActivity()).setSlaveLastMaster("");
                     }
 
                 } else {
@@ -241,8 +241,8 @@ public class WifiSlaveFragment extends TriggertrapFragment {
         }
     }
 
-    public void addAvaiableMasters(ArrayList<TTServiceInfo> masters) {
-        for (TTServiceInfo masterInfo : masters) {
+    public void addAvaiableMasters(ArrayList<PhotoSniperServiceInfo> masters) {
+        for (PhotoSniperServiceInfo masterInfo : masters) {
             addMaster(masterInfo);
         }
     }
@@ -251,9 +251,9 @@ public class WifiSlaveFragment extends TriggertrapFragment {
     public Bundle getStateBundle() {
         super.getStateBundle();
         if (mState == State.STARTED) {
-            mStateBundle.putBoolean(TriggertrapFragment.BundleKey.IS_ACTION_ACTIVE, true);
+            mStateBundle.putBoolean(PhotoSniperBaseFragment.BundleKey.IS_ACTION_ACTIVE, true);
         } else {
-            mStateBundle.putBoolean(TriggertrapFragment.BundleKey.IS_ACTION_ACTIVE, false);
+            mStateBundle.putBoolean(PhotoSniperBaseFragment.BundleKey.IS_ACTION_ACTIVE, false);
         }
 
         // Create ArrayList of MasterInfo and put in Parcelable
@@ -268,11 +268,11 @@ public class WifiSlaveFragment extends TriggertrapFragment {
 
         }
         MasterList parcableMasterList = new MasterList(masters);
-        mStateBundle.putParcelable(TriggertrapFragment.BundleKey.WIFI_SLAVE_INFO, parcableMasterList);
+        mStateBundle.putParcelable(PhotoSniperBaseFragment.BundleKey.WIFI_SLAVE_INFO, parcableMasterList);
         return mStateBundle;
     }
 
-    public void addMaster(final TTServiceInfo info) {
+    public void addMaster(final PhotoSniperServiceInfo info) {
         Log.d(TAG, "Attaching layout");
         createMasterView(info.getName(), info.getIpAddress(), info.getPort(), false);
     }
@@ -360,7 +360,7 @@ public class WifiSlaveFragment extends TriggertrapFragment {
 
     private boolean checkForAutoConnect(String discoveredMasterName) {
         boolean shouldAutoConnected = false;
-        String lastMasterName = TTApp.getInstance(getActivity()).getSlaveLastMaster();
+        String lastMasterName = PhotoSniperApp.getInstance(getActivity()).getSlaveLastMaster();
         Log.d(TAG, "Last Connected Master: " + lastMasterName);
         if (lastMasterName.equals(discoveredMasterName)) {
             shouldAutoConnected = true;
@@ -385,7 +385,7 @@ public class WifiSlaveFragment extends TriggertrapFragment {
         return isUnique;
     }
 
-    public void removeMaster(final TTServiceInfo info) {
+    public void removeMaster(final PhotoSniperServiceInfo info) {
         Log.d(TAG, "Detaching layout");
 
         int childCount = mMasterListLayout.getChildCount();

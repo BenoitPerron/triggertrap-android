@@ -4,9 +4,9 @@ import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import at.photosniper.PhotoSniperApp;
 import at.photosniper.R;
 
-import at.photosniper.TTApp;
 import at.photosniper.fragments.WifiMasterFragment;
 import eu.inmite.android.lib.dialogs.BaseDialogFragment;
 import eu.inmite.android.lib.dialogs.SimpleDialogFragment;
@@ -33,7 +33,7 @@ public class MasterRunningDialog extends SimpleDialogFragment {
             @Override
             public void onClick(View v) {
 
-                WifiMasterFragment fragment = (WifiMasterFragment) getActivity().getFragmentManager().findFragmentByTag(TTApp.FragmentTags.WIFI_MASTER);
+                WifiMasterFragment fragment = (WifiMasterFragment) getActivity().getFragmentManager().findFragmentByTag(PhotoSniperApp.FragmentTags.WIFI_MASTER);
 
                 fragment.stopWifiMaster();
                 dismiss();

@@ -13,12 +13,11 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
-import at.photosniper.R;
-
 import antistatic.spinnerwheel.AbstractWheel;
 import antistatic.spinnerwheel.OnWheelScrollListener;
 import antistatic.spinnerwheel.adapters.ArrayWheelAdapter;
-import at.photosniper.TTApp;
+import at.photosniper.PhotoSniperApp;
+import at.photosniper.R;
 import at.photosniper.util.DialpadManager;
 import at.photosniper.util.PulseGenerator;
 import at.photosniper.view.CircleTimerView;
@@ -33,6 +32,7 @@ public class BrampingFragment extends PulseSequenceFragment implements DialpadMa
     private static final String TAG = BrampingFragment.class.getSimpleName();
 
     private TimerView mExposureTimeInput;
+    private View mExposureTime;
     private View mButtonContainer;
     private NumericView mNumericInput;
 
@@ -69,7 +69,7 @@ public class BrampingFragment extends PulseSequenceFragment implements DialpadMa
     private Animation mSlideOutToTop;
 
     public BrampingFragment() {
-        mRunningAction = TTApp.OnGoingAction.BRAMPING;
+        mRunningAction = PhotoSniperApp.OnGoingAction.BRAMPING;
     }
 
     @Override
@@ -106,10 +106,10 @@ public class BrampingFragment extends PulseSequenceFragment implements DialpadMa
 
 
         //String [] validShutterSpeeds  = getValidShutterSpeeds();
-        ArrayWheelAdapter<String> exposureAdapter = new ArrayWheelAdapter<>(getActivity(), mShutterSpeeds);
+        ArrayWheelAdapter<String> exposureAdapter = new ArrayWheelAdapter<String>(getActivity(), mShutterSpeeds);
 
         exposureAdapter.setItemResource(R.layout.wheel_text_centered);
-        exposureAdapter.setItemTextResource();
+        exposureAdapter.setItemTextResource(R.id.text);
         mBrampStart.setViewAdapter(exposureAdapter);
         mBrampEnd.setViewAdapter(exposureAdapter);
 
@@ -132,10 +132,10 @@ public class BrampingFragment extends PulseSequenceFragment implements DialpadMa
     public void onStop() {
         super.onStop();
         //Persist the state of the bramping mode
-        TTApp.getInstance(getActivity()).setBrampingInterval(mExposureTimeInput.getTime());
-        TTApp.getInstance(getActivity()).setBrampingIterations(mNumericInput.getValue());
-        TTApp.getInstance(getActivity()).setBrampingStartExposure(mStartExposure);
-        TTApp.getInstance(getActivity()).setBrampingEndExposure(mEndExposure);
+        PhotoSniperApp.getInstance(getActivity()).setBrampingInterval(mExposureTimeInput.getTime());
+        PhotoSniperApp.getInstance(getActivity()).setBrampingIterations(mNumericInput.getValue());
+        PhotoSniperApp.getInstance(getActivity()).setBrampingStartExposure(mStartExposure);
+        PhotoSniperApp.getInstance(getActivity()).setBrampingEndExposure(mEndExposure);
     }
 
 
@@ -234,10 +234,10 @@ public class BrampingFragment extends PulseSequenceFragment implements DialpadMa
 
         } else {
             //Restore state of Bramping from persistent storage
-            mInterval = TTApp.getInstance(getActivity()).getBrampingInterval();
-            mIterations = TTApp.getInstance(getActivity()).getBrampingIterations();
-            mStartExposure = TTApp.getInstance(getActivity()).getBrampingStartExposure();
-            mEndExposure = TTApp.getInstance(getActivity()).getBrampingStartExposure();
+            mInterval = PhotoSniperApp.getInstance(getActivity()).getBrampingInterval();
+            mIterations = PhotoSniperApp.getInstance(getActivity()).getBrampingIterations();
+            mStartExposure = PhotoSniperApp.getInstance(getActivity()).getBrampingStartExposure();
+            mEndExposure = PhotoSniperApp.getInstance(getActivity()).getBrampingStartExposure();
 
         }
         mNumericInput.initValue(mIterations);
@@ -262,10 +262,10 @@ public class BrampingFragment extends PulseSequenceFragment implements DialpadMa
 //	            		     for( String speed: validShutterSpeeds) {
 //	            		    	 Log.d(TAG, speed);
 //	            		     }
-                    ArrayWheelAdapter<String> exposureAdapter = new ArrayWheelAdapter<>(getActivity(), validShutterSpeeds);
+                    ArrayWheelAdapter<String> exposureAdapter = new ArrayWheelAdapter<String>(getActivity(), validShutterSpeeds);
 
                     exposureAdapter.setItemResource(R.layout.wheel_text_centered);
-                    exposureAdapter.setItemTextResource();
+                    exposureAdapter.setItemTextResource(R.id.text);
                     mBrampStart.setViewAdapter(exposureAdapter);
                 }
             }
@@ -282,7 +282,7 @@ public class BrampingFragment extends PulseSequenceFragment implements DialpadMa
             }
         });
 
-        mStartExposure = TTApp.getInstance(getActivity()).getBrampingStartExposure();
+        mStartExposure = PhotoSniperApp.getInstance(getActivity()).getBrampingStartExposure();
         Log.d(TAG, "Getting start exposure of:" + mStartExposure);
 
         int i = 0;
@@ -308,10 +308,10 @@ public class BrampingFragment extends PulseSequenceFragment implements DialpadMa
                 if (mAutomaticAdjustEnd) {
                     mAutomaticAdjustEnd = false;
                     String[] validShutterSpeeds = getValidShutterSpeeds();
-                    ArrayWheelAdapter<String> exposureAdapter = new ArrayWheelAdapter<>(getActivity(), validShutterSpeeds);
+                    ArrayWheelAdapter<String> exposureAdapter = new ArrayWheelAdapter<String>(getActivity(), validShutterSpeeds);
 
                     exposureAdapter.setItemResource(R.layout.wheel_text_centered);
-                    exposureAdapter.setItemTextResource();
+                    exposureAdapter.setItemTextResource(R.id.text);
                     mBrampEnd.setViewAdapter(exposureAdapter);
                 }
             }
@@ -327,7 +327,7 @@ public class BrampingFragment extends PulseSequenceFragment implements DialpadMa
                 return false;
             }
         });
-        mEndExposure = TTApp.getInstance(getActivity()).getBrampingEndExposure();
+        mEndExposure = PhotoSniperApp.getInstance(getActivity()).getBrampingEndExposure();
         Log.d(TAG, "Getting end exposure of:" + mEndExposure);
 
         int i = 0;
@@ -377,16 +377,16 @@ public class BrampingFragment extends PulseSequenceFragment implements DialpadMa
 
     private void setValidShutterSpeeds() {
         String[] validShutterSpeeds = getValidShutterSpeeds();
-        ArrayWheelAdapter<String> exposureAdapter = new ArrayWheelAdapter<>(getActivity(), validShutterSpeeds);
+        ArrayWheelAdapter<String> exposureAdapter = new ArrayWheelAdapter<String>(getActivity(), validShutterSpeeds);
 
         exposureAdapter.setItemResource(R.layout.wheel_text_centered);
-        exposureAdapter.setItemTextResource();
+        exposureAdapter.setItemTextResource(R.id.text);
         mBrampStart.setViewAdapter(exposureAdapter);
         mBrampEnd.setViewAdapter(exposureAdapter);
     }
 
     private void setUpTimeInputs() {
-        View mExposureTime = mRootView.findViewById(R.id.brampExposure);
+        mExposureTime = mRootView.findViewById(R.id.brampExposure);
 
         mExposureTimeInput = (TimerView) mExposureTime.findViewById(R.id.timerTimeText);
         mExposureTimeInput.setUpdateListener(this);
@@ -466,7 +466,7 @@ public class BrampingFragment extends PulseSequenceFragment implements DialpadMa
 
     @Override
     public void setActionState(boolean actionState) {
-        if (actionState) {
+        if (actionState == true) {
             mState = State.STARTED;
         } else {
             mState = State.STOPPED;
@@ -564,10 +564,10 @@ public class BrampingFragment extends PulseSequenceFragment implements DialpadMa
             setMaxExposure(mBrampStart, interval);
         } else {
             String[] validShutterSpeeds = getValidShutterSpeeds();
-            ArrayWheelAdapter<String> exposureAdapter = new ArrayWheelAdapter<>(getActivity(), validShutterSpeeds);
+            ArrayWheelAdapter<String> exposureAdapter = new ArrayWheelAdapter<String>(getActivity(), validShutterSpeeds);
 
             exposureAdapter.setItemResource(R.layout.wheel_text_centered);
-            exposureAdapter.setItemTextResource();
+            exposureAdapter.setItemTextResource(R.id.text);
             mBrampStart.setViewAdapter(exposureAdapter);
         }
 
@@ -576,10 +576,10 @@ public class BrampingFragment extends PulseSequenceFragment implements DialpadMa
             setMaxExposure(mBrampEnd, interval);
         } else {
             String[] validShutterSpeeds = getValidShutterSpeeds();
-            ArrayWheelAdapter<String> exposureAdapter = new ArrayWheelAdapter<>(getActivity(), validShutterSpeeds);
+            ArrayWheelAdapter<String> exposureAdapter = new ArrayWheelAdapter<String>(getActivity(), validShutterSpeeds);
 
             exposureAdapter.setItemResource(R.layout.wheel_text_centered);
-            exposureAdapter.setItemTextResource();
+            exposureAdapter.setItemTextResource(R.id.text);
             mBrampEnd.setViewAdapter(exposureAdapter);
         }
 
@@ -593,9 +593,11 @@ public class BrampingFragment extends PulseSequenceFragment implements DialpadMa
         seconds = seconds - minutes * 60;
         hours = minutes / 60;
         minutes = minutes - hours * 60;
-
-        return String.valueOf(hours) + "h " + String.format("%02d", minutes) + "m " + String.format("%02d", seconds) + "s";
+        StringBuilder formattedTime = new StringBuilder().append(hours).append("h ").append(String.format("%02d", minutes)).append("m ").append(String.format("%02d", seconds)).append("s")
 //				.append(String.format("%02d", hundreds))
+                ;
+
+        return formattedTime.toString();
 
     }
 

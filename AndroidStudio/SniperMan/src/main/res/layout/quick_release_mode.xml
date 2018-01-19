@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<at.photosniper.view.TTLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:background="@color/tt_black"
-                                    android:orientation="vertical">
+<at.photosniper.view.PhotoSniperLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="match_parent"
+                                             android:background="@color/tt_black"
+                                             android:orientation="vertical">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -65,4 +65,4 @@
             android:padding="6dp"/>
     </FrameLayout>
 
-</at.photosniper.view.TTLinearLayout>
+</at.photosniper.view.PhotoSniperLinearLayout>

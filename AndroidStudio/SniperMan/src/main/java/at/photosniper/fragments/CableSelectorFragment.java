@@ -32,7 +32,7 @@ import at.photosniper.R;
  * @author scottmellors
  * @since 2.3
  */
-public class CableSelectorFragment extends TriggertrapFragment {
+public class CableSelectorFragment extends PhotoSniperBaseFragment {
 
     private static final String CABLE_CB1 = "CB1";
     private static final String CABLE_DC0 = "DC0";

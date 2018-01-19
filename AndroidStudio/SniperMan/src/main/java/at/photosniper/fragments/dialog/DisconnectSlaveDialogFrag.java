@@ -5,9 +5,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import at.photosniper.PhotoSniperApp;
 import at.photosniper.R;
 
-import at.photosniper.TTApp;
 import eu.inmite.android.lib.dialogs.BaseDialogFragment;
 import eu.inmite.android.lib.dialogs.SimpleDialogFragment;
 
@@ -46,7 +46,7 @@ public class DisconnectSlaveDialogFrag extends SimpleDialogFragment {
         builder.setPositiveButton(getResources().getString(R.string.ok), new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFragmentManager().findFragmentByTag(TTApp.FragmentTags.WIFI_MASTER).onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, getActivity().getIntent());
+                getFragmentManager().findFragmentByTag(PhotoSniperApp.FragmentTags.WIFI_MASTER).onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, getActivity().getIntent());
                 dismiss();
             }
         });
@@ -56,7 +56,7 @@ public class DisconnectSlaveDialogFrag extends SimpleDialogFragment {
             @Override
             public void onClick(View v) {
 
-                getFragmentManager().findFragmentByTag(TTApp.FragmentTags.WIFI_MASTER).onActivityResult(getTargetRequestCode(), Activity.RESULT_CANCELED, getActivity().getIntent());
+                getFragmentManager().findFragmentByTag(PhotoSniperApp.FragmentTags.WIFI_MASTER).onActivityResult(getTargetRequestCode(), Activity.RESULT_CANCELED, getActivity().getIntent());
                 dismiss();
             }
         });

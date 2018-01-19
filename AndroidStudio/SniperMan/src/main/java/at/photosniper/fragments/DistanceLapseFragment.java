@@ -19,9 +19,9 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
+import at.photosniper.PhotoSniperApp;
 import at.photosniper.R;
 
-import at.photosniper.TTApp;
 import at.photosniper.fragments.dialog.EnableGPSDialog;
 import at.photosniper.fragments.preference.SettingsFragment;
 import at.photosniper.util.DialpadManager;
@@ -30,7 +30,7 @@ import at.photosniper.widget.NumericView;
 import at.photosniper.widget.OngoingButton;
 import at.photosniper.widget.TimerView;
 
-public class DistanceLapseFragment extends TriggertrapFragment {
+public class DistanceLapseFragment extends PhotoSniperBaseFragment {
 
     private static final String TAG = DistanceLapseFragment.class.getSimpleName();
     private DialpadManager.InputSelectionListener mInputListener = null;
@@ -86,7 +86,7 @@ public class DistanceLapseFragment extends TriggertrapFragment {
     };
 
     public DistanceLapseFragment() {
-        mRunningAction = TTApp.OnGoingAction.DISTANCE_LAPSE;
+        mRunningAction = PhotoSniperApp.OnGoingAction.DISTANCE_LAPSE;
     }
 
     @Override
@@ -141,15 +141,15 @@ public class DistanceLapseFragment extends TriggertrapFragment {
         mDistanceRemainingText = (TextView) mRootView.findViewById(R.id.remainingDistance);
         mSpeed = (TextView) mRootView.findViewById(R.id.speed);
         mDistanceUnits = (TextView) mRootView.findViewById(R.id.distanceText2);
-        if (TTApp.getInstance(getActivity()).getDistlapseUnit() == SettingsFragment.DistanceUnits.MILES_YARDS) {
+        if (PhotoSniperApp.getInstance(getActivity()).getDistlapseUnit() == SettingsFragment.DistanceUnits.MILES_YARDS) {
             mDistanceUnits.setText(getActivity().getResources().getString(R.string.yards));
         }
         mSpeedUnits = (TextView) mRootView.findViewById(R.id.speedUnits);
-        if (TTApp.getInstance(getActivity()).getDistlapseSpeedUnit() == SettingsFragment.DistanceSpeedUnit.KILOMETERS_PER_HOUR) {
+        if (PhotoSniperApp.getInstance(getActivity()).getDistlapseSpeedUnit() == SettingsFragment.DistanceSpeedUnit.KILOMETERS_PER_HOUR) {
             mSpeedUnits.setText(getActivity().getResources().getString(R.string.km_h));
-        } else if (TTApp.getInstance(getActivity()).getDistlapseSpeedUnit() == SettingsFragment.DistanceSpeedUnit.MILES_PER_HOUR) {
+        } else if (PhotoSniperApp.getInstance(getActivity()).getDistlapseSpeedUnit() == SettingsFragment.DistanceSpeedUnit.MILES_PER_HOUR) {
             mSpeedUnits.setText(getActivity().getResources().getString(R.string.mph));
-        } else if (TTApp.getInstance(getActivity()).getDistlapseSpeedUnit() == SettingsFragment.DistanceSpeedUnit.METERS_PER_SECOND) {
+        } else if (PhotoSniperApp.getInstance(getActivity()).getDistlapseSpeedUnit() == SettingsFragment.DistanceSpeedUnit.METERS_PER_SECOND) {
             mSpeedUnits.setText(getActivity().getResources().getString(R.string.m_s));
         }
 
@@ -165,7 +165,7 @@ public class DistanceLapseFragment extends TriggertrapFragment {
     public void onStop() {
         super.onStop();
         //Persist the state of the distancelapse mode
-        TTApp.getInstance(getActivity()).setDistanceLapseDistance(mNumericInput.getValue());
+        PhotoSniperApp.getInstance(getActivity()).setDistanceLapseDistance(mNumericInput.getValue());
     }
 
     @Override
@@ -205,7 +205,7 @@ public class DistanceLapseFragment extends TriggertrapFragment {
             //TODO restore state for rotation
         } else {
             //Restore state of DistanceLapse from persistent storage
-            mDistanceTrigger = TTApp.getInstance(getActivity()).getDistanceLapseDistance();
+            mDistanceTrigger = PhotoSniperApp.getInstance(getActivity()).getDistanceLapseDistance();
 
         }
         mNumericInput.initValue(mDistanceTrigger);
@@ -272,9 +272,9 @@ public class DistanceLapseFragment extends TriggertrapFragment {
             mProgressArc.setProgress(0);
             mSpeed.setText("0.00");
             String distanceUnit = " ";
-            if (TTApp.getInstance(getActivity()).getDistlapseUnit() == SettingsFragment.DistanceUnits.MILES_YARDS) {
+            if (PhotoSniperApp.getInstance(getActivity()).getDistlapseUnit() == SettingsFragment.DistanceUnits.MILES_YARDS) {
                 distanceUnit += getActivity().getResources().getString(R.string.yard_abrievation);
-            } else if (TTApp.getInstance(getActivity()).getDistlapseUnit() == SettingsFragment.DistanceUnits.METERS_KILOMETERS) {
+            } else if (PhotoSniperApp.getInstance(getActivity()).getDistlapseUnit() == SettingsFragment.DistanceUnits.METERS_KILOMETERS) {
                 distanceUnit += getActivity().getResources().getString(R.string.meter_abrievation);
             }
             mDistanceTraveledText.setText(String.valueOf(0) + distanceUnit);
@@ -302,16 +302,16 @@ public class DistanceLapseFragment extends TriggertrapFragment {
 
         //Calculate speed for kmh , mph and m/s
         float speedAdjusted = 0f;
-        if (TTApp.getInstance(getActivity()).getDistlapseSpeedUnit() == SettingsFragment.DistanceSpeedUnit.KILOMETERS_PER_HOUR) {
+        if (PhotoSniperApp.getInstance(getActivity()).getDistlapseSpeedUnit() == SettingsFragment.DistanceSpeedUnit.KILOMETERS_PER_HOUR) {
             speedAdjusted = speed * 3.6f;
-        } else if (TTApp.getInstance(getActivity()).getDistlapseSpeedUnit() == SettingsFragment.DistanceSpeedUnit.MILES_PER_HOUR) {
+        } else if (PhotoSniperApp.getInstance(getActivity()).getDistlapseSpeedUnit() == SettingsFragment.DistanceSpeedUnit.MILES_PER_HOUR) {
             speedAdjusted = speed * 2.2369f;
         } else {
             speedAdjusted = speed;
         }
         String result = String.format("%.2f", speedAdjusted);
 
-        if (TTApp.getInstance(getActivity()).getDistlapseUnit() == SettingsFragment.DistanceUnits.MILES_YARDS) {
+        if (PhotoSniperApp.getInstance(getActivity()).getDistlapseUnit() == SettingsFragment.DistanceUnits.MILES_YARDS) {
             //Convert distance traveled to yards
             distanceTraveled = distanceTraveled * 1.093f;
         }
@@ -340,9 +340,9 @@ public class DistanceLapseFragment extends TriggertrapFragment {
 
         mSpeed.setText(result);
         String distanceUnit = " ";
-        if (TTApp.getInstance(getActivity()).getDistlapseUnit() == SettingsFragment.DistanceUnits.MILES_YARDS) {
+        if (PhotoSniperApp.getInstance(getActivity()).getDistlapseUnit() == SettingsFragment.DistanceUnits.MILES_YARDS) {
             distanceUnit += getActivity().getResources().getString(R.string.yard_abrievation);
-        } else if (TTApp.getInstance(getActivity()).getDistlapseUnit() == SettingsFragment.DistanceUnits.METERS_KILOMETERS) {
+        } else if (PhotoSniperApp.getInstance(getActivity()).getDistlapseUnit() == SettingsFragment.DistanceUnits.METERS_KILOMETERS) {
             distanceUnit += getActivity().getResources().getString(R.string.meter_abrievation);
         }
         mDistanceTraveledText.setText(String.valueOf((int) mDistanceTraveled) + distanceUnit);

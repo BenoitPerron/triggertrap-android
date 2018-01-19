@@ -8,7 +8,7 @@ import android.view.View;
 
 import at.photosniper.R;
 
-import at.photosniper.TTApp;
+import at.photosniper.PhotoSniperApp;
 import eu.inmite.android.lib.dialogs.BaseDialogFragment;
 import eu.inmite.android.lib.dialogs.SimpleDialogFragment;
 
@@ -32,9 +32,9 @@ public class ToPlayStoreDialog extends SimpleDialogFragment {
         dialog.show(activity.getFragmentManager(), TAG);
     }
 
-    public void show(Activity activity) {
+    public void show(Activity activity, boolean b) {
         ToPlayStoreDialog dialog = new ToPlayStoreDialog();
-        dialog.setIsLoveDialog(true);
+        dialog.setIsLoveDialog(b);
         dialog.show(activity.getFragmentManager(), TAG);
     }
 
@@ -54,8 +54,8 @@ public class ToPlayStoreDialog extends SimpleDialogFragment {
         builder.setPositiveButton(R.string.to_play_positive, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TTApp.getInstance(getActivity()).setShowDialogAgain();
-                getActivity().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.at.the.gogo.photosniper")));
+                PhotoSniperApp.getInstance(getActivity()).setShowDialogAgain();
+                getActivity().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=at.photosniper")));
                 dismiss();
             }
         });
@@ -64,7 +64,7 @@ public class ToPlayStoreDialog extends SimpleDialogFragment {
 
             @Override
             public void onClick(View v) {
-                TTApp.getInstance(getActivity()).setLaunchCount(RESETCOUNTVAL);
+                PhotoSniperApp.getInstance(getActivity()).setLaunchCount(RESETCOUNTVAL);
                 dismiss();
             }
         });
@@ -74,7 +74,7 @@ public class ToPlayStoreDialog extends SimpleDialogFragment {
             @Override
             public void onClick(View v) {
 
-                TTApp.getInstance(getActivity()).setShowDialogAgain();
+                PhotoSniperApp.getInstance(getActivity()).setShowDialogAgain();
                 dismiss();
             }
         });

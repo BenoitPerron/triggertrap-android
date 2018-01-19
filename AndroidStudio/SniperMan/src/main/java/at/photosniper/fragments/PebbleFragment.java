@@ -17,13 +17,13 @@ import android.widget.TextView;
 
 import at.photosniper.R;
 
-import at.photosniper.TTApp;
+import at.photosniper.PhotoSniperApp;
 import at.photosniper.outputs.OutputDispatcher;
 import at.photosniper.widget.OngoingButton;
 
 //import com.getpebble.android.kit.PebbleKit;
 
-public class PebbleFragment extends TriggertrapFragment {
+public class PebbleFragment extends PhotoSniperBaseFragment {
 
     private static final String TAG = PebbleFragment.class.getSimpleName();
     //    private final static UUID PEBBLE_APP_UUID = UUID.fromString("96439271-2DE4-4209-A68C-5571CF2C418E");
@@ -45,7 +45,7 @@ public class PebbleFragment extends TriggertrapFragment {
     private Handler mHandler = new Handler();
 
     public PebbleFragment() {
-        mRunningAction = TTApp.OnGoingAction.PEBBLE;
+        mRunningAction = PhotoSniperApp.OnGoingAction.PEBBLE;
     }
 
     @Override
@@ -82,10 +82,10 @@ public class PebbleFragment extends TriggertrapFragment {
 
         Bundle fragmentState = getArguments();
         if (fragmentState != null) {
-            String tag = fragmentState.getString(TriggertrapFragment.BundleKey.FRAGMENT_TAG);
+            String tag = fragmentState.getString(PhotoSniperBaseFragment.BundleKey.FRAGMENT_TAG);
             // Is this bundle for this Fragment?
             if (tag.equals(getTag())) {
-                boolean isActive = fragmentState.getBoolean(TriggertrapFragment.BundleKey.IS_ACTION_ACTIVE, false);
+                boolean isActive = fragmentState.getBoolean(PhotoSniperBaseFragment.BundleKey.IS_ACTION_ACTIVE, false);
                 if (isActive) {
                     mState = State.STARTED;
                 } else {

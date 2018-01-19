@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<at.photosniper.view.TTLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:orientation="horizontal">
+<at.photosniper.view.PhotoSniperLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="match_parent"
+                                             android:orientation="horizontal">
 
     <FrameLayout
         android:id="@+id/top"
@@ -101,4 +101,4 @@
             android:padding="20dp"/>
     </FrameLayout>
 
-</at.photosniper.view.TTLinearLayout>
+</at.photosniper.view.PhotoSniperLinearLayout>

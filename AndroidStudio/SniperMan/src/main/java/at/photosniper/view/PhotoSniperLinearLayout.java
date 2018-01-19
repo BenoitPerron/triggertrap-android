@@ -4,18 +4,18 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
 
-public class TTLinearLayout extends LinearLayout {
+public class PhotoSniperLinearLayout extends LinearLayout {
 
-    public TTLinearLayout(Context context) {
+    public PhotoSniperLinearLayout(Context context) {
         super(context);
     }
 
-    public TTLinearLayout(Context context, AttributeSet attrs) {
+    public PhotoSniperLinearLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         // TODO Auto-generated constructor stub
     }
 
-    public TTLinearLayout(Context context, AttributeSet attrs, int defStyle) {
+    public PhotoSniperLinearLayout(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         // TODO Auto-generated constructor stub
     }

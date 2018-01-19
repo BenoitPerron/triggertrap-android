@@ -7,7 +7,7 @@ import android.view.View;
 
 import at.photosniper.R;
 
-import at.photosniper.TTApp;
+import at.photosniper.PhotoSniperApp;
 import eu.inmite.android.lib.dialogs.BaseDialogFragment;
 import eu.inmite.android.lib.dialogs.SimpleDialogFragment;
 
@@ -27,7 +27,7 @@ public class ScopeFeelingsDialog extends SimpleDialogFragment {
     public void show(Context context, Activity activity) {
         ScopeFeelingsDialog dialog = new ScopeFeelingsDialog();
 
-        TTApp.getInstance(context).setLaunchCount(RESETCOUNTVAL);
+        PhotoSniperApp.getInstance(context).setLaunchCount(RESETCOUNTVAL);
         dialog.show(activity.getFragmentManager(), TAG);
     }
 
@@ -59,7 +59,7 @@ public class ScopeFeelingsDialog extends SimpleDialogFragment {
 
             @Override
             public void onClick(View v) {
-                TTApp.getInstance(getActivity()).setShowDialogAgain();
+                PhotoSniperApp.getInstance(getActivity()).setShowDialogAgain();
 
                 dismiss();
 

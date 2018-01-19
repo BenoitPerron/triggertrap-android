@@ -18,14 +18,14 @@ import javax.jmdns.ServiceEvent;
 import javax.jmdns.ServiceInfo;
 import javax.jmdns.ServiceListener;
 
-import at.photosniper.service.TriggertrapService;
+import at.photosniper.service.SniperManService;
 
 public class ZeroConfJmdns implements IZeroConf, MasterServer.ServerConnectionListener {
     private static final String TAG = ZeroConfJmdns.class.getSimpleName();
     private static final String TT_SERVER_NAME = "TT_Master_device";
     private static final String TT_SERVICE_TYPE = "_triggertrap._tcp.local.";
     WifiManager.MulticastLock lock;
-    private final TriggertrapService mParentService;
+    private final SniperManService mParentService;
     private JmDNS jmdnsMaster = null;
     private JmDNS jmdnsWatcher = null;
     private final ServiceListener listener;
@@ -38,7 +38,7 @@ public class ZeroConfJmdns implements IZeroConf, MasterServer.ServerConnectionLi
 
     private final ArrayList<ServiceInfo> masters = new ArrayList<>();
 
-    public ZeroConfJmdns(TriggertrapService parentService) {
+    public ZeroConfJmdns(SniperManService parentService) {
         mParentService = parentService;
         listener = new ServiceListener() {
 
@@ -138,7 +138,7 @@ public class ZeroConfJmdns implements IZeroConf, MasterServer.ServerConnectionLi
                 e.printStackTrace();
             }
         }
-        TTServiceInfo info = new TTServiceInfo(serverName, "", portNumber);
+        PhotoSniperServiceInfo info = new PhotoSniperServiceInfo(serverName, "", portNumber);
         mParentService.onWifiMasterRegistered(info);
     }
 
@@ -167,7 +167,7 @@ public class ZeroConfJmdns implements IZeroConf, MasterServer.ServerConnectionLi
         masterServer.disconnectClient(uniqueSlaveName);
     }
 
-    public ArrayList<TTSlaveInfo> getConnectedSlaves() {
+    public ArrayList<PhotoSniperSlaveInfo> getConnectedSlaves() {
         return masterServer.getConnectedSlaves();
     }
 
