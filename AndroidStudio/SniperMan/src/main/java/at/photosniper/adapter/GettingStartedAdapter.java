@@ -19,13 +19,13 @@ public class GettingStartedAdapter extends PagerAdapter {
     private static final String TAG = GettingStartedAdapter.class.getSimpleName();
 
     private static final int PAGE_COUNT = 4;
-    private LayoutInflater mInflator;
+    private final LayoutInflater mInflator;
     private Typeface SAN_SERIF_LIGHT = null;
-    private String[] titles;
-    private String[] headers;
-    private String[] bodies;
-    private String[] footers;
-    private Context mContext;
+    private final String[] titles;
+    private final String[] headers;
+    private final String[] bodies;
+    private final String[] footers;
+    private final Context mContext;
 
     public GettingStartedAdapter(Context ctx) {
         mContext = ctx;

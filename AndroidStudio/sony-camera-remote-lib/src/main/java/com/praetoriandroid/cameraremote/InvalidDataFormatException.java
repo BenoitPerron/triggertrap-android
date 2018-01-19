@@ -1,6 +1,6 @@
 package com.praetoriandroid.cameraremote;
 
-public class InvalidDataFormatException extends ParseException {
+class InvalidDataFormatException extends ParseException {
     private static final long serialVersionUID = -4574433030476745933L;
 
     public InvalidDataFormatException() {

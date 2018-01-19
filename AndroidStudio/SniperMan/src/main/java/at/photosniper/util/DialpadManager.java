@@ -22,7 +22,7 @@ public class DialpadManager implements Button.OnClickListener, Button.OnLongClic
 
     private static final String TAG = DialpadManager.class.getSimpleName();
     private final Button mNumbers[] = new Button[10];
-    private Context mContext;
+    private final Context mContext;
     private ImageButton mClear, mOK;
     private int mDialPadSate = DialPadState.HIDDEN;
 
@@ -139,7 +139,7 @@ public class DialpadManager implements Button.OnClickListener, Button.OnLongClic
         for (int i = 0; i < 10; i++) {
             mNumbers[i].setOnClickListener(this);
             mNumbers[i].setText(String.format("%d", i));
-            mNumbers[i].setTag(R.id.numbers_key, new Integer(i));
+            mNumbers[i].setTag(R.id.numbers_key, Integer.valueOf(i));
         }
 
     }
@@ -148,7 +148,7 @@ public class DialpadManager implements Button.OnClickListener, Button.OnLongClic
         return mDialPadSate;
     }
 
-    public void updateDialPad() {
+    private void updateDialPad() {
         if (mDialPadSate == DialPadState.HIDDEN) {
             mDialPadSate = DialPadState.SHOWING;
             mDialPad.setVisibility(View.VISIBLE);

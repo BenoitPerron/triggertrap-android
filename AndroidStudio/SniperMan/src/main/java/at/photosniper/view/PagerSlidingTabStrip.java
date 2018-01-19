@@ -33,16 +33,16 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
     private static final int[] ATTRS = new int[]{android.R.attr.textSize, android.R.attr.textColor};
     private final PageListener pageListener = new PageListener();
     // @formatter:on
-    public OnPageChangeListener delegatePageListener;
-    private LinearLayout.LayoutParams defaultTabLayoutParams;
-    private LinearLayout.LayoutParams expandedTabLayoutParams;
-    private LinearLayout tabsContainer;
+    private OnPageChangeListener delegatePageListener;
+    private final LinearLayout.LayoutParams defaultTabLayoutParams;
+    private final LinearLayout.LayoutParams expandedTabLayoutParams;
+    private final LinearLayout tabsContainer;
     private ViewPager pager;
     private int tabCount;
     private int currentPosition = 0;
     private float currentPositionOffset = 0f;
-    private Paint rectPaint;
-    private Paint dividerPaint;
+    private final Paint rectPaint;
+    private final Paint dividerPaint;
     private boolean checkedTabWidths = false;
     private int indicatorColor = 0xFF666666;
     private int underlineColor = 0x1A000000;
@@ -89,7 +89,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
         underlineHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, underlineHeight, dm);
         dividerPadding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dividerPadding, dm);
         tabPadding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, tabPadding, dm);
-        dividerWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dividerWidth, dm);
+        int dividerWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dividerWidth, dm);
         tabTextSize = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, tabTextSize, dm);
 
         // get system attrs (android:textSize and android:textColor)
@@ -151,7 +151,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
         this.delegatePageListener = listener;
     }
 
-    public void notifyDataSetChanged() {
+    private void notifyDataSetChanged() {
 
         tabsContainer.removeAllViews();
 
@@ -178,11 +178,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
             @Override
             public void onGlobalLayout() {
 
-                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-                    getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                } else {
-                    getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                }
+                getViewTreeObserver().removeOnGlobalLayoutListener(this);
 
                 currentPosition = pager.getCurrentItem();
                 scrollToChild(currentPosition, 0);
@@ -251,11 +247,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
                 // setAllCaps() is only available from API 14, so the upper case is made manually if we are on a
                 // pre-ICS-build
                 if (textAllCaps) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-                        tab.setAllCaps(true);
-                    } else {
-                        tab.setText(tab.getText().toString().toUpperCase(locale));
-                    }
+                    tab.setAllCaps(true);
                 }
             }
         }

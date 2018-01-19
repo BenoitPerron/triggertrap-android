@@ -86,7 +86,7 @@ public class TriggertrapService extends Service implements OutputListener, Slave
     // Wifi vars
     private IZeroConf mZeroConf;
     private SlaveSocket mSlaveSocket;
-    private ArrayList<TTServiceInfo> mAvailableMasters = new ArrayList<TTServiceInfo>();
+    private final ArrayList<TTServiceInfo> mAvailableMasters = new ArrayList<>();
     private String mConnectedMasterName = "";
     private boolean mIsWifiMasterOn = false;
 
@@ -104,13 +104,13 @@ public class TriggertrapService extends Service implements OutputListener, Slave
 
     private NotificationManager mNotificationManager;
     private Notification.Builder mNotificationBuilder;
-    private Handler mHandler = new Handler();
+    private final Handler mHandler = new Handler();
 
     private RemoteViews mRemoteViews;
 
     private Calendar mSequenceStartStopTime;
     // Used for stopping service from Notification bar.
-    private BroadcastReceiver stopServiceReceiver = new BroadcastReceiver() {
+    private final BroadcastReceiver stopServiceReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             stopCurrentAction();
@@ -581,9 +581,8 @@ public class TriggertrapService extends Service implements OutputListener, Slave
         // stackBuilder.addNextIntent(notificationIntent);
         // PendingIntent resultPendingIntent =
         // stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        return contentIntent;
+        return PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
     public void stopSequence() {
@@ -617,7 +616,7 @@ public class TriggertrapService extends Service implements OutputListener, Slave
     /*
      *
      */
-    public void playWifiSlaveBeep() {
+    private void playWifiSlaveBeep() {
 
         if (mListener != null) {
             mListener.onServiceStartSimple();
@@ -726,7 +725,7 @@ public class TriggertrapService extends Service implements OutputListener, Slave
 
     }
 
-    public void finishSelfTimerMode() {
+    private void finishSelfTimerMode() {
         trigger(TTApp.getInstance(this).getBeepLength());
 
         stopSelfTimerMode();
@@ -757,7 +756,7 @@ public class TriggertrapService extends Service implements OutputListener, Slave
         }
         mOnGoingAction = TTApp.OnGoingAction.PRESS_START_STOP;
         mListener.onServiceStopwatchStart();
-        mStopwatchTimer = new StopwatchTimer(5) {
+        mStopwatchTimer = new StopwatchTimer() {
             private final int FIVE_TENTHS_INTERVAL = 9;
             private int intervalCount = 0;
 
@@ -793,7 +792,7 @@ public class TriggertrapService extends Service implements OutputListener, Slave
         }
         mOnGoingAction = TTApp.OnGoingAction.PRESS_AND_HOLD;
         mListener.onServicePressStart();
-        mStopwatchTimer = new StopwatchTimer(5) {
+        mStopwatchTimer = new StopwatchTimer() {
             @Override
             public void onTick(long millisUntilFinished) {
                 if (mListener != null && !mIsRunningInForeground) {
@@ -823,7 +822,7 @@ public class TriggertrapService extends Service implements OutputListener, Slave
         }
         mOnGoingAction = TTApp.OnGoingAction.QUICK_RELEASE;
         mListener.onServicePressStart();
-        mStopwatchTimer = new StopwatchTimer(5) {
+        mStopwatchTimer = new StopwatchTimer() {
             @Override
             public void onTick(long millisUntilFinished) {
                 if (mListener != null && !mIsRunningInForeground) {
@@ -1070,7 +1069,7 @@ public class TriggertrapService extends Service implements OutputListener, Slave
         mListener.onClientDisconnected(name, uniqueName);
     }
 
-    public void connectToMaster(String name, String ipAddress, int port) {
+    private void connectToMaster(String name, String ipAddress, int port) {
         Log.d(TAG, "Connect to master");
         if (mSlaveSocket == null) {
             mSlaveSocket = new SlaveSocket(this);
@@ -1084,7 +1083,7 @@ public class TriggertrapService extends Service implements OutputListener, Slave
 
     }
 
-    public void disconnectFromMaster() {
+    private void disconnectFromMaster() {
         Log.d(TAG, "Disconnect from master");
         if (mSlaveSocket != null) {
             Log.d(TAG, "Closing the slave socket");
@@ -1100,7 +1099,7 @@ public class TriggertrapService extends Service implements OutputListener, Slave
         //mPebbleController.startPebble();
     }
 
-    public void stopPebble() {
+    private void stopPebble() {
         //mPebbleController.stopPebble();
         mOnGoingAction = TTApp.OnGoingAction.NONE;
         mState = State.IDLE;

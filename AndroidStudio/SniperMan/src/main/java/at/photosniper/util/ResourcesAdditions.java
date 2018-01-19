@@ -14,7 +14,7 @@ import org.xmlpull.v1.XmlPullParserException;
 /**
  * @author Cyril Mottier
  */
-public final class ResourcesAdditions {
+final class ResourcesAdditions {
 
     private ResourcesAdditions() {
         // No instance

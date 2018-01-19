@@ -52,7 +52,7 @@ public class WheelHorizontalView extends AbstractWheelView {
     /**
      * The width of the selection divider.
      */
-    protected int mSelectionDividerWidth;
+    private int mSelectionDividerWidth;
 
     // Item width
     private int itemWidth = 0;

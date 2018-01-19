@@ -21,13 +21,12 @@ public class GettingStartedFragment extends TriggertrapFragment {
     private static final int PAGER_INTERVAL = 5000;
 
     private ViewPager mPager;
-    private LinePageIndicator mIndicator;
     private GettingStartedAdapter mAdapter;
 
     private int mCurrentPage = 0;
-    private Handler mHandler = new Handler();
+    private final Handler mHandler = new Handler();
 
-    private Runnable timerTask = new Runnable() {
+    private final Runnable timerTask = new Runnable() {
         public void run() {
 
             mCurrentPage++;
@@ -52,7 +51,7 @@ public class GettingStartedFragment extends TriggertrapFragment {
         View rootView = inflater.inflate(R.layout.getting_started, container, false);
 
         mPager = (ViewPager) rootView.findViewById(R.id.pager);
-        mIndicator = (LinePageIndicator) rootView.findViewById(R.id.indicator);
+        LinePageIndicator mIndicator = (LinePageIndicator) rootView.findViewById(R.id.indicator);
 
         mPager.setAdapter(mAdapter);
         mIndicator.setViewPager(mPager);

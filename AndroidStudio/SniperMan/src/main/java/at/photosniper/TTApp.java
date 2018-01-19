@@ -11,34 +11,34 @@ import at.photosniper.util.RPC;
 
 public class TTApp {
 
-    public static final int TIMELASPE_INTERVAL_DEFAULT = 1000;
-    public static final int TIME_MODE_TIME_DEFAULT = 30000;
-    public static final int SELF_TIME_MODE_TIME_DEFAULT = 30000;
-    public static final int SOUND_SENSOR_THRESHOLD_DEFAULT = 50;
-    public static final int SOUND_SENSOR_SENSITIVTY_DEFAULT = 50;
-    public static final int STAR_TRAIL_ITERATIONS_DEFAULT = 10;
-    public static final long STAR_TRAIL_EXPOSURE_DEFAULT = 90000;
-    public static final long STAR_TRAIL_GAP_DEFAULT = 5000;
-    public static final long LE_HDR_MIDDLE_EXPOSURE_DEFAULT = 2000;
-    public static final int LE_HDR_NUM_EXPOSURES_DEFAULT = 3;
-    public static final float LE_HDR_EV_STEP_DEFAULT = 0.5f;
-    public static final long LE_HDR_TIMELPASE_MIDDLE_EXPOSURE_DEFAULT = 2000;
-    public static final long LE_HDR_TIMELPASE_INTERVAL_DEFAULT = 10000;
-    public static final long BRAMPING_START_EXPOSURE_DEFAULT = 2000;
-    public static final long BRAMPING_END_EXPOSURE_DEFAULT = 8000;
+    private static final int TIMELASPE_INTERVAL_DEFAULT = 1000;
+    private static final int TIME_MODE_TIME_DEFAULT = 30000;
+    private static final int SELF_TIME_MODE_TIME_DEFAULT = 30000;
+    private static final int SOUND_SENSOR_THRESHOLD_DEFAULT = 50;
+    private static final int SOUND_SENSOR_SENSITIVTY_DEFAULT = 50;
+    private static final int STAR_TRAIL_ITERATIONS_DEFAULT = 10;
+    private static final long STAR_TRAIL_EXPOSURE_DEFAULT = 90000;
+    private static final long STAR_TRAIL_GAP_DEFAULT = 5000;
+    private static final long LE_HDR_MIDDLE_EXPOSURE_DEFAULT = 2000;
+    private static final int LE_HDR_NUM_EXPOSURES_DEFAULT = 3;
+    private static final float LE_HDR_EV_STEP_DEFAULT = 0.5f;
+    private static final long LE_HDR_TIMELPASE_MIDDLE_EXPOSURE_DEFAULT = 2000;
+    private static final long LE_HDR_TIMELPASE_INTERVAL_DEFAULT = 10000;
+    private static final long BRAMPING_START_EXPOSURE_DEFAULT = 2000;
+    private static final long BRAMPING_END_EXPOSURE_DEFAULT = 8000;
     public static final int DISTANCELAPSE_DISTANCE_DEFAULT = 25;
-    public static final int TIMEWARP_INTERATIONS_DEAFAULT = 100;
-    public static final long TIMEWARP_DURATION_DEFAULT = 3600000;
-    public static final float TIMEWARP_CONTROL1_X_DEFAULT = 0.5f;
-    public static final float TIMEWARP_CONTROL1_Y_DEFAULT = 0.0f;
-    public static final float TIMEWARP_CONTROL2_X_DEFAULT = 0.5f;
-    public static final float TIMEWARP_CONTROL2_Y_DEFAULT = 1.0f;
-    public static final String WIFI_SLAVE_LAST_MASTER_DEFAULT = "";
-    public static final Boolean WIFI_MASTER_IS_ON_DEFAULT = false;
-    public static final Boolean SHOW_DIALOG_AGAIN_DEFAULT = true;
-    public static final int LAUNCH_COUNT_DEFAULT = 0;
-    public static final long FIRST_LAUNCH_DEFAULT = 0;
-    public static final int ND_FILTER_SHUTTER_SPEED_DEFAULT = 0;
+    private static final int TIMEWARP_INTERATIONS_DEAFAULT = 100;
+    private static final long TIMEWARP_DURATION_DEFAULT = 3600000;
+    private static final float TIMEWARP_CONTROL1_X_DEFAULT = 0.5f;
+    private static final float TIMEWARP_CONTROL1_Y_DEFAULT = 0.0f;
+    private static final float TIMEWARP_CONTROL2_X_DEFAULT = 0.5f;
+    private static final float TIMEWARP_CONTROL2_Y_DEFAULT = 1.0f;
+    private static final String WIFI_SLAVE_LAST_MASTER_DEFAULT = "";
+    private static final Boolean WIFI_MASTER_IS_ON_DEFAULT = false;
+    private static final Boolean SHOW_DIALOG_AGAIN_DEFAULT = true;
+    private static final int LAUNCH_COUNT_DEFAULT = 0;
+    private static final long FIRST_LAUNCH_DEFAULT = 0;
+    private static final int ND_FILTER_SHUTTER_SPEED_DEFAULT = 0;
     // Shared preference keys
     private static final String TT_PREFS = "triggertrap_prefs";
     private static final String TT_MODE = "tt_mode";
@@ -93,8 +93,8 @@ public class TTApp {
     private final String LAST_ACTION_BAR_LABEL_DEFAULT;
     // Typefaces
     public Typeface SAN_SERIF_LIGHT = null;
-    public Typeface SAN_SERIF_THIN = null;
-    private Context mAppContext;
+    private Typeface SAN_SERIF_THIN = null;
+    private final Context mAppContext;
     private String mLastFragmentTag = UNINITIALIZED_STRING;
     private String mLastActionBarLabel = UNINITIALIZED_STRING;
     private int mLastListItemChecked = UNINITIALIZED;
@@ -254,12 +254,12 @@ public class TTApp {
         return mShowDialogAgain;
     }
 
-    public void setShowDialogAgain(boolean showAgain) {
-        mShowDialogAgain = showAgain;
+    public void setShowDialogAgain() {
+        mShowDialogAgain = false;
 
         SharedPreferences prefs = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
         Editor editor = prefs.edit();
-        editor.putBoolean(TT_SHOW_DIALOG_AGAIN, showAgain);
+        editor.putBoolean(TT_SHOW_DIALOG_AGAIN, false);
         editor.apply();
     }
 

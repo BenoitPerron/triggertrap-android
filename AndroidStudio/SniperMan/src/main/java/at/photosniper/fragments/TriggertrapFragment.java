@@ -9,11 +9,11 @@ import at.photosniper.TTApp;
 
 public class TriggertrapFragment extends Fragment {
 
-    protected Typeface SAN_SERIF_LIGHT = null;
-    protected Typeface SAN_SERIF_THIN = null;
-    protected int mRunningAction = TTApp.OnGoingAction.NONE;
-    protected Bundle mStateBundle;
-    protected int mState = State.STOPPED;
+    Typeface SAN_SERIF_LIGHT = null;
+    Typeface SAN_SERIF_THIN = null;
+    int mRunningAction = TTApp.OnGoingAction.NONE;
+    Bundle mStateBundle;
+    int mState = State.STOPPED;
 
     public TriggertrapFragment() {
 
@@ -37,20 +37,20 @@ public class TriggertrapFragment extends Fragment {
         return mRunningAction;
     }
 
-    public Bundle getStateBundle() {
+    Bundle getStateBundle() {
         mStateBundle = new Bundle();
         mStateBundle.putString(TriggertrapFragment.BundleKey.FRAGMENT_TAG, getTag());
         return mStateBundle;
     }
 
     /*After the volume warning has been shown we need to reset to show again*/
-    public void resetVolumeWarning() {
+    void resetVolumeWarning() {
 //		  Intent intent = new Intent(WarningMessageManager.ACTION);
 //          intent.putExtra(WarningMessageManager.ACTION_TYPE, WarningMessageManager.Action.RESET);
 //          LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(intent);
     }
 
-    public void checkVolume() {
+    void checkVolume() {
 //		  Intent intent = new Intent(WarningMessageManager.ACTION);
 //          intent.putExtra(WarningMessageManager.ACTION_TYPE, WarningMessageManager.Action.SHOW);
 //          LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(intent);
@@ -75,7 +75,7 @@ public class TriggertrapFragment extends Fragment {
         String WIFI_SLAVE_INFO = "wifi_slave_info";
     }
 
-    protected interface State {
+    interface State {
         int STARTED = 0;
         int STOPPED = 1;
     }

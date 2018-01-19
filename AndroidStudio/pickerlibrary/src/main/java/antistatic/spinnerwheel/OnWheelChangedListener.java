@@ -30,7 +30,7 @@ package antistatic.spinnerwheel;
  * <li> New Wheel position is set
  * <li> Wheel view is scrolled
  */
-public interface OnWheelChangedListener {
+interface OnWheelChangedListener {
     /**
      * Callback method to be invoked when current item changed
      *

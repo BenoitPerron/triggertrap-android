@@ -21,18 +21,17 @@ public class WarningMessageManager {
 
     public static final String TAG = WarningMessageManager.class.getSimpleName();
     /*Actions and types */
-    public static final String ACTION = "warning_message_manager_action";
-    public static final String ACTION_TYPE = "action_type";
-    private final int TIMEOUT = 3000;
-    AudioManager mAudioManager;
+    private static final String ACTION = "warning_message_manager_action";
+    private static final String ACTION_TYPE = "action_type";
+    private final AudioManager mAudioManager;
     private int mState = State.READY_TO_SHOW;
-    private Context mContext;
-    private View mMessageView;
-    private Handler mHandler = new Handler();
+    private final Context mContext;
+    private final View mMessageView;
+    private final Handler mHandler = new Handler();
     private int mLastVolume = 0;
-    private AnimationSet mSlideInFromBottom;
-    private Animation mSlideOutToBottom;
-    private Runnable mCancelTask = new Runnable() {
+    private final AnimationSet mSlideInFromBottom;
+    private final Animation mSlideOutToBottom;
+    private final Runnable mCancelTask = new Runnable() {
         public void run() {
             mMessageView.startAnimation(mSlideOutToBottom);
             mMessageView.setVisibility(View.GONE);
@@ -40,7 +39,7 @@ public class WarningMessageManager {
         }
     };
     //Handler for received Events from Settings Fragment
-    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+    private final BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             // Extract data included in the Intent
@@ -113,6 +112,7 @@ public class WarningMessageManager {
         mMessageView.setVisibility(View.VISIBLE);
         mMessageView.startAnimation(mSlideInFromBottom);
         mHandler.removeCallbacks(mCancelTask);
+        int TIMEOUT = 3000;
         mHandler.postDelayed(mCancelTask, TIMEOUT);
     }
 

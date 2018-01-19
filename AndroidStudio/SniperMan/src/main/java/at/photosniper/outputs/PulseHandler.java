@@ -11,19 +11,17 @@ public class PulseHandler implements AudioBeeper.AudioBeeperListener {
     private int count = 0;
     private long[] sequence;
 
-    private AudioBeeper mBeeper;
-
-    private WifiBeeper mWifiBeeper;
+    private final AudioBeeper mBeeper;
 
     private PulseListener mListener;
 
-    public PulseHandler() {
+    private PulseHandler() {
         mBeeper = new AudioBeeper(this, null);
     }
 
     public PulseHandler(PulseListener listener, Context context) {
         mBeeper = new AudioBeeper(this, context);
-        mWifiBeeper = new WifiBeeper(context);
+        WifiBeeper mWifiBeeper = new WifiBeeper(context);
         mListener = listener;
     }
 

@@ -24,7 +24,6 @@ public class SoundSensorFragment extends TriggertrapFragment implements VolumeLi
 
     private ArcProgress mProgressArc;
     private SeekBar mMicSensitivity;
-    private SeekArc mThreshold;
     private TextView mBangText;
     private OngoingButton mButton;
     private int mState = States.MIC_CLOSED;
@@ -70,7 +69,7 @@ public class SoundSensorFragment extends TriggertrapFragment implements VolumeLi
 
         mProgressArc = (ArcProgress) rootView.findViewById(R.id.bangVolumeDisplay);
         mMicSensitivity = (SeekBar) rootView.findViewById(R.id.bangSensitivity);
-        mThreshold = (SeekArc) rootView.findViewById(R.id.bangThreshold);
+        SeekArc mThreshold = (SeekArc) rootView.findViewById(R.id.bangThreshold);
 
         //thresholdIndicator = (ImageButton) rootView.findViewById(R.id.thresholdIndicator);
         mBangText = (TextView) rootView.findViewById(R.id.bangText);
@@ -230,7 +229,7 @@ public class SoundSensorFragment extends TriggertrapFragment implements VolumeLi
 
     @Override
     public void setActionState(boolean actionState) {
-        if (actionState == true) {
+        if (actionState) {
             mState = States.MIC_OPEN;
         } else {
             mState = States.MIC_CLOSED;

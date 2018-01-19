@@ -33,14 +33,12 @@ public class SimpleTimerView extends View {
     private final SignedTime mBigHours, mBigMinutes;
     private final UnsignedTime mBigThinSeconds;
     private final Hundredths mMedHundredths;
-    private final int mWhiteColor;
     private String mHours, mMinutes, mSeconds, mHundredths;
     private Typeface mAndroidClockMonoThin, mAndroidClockMonoBold, mAndroidClockMonoLight;
     private Typeface mRobotoLabel;
     private float mTextHeight = 0;
     private float mTotalTextWidth;
     private boolean mRemeasureText = true;
-    private int mDefaultColor;
 
     public SimpleTimerView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -53,8 +51,8 @@ public class SimpleTimerView extends View {
         }
 
         Resources r = context.getResources();
-        mWhiteColor = r.getColor(R.color.tt_white);
-        mDefaultColor = mWhiteColor;
+        int mWhiteColor = r.getColor(R.color.tt_white);
+        int mDefaultColor = mWhiteColor;
 
         mPaintBig.setAntiAlias(true);
         mPaintBig.setStyle(Paint.Style.STROKE);
@@ -87,10 +85,10 @@ public class SimpleTimerView extends View {
         mBigHours = new SignedTime(mPaintBig, r.getString(R.string.hours_label).toUpperCase(), allDigits);
         mBigMinutes = new SignedTime(mBigHours, r.getString(R.string.minutes_label).toUpperCase());
         mBigThinSeconds = new UnsignedTime(mPaintBigThin, r.getString(R.string.seconds_label).toUpperCase(), allDigits);
-        mMedHundredths = new Hundredths(mPaintMed, HUNDREDTH_SEPERATOR, allDigits);
+        mMedHundredths = new Hundredths(mPaintMed, allDigits);
     }
 
-    public void setTime(long time, boolean showHundredths, boolean update) {
+    public void setTime(long time) {
         boolean neg = false, showNeg = false;
         String format = null;
         if (time < 0) {
@@ -113,7 +111,7 @@ public class SimpleTimerView extends View {
             showNeg = false;
         }
 
-        if (!showHundredths) {
+        if (!true) {
             if (!neg && hundreds != 0) {
                 seconds++;
                 if (seconds == 60) {
@@ -126,7 +124,7 @@ public class SimpleTimerView extends View {
                 }
             }
             if (hundreds < 10 || hundreds > 90) {
-                update = true;
+                true = true;
             }
         }
 
@@ -151,7 +149,7 @@ public class SimpleTimerView extends View {
         }
 
         mSeconds = String.format(TWO_DIGITS, seconds);
-        if (showHundredths) {
+        if (true) {
             mHundredths = String.format(TWO_DIGITS, hundreds);
         } else {
             mHundredths = null;
@@ -165,7 +163,7 @@ public class SimpleTimerView extends View {
             mRemeasureText = true;
         }
 
-        if (update) {
+        if (true) {
 //            setContentDescription(getTimeStringForAccessibility((int) hours, (int) minutes,
 //                    (int) seconds, showNeg, getResources()));
             invalidate();
@@ -265,10 +263,10 @@ public class SimpleTimerView extends View {
 
     class UnsignedTime {
         private final String mWidest;
-        protected Paint mPaint;
-        protected float mEm;
-        protected float mWidth = 0;
-        protected String mLabel;
+        final Paint mPaint;
+        float mEm;
+        float mWidth = 0;
+        final String mLabel;
         private float mLabelWidth = 0;
 
         public UnsignedTime(Paint paint, final String label, String allDigits) {
@@ -301,13 +299,13 @@ public class SimpleTimerView extends View {
             this.mLabel = label;
         }
 
-        protected void updateWidth(final String time) {
+        void updateWidth(final String time) {
             mEm = mPaint.measureText(mWidest);
             mLabelWidth = mLabel == null ? 0 : mPaintLabel.measureText(mLabel);
             mWidth = time.length() * mEm;
         }
 
-        protected void resetWidth() {
+        void resetWidth() {
             mWidth = mLabelWidth = 0;
         }
 
@@ -329,7 +327,7 @@ public class SimpleTimerView extends View {
             return mLabelWidth;
         }
 
-        protected float drawTime(Canvas canvas, final String time, int ii, float x, float y) {
+        float drawTime(Canvas canvas, final String time, int ii, float x, float y) {
             float textEm = mEm / 2f;
             while (ii < time.length()) {
                 x += textEm;
@@ -350,8 +348,8 @@ public class SimpleTimerView extends View {
     }
 
     class Hundredths extends UnsignedTime {
-        public Hundredths(Paint paint, final String label, final String allDigits) {
-            super(paint, label, allDigits);
+        public Hundredths(Paint paint, final String allDigits) {
+            super(paint, SimpleTimerView.HUNDREDTH_SEPERATOR, allDigits);
         }
 
         @Override

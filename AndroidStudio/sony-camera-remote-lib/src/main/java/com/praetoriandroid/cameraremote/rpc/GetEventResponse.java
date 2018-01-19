@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class GetEventResponse extends BaseResponse<EventEntity> {
 
-    private transient Map<Class<? extends EventEntity>, EventEntity> entities = new HashMap<Class<? extends EventEntity>, EventEntity>();
+    private final transient Map<Class<? extends EventEntity>, EventEntity> entities = new HashMap<>();
 
     void postProcess() {
         for (EventEntity entity : getResult()) {

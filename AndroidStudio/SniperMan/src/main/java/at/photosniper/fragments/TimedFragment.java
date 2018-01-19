@@ -31,7 +31,6 @@ public class TimedFragment extends TriggertrapFragment {
     private View mButtonContainer;
 
     private View mCountDownLayout;
-    private View mTimedInputView;
     private CountingTimerView mTimerText;
     private CircleTimerView mCircleTimerView;
 
@@ -87,7 +86,7 @@ public class TimedFragment extends TriggertrapFragment {
         mRootView = inflater.inflate(R.layout.timed, container, false);
         TextView title = (TextView) mRootView.findViewById(R.id.timedText);
         title.setTypeface(SAN_SERIF_LIGHT);
-        mTimedInputView = mRootView.findViewById(R.id.timedInputView);
+        View mTimedInputView = mRootView.findViewById(R.id.timedInputView);
         mTimedInputView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -161,7 +160,7 @@ public class TimedFragment extends TriggertrapFragment {
         mCountDownLayout.startAnimation(mSlideInFromTop);
         mCircleTimerView.setPassedTime(0, false);
         mCircleTimerView.setIntervalTime(time);
-        mTimerText.setTime(time, true, false);
+        mTimerText.setTime(time, false);
         mCircleTimerView.startIntervalAnimation();
         mState = State.STARTED;
         mTimerDuration = time;
@@ -177,7 +176,7 @@ public class TimedFragment extends TriggertrapFragment {
     }
 
     public void updateTimer(long time) {
-        mTimerText.setTime(time, true, true);
+        mTimerText.setTime(time, true);
         if (syncCircle) {
             synchroniseCircle(time);
         }
@@ -253,7 +252,7 @@ public class TimedFragment extends TriggertrapFragment {
 
     @Override
     public void setActionState(boolean actionState) {
-        if (actionState == true) {
+        if (actionState) {
             mState = State.STARTED;
         } else {
             mState = State.STOPPED;

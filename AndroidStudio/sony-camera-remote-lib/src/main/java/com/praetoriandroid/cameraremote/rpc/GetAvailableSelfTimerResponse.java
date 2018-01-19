@@ -32,7 +32,7 @@ public class GetAvailableSelfTimerResponse extends BaseResponse<CustomizableEnti
 
     static class IntArrayEntity implements CustomizableEntity {
 
-        private int[] value;
+        private final int[] value;
 
         public IntArrayEntity(int[] value) {
             this.value = value;
@@ -46,7 +46,7 @@ public class GetAvailableSelfTimerResponse extends BaseResponse<CustomizableEnti
 
     static class IntEntity implements CustomizableEntity {
 
-        private int value;
+        private final int value;
 
         public IntEntity(int value) {
             this.value = value;

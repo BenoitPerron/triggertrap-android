@@ -114,7 +114,7 @@ public abstract class EventEntity {
 
         private static final String SIZE_ORIGINAL = "Original";
         private static final String SIZE_2M = "2M";
-        private static final Map<String, Size> sizeMap = new HashMap<String, Size>();
+        private static final Map<String, Size> sizeMap = new HashMap<>();
 
         static {
             sizeMap.put(SIZE_ORIGINAL, Size.ORIGINAL);

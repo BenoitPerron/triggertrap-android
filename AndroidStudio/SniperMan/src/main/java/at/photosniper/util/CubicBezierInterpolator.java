@@ -9,10 +9,6 @@ public class CubicBezierInterpolator implements Interpolator {
 
     private static final String TAG = CubicBezierInterpolator.class.getSimpleName();
 
-    //Algorithm loses accuracy above these levels
-    private final float MAX_VALUE = 0.98f;
-    private final float MIN_VALUE = 0.02f;
-
     private float mX1, mY1, mX2, mY2;
 
     public CubicBezierInterpolator(float x1, float y1, float x2, float y2) {
@@ -55,6 +51,8 @@ public class CubicBezierInterpolator implements Interpolator {
 
 
     private void setControlsInRange(float x1, float y1, float x2, float y2) {
+        float MIN_VALUE = 0.02f;
+        float MAX_VALUE = 0.98f;
         if (x1 > MAX_VALUE) {
             mX1 = MAX_VALUE;
         } else if (x1 < MIN_VALUE) {
@@ -102,9 +100,9 @@ public class CubicBezierInterpolator implements Interpolator {
     }
 
 
-    public long[] getOriginalPauses(long sequenceDuration, int count, long exposure, long gap) {
+    public long[] getOriginalPauses(long sequenceDuration, int count, long exposure) {
 
-        long[] timeIntervals = calculateTimeIntervals(sequenceDuration, count, exposure, gap);
+        long[] timeIntervals = calculateTimeIntervals(sequenceDuration, count, exposure, (long) at.photosniper.fragments.TimeWarpFragment.MINIMUM_TIMEWARP_GAP);
         long pauses[] = new long[count];
         //String orginalPauses = "";
         for (int i = 0; i < count; i++) {
@@ -130,15 +128,15 @@ public class CubicBezierInterpolator implements Interpolator {
         return timeIntervals;
     }
 
-    public long[] getPauses(long sequenceDuration, int count, long exposure, long gap) {
-        ArrayList<Integer> overlapIndicies = new ArrayList<Integer>();
-        ArrayList<Long> adjustedPauses = new ArrayList<Long>();
+    public long[] getPauses(long sequenceDuration, int count, long exposure) {
+        ArrayList<Integer> overlapIndicies = new ArrayList<>();
+        ArrayList<Long> adjustedPauses = new ArrayList<>();
         //long [] timeIntervals = new long[count +1];
         long pauses[] = new long[count];
         //long minInterval = exposure + gap;
         //timeIntervals[count] = sequenceDuration + minInterval;
 
-        long[] timeIntervals = calculateTimeIntervals(sequenceDuration, count, exposure, gap);
+        long[] timeIntervals = calculateTimeIntervals(sequenceDuration, count, exposure, (long) at.photosniper.fragments.TimeWarpFragment.MINIMUM_TIMEWARP_GAP);
 
 //		for (int i = 0; i < count; i++) {
 //			float fraction =  (float) i / (count - 1)  ;
@@ -173,7 +171,7 @@ public class CubicBezierInterpolator implements Interpolator {
                     int startIndex = overlapIndicies.get(overlapCount);
                     int endIndex = overlapIndicies.get(overlapCount + 1);
                     long overlaptimePeriod = timeIntervals[endIndex] - timeIntervals[startIndex];
-                    int numberOfShots = (int) (overlaptimePeriod / (exposure + gap));
+                    int numberOfShots = (int) (overlaptimePeriod / (exposure + (long) at.photosniper.fragments.TimeWarpFragment.MINIMUM_TIMEWARP_GAP));
                     if (numberOfShots != 0) {
                         long newGap = (overlaptimePeriod - (exposure * numberOfShots)) / numberOfShots;
                         for (int j = 0; j < numberOfShots; j++) {

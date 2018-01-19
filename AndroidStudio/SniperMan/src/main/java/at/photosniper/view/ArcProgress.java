@@ -24,7 +24,7 @@ public class ArcProgress extends View {
     private static final int DEFAULT_END_ANGLE = 270;
 
     private float mProgressWidth = DEFAULT_PROGRESS_WIDTH;
-    private int mAngleOffset = -90;
+    private final int mAngleOffset = -90;
     private int mProgress = 0;
     private int mStartAngle = DEFAULT_START_ANGLE;
     private int mEndAngle = DEFAULT_END_ANGLE;
@@ -33,7 +33,7 @@ public class ArcProgress extends View {
     private int mRotation = 0;
     private boolean mClockwise = true;
 
-    private RectF mTempRect = new RectF();
+    private final RectF mTempRect = new RectF();
     private Paint mCirclePaint;
     private Paint mProgressPaint;
 
@@ -196,7 +196,7 @@ public class ArcProgress extends View {
         return mEndProgressAngle;
     }
 
-    public void setEndProgress(int endProgressAngle) {
+    private void setEndProgress(int endProgressAngle) {
         if (endProgressAngle >= mEndAngle) {
             endProgressAngle = mEndAngle;
         }

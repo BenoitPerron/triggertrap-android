@@ -41,7 +41,7 @@ public class ScopeFeelingsDialog extends SimpleDialogFragment {
             public void onClick(View v) {
                 dismiss();
                 ToPlayStoreDialog dialog = new ToPlayStoreDialog();
-                dialog.show(getActivity(), true);
+                dialog.show(getActivity());
             }
         });
 
@@ -59,7 +59,7 @@ public class ScopeFeelingsDialog extends SimpleDialogFragment {
 
             @Override
             public void onClick(View v) {
-                TTApp.getInstance(getActivity()).setShowDialogAgain(false);
+                TTApp.getInstance(getActivity()).setShowDialogAgain();
 
                 dismiss();
 

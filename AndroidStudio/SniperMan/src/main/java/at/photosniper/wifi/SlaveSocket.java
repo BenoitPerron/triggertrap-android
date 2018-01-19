@@ -16,9 +16,9 @@ import java.net.Socket;
 public class SlaveSocket {
     private static final String TAG = SlaveSocket.class.getSimpleName();
 
-    private Handler handler = new Handler();
+    private final Handler handler = new Handler();
     public String callback;
-    public String deviceName = "Android device";
+    private String deviceName = "Android device";
 
     private boolean connected = false;
     private Thread thread = null;
@@ -78,7 +78,7 @@ public class SlaveSocket {
                     PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
                     out.println(deviceName + "\r");
                     Log.i("SlaveSocket", "Sent.");
-                    sendCallback("connected");
+                    sendCallback();
                     while (connected) {
                         try {
                             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -121,11 +121,11 @@ public class SlaveSocket {
         thread.start();
     }
 
-    public void closed() {
+    private void closed() {
         //this.success("closed", this.callback);
     }
 
-    public void sendCallback(String action) {
+    private void sendCallback() {
         //TODO: Implement call backs for UI
 //		PluginResult result = new PluginResult(PluginResult.Status.OK, action);
 //		result.setKeepCallback(true);

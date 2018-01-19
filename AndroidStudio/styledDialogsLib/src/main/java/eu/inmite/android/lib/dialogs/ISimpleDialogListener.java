@@ -22,7 +22,7 @@ package eu.inmite.android.lib.dialogs;
  * @author David Vávra (david@inmite.eu)
  */
 public interface ISimpleDialogListener {
-    public void onPositiveButtonClicked(int requestCode);
+    void onPositiveButtonClicked(int requestCode);
 
-    public void onNegativeButtonClicked(int requestCode);
+    void onNegativeButtonClicked(int requestCode);
 }

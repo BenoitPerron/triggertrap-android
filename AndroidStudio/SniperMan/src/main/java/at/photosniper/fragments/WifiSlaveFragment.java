@@ -30,7 +30,7 @@ import at.photosniper.wifi.TTServiceInfo;
 
 public class WifiSlaveFragment extends TriggertrapFragment {
 
-    public static final int DIALOG_FRAGMENT = 1;
+    private static final int DIALOG_FRAGMENT = 1;
     private static final String TAG = WifiSlaveListener.class.getSimpleName();
     private LinearLayout mMasterListLayout;
     private WifiSlaveListener mlistener;
@@ -221,7 +221,7 @@ public class WifiSlaveFragment extends TriggertrapFragment {
 
     @Override
     public void setActionState(boolean actionState) {
-        if (actionState == true) {
+        if (actionState) {
             mState = State.STARTED;
         } else {
             mState = State.STOPPED;
@@ -257,7 +257,7 @@ public class WifiSlaveFragment extends TriggertrapFragment {
         }
 
         // Create ArrayList of MasterInfo and put in Parcelable
-        ArrayList<MasterInfo> masters = new ArrayList<MasterInfo>();
+        ArrayList<MasterInfo> masters = new ArrayList<>();
         int childCount = mMasterListLayout.getChildCount();
         for (int i = 0; i < childCount; i++) {
             View child = mMasterListLayout.getChildAt(i);
@@ -362,7 +362,7 @@ public class WifiSlaveFragment extends TriggertrapFragment {
         boolean shouldAutoConnected = false;
         String lastMasterName = TTApp.getInstance(getActivity()).getSlaveLastMaster();
         Log.d(TAG, "Last Connected Master: " + lastMasterName);
-        if (lastMasterName.equals(discoveredMasterName) == true) {
+        if (lastMasterName.equals(discoveredMasterName)) {
             shouldAutoConnected = true;
         }
         return shouldAutoConnected;
@@ -488,7 +488,7 @@ public class WifiSlaveFragment extends TriggertrapFragment {
 
     private static class MasterInfo implements Parcelable {
 
-        public static Creator<MasterInfo> CREATOR = new Creator<MasterInfo>() {
+        public static final Creator<MasterInfo> CREATOR = new Creator<MasterInfo>() {
 
             public MasterInfo createFromParcel(Parcel s) {
                 return new MasterInfo(s);

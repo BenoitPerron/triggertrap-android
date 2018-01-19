@@ -59,29 +59,25 @@ public class NumericWheelAdapter extends AbstractWheelTextAdapter {
 
     /**
      * Constructor
-     *
-     * @param context  the current context
+     *  @param context  the current context
      * @param minValue the spinnerwheel min value
-     * @param maxValue the spinnerwheel max value
      */
-    public NumericWheelAdapter(Context context, int minValue, int maxValue) {
-        this(context, minValue, maxValue, null);
+    public NumericWheelAdapter(Context context, int minValue) {
+        this(context, NumericWheelAdapter.DEFAULT_MIN_VALUE, NumericWheelAdapter.DEFAULT_MAX_VALUE);
     }
 
     /**
      * Constructor
-     *
-     * @param context  the current context
+     *  @param context  the current context
      * @param minValue the spinnerwheel min value
      * @param maxValue the spinnerwheel max value
-     * @param format   the format string
      */
-    public NumericWheelAdapter(Context context, int minValue, int maxValue, String format) {
+    public NumericWheelAdapter(Context context, int minValue, int maxValue) {
         super(context);
 
         this.minValue = minValue;
         this.maxValue = maxValue;
-        this.format = format;
+        this.format = null;
     }
 
     @Override

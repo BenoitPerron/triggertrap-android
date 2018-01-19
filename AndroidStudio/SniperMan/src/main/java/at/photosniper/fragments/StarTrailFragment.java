@@ -36,8 +36,6 @@ public class StarTrailFragment extends PulseSequenceFragment {
     private TimerView mGapTimeInput;
 
     private NumericView mNumericInput;
-    private View mExposureTime;
-    private View mGapTime;
     private View mButtonContainer;
     private View mCountDownLayout;
 
@@ -179,8 +177,8 @@ public class StarTrailFragment extends PulseSequenceFragment {
     }
 
     private void setUpTimeInputs() {
-        mExposureTime = mRootView.findViewById(R.id.starExposure);
-        mGapTime = mRootView.findViewById(R.id.starGap);
+        View mExposureTime = mRootView.findViewById(R.id.starExposure);
+        View mGapTime = mRootView.findViewById(R.id.starGap);
         mExposureTimeInput = (TimerView) mExposureTime.findViewById(R.id.timerTimeText);
         mExposureTime.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -299,11 +297,11 @@ public class StarTrailFragment extends PulseSequenceFragment {
             long totaltime = PulseGenerator.getSequenceTime(mPulseSequence);
             Log.d(TAG, "Total time Circle: " + totaltime);
             mCircleTimerView.setIntervalTime(totaltime);
-            mTimerText.setTime(totaltime, true, false);
-            mExposureTimerText.setTime(mPulseSequence[0], true, true);
-            mGapTimerText.setTime(mPulseSequence[1], true, true);
+            mTimerText.setTime(totaltime, false);
+            mExposureTimerText.setTime(mPulseSequence[0]);
+            mGapTimerText.setTime(mPulseSequence[1]);
             mCircleTimerView.startIntervalAnimation();
-            mTimerText.setTime(totaltime, true, false);
+            mTimerText.setTime(totaltime, false);
             String sequenceProgress = 1 + "/" + (mPulseSequence.length / 2);
             mSequenceCountText.setText(sequenceProgress);
 
@@ -333,7 +331,7 @@ public class StarTrailFragment extends PulseSequenceFragment {
 
     @Override
     public void setActionState(boolean actionState) {
-        if (actionState == true) {
+        if (actionState) {
             mState = State.STARTED;
         } else {
             mState = State.STOPPED;
@@ -369,27 +367,27 @@ public class StarTrailFragment extends PulseSequenceFragment {
         if (remainingPulseTime > currentGap) {
             //We need to count down the exposure
             remainingExposure = currentExposure - (timeToNext - remainingPulseTime);
-            mExposureTimerText.setTime(remainingExposure, true, true);
+            mExposureTimerText.setTime(remainingExposure);
             if ((remainingGap == 0) && ((currentSeq * 2) + 1) <= sequence.length) {
                 long nextGap = sequence[(currentSeq * 2) + 1];
-                mGapTimerText.setTime(nextGap, true, true);
+                mGapTimerText.setTime(nextGap);
             } else if (((currentSeq * 2) + 1) > sequence.length) {
-                mGapTimerText.setTime(0, true, true);
+                mGapTimerText.setTime(0);
             }
         } else {
             //We need to count down the gap
             remainingGap = remainingPulseTime;
-            mGapTimerText.setTime(remainingGap, true, true);
+            mGapTimerText.setTime(remainingGap);
             if ((remainingExposure == 0) && ((currentSeq * 2) + 2) < sequence.length) {
                 long nextExposure = sequence[(currentSeq * 2) + 2];
-                mExposureTimerText.setTime(nextExposure, true, true);
+                mExposureTimerText.setTime(nextExposure);
             } else if (((currentSeq * 2) + 2) >= sequence.length) {
-                mExposureTimerText.setTime(0, true, true);
+                mExposureTimerText.setTime(0);
             }
 
         }
 
-        mTimerText.setTime(remainingSequenceTime, true, true);
+        mTimerText.setTime(remainingSequenceTime, true);
         if (remainingPulseTime != 0) {
             if (mSyncCircle) {
                 String sequenceProgress = exposures + "/" + (sequence.length / 2);
@@ -410,7 +408,7 @@ public class StarTrailFragment extends PulseSequenceFragment {
     }
 
     public void onPulseStop() {
-        mTimerText.setTime(0, true, true);
+        mTimerText.setTime(0, true);
         onStopTimer();
     }
 

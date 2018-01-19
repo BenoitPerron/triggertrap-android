@@ -98,7 +98,6 @@
     <orderEntry type="library" exported="" name="jmdns-3.4.1" level="project" />
     <orderEntry type="library" exported="" name="play-services-5.0.89" level="project" />
     <orderEntry type="module" module-name="styledDialogsLib" exported="" />
-    <orderEntry type="module" module-name="SonySupportLib" exported="" />
     <orderEntry type="module" module-name="pickerlibrary" exported="" />
     <orderEntry type="module" module-name="sony-camera-remote-lib" exported="" />
     <orderEntry type="module" module-name="viewPagerIndicatorLib" exported="" />

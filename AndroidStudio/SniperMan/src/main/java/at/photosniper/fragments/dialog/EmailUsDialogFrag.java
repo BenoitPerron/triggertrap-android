@@ -6,7 +6,7 @@ import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 
-import com.photosniper.R;
+import at.photosniper.R;
 
 import eu.inmite.android.lib.dialogs.BaseDialogFragment;
 import eu.inmite.android.lib.dialogs.SimpleDialogFragment;

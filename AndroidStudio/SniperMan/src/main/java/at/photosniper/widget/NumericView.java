@@ -16,7 +16,6 @@ public class NumericView extends LinearLayout implements DialpadManager.DialPadI
     private static final String TAG = NumericView.class.getSimpleName();
     private static final int DEFAULT_MAX_CHARS = 5;
     private final int mGrayColor;
-    private Typeface mAndroidClockMonoThin;
     private Typeface mAndroidClockMonoBold;
     private TextView mNumericValue;
     private int mMaxChars = DEFAULT_MAX_CHARS;
@@ -30,7 +29,7 @@ public class NumericView extends LinearLayout implements DialpadManager.DialPadI
     public NumericView(Context context, AttributeSet attrs) {
         super(context, attrs);
         if (!isInEditMode()) {
-            mAndroidClockMonoThin = Typeface.createFromAsset(context.getAssets(), "fonts/AndroidClockMono-Thin.ttf");
+            Typeface mAndroidClockMonoThin = Typeface.createFromAsset(context.getAssets(), "fonts/AndroidClockMono-Thin.ttf");
             mAndroidClockMonoBold = Typeface.createFromAsset(context.getAssets(), "fonts/AndroidClockMono-Bold.ttf");
         }
         mGrayColor = context.getResources().getColor(R.color.tt_dark_grey);

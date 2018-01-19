@@ -65,46 +65,57 @@ public class SettingsFragment extends PreferenceFragment implements OnSharedPref
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPrefs, String key) {
-        if (key.equals(PULSE_LENGTH_SETTING)) {
-            ListPreference connectionPref = (ListPreference) findPreference(key);
-            connectionPref.setSummary(connectionPref.getEntry());
-            TTApp.getInstance(getActivity()).setBeepLength(Long.parseLong(sharedPrefs.getString(key, "")));
-            //Create Distance update event and broadcast it
-            Intent intent = new Intent(SETTINGS_UPDATE_EVENT);
-            intent.putExtra(SettingsEvent.EVENT_TYPE, SettingsType.PULSE_LENGTH);
-            intent.putExtra(SettingsEvent.EVENT_VALUE, Long.parseLong(sharedPrefs.getString(key, "")));
-            LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(intent);
+        switch (key) {
+            case PULSE_LENGTH_SETTING: {
+                ListPreference connectionPref = (ListPreference) findPreference(key);
+                connectionPref.setSummary(connectionPref.getEntry());
+                TTApp.getInstance(getActivity()).setBeepLength(Long.parseLong(sharedPrefs.getString(key, "")));
+                //Create Distance update event and broadcast it
+                Intent intent = new Intent(SETTINGS_UPDATE_EVENT);
+                intent.putExtra(SettingsEvent.EVENT_TYPE, SettingsType.PULSE_LENGTH);
+                intent.putExtra(SettingsEvent.EVENT_VALUE, Long.parseLong(sharedPrefs.getString(key, "")));
+                LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(intent);
 
-        } else if (key.equals(SENSOR_RESET_DELAY_SETTING)) {
-            ListPreference connectionPref = (ListPreference) findPreference(key);
-            connectionPref.setSummary(connectionPref.getEntry());
-            TTApp.getInstance(getActivity()).setSensorResetDelay(Integer.parseInt(sharedPrefs.getString(key, "")));
-        } else if (key.equals(SENSOR_DELAY_SETTING)) {
-            ListPreference connectionPref = (ListPreference) findPreference(key);
-            connectionPref.setSummary(connectionPref.getEntry());
-            TTApp.getInstance(getActivity()).setSensorDelay(Integer.parseInt(sharedPrefs.getString(key, "")));
-        } else if (key.equals(DISTANCE_SPEED_SETTING)) {
-            ListPreference connectionPref = (ListPreference) findPreference(key);
-            connectionPref.setSummary(connectionPref.getEntry());
-            TTApp.getInstance(getActivity()).setDistancLapseSpeedUnit(Integer.parseInt(sharedPrefs.getString(key, "")));
+                break;
+            }
+            case SENSOR_RESET_DELAY_SETTING: {
+                ListPreference connectionPref = (ListPreference) findPreference(key);
+                connectionPref.setSummary(connectionPref.getEntry());
+                TTApp.getInstance(getActivity()).setSensorResetDelay(Integer.parseInt(sharedPrefs.getString(key, "")));
+                break;
+            }
+            case SENSOR_DELAY_SETTING: {
+                ListPreference connectionPref = (ListPreference) findPreference(key);
+                connectionPref.setSummary(connectionPref.getEntry());
+                TTApp.getInstance(getActivity()).setSensorDelay(Integer.parseInt(sharedPrefs.getString(key, "")));
+                break;
+            }
+            case DISTANCE_SPEED_SETTING: {
+                ListPreference connectionPref = (ListPreference) findPreference(key);
+                connectionPref.setSummary(connectionPref.getEntry());
+                TTApp.getInstance(getActivity()).setDistancLapseSpeedUnit(Integer.parseInt(sharedPrefs.getString(key, "")));
 
-            //Create Distance update event and broadcast it
-            Intent intent = new Intent(SETTINGS_UPDATE_EVENT);
-            intent.putExtra(SettingsEvent.EVENT_TYPE, SettingsType.DISTANCES_SPEED_UNT);
-            intent.putExtra(SettingsEvent.EVENT_VALUE, Integer.parseInt(sharedPrefs.getString(key, "")));
-            LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(intent);
+                //Create Distance update event and broadcast it
+                Intent intent = new Intent(SETTINGS_UPDATE_EVENT);
+                intent.putExtra(SettingsEvent.EVENT_TYPE, SettingsType.DISTANCES_SPEED_UNT);
+                intent.putExtra(SettingsEvent.EVENT_VALUE, Integer.parseInt(sharedPrefs.getString(key, "")));
+                LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(intent);
 
-        } else if (key.equals(DISTANCE_UNIT_SETTING)) {
-            ListPreference connectionPref = (ListPreference) findPreference(key);
-            connectionPref.setSummary(connectionPref.getEntry());
-            TTApp.getInstance(getActivity()).setDistancLapseUnit(Integer.parseInt(sharedPrefs.getString(key, "")));
+                break;
+            }
+            case DISTANCE_UNIT_SETTING: {
+                ListPreference connectionPref = (ListPreference) findPreference(key);
+                connectionPref.setSummary(connectionPref.getEntry());
+                TTApp.getInstance(getActivity()).setDistancLapseUnit(Integer.parseInt(sharedPrefs.getString(key, "")));
 
-            Log.d(TAG, "Sending broadcast");
-            //Create Distance update event and broadcast it
-            Intent intent = new Intent(SETTINGS_UPDATE_EVENT);
-            intent.putExtra(SettingsEvent.EVENT_TYPE, SettingsType.DISTANCE_UNIT);
-            intent.putExtra(SettingsEvent.EVENT_VALUE, Integer.parseInt(sharedPrefs.getString(key, "")));
-            LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(intent);
+                Log.d(TAG, "Sending broadcast");
+                //Create Distance update event and broadcast it
+                Intent intent = new Intent(SETTINGS_UPDATE_EVENT);
+                intent.putExtra(SettingsEvent.EVENT_TYPE, SettingsType.DISTANCE_UNIT);
+                intent.putExtra(SettingsEvent.EVENT_VALUE, Integer.parseInt(sharedPrefs.getString(key, "")));
+                LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(intent);
+                break;
+            }
         }
 
     }

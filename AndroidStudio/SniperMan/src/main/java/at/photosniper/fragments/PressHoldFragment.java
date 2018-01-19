@@ -121,7 +121,7 @@ public class PressHoldFragment extends TriggertrapFragment {
         mCircleTimerView.setTimerMode(false);
     }
 
-    protected void hideCountDown() {
+    private void hideCountDown() {
         mCountDownLayout.setVisibility(View.GONE);
 
     }
@@ -131,13 +131,13 @@ public class PressHoldFragment extends TriggertrapFragment {
         mCountDownLayout.startAnimation(mSlideInFromTop);
         mCircleTimerView.setIntervalTime(TIME_INTERVAL);
         mCircleTimerView.setPassedTime(0, false);
-        mTimerText.setTime(0, true, false);
+        mTimerText.setTime(0, false);
         mCircleTimerView.startIntervalAnimation();
         mState = State.STARTED;
     }
 
     public void updateStopwatch(long time) {
-        mTimerText.setTime(time, true, true);
+        mTimerText.setTime(time, true);
         mLastTimeSet = time;
     }
 
@@ -155,7 +155,7 @@ public class PressHoldFragment extends TriggertrapFragment {
 
     @Override
     public void setActionState(boolean actionState) {
-        if (actionState == true) {
+        if (actionState) {
             mState = State.STARTED;
         } else {
             mState = State.STOPPED;

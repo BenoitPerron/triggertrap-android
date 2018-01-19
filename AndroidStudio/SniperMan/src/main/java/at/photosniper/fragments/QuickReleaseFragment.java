@@ -120,7 +120,7 @@ public class QuickReleaseFragment extends TriggertrapFragment {
         mCircleTimerView.setTimerMode(false);
     }
 
-    protected void hideCountDown() {
+    private void hideCountDown() {
         mCountDownLayout.setVisibility(View.GONE);
 
     }
@@ -130,14 +130,14 @@ public class QuickReleaseFragment extends TriggertrapFragment {
         mCountDownLayout.startAnimation(mSlideInFromTop);
         mCircleTimerView.setIntervalTime(TIME_INTERVAL);
         mCircleTimerView.setPassedTime(0, false);
-        mTimerText.setTime(0, true, false);
+        mTimerText.setTime(0, false);
         mCircleTimerView.startIntervalAnimation();
         mState = State.STARTED;
 
     }
 
     public void updateStopwatch(long time) {
-        mTimerText.setTime(time, true, true);
+        mTimerText.setTime(time, true);
     }
 
     public void stopStopwatch() {
@@ -150,7 +150,7 @@ public class QuickReleaseFragment extends TriggertrapFragment {
 
     @Override
     public void setActionState(boolean actionState) {
-        if (actionState == true) {
+        if (actionState) {
             mState = State.STARTED;
         } else {
             mState = State.STOPPED;

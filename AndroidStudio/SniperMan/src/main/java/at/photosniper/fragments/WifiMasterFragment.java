@@ -39,7 +39,7 @@ import at.photosniper.wifi.TTSlaveInfo;
 
 public class WifiMasterFragment extends TriggertrapFragment {
 
-    public static final int DIALOG_FRAGMENT = 1;
+    private static final int DIALOG_FRAGMENT = 1;
     private static final String TAG = WifiMasterFragment.class.getSimpleName();
     private LayoutInflater mInflater;
     private View mRootView;
@@ -276,7 +276,7 @@ public class WifiMasterFragment extends TriggertrapFragment {
 
     public void onClientConnected(String name, String uniqueName) {
         Log.d(TAG, "Attaching layout");
-        createSlaveView(name, uniqueName, true);
+        createSlaveView(name, uniqueName);
     }
 
     public void onClientDisconnected(String name, String uniqueName) {
@@ -306,13 +306,13 @@ public class WifiMasterFragment extends TriggertrapFragment {
         clearSlaveList();
 
         for (TTSlaveInfo slaveInfo : slaves) {
-            createSlaveView(slaveInfo.getName(), slaveInfo.getUniqueName(), true);
+            createSlaveView(slaveInfo.getName(), slaveInfo.getUniqueName());
         }
     }
 
     @Override
     public void setActionState(boolean actionState) {
-        if (actionState == true) {
+        if (actionState) {
             mState = State.STARTED;
         } else {
             mState = State.STOPPED;
@@ -334,7 +334,7 @@ public class WifiMasterFragment extends TriggertrapFragment {
         }
     }
 
-    private void createSlaveView(String name, String uniqueName, boolean isChecked) {
+    private void createSlaveView(String name, String uniqueName) {
 
 
         // Don't attach the view straight away we want to set the tag first.
@@ -373,7 +373,7 @@ public class WifiMasterFragment extends TriggertrapFragment {
         slaveInfo.uniqueName = uniqueName;
 
 
-        slaveInfo.isChecked = isChecked;
+        slaveInfo.isChecked = true;
         slaveItem.setTag(slaveInfo);
 
         TextView masterName = (TextView) slaveItem.findViewById(R.id.wifi_slave_name);
@@ -383,7 +383,7 @@ public class WifiMasterFragment extends TriggertrapFragment {
 
 
         slaveItem.setOnClickListener(mCheckBoxListener);
-        if (isChecked) {
+        if (true) {
             checkBox.setChecked(true);
         }
 
@@ -396,7 +396,7 @@ public class WifiMasterFragment extends TriggertrapFragment {
         }
     }
 
-    public void removeSlaveView(String uniqueName) {
+    private void removeSlaveView(String uniqueName) {
         Log.d(TAG, "Detaching layout");
 
         int childCount = mSlaveListLayout.getChildCount();
@@ -424,7 +424,7 @@ public class WifiMasterFragment extends TriggertrapFragment {
     }
 
     private void showDialog() {
-        DisconnectSlaveDialogFrag dialogFrag = DisconnectSlaveDialogFrag.newInstance(123);
+        DisconnectSlaveDialogFrag dialogFrag = DisconnectSlaveDialogFrag.newInstance();
         dialogFrag.setTargetFragment(this, DIALOG_FRAGMENT);
         dialogFrag.show(getFragmentManager().beginTransaction(), "dialog");
     }

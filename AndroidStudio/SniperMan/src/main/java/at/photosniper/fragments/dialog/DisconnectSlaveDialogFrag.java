@@ -21,11 +21,11 @@ import eu.inmite.android.lib.dialogs.SimpleDialogFragment;
  */
 public class DisconnectSlaveDialogFrag extends SimpleDialogFragment {
 
-    public static DisconnectSlaveDialogFrag newInstance(int num) {
+    public static DisconnectSlaveDialogFrag newInstance() {
 
         DisconnectSlaveDialogFrag dialogFragment = new DisconnectSlaveDialogFrag();
         Bundle bundle = new Bundle();
-        bundle.putInt("num", num);
+        bundle.putInt("num", 123);
         dialogFragment.setArguments(bundle);
 
         return dialogFragment;
@@ -39,7 +39,7 @@ public class DisconnectSlaveDialogFrag extends SimpleDialogFragment {
     @Override
     public BaseDialogFragment.Builder build(BaseDialogFragment.Builder builder) {
 
-        builder.setIcon(R.drawable.ic_dialog_alert_holo_light);
+        builder.setIcon();
         builder.setView(LayoutInflater.from(getActivity()).inflate(R.layout.running_action_dialog, null));
         builder.setTitle(getResources().getString(R.string.disconnect_slave_device));
         builder.setMessage(getResources().getString(R.string.do_you_want_to_slave_device));

@@ -25,18 +25,18 @@ public class ZeroConfJmdns implements IZeroConf, MasterServer.ServerConnectionLi
     private static final String TT_SERVER_NAME = "TT_Master_device";
     private static final String TT_SERVICE_TYPE = "_triggertrap._tcp.local.";
     WifiManager.MulticastLock lock;
-    private TriggertrapService mParentService;
+    private final TriggertrapService mParentService;
     private JmDNS jmdnsMaster = null;
     private JmDNS jmdnsWatcher = null;
-    private ServiceListener listener;
+    private final ServiceListener listener;
 
 
-    private MasterServer masterServer = MasterServer.getInstance();
+    private final MasterServer masterServer = MasterServer.getInstance();
     private int portNumber;
     private String serverName;
     private String masterIP;
 
-    private ArrayList<ServiceInfo> masters = new ArrayList<ServiceInfo>();
+    private final ArrayList<ServiceInfo> masters = new ArrayList<>();
 
     public ZeroConfJmdns(TriggertrapService parentService) {
         mParentService = parentService;
@@ -88,15 +88,15 @@ public class ZeroConfJmdns implements IZeroConf, MasterServer.ServerConnectionLi
 
             JSONArray addresses = new JSONArray();
             String[] add = info.getHostAddresses();
-            for (int i = 0; i < add.length; i++) {
-                addresses.put(add[i]);
+            for (String anAdd : add) {
+                addresses.put(anAdd);
             }
             obj.put("addresses", addresses);
             JSONArray urls = new JSONArray();
 
             String[] url = info.getURLs();
-            for (int i = 0; i < url.length; i++) {
-                urls.put(url[i]);
+            for (String anUrl : url) {
+                urls.put(anUrl);
             }
             obj.put("urls", urls);
 
@@ -255,7 +255,7 @@ public class ZeroConfJmdns implements IZeroConf, MasterServer.ServerConnectionLi
         mParentService.onClientDisconnectionReceived(clientName, uniqueName);
     }
 
-    class RetreiveJmDnsWatcher extends AsyncTask<String, Void, JmDNS> {
+    private class RetreiveJmDnsWatcher extends AsyncTask<String, Void, JmDNS> {
 
         protected JmDNS doInBackground(String... ips) {
             try {

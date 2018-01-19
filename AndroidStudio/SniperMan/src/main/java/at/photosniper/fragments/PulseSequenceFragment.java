@@ -6,9 +6,9 @@ import at.photosniper.util.PulseGenerator;
 
 public class PulseSequenceFragment extends TriggertrapFragment {
 
-    protected PulseSequenceListener mPulseSeqListener;
-    protected PulseGenerator mPulseGenerator;
-    protected long[] mPulseSequence;
+    PulseSequenceListener mPulseSeqListener;
+    PulseGenerator mPulseGenerator;
+    long[] mPulseSequence;
 
     @Override
     public void onAttach(Activity activity) {

@@ -15,7 +15,7 @@ public class GetEventRequest extends BaseRequest<Boolean, GetEventResponse> {
 
     private static Gson customGson;
 
-    public GetEventRequest(boolean longPolling) {
+    private GetEventRequest(boolean longPolling) {
         super(GetEventResponse.class, RpcMethod.getEvent, longPolling);
     }
 

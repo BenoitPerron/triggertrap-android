@@ -27,7 +27,6 @@ android {
 
 dependencies {
     compile project(':sony-camera-remote-lib')
-    compile project(':SonySupportLib')
     compile project(':pickerlibrary')
     compile project(':styledDialogsLib')
     compile project(':viewPagerIndicatorLib')

@@ -22,18 +22,18 @@ import at.photosniper.widget.TimerView;
 public class TimeFragment extends PulseSequenceFragment {
 
     private static final String TAG = TimeFragment.class.getSimpleName();
-    protected TimerView mTimeView;
-    protected ImageView mDelete;
+    TimerView mTimeView;
+    private ImageView mDelete;
     protected View mDialPad;
-    protected View mCountDownLayout;
-    protected View mTimedInputView;
-    protected long mInitialTime = 0;
-    protected boolean syncCircle = false;
-    protected CircleTimerView mCircleTimerView;
-    protected CountingTimerView mTimerText;
-    protected Animation mSlideInFromTop;
-    protected Animation mSlideOutToTop;
-    protected DialpadManager.InputSelectionListener mListener = null;
+    View mCountDownLayout;
+    View mTimedInputView;
+    private final long mInitialTime = 0;
+    boolean syncCircle = false;
+    CircleTimerView mCircleTimerView;
+    CountingTimerView mTimerText;
+    Animation mSlideInFromTop;
+    Animation mSlideOutToTop;
+    DialpadManager.InputSelectionListener mListener = null;
     private View mRootView;
 
     @Override
@@ -76,13 +76,13 @@ public class TimeFragment extends PulseSequenceFragment {
     }
 
 
-    protected void showCountDown() {
+    void showCountDown() {
         if (mCountDownLayout != null) {
             mCountDownLayout.setVisibility(View.VISIBLE);
         }
     }
 
-    protected void hideCountDown() {
+    void hideCountDown() {
         if (mCountDownLayout != null) {
             mCountDownLayout.setVisibility(View.GONE);
         }
@@ -132,7 +132,7 @@ public class TimeFragment extends PulseSequenceFragment {
     }
 
 
-    protected void synchroniseCircle(long remainingTime) {
+    void synchroniseCircle(long remainingTime) {
         Log.d(TAG, "Schronising circle with time: " + mTimeView.getTime() + " Remaining time: " + remainingTime);
         mCircleTimerView.setIntervalTime(mTimeView.getTime());
         mCircleTimerView.setPassedTime((mTimeView.getTime() - remainingTime), true);

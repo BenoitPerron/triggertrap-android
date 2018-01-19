@@ -15,11 +15,9 @@ import at.photosniper.view.ZeroTopPaddingTextView;
 
 public class TimerView extends LinearLayout implements DialpadManager.DialPadInput {
 
-    public final static int LONG_TIME = 100;
-    public final static int SHORT_TIME = 10;
+    private final static int LONG_TIME = 100;
+    private final static int SHORT_TIME = 10;
     private final int START_POINTER_DECIMAL = -1;
-    private final int START_POINTER_SECONDS = 1;
-    private final int mWhiteColor, mGrayColor;
     private ZeroTopPaddingTextView mHoursHundreds, mHoursOnes, mMinutesOnes;
     private ZeroTopPaddingTextView mHoursTens, mMinutesTens;
     private TextView mSeconds, mMilliSeconds;
@@ -28,7 +26,7 @@ public class TimerView extends LinearLayout implements DialpadManager.DialPadInp
     private int mInputSize = 8;
     private int mInputPointer = START_POINTER_DECIMAL;
     private int mInputPointerStart = START_POINTER_DECIMAL;
-    private int mInput[] = new int[mInputSize];
+    private final int[] mInput = new int[mInputSize];
 
     private DialpadManager.InputUpdatedListener mUpdateListener = null;
     private int mState = State.UN_SELECTED;
@@ -44,8 +42,8 @@ public class TimerView extends LinearLayout implements DialpadManager.DialPadInp
             mAndroidClockMonoBold = Typeface.createFromAsset(context.getAssets(), "fonts/AndroidClockMono-Bold.ttf");
         }
 
-        mWhiteColor = context.getResources().getColor(R.color.tt_white);
-        mGrayColor = context.getResources().getColor(R.color.tt_dark_grey);
+        int mWhiteColor = context.getResources().getColor(R.color.tt_white);
+        int mGrayColor = context.getResources().getColor(R.color.tt_dark_grey);
 
     }
 
@@ -82,6 +80,7 @@ public class TimerView extends LinearLayout implements DialpadManager.DialPadInp
         if (mMilliSeconds != null) {
             mMilliSeconds.setTypeface(mAndroidClockMonoThin);
         } else {
+            int START_POINTER_SECONDS = 1;
             mInputPointer = START_POINTER_SECONDS;
             mInputPointerStart = START_POINTER_SECONDS;
         }
@@ -165,7 +164,7 @@ public class TimerView extends LinearLayout implements DialpadManager.DialPadInp
         return (secs * 1000) + (mInput[1] * 100) + (mInput[0] * 10);
     }
 
-    public void setTime(int hoursTensDigit, int hoursOnesDigit, int minutesTensDigit, int minutesOnesDigit, int seconds, int milliseconds) {
+    private void setTime(int hoursTensDigit, int hoursOnesDigit, int minutesTensDigit, int minutesOnesDigit, int seconds, int milliseconds) {
         if (mHoursTens != null) {
             // Hide digit
             if (hoursTensDigit == -2) {
@@ -279,7 +278,6 @@ public class TimerView extends LinearLayout implements DialpadManager.DialPadInp
         if (mUpdateListener != null) {
             mUpdateListener.onInputUpdated();
         }
-        return;
 
     }
 

@@ -85,14 +85,14 @@ public abstract class WheelScroller {
     public static final int MIN_DELTA_FOR_SCROLLING = 1;
 
     // Listener
-    private ScrollingListener listener;
+    private final ScrollingListener listener;
 
     // Context
-    private Context context;
+    private final Context context;
 
     // Scrolling
-    private GestureDetector gestureDetector;
-    protected Scroller scroller;
+    private final GestureDetector gestureDetector;
+    Scroller scroller;
     private int lastScrollPosition;
     private float lastTouchedPosition;
     private boolean isScrollingPerformed;
@@ -103,7 +103,7 @@ public abstract class WheelScroller {
      * @param context  the current context
      * @param listener the scrolling listener
      */
-    public WheelScroller(Context context, ScrollingListener listener) {
+    WheelScroller(Context context, ScrollingListener listener) {
         gestureDetector = new GestureDetector(context, new SimpleOnGestureListener() {
             public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
                 // Do scrolling in onTouchEvent() since onScroll() are not call immediately
@@ -224,7 +224,7 @@ public abstract class WheelScroller {
     }
 
     // animation handler
-    private Handler animationHandler = new Handler() {
+    private final Handler animationHandler = new Handler() {
         public void handleMessage(Message msg) {
             scroller.computeScrollOffset();
             int currPosition = getCurrentScrollerPosition();
@@ -271,7 +271,7 @@ public abstract class WheelScroller {
     /**
      * Finishes scrolling
      */
-    protected void finishScrolling() {
+    private void finishScrolling() {
         if (isScrollingPerformed) {
             listener.onFinished();
             isScrollingPerformed = false;

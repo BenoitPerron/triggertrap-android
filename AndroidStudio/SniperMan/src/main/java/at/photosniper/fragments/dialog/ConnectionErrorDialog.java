@@ -23,11 +23,11 @@ public class ConnectionErrorDialog extends SimpleDialogFragment {
     private Dialog mServiceErrorDialog;
     private TTLocationService mLocationService;
 
-    public void setDialog(Dialog serviceErrorDialog) {
+    private void setDialog(Dialog serviceErrorDialog) {
         this.mServiceErrorDialog = serviceErrorDialog;
     }
 
-    public void setLocationService(TTLocationService locService) {
+    private void setLocationService(TTLocationService locService) {
         this.mLocationService = locService;
     }
 
@@ -43,7 +43,7 @@ public class ConnectionErrorDialog extends SimpleDialogFragment {
     @Override
     public BaseDialogFragment.Builder build(BaseDialogFragment.Builder builder) {
         builder.setView(LayoutInflater.from(getActivity()).inflate(R.layout.running_action_dialog, null));
-        builder.setTitle(R.string.connect_error_title).setMessage(R.string.connect_error_description);
+        builder.setTitle().setMessage();
         builder.setPositiveButton(R.string.yes, new View.OnClickListener() {
             public void onClick(View v) {
                 dismiss();

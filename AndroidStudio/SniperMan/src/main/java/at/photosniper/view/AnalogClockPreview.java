@@ -33,7 +33,6 @@ import at.photosniper.R;
 public class AnalogClockPreview extends View {
 
     private final Drawable mSecondHand;
-    private final Context mContext;
     private Drawable mDial;
     private int mDialWidth = 140;
     private int mDialHeight = 140;
@@ -44,7 +43,7 @@ public class AnalogClockPreview extends View {
     private float mDotRadius = 7;
     private float mDotOffset = 0;
     private Paint mDotPaint;
-    private Paint mDialPaint;
+    private final Paint mDialPaint;
 
     public AnalogClockPreview(Context context) {
         this(context, null);
@@ -56,7 +55,7 @@ public class AnalogClockPreview extends View {
 
     public AnalogClockPreview(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        mContext = context;
+        Context mContext = context;
         Resources r = mContext.getResources();
         final Resources res = getResources();
 
@@ -173,8 +172,8 @@ public class AnalogClockPreview extends View {
     }
 
 
-    public void setHandAngle(float angle) {
-        mHandAngle = angle;
+    public void setHandAngle() {
+        mHandAngle = 0f;
         invalidate();
     }
 

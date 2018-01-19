@@ -136,7 +136,7 @@ public class LinePageIndicator extends View implements PageIndicator {
         return mPaintSelected.getStrokeWidth();
     }
 
-    public void setStrokeWidth(float lineHeight) {
+    private void setStrokeWidth(float lineHeight) {
         mPaintSelected.setStrokeWidth(lineHeight);
         mPaintUnselected.setStrokeWidth(lineHeight);
         invalidate();

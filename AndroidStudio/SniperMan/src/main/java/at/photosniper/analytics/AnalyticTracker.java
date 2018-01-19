@@ -21,11 +21,10 @@ public class AnalyticTracker {
     private static AnalyticTracker mInstance;
     //    private MixpanelAPI mMixpanel;
     private static JSONObject mProperties;
-    private Context mContext;
     private Calendar mStartTime;
 
-    public AnalyticTracker(Context context) {
-        mContext = context;
+    private AnalyticTracker(Context context) {
+        Context mContext = context;
     }
 
     public static AnalyticTracker getInstance(Context context) {

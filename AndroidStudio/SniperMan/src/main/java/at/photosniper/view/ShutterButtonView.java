@@ -26,20 +26,23 @@ import at.photosniper.R;
 public class ShutterButtonView extends ImageView {
     private static final String TAG = "StatusBar.KeyButtonView";
 
-    final float GLOW_MAX_SCALE_FACTOR = 1.8f;
-    final float BUTTON_QUIESCENT_ALPHA = 0.70f;
+    private final float GLOW_MAX_SCALE_FACTOR = 1.8f;
+    private final float BUTTON_QUIESCENT_ALPHA = 0.70f;
 
-    long mDownTime;
-    int mCode;
-    int mTouchSlop;
-    Drawable mGlowBG;
-    int mGlowWidth, mGlowHeight;
-    float mGlowAlpha = 0f, mGlowScale = 1f, mDrawingAlpha = 1f;
-    boolean mSupportsLongpress = true;
-    RectF mRect = new RectF(0f, 0f, 0f, 0f);
-    AnimatorSet mPressedAnim;
+    private long mDownTime;
+    private int mCode;
+    private final int mTouchSlop;
+    private final Drawable mGlowBG;
+    private int mGlowWidth;
+    private int mGlowHeight;
+    private float mGlowAlpha = 0f;
+    private float mGlowScale = 1f;
+    private float mDrawingAlpha = 1f;
+    private final boolean mSupportsLongpress = true;
+    private final RectF mRect = new RectF(0f, 0f, 0f, 0f);
+    private AnimatorSet mPressedAnim;
 
-    Runnable mCheckLongPress = new Runnable() {
+    private final Runnable mCheckLongPress = new Runnable() {
         public void run() {
             if (isPressed()) {
                 // Slog.d("KeyButtonView", "longpressed: " + this);
@@ -88,10 +91,9 @@ public class ShutterButtonView extends ImageView {
             final int h = getHeight();
             final float aspect = (float) mGlowWidth / mGlowHeight;
             final int drawW = (int) (h * aspect);
-            final int drawH = h;
             final int margin = (drawW - w) / 2;
             canvas.scale(mGlowScale, mGlowScale, w * 0.5f, h * 0.5f);
-            mGlowBG.setBounds(-margin, 0, drawW - margin, drawH);
+            mGlowBG.setBounds(-margin, 0, drawW - margin, h);
             mGlowBG.setAlpha((int) (mDrawingAlpha * mGlowAlpha * 255));
             mGlowBG.draw(canvas);
             canvas.restore();
@@ -107,7 +109,7 @@ public class ShutterButtonView extends ImageView {
         return mDrawingAlpha;
     }
 
-    public void setDrawingAlpha(float x) {
+    private void setDrawingAlpha(float x) {
         if (mGlowBG == null)
             return;
         // Calling setAlpha(int), which is an ImageView-specific
@@ -246,11 +248,11 @@ public class ShutterButtonView extends ImageView {
         return true;
     }
 
-    void sendEvent(int action, int flags) {
+    private void sendEvent(int action, int flags) {
         sendEvent(action, flags, SystemClock.uptimeMillis());
     }
 
-    void sendEvent(int action, int flags, long when) {
+    private void sendEvent(int action, int flags, long when) {
         final int repeatCount = (flags & KeyEvent.FLAG_LONG_PRESS) != 0 ? 1 : 0;
         final KeyEvent ev = new KeyEvent(mDownTime, when, action, mCode, repeatCount, 0, KeyCharacterMap.VIRTUAL_KEYBOARD, 0, flags | KeyEvent.FLAG_FROM_SYSTEM | KeyEvent.FLAG_VIRTUAL_HARD_KEY, InputDevice.SOURCE_KEYBOARD);
 //        InputManager.getInstance().injectInputEvent(ev,

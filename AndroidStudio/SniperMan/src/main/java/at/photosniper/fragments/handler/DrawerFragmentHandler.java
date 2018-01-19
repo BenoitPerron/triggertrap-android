@@ -13,12 +13,26 @@ import at.photosniper.R;
 public class DrawerFragmentHandler {
 
 
+
     private final FragmentManager mManager;
     private final int mContainerId;
     private final ArrayList<DrawContentInfo> mDrawerPanes = new ArrayList<DrawContentInfo>();
     private DrawContentInfo mLastDrawerPane;
     private boolean mInitialized;
     private String mCurrentDrawerTag;
+
+    static final class DrawContentInfo {
+        private final String tag;
+        private final Class<?> clss;
+        private final Bundle args;
+        private Fragment fragment;
+
+        DrawContentInfo(String _tag, Class<?> _class, Bundle _args) {
+            tag = _tag;
+            clss = _class;
+            args = _args;
+        }
+    }
 
     public DrawerFragmentHandler(FragmentManager manager, int containerId) {
         mManager = manager;
@@ -115,18 +129,5 @@ public class DrawerFragmentHandler {
         boolean setArgs = false;
 
         return setArgs;
-    }
-
-    static final class DrawContentInfo {
-        private final String tag;
-        private final Class<?> clss;
-        private final Bundle args;
-        private Fragment fragment;
-
-        DrawContentInfo(String _tag, Class<?> _class, Bundle _args) {
-            tag = _tag;
-            clss = _class;
-            args = _args;
-        }
     }
 }

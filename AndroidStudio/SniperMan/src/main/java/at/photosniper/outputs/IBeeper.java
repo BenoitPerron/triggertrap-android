@@ -1,10 +1,10 @@
 package at.photosniper.outputs;
 
-public interface IBeeper {
+interface IBeeper {
 
     void play(long length);
 
-    void play(long length, long pauseLength);
+    void play(long length);
 
     void stop();
 }

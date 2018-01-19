@@ -44,16 +44,13 @@ public class TimeWarpFragment extends TimeFragment implements DialpadManager.Inp
 
     public static final int MINIMUM_TIMEWARP_GAP = 10;
     private static final String TAG = TimeWarpFragment.class.getSimpleName();
-    ArrayList<Float> overlapCoords = new ArrayList<Float>();
-    CalculateOverLaps calculateOverLaps = new CalculateOverLaps();
+    private final ArrayList<Float> overlapCoords = new ArrayList<>();
+    private CalculateOverLaps calculateOverLaps = new CalculateOverLaps();
     private DialpadManager.InputSelectionListener mInputListener = null;
-    private int MAXIMUM_OVERLAPS = 150;
     private View mRootView;
     private OngoingButton mButton;
     private NumericView mTimewarpIterationsView;
     private TimerView mTimewarpDurationView;
-    private FrameLayout mShowSettings;
-    private FrameLayout mHideSettings;
     private View mButtonContainer;
     private View mTimeWarpSettings;
     private View mExposureDuration;
@@ -115,13 +112,13 @@ public class TimeWarpFragment extends TimeFragment implements DialpadManager.Inp
         mExposureDuration = mRootView.findViewById(R.id.exposureDuration);
         mExposureValue1 = (TextView) mExposureDuration.findViewById(R.id.exposureValue);
         mDuration1 = (SimpleTimerView) mExposureDuration.findViewById(R.id.durationValue);
-        mShowSettings = (FrameLayout) mExposureDuration.findViewById(R.id.showHideSettings);
+        FrameLayout mShowSettings = (FrameLayout) mExposureDuration.findViewById(R.id.showHideSettings);
 
         mTimeWarpSettings = mRootView.findViewById(R.id.timeWarpSettings);
         View exposureDuration = mTimeWarpSettings.findViewById(R.id.exposureDuration);
         mExposureValue2 = (TextView) mTimeWarpSettings.findViewById(R.id.exposureValue);
         mDuration2 = (SimpleTimerView) mTimeWarpSettings.findViewById(R.id.durationValue);
-        mHideSettings = (FrameLayout) mTimeWarpSettings.findViewById(R.id.showHideSettings);
+        FrameLayout mHideSettings = (FrameLayout) mTimeWarpSettings.findViewById(R.id.showHideSettings);
         ImageView showHide = (ImageView) mTimeWarpSettings.findViewById(R.id.showHideArrow);
         showHide.setImageDrawable(getResources().getDrawable(R.drawable.tickup));
 
@@ -296,8 +293,8 @@ public class TimeWarpFragment extends TimeFragment implements DialpadManager.Inp
 
         mTimewarpDurationView.setTextInputTime(mDuration);
         mTimewarpDurationView.initInputs(mDuration);
-        mDuration1.setTime(mTimewarpDurationView.getTime(), true, true);
-        mDuration2.setTime(mTimewarpDurationView.getTime(), true, true);
+        mDuration1.setTime(mTimewarpDurationView.getTime());
+        mDuration2.setTime(mTimewarpDurationView.getTime());
     }
 
     private void setUpControlPoints() {
@@ -332,7 +329,7 @@ public class TimeWarpFragment extends TimeFragment implements DialpadManager.Inp
 
     }
 
-    public void setUpInterpolator() {
+    private void setUpInterpolator() {
         Bundle fragmentState = getArguments();
         if (fragmentState != null) {
             //TODO restore state for rotation
@@ -440,7 +437,7 @@ public class TimeWarpFragment extends TimeFragment implements DialpadManager.Inp
             public void onClick(View arg0) {
                 if (mPreviewState == PreviewState.PREVIEW_STOPPED) {
                     mPreviewState = PreviewState.PREVIEW_RUNNING;
-                    mAnalogPreview.setHandAngle(0f);
+                    mAnalogPreview.setHandAngle();
                     mButton.animate().cancel();
                     mAnalogPreview.animate().cancel();
                     mObjectAnimator.cancel();
@@ -451,7 +448,6 @@ public class TimeWarpFragment extends TimeFragment implements DialpadManager.Inp
                     mObjectAnimator.start();
                     mPreviewTimeWarp.animate().rotationXBy(90).setDuration(150);
                 } else if (mPreviewState == PreviewState.PREVIEW_RUNNING) {
-                    return;
                 } else {
                     mButton.animate().cancel();
                     mAnalogPreview.animate().cancel();
@@ -488,11 +484,11 @@ public class TimeWarpFragment extends TimeFragment implements DialpadManager.Inp
             long totaltime = PulseGenerator.getSequenceTime(mPulseSequence);
             Log.d(TAG, "Total time Circle: " + totaltime);
             mCircleTimerView.setIntervalTime(totaltime);
-            mTimerText.setTime(totaltime, true, false);
-            mExposureTimerText.setTime(mPulseSequence[0], true, true);
-            mGapTimerText.setTime(mPulseSequence[1], true, true);
+            mTimerText.setTime(totaltime, false);
+            mExposureTimerText.setTime(mPulseSequence[0]);
+            mGapTimerText.setTime(mPulseSequence[1]);
             mCircleTimerView.startIntervalAnimation();
-            mTimerText.setTime(totaltime, true, false);
+            mTimerText.setTime(totaltime, false);
             String sequenceProgress = 1 + "/" + (mPulseSequence.length / 2);
             mSequenceCountText.setText(sequenceProgress);
 
@@ -513,7 +509,7 @@ public class TimeWarpFragment extends TimeFragment implements DialpadManager.Inp
 
     @Override
     public void setActionState(boolean actionState) {
-        if (actionState == true) {
+        if (actionState) {
             mState = State.STARTED;
         } else {
             mState = State.STOPPED;
@@ -552,27 +548,27 @@ public class TimeWarpFragment extends TimeFragment implements DialpadManager.Inp
         if (remainingPulseTime > currentGap) {
             //We need to count down the exposure
             remainingExposure = currentExposure - (timeToNext - remainingPulseTime);
-            mExposureTimerText.setTime(remainingExposure, true, true);
+            mExposureTimerText.setTime(remainingExposure);
             if ((remainingGap == 0) && ((currentSeq * 2) + 1) <= sequence.length) {
                 long nextGap = sequence[(currentSeq * 2) + 1];
-                mGapTimerText.setTime(nextGap, true, true);
+                mGapTimerText.setTime(nextGap);
             } else if (((currentSeq * 2) + 1) > sequence.length) {
-                mGapTimerText.setTime(0, true, true);
+                mGapTimerText.setTime(0);
             }
         } else {
             //We need to count down the gap
             remainingGap = remainingPulseTime;
-            mGapTimerText.setTime(remainingGap, true, true);
+            mGapTimerText.setTime(remainingGap);
             if ((remainingExposure == 0) && ((currentSeq * 2) + 2) < sequence.length) {
                 long nextExposure = sequence[(currentSeq * 2) + 2];
-                mExposureTimerText.setTime(nextExposure, true, true);
+                mExposureTimerText.setTime(nextExposure);
             } else if (((currentSeq * 2) + 2) >= sequence.length) {
-                mExposureTimerText.setTime(0, true, true);
+                mExposureTimerText.setTime(0);
             }
 
         }
 
-        mTimerText.setTime(remainingSequenceTime, true, true);
+        mTimerText.setTime(remainingSequenceTime, true);
         if (remainingPulseTime != 0) {
             if (mSyncCircle) {
                 String sequenceProgress = exposures + "/" + (sequence.length / 2);
@@ -593,7 +589,7 @@ public class TimeWarpFragment extends TimeFragment implements DialpadManager.Inp
     }
 
     public void onPulseStop() {
-        mTimerText.setTime(0, true, true);
+        mTimerText.setTime(0, true);
         onStopTimer();
     }
 
@@ -601,8 +597,8 @@ public class TimeWarpFragment extends TimeFragment implements DialpadManager.Inp
     public void onInputUpdated() {
         mExposureValue1.setText(String.valueOf(mTimewarpIterationsView.getValue()));
         mExposureValue2.setText(String.valueOf(mTimewarpIterationsView.getValue()));
-        mDuration1.setTime(mTimewarpDurationView.getTime(), true, true);
-        mDuration2.setTime(mTimewarpDurationView.getTime(), true, true);
+        mDuration1.setTime(mTimewarpDurationView.getTime());
+        mDuration2.setTime(mTimewarpDurationView.getTime());
     }
 
     private void onUpdateBezierWidget() {
@@ -643,9 +639,10 @@ public class TimeWarpFragment extends TimeFragment implements DialpadManager.Inp
         }
 
         protected ArrayList<Float> doInBackground(Void... arg0) {
-            long[] pauses = mInterpolator.getOriginalPauses(mTimewarpDurationView.getTime(), mTimewarpIterationsView.getValue(), TTApp.getInstance(getActivity()).getBeepLength(), MINIMUM_TIMEWARP_GAP);
+            long[] pauses = mInterpolator.getOriginalPauses(mTimewarpDurationView.getTime(), mTimewarpIterationsView.getValue(), TTApp.getInstance(getActivity()).getBeepLength());
 
             overlapCoords.clear();
+            int MAXIMUM_OVERLAPS = 150;
             if (pauses.length > MAXIMUM_OVERLAPS) {
                 int startIndex = 0;
                 int endIndex = MAXIMUM_OVERLAPS / 3;

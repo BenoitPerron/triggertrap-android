@@ -1,6 +1,6 @@
 package com.praetoriandroid.cameraremote;
 
-public class SsdpException extends RpcException {
+class SsdpException extends RpcException {
     private static final long serialVersionUID = 1410831473745729216L;
 
     public SsdpException() {

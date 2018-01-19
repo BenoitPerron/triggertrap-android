@@ -14,7 +14,7 @@ public class StopMovieRecResponse extends BaseResponse<String> {
         }
     }
 
-    public String getThumbnailUrl() {
+    private String getThumbnailUrl() {
         return getResult()[0];
     }
 

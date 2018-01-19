@@ -9,7 +9,7 @@ import at.photosniper.R;
 public class ErrorPopup extends PopupWindow {
 
     private boolean mAbove = false;
-    private TextView mView;
+    private final TextView mView;
     private int mPopupInlineErrorBackgroundId = 0;
     private int mPopupInlineErrorAboveBackgroundId = 0;
 

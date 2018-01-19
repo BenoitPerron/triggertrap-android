@@ -22,7 +22,7 @@ public class TTLocationService implements GooglePlayServicesClient.ConnectionCal
 
     public final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
     // Update frequency in seconds
-    public static final int UPDATE_INTERVAL_IN_SECONDS = 1;
+    private static final int UPDATE_INTERVAL_IN_SECONDS = 1;
     private static final String TAG = TTLocationService.class.getSimpleName();
     // Milliseconds per second
     private static final int MILLISECONDS_PER_SECOND = 1000;
@@ -33,7 +33,7 @@ public class TTLocationService implements GooglePlayServicesClient.ConnectionCal
     // A fast frequency ceiling in milliseconds
     private static final long FASTEST_INTERVAL = MILLISECONDS_PER_SECOND * FASTEST_INTERVAL_IN_SECONDS;
 
-    private Activity mParentActivty;
+    private final Activity mParentActivty;
     private LocationClient mLocationClient;
     private LocationRequest mLocationRequest;
     private double mStartLatitude = 0;

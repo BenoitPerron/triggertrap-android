@@ -14,14 +14,14 @@ import android.media.AudioTrack;
  */
 public class AudioBeeper implements IBeeper {
 
-    public static final long FOREVER = Long.MAX_VALUE;
+    private static final long FOREVER = Long.MAX_VALUE;
     private static final String TAG = AudioBeeper.class.getSimpleName();
     private static final double WAVE_FREQUENCY = 17000;
 
 
-    private AudioTrack track;
-    private short[] buffer;
-    private short[] samples;
+    private final AudioTrack track;
+    private final short[] buffer;
+    private final short[] samples;
     private long limit = 0;
     private long pause = FOREVER;
     private boolean writingSamples = true;
@@ -31,9 +31,9 @@ public class AudioBeeper implements IBeeper {
 //	   private int soundID;
 //	   float volume;
 
-    private AudioBeeperListener mListener;
+    private final AudioBeeperListener mListener;
 
-    public AudioBeeper() {
+    private AudioBeeper() {
         this(null, null);
     }
 
@@ -98,10 +98,10 @@ public class AudioBeeper implements IBeeper {
 
     public void play(long length) {
 
-        play(length, FOREVER);
+        play(length);
     }
 
-    public void play(long length, long pauseLength) {
+    public void play(long length) {
 //		   spool.play(soundID, volume, volume, 1, 0, 1f);
 
         long cycles = length * 441 / 5;

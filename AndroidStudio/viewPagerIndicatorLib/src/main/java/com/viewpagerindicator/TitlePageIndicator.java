@@ -81,7 +81,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
 
         public final int value;
 
-        private IndicatorStyle(int value) {
+        IndicatorStyle(int value) {
             this.value = value;
         }
 
@@ -100,7 +100,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
 
         public final int value;
 
-        private LinePosition(int value) {
+        LinePosition(int value) {
             this.value = value;
         }
 
@@ -123,7 +123,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
     private boolean mBoldText;
     private int mColorText;
     private int mColorSelected;
-    private Path mPath = new Path();
+    private final Path mPath = new Path();
     private final Rect mBounds = new Rect();
     private final Paint mPaintFooterLine = new Paint();
     private IndicatorStyle mFooterIndicatorStyle;

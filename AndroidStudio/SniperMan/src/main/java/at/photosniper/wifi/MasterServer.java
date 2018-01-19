@@ -20,15 +20,13 @@ public class MasterServer {
 
     private static final String TAG = MasterServer.class.getSimpleName();
     private static MasterServer instance = null;
-    private final String BEEP_STRING = "BEEP\r\n";
-    private Handler handler = new Handler();
+    private final Handler handler = new Handler();
     private ArrayList<Socket> clientSockets = null;
     private ArrayList<String> clientSocketNames = null;
     private ArrayList<String> clientSocketUniqueNames = null;
 
     private ArrayList<DisconnectListeningThread> disconnectListenerThreads = null;
     private ServerSocket serverSocket;
-    private PrintWriter out;
     private boolean isListening = false;
     private ServerConnectionListener connectionListener = null;
 
@@ -45,10 +43,10 @@ public class MasterServer {
     }
 
     public int createServer() {
-        clientSockets = new ArrayList<Socket>();
-        clientSocketNames = new ArrayList<String>();
-        clientSocketUniqueNames = new ArrayList<String>();
-        disconnectListenerThreads = new ArrayList<DisconnectListeningThread>();
+        clientSockets = new ArrayList<>();
+        clientSocketNames = new ArrayList<>();
+        clientSocketUniqueNames = new ArrayList<>();
+        disconnectListenerThreads = new ArrayList<>();
 
         int serverPort = -1;
         try {
@@ -92,7 +90,8 @@ public class MasterServer {
             for (Socket clientSocket : clientSockets) {
 
                 try {
-                    out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream())), true);
+                    PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream())), true);
+                    String BEEP_STRING = "BEEP\r\n";
                     out.println(BEEP_STRING);
                     Log.d(TAG, "Wifi sending string: " + BEEP_STRING);
                 } catch (IOException e) {
@@ -156,7 +155,7 @@ public class MasterServer {
     }
 
     public ArrayList<TTSlaveInfo> getConnectedSlaves() {
-        ArrayList<TTSlaveInfo> connectedSlaves = new ArrayList<TTSlaveInfo>();
+        ArrayList<TTSlaveInfo> connectedSlaves = new ArrayList<>();
         int index = 0;
         if (clientSocketNames != null) {
             for (String name : clientSocketNames) {
@@ -202,8 +201,8 @@ public class MasterServer {
     class DisconnectListeningThread implements Runnable {
         private boolean isListening = true;
 
-        private Socket clientSocket;
-        private InputStream inStream;
+        private final Socket clientSocket;
+        private final InputStream inStream;
 
         public DisconnectListeningThread(Socket clientSocket, InputStream in) {
             inStream = in;

@@ -4,9 +4,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-public class WifiPagerAdapter extends FragmentPagerAdapter {
+class WifiPagerAdapter extends FragmentPagerAdapter {
 
-    private String[] mTitles;
+    private final String[] mTitles;
 
     public WifiPagerAdapter(FragmentManager fm, String[] titles) {
         super(fm);

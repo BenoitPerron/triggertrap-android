@@ -33,7 +33,6 @@ public class BrampingFragment extends PulseSequenceFragment implements DialpadMa
     private static final String TAG = BrampingFragment.class.getSimpleName();
 
     private TimerView mExposureTimeInput;
-    private View mExposureTime;
     private View mButtonContainer;
     private NumericView mNumericInput;
 
@@ -107,10 +106,10 @@ public class BrampingFragment extends PulseSequenceFragment implements DialpadMa
 
 
         //String [] validShutterSpeeds  = getValidShutterSpeeds();
-        ArrayWheelAdapter<String> exposureAdapter = new ArrayWheelAdapter<String>(getActivity(), mShutterSpeeds);
+        ArrayWheelAdapter<String> exposureAdapter = new ArrayWheelAdapter<>(getActivity(), mShutterSpeeds);
 
         exposureAdapter.setItemResource(R.layout.wheel_text_centered);
-        exposureAdapter.setItemTextResource(R.id.text);
+        exposureAdapter.setItemTextResource();
         mBrampStart.setViewAdapter(exposureAdapter);
         mBrampEnd.setViewAdapter(exposureAdapter);
 
@@ -160,11 +159,11 @@ public class BrampingFragment extends PulseSequenceFragment implements DialpadMa
             long totaltime = PulseGenerator.getSequenceTime(mPulseSequence);
             Log.d(TAG, "Total time Circle: " + totaltime);
             mCircleTimerView.setIntervalTime(totaltime);
-            mTimerText.setTime(mExposureTimeInput.getTime(), true, false);
-            mExposureTimerText.setTime(mPulseSequence[0], true, true);
-            mGapTimerText.setTime(mPulseSequence[1], true, true);
+            mTimerText.setTime(mExposureTimeInput.getTime(), false);
+            mExposureTimerText.setTime(mPulseSequence[0]);
+            mGapTimerText.setTime(mPulseSequence[1]);
             mCircleTimerView.startIntervalAnimation();
-            mTimerText.setTime(totaltime, true, false);
+            mTimerText.setTime(totaltime, false);
             String sequenceProgress = 1 + "/" + (mPulseSequence.length / 2);
             mSequenceCountText.setText(sequenceProgress);
 
@@ -263,10 +262,10 @@ public class BrampingFragment extends PulseSequenceFragment implements DialpadMa
 //	            		     for( String speed: validShutterSpeeds) {
 //	            		    	 Log.d(TAG, speed);
 //	            		     }
-                    ArrayWheelAdapter<String> exposureAdapter = new ArrayWheelAdapter<String>(getActivity(), validShutterSpeeds);
+                    ArrayWheelAdapter<String> exposureAdapter = new ArrayWheelAdapter<>(getActivity(), validShutterSpeeds);
 
                     exposureAdapter.setItemResource(R.layout.wheel_text_centered);
-                    exposureAdapter.setItemTextResource(R.id.text);
+                    exposureAdapter.setItemTextResource();
                     mBrampStart.setViewAdapter(exposureAdapter);
                 }
             }
@@ -309,10 +308,10 @@ public class BrampingFragment extends PulseSequenceFragment implements DialpadMa
                 if (mAutomaticAdjustEnd) {
                     mAutomaticAdjustEnd = false;
                     String[] validShutterSpeeds = getValidShutterSpeeds();
-                    ArrayWheelAdapter<String> exposureAdapter = new ArrayWheelAdapter<String>(getActivity(), validShutterSpeeds);
+                    ArrayWheelAdapter<String> exposureAdapter = new ArrayWheelAdapter<>(getActivity(), validShutterSpeeds);
 
                     exposureAdapter.setItemResource(R.layout.wheel_text_centered);
-                    exposureAdapter.setItemTextResource(R.id.text);
+                    exposureAdapter.setItemTextResource();
                     mBrampEnd.setViewAdapter(exposureAdapter);
                 }
             }
@@ -378,16 +377,16 @@ public class BrampingFragment extends PulseSequenceFragment implements DialpadMa
 
     private void setValidShutterSpeeds() {
         String[] validShutterSpeeds = getValidShutterSpeeds();
-        ArrayWheelAdapter<String> exposureAdapter = new ArrayWheelAdapter<String>(getActivity(), validShutterSpeeds);
+        ArrayWheelAdapter<String> exposureAdapter = new ArrayWheelAdapter<>(getActivity(), validShutterSpeeds);
 
         exposureAdapter.setItemResource(R.layout.wheel_text_centered);
-        exposureAdapter.setItemTextResource(R.id.text);
+        exposureAdapter.setItemTextResource();
         mBrampStart.setViewAdapter(exposureAdapter);
         mBrampEnd.setViewAdapter(exposureAdapter);
     }
 
     private void setUpTimeInputs() {
-        mExposureTime = mRootView.findViewById(R.id.brampExposure);
+        View mExposureTime = mRootView.findViewById(R.id.brampExposure);
 
         mExposureTimeInput = (TimerView) mExposureTime.findViewById(R.id.timerTimeText);
         mExposureTimeInput.setUpdateListener(this);
@@ -467,7 +466,7 @@ public class BrampingFragment extends PulseSequenceFragment implements DialpadMa
 
     @Override
     public void setActionState(boolean actionState) {
-        if (actionState == true) {
+        if (actionState) {
             mState = State.STARTED;
         } else {
             mState = State.STOPPED;
@@ -506,27 +505,27 @@ public class BrampingFragment extends PulseSequenceFragment implements DialpadMa
         if (remainingPulseTime > currentGap) {
             //We need to count down the exposure
             remainingExposure = currentExposure - (timeToNext - remainingPulseTime);
-            mExposureTimerText.setTime(remainingExposure, true, true);
+            mExposureTimerText.setTime(remainingExposure);
             if ((remainingGap == 0) && ((currentSeq * 2) + 1) <= sequence.length) {
                 long nextGap = sequence[(currentSeq * 2) + 1];
-                mGapTimerText.setTime(nextGap, true, true);
+                mGapTimerText.setTime(nextGap);
             } else if (((currentSeq * 2) + 1) > sequence.length) {
-                mGapTimerText.setTime(0, true, true);
+                mGapTimerText.setTime(0);
             }
         } else {
             //We need to count down the gap
             remainingGap = remainingPulseTime;
-            mGapTimerText.setTime(remainingGap, true, true);
+            mGapTimerText.setTime(remainingGap);
             if ((remainingExposure == 0) && ((currentSeq * 2) + 2) < sequence.length) {
                 long nextExposure = sequence[(currentSeq * 2) + 2];
-                mExposureTimerText.setTime(nextExposure, true, true);
+                mExposureTimerText.setTime(nextExposure);
             } else if (((currentSeq * 2) + 2) >= sequence.length) {
-                mExposureTimerText.setTime(0, true, true);
+                mExposureTimerText.setTime(0);
             }
 
         }
 
-        mTimerText.setTime(remainingSequenceTime, true, true);
+        mTimerText.setTime(remainingSequenceTime, true);
         if (remainingPulseTime != 0) {
             if (mSyncCircle) {
                 String sequenceProgress = exposures + "/" + (sequence.length / 2);
@@ -547,7 +546,7 @@ public class BrampingFragment extends PulseSequenceFragment implements DialpadMa
     }
 
     public void onPulseStop() {
-        mTimerText.setTime(0, true, true);
+        mTimerText.setTime(0, true);
         onStopTimer();
     }
 
@@ -565,10 +564,10 @@ public class BrampingFragment extends PulseSequenceFragment implements DialpadMa
             setMaxExposure(mBrampStart, interval);
         } else {
             String[] validShutterSpeeds = getValidShutterSpeeds();
-            ArrayWheelAdapter<String> exposureAdapter = new ArrayWheelAdapter<String>(getActivity(), validShutterSpeeds);
+            ArrayWheelAdapter<String> exposureAdapter = new ArrayWheelAdapter<>(getActivity(), validShutterSpeeds);
 
             exposureAdapter.setItemResource(R.layout.wheel_text_centered);
-            exposureAdapter.setItemTextResource(R.id.text);
+            exposureAdapter.setItemTextResource();
             mBrampStart.setViewAdapter(exposureAdapter);
         }
 
@@ -577,10 +576,10 @@ public class BrampingFragment extends PulseSequenceFragment implements DialpadMa
             setMaxExposure(mBrampEnd, interval);
         } else {
             String[] validShutterSpeeds = getValidShutterSpeeds();
-            ArrayWheelAdapter<String> exposureAdapter = new ArrayWheelAdapter<String>(getActivity(), validShutterSpeeds);
+            ArrayWheelAdapter<String> exposureAdapter = new ArrayWheelAdapter<>(getActivity(), validShutterSpeeds);
 
             exposureAdapter.setItemResource(R.layout.wheel_text_centered);
-            exposureAdapter.setItemTextResource(R.id.text);
+            exposureAdapter.setItemTextResource();
             mBrampEnd.setViewAdapter(exposureAdapter);
         }
 
@@ -594,11 +593,9 @@ public class BrampingFragment extends PulseSequenceFragment implements DialpadMa
         seconds = seconds - minutes * 60;
         hours = minutes / 60;
         minutes = minutes - hours * 60;
-        StringBuilder formattedTime = new StringBuilder().append(hours).append("h ").append(String.format("%02d", minutes)).append("m ").append(String.format("%02d", seconds)).append("s")
-//				.append(String.format("%02d", hundreds))
-                ;
 
-        return formattedTime.toString();
+        return String.valueOf(hours) + "h " + String.format("%02d", minutes) + "m " + String.format("%02d", seconds) + "s";
+//				.append(String.format("%02d", hundreds))
 
     }
 

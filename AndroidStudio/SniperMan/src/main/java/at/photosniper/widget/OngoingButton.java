@@ -37,11 +37,10 @@ public class OngoingButton extends View {
     private Paint mFirstCirclePaint;
     private Paint mSecondCirclePaint;
     private Paint mThirdCirclePaint;
-    private RectF mRectCircle = new RectF();
-    private RectF mRectOuterCircle = new RectF();
+    private final RectF mRectCircle = new RectF();
+    private final RectF mRectOuterCircle = new RectF();
     private int mInnerGap = 13;
     private int mRadius = 65;
-    private int mCircleBoarderWidth;
     private float mCx;
     private float mCy;
 
@@ -60,9 +59,8 @@ public class OngoingButton extends View {
     private float mSecondCircleStroke = DEFAULT_OUTER_WIDTH;
 
     private ObjectAnimator mFirstCircleAnimator = null;
-    private ObjectAnimator mSecondCircleAnimator = null;
     private ObjectAnimator mThirdCircleAnimator;
-    private AnimatorSet animSet = new AnimatorSet();
+    private final AnimatorSet animSet = new AnimatorSet();
 
     private int mState = State.STOPPED;
 
@@ -94,7 +92,7 @@ public class OngoingButton extends View {
         mOuterCircleWidth = (int) (mOuterCircleWidth * density);
         mInnerGap = (int) (mInnerGap * density);
         mRadius = (int) (mRadius * density);
-        mCircleBoarderWidth = (int) (CIRCLE_BOARDER_WIDTH * density);
+        int mCircleBoarderWidth = (int) (CIRCLE_BOARDER_WIDTH * density);
         mFinalCircleRadius = (int) (ANIM_FINAL_RADIUS * density);
 
         int circleColor = res.getColor(R.color.tt_button_circle_border_color);
@@ -217,7 +215,7 @@ public class OngoingButton extends View {
             PropertyValuesHolder pvhSecondCircleRadius = PropertyValuesHolder.ofFloat("secondCircleRadius", mStartCircleRadius, mFinalCircleRadius);
             PropertyValuesHolder pvhSecondCircleAlpha = PropertyValuesHolder.ofFloat("secondCircleAlpha", 125, 0);
             PropertyValuesHolder pvhSecondCircleStroke = PropertyValuesHolder.ofFloat("secondCircleStroke", DEFAULT_OUTER_WIDTH, (DEFAULT_OUTER_WIDTH * 2));
-            mSecondCircleAnimator = ObjectAnimator.ofPropertyValuesHolder(this, pvhSecondCircleAlpha, pvhSecondCircleStroke, pvhSecondCircleRadius).setDuration(mAnimationTime);
+            ObjectAnimator mSecondCircleAnimator = ObjectAnimator.ofPropertyValuesHolder(this, pvhSecondCircleAlpha, pvhSecondCircleStroke, pvhSecondCircleRadius).setDuration(mAnimationTime);
             mSecondCircleAnimator.setInterpolator(new DecelerateInterpolator(1.3f));
             if (!mOneShot) {
                 mSecondCircleAnimator.setRepeatCount(ValueAnimator.INFINITE);
@@ -314,7 +312,7 @@ public class OngoingButton extends View {
             }
 
         }
-        if (mIgnoreTouch == false) {
+        if (!mIgnoreTouch) {
             mThirdCircleAnimator.reverse();
         }
 

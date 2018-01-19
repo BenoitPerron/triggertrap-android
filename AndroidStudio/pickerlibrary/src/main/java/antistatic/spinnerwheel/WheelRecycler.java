@@ -33,7 +33,7 @@ import android.widget.LinearLayout;
 /**
  * Recycle stored spinnerwheel items to reuse.
  */
-public class WheelRecycler {
+class WheelRecycler {
 
 
     @SuppressWarnings("unused")
@@ -46,7 +46,7 @@ public class WheelRecycler {
     private List<View> emptyItems;
 
     // Wheel view
-    private AbstractWheel wheel;
+    private final AbstractWheel wheel;
 
     /**
      * Constructor
@@ -123,7 +123,7 @@ public class WheelRecycler {
      */
     private List<View> addView(View view, List<View> cache) {
         if (cache == null) {
-            cache = new LinkedList<View>();
+            cache = new LinkedList<>();
         }
 
         cache.add(view);

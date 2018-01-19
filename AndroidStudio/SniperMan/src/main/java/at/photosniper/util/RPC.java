@@ -34,18 +34,18 @@ public class RPC {
 
     private static final String RPC_NETWORK = "RPC network";
     private static final int SSDP_TIMEOUT = 1000;
-    private static final int CONNECTION_TIMEOUT = 1000;
-    private final Set<ConnectionListener> connectionListeners = new HashSet<ConnectionListener>();
-    private final Map<Object, ResponseHandler<?>> responseHandlers = new HashMap<Object, ResponseHandler<?>>();
+
+    private final Set<ConnectionListener> connectionListeners = new HashSet<>();
+    private final Map<Object, ResponseHandler<?>> responseHandlers = new HashMap<>();
     private RpcClient rpcClient;
     private Throwable initializationError;
     private boolean initialized;
-    private LiveViewFetcher liveViewFetcher = new LiveViewFetcher();
+    private final LiveViewFetcher liveViewFetcher = new LiveViewFetcher();
     private volatile boolean liveViewInProgress;
     private List<Integer> availableSelfTimers = Collections.emptyList();
 
     public RPC() {
-        liveViewFetcher.setConnectionTimeout(CONNECTION_TIMEOUT);
+        liveViewFetcher.setConnectionTimeout(RpcClient.CONNECTION_TIMEOUT);
     }
 
     public List<Integer> getAvailableSelfTimers() {
@@ -58,12 +58,12 @@ public class RPC {
             initialized = false;
             initializationError = null;
             SsdpClient ssdpClient = new SsdpClient();
-            ssdpClient.setSearchTimeout(SSDP_TIMEOUT);
+            ssdpClient.setSearchTimeout(RpcClient.CONNECTION_TIMEOUT);
             String deviceDescriptionUrl = ssdpClient.getDeviceDescriptionUrl();
-            DeviceDescription description = new DeviceDescription.Fetcher().setConnectionTimeout(CONNECTION_TIMEOUT).fetch(deviceDescriptionUrl);
+            DeviceDescription description = new DeviceDescription.Fetcher().setConnectionTimeout(RpcClient.CONNECTION_TIMEOUT).fetch(deviceDescriptionUrl);
             final String cameraServiceUrl = description.getServiceUrl(DeviceDescription.CAMERA);
             rpcClient = new RpcClient(cameraServiceUrl);
-            rpcClient.setConnectionTimeout(CONNECTION_TIMEOUT);
+            rpcClient.setConnectionTimeout();
             rpcClient.sayHello();
             GetAvailableSelfTimerResponse selfTimers = rpcClient.send(new GetAvailableSelfTimerRequest());
             if (selfTimers.isOk()) {
@@ -78,7 +78,7 @@ public class RPC {
     }
 
     //    @UiThread
-    void onConnected(String cameraServiceUrl) {
+    private void onConnected(String cameraServiceUrl) {
         initialized = true;
         for (ConnectionListener callback : connectionListeners) {
             callback.onConnected();
@@ -86,7 +86,7 @@ public class RPC {
     }
 
     //    @UiThread
-    void onConnectionFailed(Throwable e) {
+    private void onConnectionFailed(Throwable e) {
         Log.e("@@@@@", "RPC connect failed", e);
         initialized = true;
         initializationError = e;
@@ -135,7 +135,7 @@ public class RPC {
     }
 
     //    @Background (serial = RPC_NETWORK)
-    <Response extends BaseResponse<?>> void sendRequestInt(BaseRequest<?, Response> request, Object tag) {
+    private <Response extends BaseResponse<?>> void sendRequestInt(BaseRequest<?, Response> request, Object tag) {
         try {
             Response response = rpcClient.send(request);
             if (response.isOk()) {
@@ -149,7 +149,7 @@ public class RPC {
     }
 
     //    @UiThread
-    <Response extends BaseResponse<?>> void onResponseSuccess(Object tag, Response response) {
+    private <Response extends BaseResponse<?>> void onResponseSuccess(Object tag, Response response) {
         @SuppressWarnings("unchecked") ResponseHandler<Response> handler = (ResponseHandler<Response>) responseHandlers.get(tag);
         if (handler != null) {
             handler.onSuccess(response);
@@ -157,7 +157,7 @@ public class RPC {
     }
 
     //    @UiThread
-    <Response extends BaseResponse<?>> void onResponseFail(Object tag, Throwable e) {
+    private <Response extends BaseResponse<?>> void onResponseFail(Object tag, Throwable e) {
         @SuppressWarnings("unchecked") ResponseHandler<Response> handler = (ResponseHandler<Response>) responseHandlers.get(tag);
         if (handler != null) {
             handler.onFail(e);
@@ -198,9 +198,7 @@ public class RPC {
                         LiveViewFetcher.Frame frame = liveViewFetcher.getNextFrame();
                         callback.onNextFrame(frame);
                     }
-                } catch (IOException e) {
-                    callback.onError(e);
-                } catch (ParseException e) {
+                } catch (IOException | ParseException e) {
                     callback.onError(e);
                 } catch (LiveViewDisconnectedException ignored) {
                 }
@@ -227,7 +225,7 @@ public class RPC {
     }
 
     public static class ErrorResponseException extends RpcException {
-        private int errorCode;
+        private final int errorCode;
 
         public ErrorResponseException(int errorCode) {
             this.errorCode = errorCode;

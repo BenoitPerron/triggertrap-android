@@ -2,9 +2,9 @@ package com.praetoriandroid.cameraremote;
 
 import java.io.IOException;
 
-public class BadHttpStatusException extends IOException {
+class BadHttpStatusException extends IOException {
     private static final long serialVersionUID = 5911995982406477578L;
-    private int httpStatus;
+    private final int httpStatus;
 
     public BadHttpStatusException(int httpStatusCode, String httpStatusMessage) {
         super(httpStatusCode + ": " + httpStatusMessage);

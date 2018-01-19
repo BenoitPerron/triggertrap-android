@@ -84,7 +84,6 @@ public class NdCalculatorFragment extends TriggertrapFragment {
     private static final double TWENTY_SEC = 20000;
     private static final double TWENTYFIVE_SEC = 25000;
     private static final double THIRTY_SEC = 30000;
-    private List<String> mNdValues;
     private String[] mBaseShutterSpeedVals;
     private double[] mNdValueArray;
     private String[] mNdNameVals;
@@ -109,7 +108,7 @@ public class NdCalculatorFragment extends TriggertrapFragment {
         mResultTextView = (TextView) rootView.findViewById(R.id.resultTextView);
         mResultTextLabel = (ZeroTopPaddingTextView) rootView.findViewById(R.id.result_label);
 
-        mNdValues = new ArrayList<String>();
+        List<String> mNdValues = new ArrayList<>();
 
         for (int i = 1; i < 21; i++) {
             mNdValues.add(getResources().getQuantityString(R.plurals.numberOfStops, i, i));
@@ -125,7 +124,7 @@ public class NdCalculatorFragment extends TriggertrapFragment {
         View ndValueView = rootView.findViewById(R.id.nd_filter_picker);
         AbstractWheel ndValueWheel = (AbstractWheel) ndValueView.findViewById(R.id.wheelHorizontalView);
         ndValueAdapter.setItemResource(R.layout.wheel_double_text_centered);
-        ndValueAdapter.setItemTextResource(R.id.text);
+        ndValueAdapter.setItemTextResource();
         ndValueWheel.setViewAdapter(ndValueAdapter);
 
         ndValueWheel.addScrollingListener(new OnWheelScrollListener() {
@@ -144,13 +143,13 @@ public class NdCalculatorFragment extends TriggertrapFragment {
 
         ndValueWheel.setCurrentItem(0);
 
-        ArrayWheelAdapter<String> shutterSpeedAdapter = new ArrayWheelAdapter<String>(getActivity(), mBaseShutterSpeedVals);
+        ArrayWheelAdapter<String> shutterSpeedAdapter = new ArrayWheelAdapter<>(getActivity(), mBaseShutterSpeedVals);
 
         View shutterSpeedView = rootView.findViewById(R.id.base_shutter_speed_picker);
 
         AbstractWheel shutterSpeedWheel = (AbstractWheel) shutterSpeedView.findViewById(R.id.wheelHorizontalView);
         shutterSpeedAdapter.setItemResource(R.layout.wheel_text_centered);
-        shutterSpeedAdapter.setItemTextResource(R.id.text);
+        shutterSpeedAdapter.setItemTextResource();
         TTApp app = TTApp.getInstance(getActivity());
 
         shutterSpeedWheel.addScrollingListener(new OnWheelScrollListener() {
@@ -186,7 +185,7 @@ public class NdCalculatorFragment extends TriggertrapFragment {
      * @param shutterSpeed - currently selected shutterSpeed value
      * @return String output of calculated time value.
      */
-    public String getNdTime(int stops, int shutterSpeed) {
+    private String getNdTime(int stops, int shutterSpeed) {
 
         String output = "";
 

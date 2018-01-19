@@ -70,7 +70,8 @@ public class SunriseSunsetFragment extends TriggertrapFragment implements Locati
     private TextView mTitle1TextView, mTitle2TextView, mSolarTime1TextView, mSolarTime2TextView, mRelativeTime1TextView, mRelativeTime2TextView, mTwilightTime1TextView, mTwilightTime2TextView, mLocationTextView;
     private Handler mTimeUpdater;
     private Calendar mNextSunrise, mNextSunset, mLastSunrise, mLastSunset;
-    private Calendar mLastSunsetTwilight, mLastSunriseTwilight, mNextSunsetTwilight, mNextSunriseTwilight;
+    private Calendar mNextSunsetTwilight;
+    private Calendar mNextSunriseTwilight;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -293,6 +294,8 @@ public class SunriseSunsetFragment extends TriggertrapFragment implements Locati
         mSunsetTwilightCal = getCalendarForTime(now, longLat, SolarEvent.SUNSETTWILIGHT);
 
         // presunrise state
+        Calendar mLastSunriseTwilight;
+        Calendar mLastSunsetTwilight;
         if (now.before(mSunsetCal) && now.before(mSunriseCal)) {
 
             mNextSunrise = (Calendar) mSunriseCal.clone();
@@ -508,8 +511,8 @@ public class SunriseSunsetFragment extends TriggertrapFragment implements Locati
      */
     private class EventUpdateHandler extends Handler {
 
-        private Calendar mEvent1;
-        private Calendar mEvent2;
+        private final Calendar mEvent1;
+        private final Calendar mEvent2;
 
         private long mNextUpdate;
 
@@ -566,7 +569,7 @@ public class SunriseSunsetFragment extends TriggertrapFragment implements Locati
 
                     if (mNextUpdate == 0) {
 
-                        mSolarArcView.progressSun(PERCENTAGE_PROGRESS);
+                        mSolarArcView.progressSun();
                     }
 
                     this.sendEmptyMessageDelayed(1, ANIMATION_DURATION);

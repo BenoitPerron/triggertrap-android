@@ -15,19 +15,19 @@ public class HeadsetWatcher {
 
     private static final String TAG = HeadsetWatcher.class.getSimpleName();
 
-    private HeadsetBroadcastReceiver headsetReceiver;
+    private final HeadsetBroadcastReceiver headsetReceiver;
 
     //Support two listeners Primary is always set secondary is transient
     private ArrayList<HeadsetListener> mListeners = null;
 
-    public HeadsetWatcher(Context ctx, HeadsetListener listener) {
+    private HeadsetWatcher(Context ctx, HeadsetListener listener) {
         headsetReceiver = new HeadsetBroadcastReceiver(this);
         ctx.registerReceiver(headsetReceiver, new IntentFilter(Intent.ACTION_HEADSET_PLUG));
-        mListeners = new ArrayList<HeadsetWatcher.HeadsetListener>();
+        mListeners = new ArrayList<>();
         mListeners.add(listener);
     }
 
-    public void changed(int state) {
+    private void changed(int state) {
         Log.d(TAG, "State changed " + state);
         if (mListeners != null) {
             for (HeadsetListener listener : mListeners) {
@@ -51,7 +51,7 @@ public class HeadsetWatcher {
     }
 
     public class HeadsetBroadcastReceiver extends BroadcastReceiver {
-        protected HeadsetWatcher watcher;
+        final HeadsetWatcher watcher;
 
         public HeadsetBroadcastReceiver(HeadsetWatcher watcher) {
             super();

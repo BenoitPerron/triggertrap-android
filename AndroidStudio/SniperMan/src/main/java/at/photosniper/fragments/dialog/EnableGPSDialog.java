@@ -45,7 +45,7 @@ public class EnableGPSDialog extends SimpleDialogFragment {
             public void onClick(View v) {
 
                 MainActivity mainActivity = (MainActivity) getActivity();
-                mainActivity.ignoreGPS(true);
+                mainActivity.ignoreGPS();
 
                 dismiss();
             }

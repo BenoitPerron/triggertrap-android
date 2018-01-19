@@ -10,7 +10,7 @@ public abstract class StopwatchTimer {
     private final long mCountdownInterval;
     private long mStartTime;
     // handles counting down
-    private Handler mHandler = new Handler() {
+    private final Handler mHandler = new Handler() {
 
         @Override
         public void handleMessage(Message msg) {
@@ -38,8 +38,8 @@ public abstract class StopwatchTimer {
         }
     };
 
-    public StopwatchTimer(long countDownInterval) {
-        mCountdownInterval = countDownInterval;
+    public StopwatchTimer() {
+        mCountdownInterval = (long) 5;
     }
 
     /**

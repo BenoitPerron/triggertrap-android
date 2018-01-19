@@ -32,9 +32,9 @@ public class ToPlayStoreDialog extends SimpleDialogFragment {
         dialog.show(activity.getFragmentManager(), TAG);
     }
 
-    public void show(Activity activity, boolean b) {
+    public void show(Activity activity) {
         ToPlayStoreDialog dialog = new ToPlayStoreDialog();
-        dialog.setIsLoveDialog(b);
+        dialog.setIsLoveDialog(true);
         dialog.show(activity.getFragmentManager(), TAG);
     }
 
@@ -54,7 +54,7 @@ public class ToPlayStoreDialog extends SimpleDialogFragment {
         builder.setPositiveButton(R.string.to_play_positive, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TTApp.getInstance(getActivity()).setShowDialogAgain(false);
+                TTApp.getInstance(getActivity()).setShowDialogAgain();
                 getActivity().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.at.the.gogo.photosniper")));
                 dismiss();
             }
@@ -74,7 +74,7 @@ public class ToPlayStoreDialog extends SimpleDialogFragment {
             @Override
             public void onClick(View v) {
 
-                TTApp.getInstance(getActivity()).setShowDialogAgain(false);
+                TTApp.getInstance(getActivity()).setShowDialogAgain();
                 dismiss();
             }
         });
@@ -82,7 +82,7 @@ public class ToPlayStoreDialog extends SimpleDialogFragment {
         return builder;
     }
 
-    public void setIsLoveDialog(boolean b) {
+    private void setIsLoveDialog(boolean b) {
         this.mIsLoveDialog = b;
     }
 }

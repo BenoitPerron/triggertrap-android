@@ -27,12 +27,12 @@ package antistatic.spinnerwheel;
 /**
  * Range for visible items.
  */
-public class ItemsRange {
+class ItemsRange {
     // First item number
-    private int first;
+    private final int first;
 
     // Items count
-    private int count;
+    private final int count;
 
     /**
      * Default constructor. Creates an empty range

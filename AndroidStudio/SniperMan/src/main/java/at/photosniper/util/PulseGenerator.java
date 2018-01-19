@@ -4,13 +4,12 @@ import android.content.Context;
 import android.util.Log;
 
 import at.photosniper.TTApp;
-import at.photosniper.fragments.TimeWarpFragment;
 
 public class PulseGenerator {
 
     private static final String TAG = PulseGenerator.class.getSimpleName();
 
-    private Context mAppContext;
+    private final Context mAppContext;
 
     public PulseGenerator(Context appContext) {
         //Make sure we have an application context.
@@ -29,10 +28,10 @@ public class PulseGenerator {
     }
 
     public static void logSequence(long[] sequence) {
-        StringBuffer stringBuf = new StringBuffer();
+        StringBuilder stringBuf = new StringBuilder();
         int count = sequence.length / 2;
         for (int i = 0; i < count; i++) {
-            stringBuf.append("[" + sequence[i * 2] + "," + sequence[(i * 2) + 1] + "] ");
+            stringBuf.append("[").append(sequence[i * 2]).append(",").append(sequence[(i * 2) + 1]).append("] ");
         }
         Log.d(TAG, "Sequence: " + stringBuf.toString());
     }
@@ -114,7 +113,7 @@ public class PulseGenerator {
 
     public long[] getTimeWarpSequence(int count, long sequenceDuration, CubicBezierInterpolator interpolator) {
 
-        long[] pauses = interpolator.getPauses(sequenceDuration, count, TTApp.getInstance(mAppContext).getBeepLength(), TimeWarpFragment.MINIMUM_TIMEWARP_GAP);
+        long[] pauses = interpolator.getPauses(sequenceDuration, count, TTApp.getInstance(mAppContext).getBeepLength());
         long[] sequence = new long[(pauses.length) * 2];
 
         for (int i = 0; i < pauses.length; i++) {

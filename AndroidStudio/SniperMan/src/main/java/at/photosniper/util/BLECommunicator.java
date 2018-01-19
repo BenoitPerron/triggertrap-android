@@ -7,7 +7,7 @@ import android.annotation.TargetApi;
  */
 
 @TargetApi(21)
-public class BLECommunicator {
+class BLECommunicator {
 
 //    private static final String TAG = ScanActivity.class.getSimpleName();
 //    private static final long SCAN_TIMEOUT_MS = 10_000;

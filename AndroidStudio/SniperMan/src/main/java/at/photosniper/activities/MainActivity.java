@@ -116,15 +116,15 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
     private static final int REQUEST_PERMISSION_LOCATION = 1;
     private final BluetoothLeScannerCompat mScanner = BluetoothLeScannerCompat.getScanner();
     private final Handler mStopScanHandler = new Handler();
-    Animation mSlideUpFromBottom;
-    Animation mSlideDownToBottom;
+    private Animation mSlideUpFromBottom;
+    private Animation mSlideDownToBottom;
     private int mShotsTakenCount = 0;
     private String mAppName;
     private String mSelectedItemName;
     private String[] mModesGroups;
-    private ArrayList<String[]> mModes = new ArrayList<String[]>();
-    private ArrayList<String[]> mModesSubText = new ArrayList<String[]>();
-    private ArrayList<TypedArray> mModeIcons = new ArrayList<TypedArray>();
+    private final ArrayList<String[]> mModes = new ArrayList<>();
+    private final ArrayList<String[]> mModesSubText = new ArrayList<>();
+    private final ArrayList<TypedArray> mModeIcons = new ArrayList<>();
     private ExpandableListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
@@ -134,7 +134,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
     private TTLocationService mLocationService = null;
     private DrawerFragmentHandler mDrawerFragHandler = null;
     private String mInitialFragmentTag = TTApp.FragmentTags.GETTING_STARTED;
-    private Bundle mInitialFragmentState = null;
+    private final Bundle mInitialFragmentState = null;
 
 
     // BLE --- start
@@ -152,7 +152,6 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
             stopLeScan();
         }
     };
-    private GattClient mGattClient;
     private final ScanCallback mScanCallback = new ScanCallback() {
         @Override
         public void onScanResult(int callbackType, ScanResult result) {
@@ -180,7 +179,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
     /*
      * Service binding and handling code
      */
-    private ServiceConnection mTriggertrapServiceConnection = new ServiceConnection() {
+    private final ServiceConnection mTriggertrapServiceConnection = new ServiceConnection() {
 
         @Override
         public void onServiceConnected(ComponentName className, IBinder service) {
@@ -481,7 +480,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
                                 mService.setTTLocationService(mLocationService);
                             }
                             if (distanceFragment != null && distanceFragment.isVisible()) {
-                                distanceFragment.setDistanceLapseState(DistanceLapseFragment.GooglePlayServiceState.SERVICE_AVAILABLE);
+                                distanceFragment.setDistanceLapseState();
                             }
                         }
                         break;
@@ -516,8 +515,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
 
     private String getNotifcationText(int onGoingAction) {
         String[] notifcations = getResources().getStringArray(R.array.tt_notifications);
-        String notifcationText = notifcations[onGoingAction];
-        return notifcationText;
+        return notifcations[onGoingAction];
     }
 
     private void setUpStatusBar() {
@@ -536,7 +534,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
     }
 
     private void setUpFragmentHandler(boolean hasBeenRotated) {
-        mDrawerFragHandler = new DrawerFragmentHandler(getFragmentManager(), R.id.content_frame);
+        mDrawerFragHandler = new DrawerFragmentHandler(getFragmentManager());
         mDrawerFragHandler.addDrawerPane(TTApp.FragmentTags.PLACEHOLDER, PlaceHolderFragment.class, mInitialFragmentState);
         mDrawerFragHandler.addDrawerPane(TTApp.FragmentTags.GETTING_STARTED, GettingStartedFragment.class, mInitialFragmentState);
 
@@ -772,7 +770,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
                         }
                         DistanceLapseFragment distanceFragment = (DistanceLapseFragment) getFragmentManager().findFragmentByTag(TTApp.FragmentTags.DISTANCE_LAPSE);
                         if (distanceFragment != null) {
-                            distanceFragment.setDistanceLapseState(DistanceLapseFragment.GooglePlayServiceState.SERVICE_AVAILABLE);
+                            distanceFragment.setDistanceLapseState();
                         }
                     }
                 } else if (position == 3) {
@@ -860,7 +858,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
                     }
                     DistanceLapseFragment distanceFragment = (DistanceLapseFragment) getFragmentManager().findFragmentByTag(TTApp.FragmentTags.DISTANCE_LAPSE);
                     if (distanceFragment != null) {
-                        distanceFragment.setDistanceLapseState(DistanceLapseFragment.GooglePlayServiceState.SERVICE_AVAILABLE);
+                        distanceFragment.setDistanceLapseState();
                     }
                 }
 
@@ -1541,13 +1539,13 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
 
     }
 
-    public void ignoreGPS(boolean ignore) {
+    public void ignoreGPS() {
         String currentFragTag = mDrawerFragHandler.getCurrentFragmentTag();
         if (currentFragTag.equals(TTApp.FragmentTags.DISTANCE_LAPSE)) {
             Fragment fragment = getFragmentManager().findFragmentByTag(currentFragTag);
             if (fragment != null) {
                 DistanceLapseFragment disrFrag = (DistanceLapseFragment) fragment;
-                disrFrag.ignoreGPS(ignore);
+                disrFrag.ignoreGPS(true);
             }
         }
     }
@@ -1812,7 +1810,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
                             WifiMasterFragment masterFrag = (WifiMasterFragment) fragment;
                             masterFrag.wifiMasterUnregister();
                         }
-                    } catch (NullPointerException exp) {
+                    } catch (NullPointerException ignored) {
 
                     }
                 }
@@ -2013,7 +2011,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
         mScanning = true;
 
         ScanSettings settings = new ScanSettings.Builder().setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY).setReportDelay(1000).build();
-        List<ScanFilter> filters = new ArrayList<ScanFilter>();
+        List<ScanFilter> filters = new ArrayList<>();
         filters.add(new ScanFilter.Builder().setServiceUuid(new ParcelUuid(GattClient.SERVICE_UUID)).build());
         mScanner.startScan(filters, settings, mScanCallback);
 
@@ -2036,7 +2034,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
 
     private void connectBLE(BluetoothDevice device) {
 
-        mGattClient = new GattClient();
+        GattClient mGattClient = new GattClient();
 
         mGattClient.onCreate(this, device.getAddress(), new GattClient.OnCounterReadListener() {
 
@@ -2093,7 +2091,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
 
     public class DrawerExpandableListAdapter extends BaseExpandableListAdapter {
 
-        LayoutInflater inflater = (LayoutInflater) MainActivity.this.getSystemService(MainActivity.LAYOUT_INFLATER_SERVICE);
+        final LayoutInflater inflater = (LayoutInflater) MainActivity.this.getSystemService(MainActivity.LAYOUT_INFLATER_SERVICE);
 
         public Object getChild(int groupPosition, int childPosition) {
             return mModes.get(groupPosition)[childPosition];

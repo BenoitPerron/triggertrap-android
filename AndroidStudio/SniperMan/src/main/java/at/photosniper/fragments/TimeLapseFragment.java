@@ -30,7 +30,7 @@ import at.photosniper.widget.OngoingButton;
 
 public class TimeLapseFragment extends TimeFragment implements DialpadManager.InputUpdatedListener {
 
-    private static String TAG = TimeLapseFragment.class.getSimpleName();
+    private static final String TAG = TimeLapseFragment.class.getSimpleName();
 
     private View mRootView;
     private OngoingButton mButton;
@@ -46,7 +46,7 @@ public class TimeLapseFragment extends TimeFragment implements DialpadManager.In
 
     private int mValidState = ValidState.VALID;
     // Handler for received Events from Settings Fragment
-    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+    private final BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             // Extract data included in the Intent
@@ -239,7 +239,7 @@ public class TimeLapseFragment extends TimeFragment implements DialpadManager.In
 
     @Override
     public void setActionState(boolean actionState) {
-        if (actionState == true) {
+        if (actionState) {
             mState = State.STARTED;
         } else {
             mState = State.STOPPED;
@@ -251,7 +251,7 @@ public class TimeLapseFragment extends TimeFragment implements DialpadManager.In
         mCircleTimerView.setPassedTime(0, false);
         mCircleTimerView.setIntervalTime(timeToNext);
         mCircleTimerView.startIntervalAnimation();
-        mTimerText.setTime(timeToNext, true, false);
+        mTimerText.setTime(timeToNext, false);
         mTimeLapseCount.setText(String.valueOf(count));
         mLastCount = count;
     }
@@ -260,7 +260,7 @@ public class TimeLapseFragment extends TimeFragment implements DialpadManager.In
 
         mCurrentExposureCount = exposures;
 
-        mTimerText.setTime(remainingPulseTime, true, true);
+        mTimerText.setTime(remainingPulseTime, true);
         if (remainingPulseTime != 0) {
             if (syncCircle) {
                 mTimeLapseCount.setText(String.valueOf(exposures));
@@ -300,7 +300,7 @@ public class TimeLapseFragment extends TimeFragment implements DialpadManager.In
             mCountDownLayout.startAnimation(mSlideInFromTop);
             mCircleTimerView.setPassedTime(0, false);
             mCircleTimerView.setIntervalTime(timeMilliSeconds);
-            mTimerText.setTime(timeMilliSeconds, true, false);
+            mTimerText.setTime(timeMilliSeconds, false);
             mPulseSequence = mPulseGenerator.getTimeLapseSequence(timeMilliSeconds);
             mPulseSeqListener.onPulseSequenceCreated(TTApp.OnGoingAction.TIMELAPSE, mPulseSequence, true);
 

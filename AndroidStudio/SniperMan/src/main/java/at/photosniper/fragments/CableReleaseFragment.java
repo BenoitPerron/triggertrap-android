@@ -72,7 +72,7 @@ public class CableReleaseFragment extends TriggertrapFragment {
 
     @Override
     public void setActionState(boolean actionState) {
-        if (actionState == true) {
+        if (actionState) {
             mState = State.STARTED;
         } else {
             mState = State.STOPPED;

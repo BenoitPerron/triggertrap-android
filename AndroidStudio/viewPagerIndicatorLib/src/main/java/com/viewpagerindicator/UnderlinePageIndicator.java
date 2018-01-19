@@ -114,7 +114,7 @@ public class UnderlinePageIndicator extends View implements PageIndicator {
         return mFades;
     }
 
-    public void setFades(boolean fades) {
+    private void setFades(boolean fades) {
         if (fades != mFades) {
             mFades = fades;
             if (fades) {
@@ -131,7 +131,7 @@ public class UnderlinePageIndicator extends View implements PageIndicator {
         return mFadeDelay;
     }
 
-    public void setFadeDelay(int fadeDelay) {
+    private void setFadeDelay(int fadeDelay) {
         mFadeDelay = fadeDelay;
     }
 
@@ -139,7 +139,7 @@ public class UnderlinePageIndicator extends View implements PageIndicator {
         return mFadeLength;
     }
 
-    public void setFadeLength(int fadeLength) {
+    private void setFadeLength(int fadeLength) {
         mFadeLength = fadeLength;
         mFadeBy = 0xFF / (mFadeLength / FADE_FRAME_MS);
     }
@@ -148,7 +148,7 @@ public class UnderlinePageIndicator extends View implements PageIndicator {
         return mPaint.getColor();
     }
 
-    public void setSelectedColor(int selectedColor) {
+    private void setSelectedColor(int selectedColor) {
         mPaint.setColor(selectedColor);
         invalidate();
     }

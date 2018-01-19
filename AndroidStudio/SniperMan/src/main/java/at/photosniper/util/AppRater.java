@@ -47,7 +47,7 @@ public class AppRater {
 
     }
 
-    public static void showRateDialog(final Context context, final Activity activity) {
+    private static void showRateDialog(final Context context, final Activity activity) {
 
         ScopeFeelingsDialog dialog = new ScopeFeelingsDialog();
         dialog.show(context, activity);

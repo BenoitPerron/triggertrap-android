@@ -1,6 +1,6 @@
 package com.praetoriandroid.cameraremote.rpc;
 
-public class SetSelfTimerRequest extends BaseRequest<Integer, SimpleResponse> {
+class SetSelfTimerRequest extends BaseRequest<Integer, SimpleResponse> {
 
     public static final int NO_TIMER = 0;
 

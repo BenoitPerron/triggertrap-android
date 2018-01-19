@@ -21,8 +21,8 @@ public abstract class BaseRequest<Param, Response extends BaseResponse> {
     private final RpcMethod method;
     @SuppressWarnings("FieldCanBeLocal")
     private final String version = "1.0";
-    private Param[] params;
-    private int id;
+    private final Param[] params;
+    private final int id;
 
     /**
      * All subclass constructors must explicitly define response class and request method. See any subclass for example.
@@ -31,7 +31,8 @@ public abstract class BaseRequest<Param, Response extends BaseResponse> {
      * @param method        request method for the given request. Probably named as a request class without 'Request' suffix.
      * @param params        optional request parameter(s).
      */
-    public BaseRequest(Class<Response> responseClass, RpcMethod method, Param... params) {
+    @SafeVarargs
+    BaseRequest(Class<Response> responseClass, RpcMethod method, Param... params) {
         this.responseClass = responseClass;
         this.method = method;
         this.params = Arrays.copyOf(params, params.length);

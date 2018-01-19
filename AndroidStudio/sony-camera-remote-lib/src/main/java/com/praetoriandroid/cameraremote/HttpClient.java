@@ -27,7 +27,7 @@ public class HttpClient {
         return fetch(urlString, Method.GET, null);
     }
 
-    public InputStream post(String urlString, String data) throws IOException {
+    private InputStream post(String urlString, String data) throws IOException {
         return fetch(urlString, Method.POST, data);
     }
 

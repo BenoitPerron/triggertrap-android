@@ -13,15 +13,18 @@ import com.praetoriandroid.cameraremote.rpc.SimpleResponse;
 import com.praetoriandroid.cameraremote.rpc.StartRecModeRequest;
 import com.praetoriandroid.cameraremote.rpc.StopRecModeRequest;
 
+
 import java.io.IOException;
 
 public class RpcClient {
 
-    private Gson gson = new Gson();
+    public static final int CONNECTION_TIMEOUT = 1000;
 
-    private HttpClient httpClient = new HttpClient();
+    private final Gson gson = new Gson();
 
-    private String cameraServiceUrl;
+    private final HttpClient httpClient = new HttpClient();
+
+    private final String cameraServiceUrl;
 
     private Logger logger;
 
@@ -29,8 +32,8 @@ public class RpcClient {
         this.cameraServiceUrl = cameraServiceUrl;
     }
 
-    public void setConnectionTimeout(int timeout) {
-        httpClient.setConnectionTimeout(timeout);
+    public void setConnectionTimeout() {
+        httpClient.setConnectionTimeout(CONNECTION_TIMEOUT);
     }
 
     public void setLogger(Logger logger) {
@@ -71,9 +74,7 @@ public class RpcClient {
             Response response = request.parseResponse(gson, responseText);
             response.validate();
             return response;
-        } catch (JsonSyntaxException e) {
-            throw new RpcException(e);
-        } catch (IOException e) {
+        } catch (JsonSyntaxException | IOException e) {
             throw new RpcException(e);
         }
     }

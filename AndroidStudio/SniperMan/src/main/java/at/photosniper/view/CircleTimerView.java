@@ -19,17 +19,15 @@ import at.photosniper.R;
 public class CircleTimerView extends View {
 
 
-    public static final String PREF_CTV_PAUSED = "_ctv_paused";
-    public static final String PREF_CTV_INTERVAL = "_ctv_interval";
-    public static final String PREF_CTV_INTERVAL_START = "_ctv_interval_start";
-    public static final String PREF_CTV_CURRENT_INTERVAL = "_ctv_current_interval";
-    public static final String PREF_CTV_ACCUM_TIME = "_ctv_accum_time";
-    public static final String PREF_CTV_TIMER_MODE = "_ctv_timer_mode";
-    public static final String PREF_CTV_MARKER_TIME = "_ctv_marker_time";
-    private static float mCircleXCenterLeftPadding = 0;
+    private static final String PREF_CTV_PAUSED = "_ctv_paused";
+    private static final String PREF_CTV_INTERVAL = "_ctv_interval";
+    private static final String PREF_CTV_INTERVAL_START = "_ctv_interval_start";
+    private static final String PREF_CTV_CURRENT_INTERVAL = "_ctv_current_interval";
+    private static final String PREF_CTV_ACCUM_TIME = "_ctv_accum_time";
+    private static final String PREF_CTV_TIMER_MODE = "_ctv_timer_mode";
+    private static final String PREF_CTV_MARKER_TIME = "_ctv_marker_time";
     private static float mStrokeSize = 4;
     private static float mProgressStrokeSize = 2;
-    private static float mDiamondStrokeSize = 12;
     private static float mMarkerStrokeSize = 2;
     private final Paint mPaint = new Paint();
     private final Paint mFill = new Paint();
@@ -44,7 +42,6 @@ public class CircleTimerView extends View {
     private boolean mPaused = false;
     private boolean mAnimate = false;
     private float mRectHalfWidth = 6f;
-    private Resources mResources;
     private float mRadiusOffset;   // amount to remove from radius to account for markers on circle
     private float mScreenDensity;
     // Class has 2 modes:
@@ -123,12 +120,12 @@ public class CircleTimerView extends View {
 
     private void init(Context c) {
 
-        mResources = c.getResources();
-        mCircleXCenterLeftPadding = (mResources.getDimension(R.dimen.timer_circle_width) - mResources.getDimension(R.dimen.timer_circle_diameter)) / 2;
+        Resources mResources = c.getResources();
+        float mCircleXCenterLeftPadding = (mResources.getDimension(R.dimen.timer_circle_width) - mResources.getDimension(R.dimen.timer_circle_diameter)) / 2;
         mStrokeSize = mResources.getDimension(R.dimen.circletimer_circle_stroke_size);
         mProgressStrokeSize = mResources.getDimension(R.dimen.circletimer_circle_stroke_progress_size);
 
-        mDiamondStrokeSize = mResources.getDimension(R.dimen.circletimer_diamond_size);
+        float mDiamondStrokeSize = mResources.getDimension(R.dimen.circletimer_diamond_size);
         mMarkerStrokeSize = mResources.getDimension(R.dimen.circletimer_marker_size);
         mRadiusOffset = Utils.calculateRadiusOffset(mProgressStrokeSize, mDiamondStrokeSize, mMarkerStrokeSize);
         mPaint.setAntiAlias(true);
@@ -216,7 +213,7 @@ public class CircleTimerView extends View {
         }
     }
 
-    protected void drawRedDiamond(Canvas canvas, float degrees, int xCenter, int yCenter, float radius) {
+    private void drawRedDiamond(Canvas canvas, float degrees, int xCenter, int yCenter, float radius) {
         mPaint.setColor(mRedColor);
         float diamondPercent;
         if (mTimerMode) {

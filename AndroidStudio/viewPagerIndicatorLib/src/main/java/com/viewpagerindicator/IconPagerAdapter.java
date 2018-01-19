@@ -1,6 +1,6 @@
 package com.viewpagerindicator;
 
-public interface IconPagerAdapter {
+interface IconPagerAdapter {
     /**
      * Get icon representing the page at {@code index} in the adapter.
      */

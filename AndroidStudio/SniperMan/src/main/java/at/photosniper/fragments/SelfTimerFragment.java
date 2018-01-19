@@ -35,7 +35,6 @@ public class SelfTimerFragment extends TriggertrapFragment {
     private long mTimerDuration;
 
     private View mCountDownLayout;
-    private View mTimedInputView;
     private CountingTimerView mTimerText;
     private CircleTimerView mCircleTimerView;
 
@@ -76,7 +75,7 @@ public class SelfTimerFragment extends TriggertrapFragment {
         mRootView = inflater.inflate(R.layout.self_timer_mode, container, false);
         TextView title = (TextView) mRootView.findViewById(R.id.timedText);
         title.setTypeface(SAN_SERIF_LIGHT);
-        mTimedInputView = mRootView.findViewById(R.id.timedInputView);
+        View mTimedInputView = mRootView.findViewById(R.id.timedInputView);
         mTimedInputView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -141,7 +140,7 @@ public class SelfTimerFragment extends TriggertrapFragment {
         mCountDownLayout.startAnimation(mSlideInFromTop);
         mCircleTimerView.setPassedTime(0, false);
         mCircleTimerView.setIntervalTime(time);
-        mTimerText.setTime(time, true, false);
+        mTimerText.setTime(time, false);
         mCircleTimerView.startIntervalAnimation();
         mState = State.STARTED;
         mTimerDuration = time;
@@ -156,7 +155,7 @@ public class SelfTimerFragment extends TriggertrapFragment {
     }
 
     public void updateTimer(long time) {
-        mTimerText.setTime(time, true, true);
+        mTimerText.setTime(time, true);
         if (syncCircle) {
             synchroniseCircle(time);
         }

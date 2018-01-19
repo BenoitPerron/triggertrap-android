@@ -9,13 +9,13 @@ import java.nio.ByteBuffer;
 @SuppressWarnings("UnusedDeclaration")
 public class LiveViewFetcher {
 
-    private HttpClient httpClient = new HttpClient();
+    private final HttpClient httpClient = new HttpClient();
     private InputStream inputStream;
-    private CommonHeader commonHeader = new CommonHeader();
-    private PayloadHeader payloadHeader = new PayloadHeader();
-    private DataBlock payloadData = new DataBlock(8192);
-    private DataBlock padding = new DataBlock(0);
-    private Frame reusableFrame = new Frame();
+    private final CommonHeader commonHeader = new CommonHeader();
+    private final PayloadHeader payloadHeader = new PayloadHeader();
+    private final DataBlock payloadData = new DataBlock(8192);
+    private final DataBlock padding = new DataBlock(0);
+    private final Frame reusableFrame = new Frame();
     private boolean closed;
 
     public void setConnectionTimeout(int timeout) {

@@ -7,7 +7,7 @@ import at.photosniper.wifi.MasterServer;
 
 public class WifiBeeper implements IBeeper {
 
-    private Context mAppContext;
+    private final Context mAppContext;
 
     public WifiBeeper(Context context) {
         mAppContext = context.getApplicationContext();
@@ -20,7 +20,7 @@ public class WifiBeeper implements IBeeper {
         }
     }
 
-    public void play(long length, long pauseLength) {
+    public void play(long length) {
         //Check this is not a bulb mode trigger
         if (TTApp.getInstance(mAppContext).getBeepLength() == length) {
             MasterServer.getInstance().beep();

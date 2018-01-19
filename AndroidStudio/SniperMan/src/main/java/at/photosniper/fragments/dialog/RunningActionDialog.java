@@ -54,7 +54,7 @@ public class RunningActionDialog extends SimpleDialogFragment {
         return builder;
     }
 
-    public void setRunningMode(String runningMode) {
+    private void setRunningMode(String runningMode) {
         mRunningMode = runningMode;
     }
 }

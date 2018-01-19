@@ -5,7 +5,7 @@ import android.content.Context;
 public class OutputDispatcher implements PulseHandler.PulseListener {
 
     private static final String TAG = OutputDispatcher.class.getSimpleName();
-    PulseHandler mPulseHandler;
+    private final PulseHandler mPulseHandler;
 
     private OutputListener mListener;
 

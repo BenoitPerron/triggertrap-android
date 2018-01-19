@@ -27,8 +27,8 @@ class IcsLinearLayout extends LinearLayout {
     private Drawable mDivider;
     private int mDividerWidth;
     private int mDividerHeight;
-    private int mShowDividers;
-    private int mDividerPadding;
+    private final int mShowDividers;
+    private final int mDividerPadding;
 
 
     public IcsLinearLayout(Context context, int themeAttr) {

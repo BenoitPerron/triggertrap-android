@@ -33,16 +33,15 @@ public class HdrTimeLapseFragment extends PulseSequenceFragment {
     private DialpadManager.InputSelectionListener mInputListener = null;
 
     private int[] mShutterSpeedValues;
-    private float[] mEvValues = {0.33f, 0.5f, 1.0f, 2.0f};
+    private final float[] mEvValues = {0.33f, 0.5f, 1.0f, 2.0f};
     private boolean mScrolling = false;
     private long mCurrentMiddleSpeed = 60000;
     private float mCurrentEvValue = mEvValues[2];
-    private int mCurrentNumExposures = 3;
+    private final int mCurrentNumExposures = 3;
     private int mCurrentExposureCount;
 
     private View mRootView;
     private OngoingButton mButton;
-    private View mIntervalView;
     private TimerView mIntervalTimeInput;
     private View mButtonContainer;
 
@@ -58,8 +57,6 @@ public class HdrTimeLapseFragment extends PulseSequenceFragment {
     private Animation mSlideOutToTop;
 
     private boolean mSyncCircle = false;
-
-    private long mInterval = 0;
 
     public HdrTimeLapseFragment() {
         mRunningAction = TTApp.OnGoingAction.HDR_TIMELAPSE;
@@ -84,18 +81,18 @@ public class HdrTimeLapseFragment extends PulseSequenceFragment {
         mShutterSpeedValues = getResources().getIntArray(R.array.shutter_speed_values);
         final String[] shutterSpeeds = getResources().getStringArray(R.array.shutter_speeds);
 
-        ArrayWheelAdapter<String> middleAdapter = new ArrayWheelAdapter<String>(getActivity(), shutterSpeeds);
+        ArrayWheelAdapter<String> middleAdapter = new ArrayWheelAdapter<>(getActivity(), shutterSpeeds);
 
         View middleExposure = mRootView.findViewById(R.id.hdrMiddleExposure);
 
         final AbstractWheel hdrMiddle = (AbstractWheel) middleExposure.findViewById(R.id.wheelHorizontalView);
         middleAdapter.setItemResource(R.layout.wheel_text_centered);
-        middleAdapter.setItemTextResource(R.id.text);
+        middleAdapter.setItemTextResource();
         hdrMiddle.setViewAdapter(middleAdapter);
 
-        ArrayWheelAdapter<String> evAdapter = new ArrayWheelAdapter<String>(getActivity(), new String[]{"1/3", "1/2", "1", "2"});
+        ArrayWheelAdapter<String> evAdapter = new ArrayWheelAdapter<>(getActivity(), new String[]{"1/3", "1/2", "1", "2"});
         evAdapter.setItemResource(R.layout.wheel_text_centered);
-        evAdapter.setItemTextResource(R.id.text);
+        evAdapter.setItemTextResource();
         View evSteps = mRootView.findViewById(R.id.hdrEvStep);
         final AbstractWheel hdrEv = (AbstractWheel) evSteps.findViewById(R.id.wheelHorizontalView);
         hdrEv.setViewAdapter(evAdapter);
@@ -188,7 +185,7 @@ public class HdrTimeLapseFragment extends PulseSequenceFragment {
     }
 
     private void setUpInterval() {
-        mIntervalView = mRootView.findViewById(R.id.intervalInput);
+        View mIntervalView = mRootView.findViewById(R.id.intervalInput);
 
         mIntervalTimeInput = (TimerView) mIntervalView.findViewById(R.id.timerTimeText);
 
@@ -209,7 +206,7 @@ public class HdrTimeLapseFragment extends PulseSequenceFragment {
             }
         });
 
-        mInterval = TTApp.getInstance(getActivity()).getHDRTimeLapseInterval();
+        long mInterval = TTApp.getInstance(getActivity()).getHDRTimeLapseInterval();
 
         mIntervalTimeInput.setTextInputTime(mInterval);
         mIntervalTimeInput.initInputs(mInterval);
@@ -283,7 +280,7 @@ public class HdrTimeLapseFragment extends PulseSequenceFragment {
 
     @Override
     public void setActionState(boolean actionState) {
-        if (actionState == true) {
+        if (actionState) {
             mState = State.STARTED;
         } else {
             mState = State.STOPPED;
@@ -336,27 +333,27 @@ public class HdrTimeLapseFragment extends PulseSequenceFragment {
         if (remainingPulseTime > currentGap) {
             //We need to count down the exposure
             remainingExposure = currentExposure - (timeToNext - remainingPulseTime);
-            mExposureTimerText.setTime(remainingExposure, true, true);
+            mExposureTimerText.setTime(remainingExposure);
             if ((remainingGap == 0) && ((currentSeq * 2) + 1) <= sequence.length) {
                 long nextGap = sequence[(currentSeq * 2) + 1];
-                mGapTimerText.setTime(nextGap, true, true);
+                mGapTimerText.setTime(nextGap);
             } else if (((currentSeq * 2) + 1) > sequence.length) {
-                mGapTimerText.setTime(0, true, true);
+                mGapTimerText.setTime(0);
             }
         } else {
             //We need to count down the gap
             remainingGap = remainingPulseTime;
-            mGapTimerText.setTime(remainingGap, true, true);
+            mGapTimerText.setTime(remainingGap);
             if ((remainingExposure == 0) && ((currentSeq * 2) + 2) < sequence.length) {
                 long nextExposure = sequence[(currentSeq * 2) + 2];
-                mExposureTimerText.setTime(nextExposure, true, true);
+                mExposureTimerText.setTime(nextExposure);
             } else if (((currentSeq * 2) + 2) >= sequence.length) {
-                mExposureTimerText.setTime(0, true, true);
+                mExposureTimerText.setTime(0);
             }
 
         }
 
-        mTimerText.setTime(remainingSequenceTime, true, true);
+        mTimerText.setTime(remainingSequenceTime, true);
         if (remainingPulseTime != 0) {
             if (mSyncCircle) {
                 //String sequenceProgress = exposures + "/" + (sequence.length/2);
@@ -377,7 +374,7 @@ public class HdrTimeLapseFragment extends PulseSequenceFragment {
     }
 
     public void onPulseStop() {
-        mTimerText.setTime(0, true, true);
+        mTimerText.setTime(0, true);
         onStopTimer();
     }
 
@@ -390,7 +387,7 @@ public class HdrTimeLapseFragment extends PulseSequenceFragment {
         //mGapTimerText.setTime(sequence[1], true, true);
         mCircleTimerView.setPassedTime(0, true);
         mCircleTimerView.startIntervalAnimation();
-        mTimerText.setTime(totaltime, true, false);
+        mTimerText.setTime(totaltime, false);
     }
 
     private void onStartTimer() {
@@ -410,10 +407,10 @@ public class HdrTimeLapseFragment extends PulseSequenceFragment {
             Log.d(TAG, "Total time Circle: " + totaltime);
             mCircleTimerView.setIntervalTime(totaltime);
 
-            mExposureTimerText.setTime(mPulseSequence[0], true, true);
-            mGapTimerText.setTime(mPulseSequence[1], true, true);
+            mExposureTimerText.setTime(mPulseSequence[0]);
+            mGapTimerText.setTime(mPulseSequence[1]);
             mCircleTimerView.startIntervalAnimation();
-            mTimerText.setTime(totaltime, true, false);
+            mTimerText.setTime(totaltime, false);
         }
     }
 

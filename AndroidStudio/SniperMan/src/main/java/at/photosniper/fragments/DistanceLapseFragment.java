@@ -48,7 +48,6 @@ public class DistanceLapseFragment extends TriggertrapFragment {
     private TextView mSpeedUnits;
 
     private int mDistanceTrigger;
-    private float mDistanceTraveled;
     private boolean mIngnoreGPS = false;
 
     private Animation mSlideInFromTop;
@@ -60,7 +59,7 @@ public class DistanceLapseFragment extends TriggertrapFragment {
 
     private DistanceLapseListener mDistanceListener;
     //Handler for received Events from Settings Fragment
-    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+    private final BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             // Extract data included in the Intent
@@ -318,6 +317,7 @@ public class DistanceLapseFragment extends TriggertrapFragment {
         }
 
         int progress = 0;
+        float mDistanceTraveled;
         if (distanceTraveled >= mDistanceTrigger) {
             float remainder = distanceTraveled % mDistanceTrigger;
             mDistanceTraveled = (int) remainder;
@@ -354,8 +354,8 @@ public class DistanceLapseFragment extends TriggertrapFragment {
         return mGooglePlayServiceState;
     }
 
-    public void setDistanceLapseState(int state) {
-        mGooglePlayServiceState = state;
+    public void setDistanceLapseState() {
+        mGooglePlayServiceState = GooglePlayServiceState.SERVICE_AVAILABLE;
     }
 
     private void showDistanceProgress() {
@@ -368,9 +368,9 @@ public class DistanceLapseFragment extends TriggertrapFragment {
 
     @Override
     public void setActionState(boolean actionState) {
-        if (actionState == true) {
+        if (actionState) {
             mState = State.STARTED;
-            setDistanceLapseState(GooglePlayServiceState.SERVICE_AVAILABLE);
+            setDistanceLapseState();
         } else {
             mState = State.STOPPED;
         }

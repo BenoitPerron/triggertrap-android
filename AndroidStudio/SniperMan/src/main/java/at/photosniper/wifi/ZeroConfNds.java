@@ -18,13 +18,13 @@ public class ZeroConfNds implements IZeroConf {
 
     private static final String TAG = ZeroConfNds.class.getSimpleName();
     private static final String TT_SERVICE_TYPE = "_triggertrap._tcp.";
-    public static int SERVICE_RESOLVED = 0;
-    public static int SERVICE_LOST = 1;
+    private static final int SERVICE_RESOLVED = 0;
+    private static final int SERVICE_LOST = 1;
 
     private String mServiceName;
 
-    private TriggertrapService mParentService;
-    Handler handler = new Handler(Looper.getMainLooper()) {
+    private final TriggertrapService mParentService;
+    private final Handler handler = new Handler(Looper.getMainLooper()) {
         public void handleMessage(Message msg) {
 
             NsdServiceInfo serviceInfo = (NsdServiceInfo) msg.obj;
@@ -50,15 +50,15 @@ public class ZeroConfNds implements IZeroConf {
     };
     private DiscoveryListener mDiscoveryListener = null;
     private ResolveListener mResolveListener = null;
-    private NsdManager mNsdManager;
+    private final NsdManager mNsdManager;
 
-    public ZeroConfNds(TriggertrapService parentService) {
+    private ZeroConfNds(TriggertrapService parentService) {
         mParentService = parentService;
         mNsdManager = (NsdManager) parentService.getSystemService(Context.NSD_SERVICE);
     }
 
 
-    public void setupResolveListener() {
+    private void setupResolveListener() {
         mResolveListener = new NsdManager.ResolveListener() {
 
             @Override
@@ -193,6 +193,6 @@ public class ZeroConfNds implements IZeroConf {
     }
 
     public ArrayList<TTSlaveInfo> getConnectedSlaves() {
-        return new ArrayList<TTSlaveInfo>();
+        return new ArrayList<>();
     }
 }

@@ -34,34 +34,34 @@ import at.photosniper.R;
  */
 public class CableSelectorFragment extends TriggertrapFragment {
 
-    public static final String CABLE_CB1 = "CB1";
-    public static final String CABLE_DC0 = "DC0";
-    public static final String CABLE_DC1 = "DC1";
-    public static final String CABLE_DC2 = "DC2";
-    public static final String CABLE_E3 = "E3";
-    public static final String CABLE_L1 = "L1";
-    public static final String CABLE_N3 = "N3";
-    public static final String CABLE_NX = "NX";
-    public static final String CABLE_R9 = "R9";
-    public static final String CABLE_S1 = "S1";
-    public static final String CABLE_S2 = "S2";
-    public static final String CABLE_UC1 = "UC1";
+    private static final String CABLE_CB1 = "CB1";
+    private static final String CABLE_DC0 = "DC0";
+    private static final String CABLE_DC1 = "DC1";
+    private static final String CABLE_DC2 = "DC2";
+    private static final String CABLE_E3 = "E3";
+    private static final String CABLE_L1 = "L1";
+    private static final String CABLE_N3 = "N3";
+    private static final String CABLE_NX = "NX";
+    private static final String CABLE_R9 = "R9";
+    private static final String CABLE_S1 = "S1";
+    private static final String CABLE_S2 = "S2";
+    private static final String CABLE_UC1 = "UC1";
 
-    private HashMap<String, LinkedHashMap<String, String>> mCableChooserData = new HashMap<String, LinkedHashMap<String, String>>();
+    private final HashMap<String, LinkedHashMap<String, String>> mCableChooserData = new HashMap<>();
     private Button mBuyCableBtn;
     private String[] mCurrentCameraArray;
     private ImageView mCableImageView;
 
-    private HashMap<String, String> mStoreLinks = new HashMap<String, String>();
+    private final HashMap<String, String> mStoreLinks = new HashMap<>();
 
-    public static SortedMap<String, String> listFromJsonSorted(JSONObject json) {
+    private static SortedMap<String, String> listFromJsonSorted(JSONObject json) {
         if (json == null)
             return null;
-        SortedMap<String, String> map = new TreeMap<String, String>();
+        SortedMap<String, String> map = new TreeMap<>();
         Iterator<String> i = json.keys();
         while (i.hasNext()) {
             try {
-                String key = i.next().toString();
+                String key = i.next();
                 String j = json.getString(key);
                 map.put(key, j);
             } catch (JSONException e) {
@@ -98,7 +98,7 @@ public class CableSelectorFragment extends TriggertrapFragment {
             for (String manufacturer : manufacturers) {
 
                 JSONObject tempObj = obj.getJSONObject(manufacturer);
-                LinkedHashMap<String, String> temp = new LinkedHashMap<String, String>();
+                LinkedHashMap<String, String> temp = new LinkedHashMap<>();
 
                 SortedMap<String, String> map = listFromJsonSorted(tempObj);
 
@@ -126,11 +126,11 @@ public class CableSelectorFragment extends TriggertrapFragment {
         cameraManufacturers.addScrollingListener(new OnWheelScrollListener() {
             @Override
             public void onScrollingStarted(AbstractWheel wheel) {
-                ArrayWheelAdapter<String> cameraAdapter = new ArrayWheelAdapter<String>(getActivity(), new String[]{"- - -"});
+                ArrayWheelAdapter<String> cameraAdapter = new ArrayWheelAdapter<>(getActivity(), new String[]{"- - -"});
                 cameraAdapter.setItemResource(R.layout.wheel_text_stretch);
-                cameraAdapter.setItemTextResource(R.id.text);
+                cameraAdapter.setItemTextResource();
                 cameraModelWheel.setViewAdapter(cameraAdapter);
-                cameraModelWheel.setCyclic(true);
+                cameraModelWheel.setCyclic();
             }
 
             @Override
@@ -138,11 +138,11 @@ public class CableSelectorFragment extends TriggertrapFragment {
 
                 mCurrentCameraArray = getCamerasFor(cameraManufacturers.getCurrentItem());
 
-                ArrayWheelAdapter<String> cameraAdapter = new ArrayWheelAdapter<String>(getActivity(), mCurrentCameraArray);
+                ArrayWheelAdapter<String> cameraAdapter = new ArrayWheelAdapter<>(getActivity(), mCurrentCameraArray);
                 cameraAdapter.setItemResource(R.layout.wheel_text_stretch);
-                cameraAdapter.setItemTextResource(R.id.text);
+                cameraAdapter.setItemTextResource();
                 cameraModelWheel.setViewAdapter(cameraAdapter);
-                cameraModelWheel.setCyclic(true);
+                cameraModelWheel.setCyclic();
                 cameraModelWheel.setCurrentItem(0);
 
                 updateUIForCamera(cameraManufacturers.getCurrentItem(), 0);
@@ -162,18 +162,18 @@ public class CableSelectorFragment extends TriggertrapFragment {
             }
         });
 
-        ArrayWheelAdapter<String> manufacturerAdapter = new ArrayWheelAdapter<String>(getActivity(), manufacturers);
+        ArrayWheelAdapter<String> manufacturerAdapter = new ArrayWheelAdapter<>(getActivity(), manufacturers);
         manufacturerAdapter.setItemResource(R.layout.wheel_text_stretch);
-        manufacturerAdapter.setItemTextResource(R.id.text);
+        manufacturerAdapter.setItemTextResource();
         cameraManufacturers.setViewAdapter(manufacturerAdapter);
-        cameraManufacturers.setCyclic(true);
+        cameraManufacturers.setCyclic();
 
 
-        ArrayWheelAdapter<String> cameraAdapter = new ArrayWheelAdapter<String>(getActivity(), getCamerasFor(cameraManufacturers.getCurrentItem()));
+        ArrayWheelAdapter<String> cameraAdapter = new ArrayWheelAdapter<>(getActivity(), getCamerasFor(cameraManufacturers.getCurrentItem()));
         cameraAdapter.setItemResource(R.layout.wheel_text_stretch);
-        cameraAdapter.setItemTextResource(R.id.text);
+        cameraAdapter.setItemTextResource();
         cameraModelWheel.setViewAdapter(cameraAdapter);
-        cameraModelWheel.setCyclic(true);
+        cameraModelWheel.setCyclic();
         //Set initial state
         mCurrentCameraArray = getCamerasFor(0);
         updateUIForCamera(0, 0);
@@ -181,7 +181,7 @@ public class CableSelectorFragment extends TriggertrapFragment {
         return rootView;
     }
 
-    public String[] getCamerasFor(int manufacturer) {
+    private String[] getCamerasFor(int manufacturer) {
 
         final String[] manufacturers = getResources().getStringArray(R.array.tt_camera_manufacturers);
 
@@ -190,36 +190,49 @@ public class CableSelectorFragment extends TriggertrapFragment {
         return tempMap.keySet().toArray(new String[tempMap.keySet().size()]);
     }
 
-    public void updateUIForCamera(int manufacturer, int cameraModel) {
+    private void updateUIForCamera(int manufacturer, int cameraModel) {
         final String[] manufacturers = getResources().getStringArray(R.array.tt_camera_manufacturers);
         HashMap<String, String> tempMap = mCableChooserData.get(manufacturers[manufacturer]);
         String cableType = tempMap.get(mCurrentCameraArray[cameraModel]);
 
         if (cableType != null) {
-            if (cableType.equals(CABLE_CB1)) {
-                setupButton(R.string.buy_cable_cb1, CABLE_CB1, R.drawable.cable_cb1);
-            } else if (cableType.equals(CABLE_DC0)) {
-                setupButton(R.string.buy_cable_dc0, CABLE_DC0, R.drawable.cable_dc0);
-            } else if (cableType.equals(CABLE_DC1)) {
-                setupButton(R.string.buy_cable_dc1, CABLE_DC1, R.drawable.cable_dc1);
-            } else if (cableType.equals(CABLE_DC2)) {
-                setupButton(R.string.buy_cable_dc2, CABLE_DC2, R.drawable.cable_dc2);
-            } else if (cableType.equals(CABLE_E3)) {
-                setupButton(R.string.buy_cable_e3, CABLE_E3, R.drawable.cable_e3);
-            } else if (cableType.equals(CABLE_L1)) {
-                setupButton(R.string.buy_cable_l1, CABLE_L1, R.drawable.cable_l1);
-            } else if (cableType.equals(CABLE_N3)) {
-                setupButton(R.string.buy_cable_n3, CABLE_N3, R.drawable.cable_n3);
-            } else if (cableType.equals(CABLE_NX)) {
-                setupButton(R.string.buy_cable_nx, CABLE_NX, R.drawable.cable_nx);
-            } else if (cableType.equals(CABLE_R9)) {
-                setupButton(R.string.buy_cable_r9, CABLE_R9, R.drawable.cable_r9);
-            } else if (cableType.equals(CABLE_S1)) {
-                setupButton(R.string.buy_cable_s1, CABLE_S1, R.drawable.cable_s1);
-            } else if (cableType.equals(CABLE_S2)) {
-                setupButton(R.string.buy_cable_s2, CABLE_S2, R.drawable.cable_s2);
-            } else if (cableType.equals(CABLE_UC1)) {
-                setupButton(R.string.buy_cable_uc1, CABLE_UC1, R.drawable.cable_uc1);
+            switch (cableType) {
+                case CABLE_CB1:
+                    setupButton(R.string.buy_cable_cb1, CABLE_CB1, R.drawable.cable_cb1);
+                    break;
+                case CABLE_DC0:
+                    setupButton(R.string.buy_cable_dc0, CABLE_DC0, R.drawable.cable_dc0);
+                    break;
+                case CABLE_DC1:
+                    setupButton(R.string.buy_cable_dc1, CABLE_DC1, R.drawable.cable_dc1);
+                    break;
+                case CABLE_DC2:
+                    setupButton(R.string.buy_cable_dc2, CABLE_DC2, R.drawable.cable_dc2);
+                    break;
+                case CABLE_E3:
+                    setupButton(R.string.buy_cable_e3, CABLE_E3, R.drawable.cable_e3);
+                    break;
+                case CABLE_L1:
+                    setupButton(R.string.buy_cable_l1, CABLE_L1, R.drawable.cable_l1);
+                    break;
+                case CABLE_N3:
+                    setupButton(R.string.buy_cable_n3, CABLE_N3, R.drawable.cable_n3);
+                    break;
+                case CABLE_NX:
+                    setupButton(R.string.buy_cable_nx, CABLE_NX, R.drawable.cable_nx);
+                    break;
+                case CABLE_R9:
+                    setupButton(R.string.buy_cable_r9, CABLE_R9, R.drawable.cable_r9);
+                    break;
+                case CABLE_S1:
+                    setupButton(R.string.buy_cable_s1, CABLE_S1, R.drawable.cable_s1);
+                    break;
+                case CABLE_S2:
+                    setupButton(R.string.buy_cable_s2, CABLE_S2, R.drawable.cable_s2);
+                    break;
+                case CABLE_UC1:
+                    setupButton(R.string.buy_cable_uc1, CABLE_UC1, R.drawable.cable_uc1);
+                    break;
             }
         }
     }
@@ -237,7 +250,7 @@ public class CableSelectorFragment extends TriggertrapFragment {
         });
     }
 
-    public String loadJSONFromAsset(String fileName) {
+    private String loadJSONFromAsset(String fileName) {
         String json;
         try {
             InputStream is = getActivity().getAssets().open(fileName);

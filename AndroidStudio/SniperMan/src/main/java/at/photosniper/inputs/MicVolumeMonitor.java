@@ -9,10 +9,10 @@ import at.photosniper.TTApp;
 
 public class MicVolumeMonitor {
 
-    public static final int MAX_VOL_RANGE = Short.MAX_VALUE;
-    public static final int MIN_VOL_RANGE = 500;
-    public static final int DEFAULT_VOL_RANGE = 5000;
-    public static final int SAMPLE_RATE = 16000;
+    private static final int MAX_VOL_RANGE = Short.MAX_VALUE;
+    private static final int MIN_VOL_RANGE = 500;
+    private static final int DEFAULT_VOL_RANGE = 5000;
+    private static final int SAMPLE_RATE = 16000;
     private static final String TAG = MicVolumeMonitor.class.getSimpleName();
     private static final int VOLUME_UPDATE_INTERVAL = 10;
     private static final int TRIGGER_UPDATE_INTERVAL = 10;
@@ -25,9 +25,9 @@ public class MicVolumeMonitor {
     private boolean mIsThresholdEnabled = false;
     private long lastUpdateTime = System.currentTimeMillis();
     private long lastTriggerTime = System.currentTimeMillis();
-    private Handler handler = new Handler();
+    private final Handler handler = new Handler();
 
-    public MicVolumeMonitor() {
+    private MicVolumeMonitor() {
         initRecorder();
     }
 
@@ -73,7 +73,7 @@ public class MicVolumeMonitor {
                                 lastUpdateTime = currentTime;
                                 mListener.onVolumeUpdate(percentAmplitude);
                             }
-                            if (rmsAmplitude > mThreshold && mIsThresholdEnabled == true) {
+                            if (rmsAmplitude > mThreshold && mIsThresholdEnabled) {
                                 if (currentTime - lastTriggerTime > TTApp.getInstance(null).getSensorResetDelay()) {
                                     lastTriggerTime = currentTime;
 
@@ -99,7 +99,7 @@ public class MicVolumeMonitor {
     }
 
     public void start() {
-        if (mIsRecording == false) {
+        if (!mIsRecording) {
             mIsRecording = true;
             mRecorder.startRecording();
             startBufferedRead();
@@ -107,7 +107,7 @@ public class MicVolumeMonitor {
     }
 
     public void stop() {
-        if (mIsRecording == true) {
+        if (mIsRecording) {
             mIsRecording = false;
             mRecorder.stop();
         }
@@ -137,8 +137,7 @@ public class MicVolumeMonitor {
         percentage = (percentage > 100) ? 100 : percentage;
         final int volumeRange = MAX_VOL_RANGE - MIN_VOL_RANGE;
         final int percentageRange = (int) (volumeRange * percentage / 100);
-        int upperVolumeRange = MAX_VOL_RANGE - percentageRange;
-        mVolumeRange = upperVolumeRange;
+        mVolumeRange = MAX_VOL_RANGE - percentageRange;
         //Reset threshold
         setThreshold(thresholdPercentage);
     }

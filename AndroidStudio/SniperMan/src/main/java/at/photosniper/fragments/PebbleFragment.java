@@ -29,7 +29,7 @@ public class PebbleFragment extends TriggertrapFragment {
     //    private final static UUID PEBBLE_APP_UUID = UUID.fromString("96439271-2DE4-4209-A68C-5571CF2C418E");
     private final static int CMD_KEY = 0x01;
     private final static int CMD_DOWN = 0x01;
-    OutputDispatcher mOutputDispatcher;
+    private OutputDispatcher mOutputDispatcher;
     private PebbleListener mlistener;
     private OngoingButton mButton;
     private View mRootView;
@@ -181,7 +181,7 @@ public class PebbleFragment extends TriggertrapFragment {
 
     @Override
     public void setActionState(boolean actionState) {
-        if (actionState == true) {
+        if (actionState) {
             mState = State.STARTED;
         } else {
             mState = State.STOPPED;

@@ -16,7 +16,7 @@ public class GetSupportedSelfTimerResponse extends BaseResponse<List<Integer>> {
         }
     }
 
-    public List<Integer> getTimers() {
+    private List<Integer> getTimers() {
         return getResult()[0];
     }
 

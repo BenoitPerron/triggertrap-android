@@ -26,11 +26,11 @@ public class BezierWidget extends View {
     private final Paint mCirclePaint = new Paint();
     private final Paint mCircleOutlinePaint = new Paint();
     private final Paint mFramePaint = new Paint();
-    ArrayList<Float> mOverlapPoints = null;
+    private ArrayList<Float> mOverlapPoints = null;
     private int mX1 = 0, mY1 = 0;
     private int mX2 = 0, mY2 = 0;
-    private Path curvePath = new Path();
-    private RectF frame = new RectF();
+    private final Path curvePath = new Path();
+    private final RectF frame = new RectF();
     private int mFrameStrokeWidth = 1;
     private int mCurveStrokeWidth = 3;
     private int mTouchCircleRadius = 10;
@@ -145,9 +145,7 @@ public class BezierWidget extends View {
                     float yCoord = (1 - yNormCoord) * mInnerFrameHeight;
 
                     canvas.drawCircle(xCoord, yCoord, 20, mCurvePaint);
-                } catch (IndexOutOfBoundsException exp) {
-                    // Don't so anything if we haven't got overlap points.
-                } catch (NullPointerException exp) {
+                } catch (IndexOutOfBoundsException | NullPointerException exp) {
                     // Don't so anything if we haven't got overlap points.
                 }
 
@@ -224,8 +222,7 @@ public class BezierWidget extends View {
         // Switch origin to bottom left corner
         y1Norm = 1 - y1Norm;
         y2Norm = 1 - y2Norm;
-        float[] controlPoints = {x1Norm, y1Norm, x2Norm, y2Norm};
-        return controlPoints;
+        return new float[]{x1Norm, y1Norm, x2Norm, y2Norm};
     }
 
     public void setOverlapPoints(ArrayList<Float> overlapPoints) {
@@ -280,7 +277,6 @@ public class BezierWidget extends View {
 //					mListener.onControlChanged(normPts[0], normPts[1], normPts[2], normPts[3]);
 //				}
             }
-            return;
         }
 
 

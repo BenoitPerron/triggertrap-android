@@ -7,13 +7,13 @@ import java.util.Map;
 @SuppressWarnings("UnusedDeclaration")
 public class MethodTypesEntity {
 
-    private String name;
+    private final String name;
 
-    private List<AbstractClass> parameterTypes;
+    private final List<AbstractClass> parameterTypes;
 
-    private List<AbstractClass> responseTypes;
+    private final List<AbstractClass> responseTypes;
 
-    private String version;
+    private final String version;
 
     public MethodTypesEntity(String name, List<AbstractClass> parameterTypes, List<AbstractClass> responseTypes, String version) {
         this.name = name;
@@ -75,7 +75,7 @@ public class MethodTypesEntity {
 
     public static class SimpleClass implements AbstractClass {
 
-        private Class<?> clazz;
+        private final Class<?> clazz;
 
         public SimpleClass(Class<?> clazz) {
             this.clazz = clazz;

@@ -17,9 +17,7 @@ import at.photosniper.R;
 public class SeekArc extends View {
 
     private static final String TAG = SeekArc.class.getSimpleName();
-    private static int INVALID_PROGRESS_VALUE = -1;
-    // The initial rotational offset -90 means we start at 12 o'clock
-    private final int mAngleOffset = -90;
+    private static final int INVALID_PROGRESS_VALUE = -1;
 
     // Attributes
     private int mArcRadius = 0;
@@ -40,14 +38,13 @@ public class SeekArc extends View {
 
     // Internal variables
     private float mProgressSweep = 0;
-    private RectF mArcRect = new RectF();
+    private final RectF mArcRect = new RectF();
     private Paint mArcPaint;
     private Paint mProgressPaint;
     private int mTranslateX;
     private int mTranslateY;
     private int mThumbXPos;
     private int mThumbYPos;
-    private double mTouchAngle;
     private float mTouchIgnoreRadius;
     private OnSeekArcChangeListener mOnSeekArcChangeListener;
 
@@ -166,6 +163,7 @@ public class SeekArc extends View {
     protected void onDraw(Canvas canvas) {
 
         // Draw the arcs
+        int mAngleOffset = -90;
         final int arcStart = mStartAngle + mAngleOffset + mRotation;
         final int arcSweep = mSweepAngle;
         canvas.drawArc(mArcRect, arcStart, arcSweep, false, mArcPaint);
@@ -272,9 +270,9 @@ public class SeekArc extends View {
             return;
         }
         setPressed(true);
-        mTouchAngle = getTouchDegrees(event.getX(), event.getY());
+        double mTouchAngle = getTouchDegrees(event.getX(), event.getY());
         int progress = getProgressForAngle(mTouchAngle);
-        onProgressRefresh(progress, true);
+        onProgressRefresh(progress);
     }
 
     private boolean ignoreTouch(float xPos, float yPos) {
@@ -330,8 +328,8 @@ public class SeekArc extends View {
         updateProgress(progress, false);
     }
 
-    private void onProgressRefresh(int progress, boolean fromUser) {
-        updateProgress(progress, fromUser);
+    private void onProgressRefresh(int progress) {
+        updateProgress(progress, true);
     }
 
     private void updateProgress(int progress, boolean fromUser) {

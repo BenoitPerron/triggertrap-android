@@ -11,7 +11,7 @@ import at.photosniper.outputs.OutputDispatcher;
 //import com.getpebble.android.kit.PebbleKit;
 //import com.getpebble.android.kit.util.PebbleDictionary;
 
-public class PebbleController {
+class PebbleController {
 
 //    private static final String TAG = PebbleController.class.getSimpleName();
 //    // Pebble stuff

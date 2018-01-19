@@ -57,14 +57,14 @@ public class SolarArc extends View {
     private int mArcRadius = 0;
 
     // Internal variables
-    private RectF mArcRect = new RectF();
-    private Paint mArcPaint;
-    private Paint mFillerPaint;
-    private Paint mGrayFillPaint;
+    private final RectF mArcRect = new RectF();
+    private final Paint mArcPaint;
+    private final Paint mFillerPaint;
+    private final Paint mGrayFillPaint;
 
     private boolean mIsAfterSunset;
 
-    private float mDensity;
+    private final float mDensity;
 
     private String mSunsetTime;
     private String mSunriseTime;
@@ -73,12 +73,12 @@ public class SolarArc extends View {
 
     private String mTimeLayoutValue;
 
-    private Bitmap mGraySunBitmap;
-    private Bitmap mRedSunBitmap;
+    private final Bitmap mGraySunBitmap;
+    private final Bitmap mRedSunBitmap;
 
     private ObjectAnimator mSunAnimator;
 
-    private SimpleDateFormat mTimeFormat;
+    private final SimpleDateFormat mTimeFormat;
 
     public SolarArc(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -129,7 +129,7 @@ public class SolarArc extends View {
         invalidate();
     }
 
-    public int getSunAngle() {
+    private int getSunAngle() {
 
         return mSunAngle;
     }
@@ -156,10 +156,10 @@ public class SolarArc extends View {
 
     }
 
-    public void progressSun(int percent) {
+    public void progressSun() {
 
         // animate to new percentage
-        mSunAnimator = ObjectAnimator.ofInt(this, "sunAngle", getSunAngle() + percent);
+        mSunAnimator = ObjectAnimator.ofInt(this, "sunAngle", getSunAngle() + at.photosniper.fragments.SunriseSunsetFragment.PERCENTAGE_PROGRESS);
         mSunAnimator.setDuration(SHORT_ANIMATIONDURATION);
         mSunAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
         mSunAnimator.start();

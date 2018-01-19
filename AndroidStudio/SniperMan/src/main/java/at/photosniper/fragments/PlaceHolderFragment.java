@@ -16,7 +16,6 @@ public class PlaceHolderFragment extends TriggertrapFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.place_holder, container, false);
-        return rootView;
+        return inflater.inflate(R.layout.place_holder, container, false);
     }
 }

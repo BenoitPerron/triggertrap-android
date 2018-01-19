@@ -55,7 +55,7 @@ public class CountingTimerView extends View {
     private final AccessibilityManager mAccessibilityManager;
     private String mHours, mMinutes, mSeconds, mHundredths;
     private boolean mShowTimeStr = true;
-    Runnable mBlinkThread = new Runnable() {
+    private final Runnable mBlinkThread = new Runnable() {
         private boolean mVisible = true;
 
         @Override
@@ -128,24 +128,24 @@ public class CountingTimerView extends View {
         mBigHours = new SignedTime(mPaintBig, r.getString(R.string.hours_label).toUpperCase(), allDigits);
         mBigMinutes = new SignedTime(mBigHours, r.getString(R.string.minutes_label).toUpperCase());
         mBigThinSeconds = new UnsignedTime(mPaintBigThin, r.getString(R.string.seconds_label).toUpperCase(), allDigits);
-        mMedHundredths = new Hundredths(mPaintMed, HUNDREDTH_SEPERATOR, allDigits);
+        mMedHundredths = new Hundredths(mPaintMed, allDigits);
     }
 
-    protected void resetTextSize() {
+    private void resetTextSize() {
         mPaintBig.setTextSize(mBigFontSize);
         mTextHeight = mBigFontSize;
         mPaintBigThin.setTextSize(mBigFontSize);
         mPaintMed.setTextSize(mSmallFontSize);
     }
 
-    protected void setTextColor(int textColor) {
+    private void setTextColor(int textColor) {
         mPaintBig.setColor(textColor);
         mPaintBigThin.setColor(textColor);
         mPaintMed.setColor(textColor);
         mPaintLabel.setColor(textColor);
     }
 
-    public void setTime(long time, boolean showHundredths, boolean update) {
+    public void setTime(long time, boolean update) {
         boolean neg = false, showNeg = false;
         String format = null;
         if (time < 0) {
@@ -168,7 +168,7 @@ public class CountingTimerView extends View {
             showNeg = false;
         }
 
-        if (!showHundredths) {
+        if (!true) {
             if (!neg && hundreds != 0) {
                 seconds++;
                 if (seconds == 60) {
@@ -206,7 +206,7 @@ public class CountingTimerView extends View {
         }
 
         mSeconds = String.format(TWO_DIGITS, seconds);
-        if (showHundredths) {
+        if (true) {
             mHundredths = String.format(TWO_DIGITS, hundreds);
         } else {
             mHundredths = null;
@@ -274,7 +274,7 @@ public class CountingTimerView extends View {
         }
     }
 
-    public void showTime(boolean visible) {
+    private void showTime(boolean visible) {
         mShowTimeStr = visible;
         invalidate();
     }
@@ -420,10 +420,10 @@ public class CountingTimerView extends View {
 
     class UnsignedTime {
         private final String mWidest;
-        protected Paint mPaint;
-        protected float mEm;
-        protected float mWidth = 0;
-        protected String mLabel;
+        final Paint mPaint;
+        float mEm;
+        float mWidth = 0;
+        final String mLabel;
         private float mLabelWidth = 0;
 
         public UnsignedTime(Paint paint, final String label, String allDigits) {
@@ -456,13 +456,13 @@ public class CountingTimerView extends View {
             this.mLabel = label;
         }
 
-        protected void updateWidth(final String time) {
+        void updateWidth(final String time) {
             mEm = mPaint.measureText(mWidest);
             mLabelWidth = mLabel == null ? 0 : mPaintLabel.measureText(mLabel);
             mWidth = time.length() * mEm;
         }
 
-        protected void resetWidth() {
+        void resetWidth() {
             mWidth = mLabelWidth = 0;
         }
 
@@ -484,7 +484,7 @@ public class CountingTimerView extends View {
             return mLabelWidth;
         }
 
-        protected float drawTime(Canvas canvas, final String time, int ii, float x, float y) {
+        float drawTime(Canvas canvas, final String time, int ii, float x, float y) {
             float textEm = mEm / 2f;
             while (ii < time.length()) {
                 x += textEm;
@@ -505,8 +505,8 @@ public class CountingTimerView extends View {
     }
 
     class Hundredths extends UnsignedTime {
-        public Hundredths(Paint paint, final String label, final String allDigits) {
-            super(paint, label, allDigits);
+        public Hundredths(Paint paint, final String allDigits) {
+            super(paint, CountingTimerView.HUNDREDTH_SEPERATOR, allDigits);
         }
 
         @Override
