@@ -41,43 +41,43 @@ public class PhotoSniperApp {
     private static final long FIRST_LAUNCH_DEFAULT = 0;
     private static final int ND_FILTER_SHUTTER_SPEED_DEFAULT = 0;
     // Shared preference keys
-    private static final String TT_PREFS = "triggertrap_prefs";
-    private static final String TT_MODE = "tt_mode";
-    private static final String TT_IS_FIRST_LAUNCH = "tt_is_first_launch";
-    private static final String TT_LAST_FRAGMENT = "tt_last_fragment";
-    private static final String TT_LAST_ACTION_BAR_LABEL = "tt_last_action_bar_label";
-    private static final String TT_LAST_LIST_ITEM_CHECKED = "tt_last_list_item_checked";
-    private static final String TT_TIMELASPE_INTERVAL = "tt_timelaspe_interval";
-    private static final String TT_TIME_MODE_TIME = "tt_time_mode_time";
-    private static final String TT_SELF_TIME_MODE_TIME = "tt_self_time_mode_time";
-    private static final String TT_SOUND_SENSOR_THRESHOLD = "tt_sound_sensor_threshold";
-    private static final String TT_SOUND_SENSOR_SENSITIVTY = "tt_sound_sensor_sensitivty";
-    private static final String TT_STAR_TRAIL_ITERATIONS = "tt_star_trail_interations";
-    private static final String TT_STAR_TRAIL_EXPOSURE = "tt_star_trail_exposure";
-    private static final String TT_STAR_TRAIL_GAP = "tt_star_trail_gap";
-    private static final String TT_HDR_MIDDLE_EXP = "tt_hdr_middle_exp";
-    private static final String TT_HDR_NUM_EXP = "tt_hdr_num_exp";
-    private static final String TT_HDR_EV_STEP = "tt_hdr_ev_step";
-    private static final String TT_HDR_TIMELPASE_MIDDLE_EXP = "tt_hdr_timelapse_middle_exp";
-    private static final String TT_HDR_TIMELPASE_INTERVAL = "tt_hdr_timelapse_interval";
-    private static final String TT_HDR_TIMELPASE_EV_STEP = "tt_hdr_timelapse_ev_step";
-    private static final String TT_BRAMPING_ITERATIONS = "tt_bramping_iterations";
-    private static final String TT_BRAMPING_INTERVAL = "tt_bramping_interval";
-    private static final String TT_BRAMPING_START_EXP = "tt_bramping_start_exp";
-    private static final String TT_BRAMPING_END_EXP = "tt_bramping_end_exp";
-    private static final String TT_DISTANCELAPSE_DISTANCE = "tt_distancelapse_distance";
-    private static final String TT_TIMEWARP_ITERATIONS = "tt_timewarp_iterations";
-    private static final String TT_TIMEWARP_DURATION = "tt_timewarp_duration";
-    private static final String TT_TIMEWARP_CONTROL1_X = "tt_timewarp_control1_x";
-    private static final String TT_TIMEWARP_CONTROL1_Y = "tt_timewarp_control1_y";
-    private static final String TT_TIMEWARP_CONTROL2_X = "tt_timewarp_control2_x";
-    private static final String TT_TIMEWARP_CONTROL2_Y = "tt_timewarp_control2_y";
-    private static final String TT_WIFI_SLAVE_LAST_MASTER = "tt_wifi_slave_last_master";
-    private static final String TT_WIFI_MASTER_IS_ON = "tt_wifi_master_is_on";
-    private static final String TT_SHOW_DIALOG_AGAIN = "tt_show_dialog_again";
-    private static final String TT_LAUNCH_COUNT = "tt_launch_count";
-    private static final String TT_FIRST_LAUNCH_DATE = "tt_first_launch_date";
-    private static final String TT_DEFAULT_SHUTTER_SPEED = "tt_default_shutter_speed";
+    private static final String PS_PREFS = "photosniper_prefs";
+    private static final String PS_MODE = "ps_mode";
+    private static final String PS_IS_FIRST_LAUNCH = "ps_is_first_launch";
+    private static final String PS_LAST_FRAGMENT = "ps_last_fragment";
+    private static final String PS_LAST_ACTION_BAR_LABEL = "ps_last_action_bar_label";
+    private static final String PS_LAST_LIST_ITEM_CHECKED = "ps_last_list_item_checked";
+    private static final String PS_TIMELASPE_INTERVAL = "ps_timelaspe_interval";
+    private static final String PS_TIME_MODE_TIME = "ps_time_mode_time";
+    private static final String PS_SELF_TIME_MODE_TIME = "ps_self_time_mode_time";
+    private static final String PS_SOUND_SENSOR_THRESHOLD = "ps_sound_sensor_threshold";
+    private static final String PS_SOUND_SENSOR_SENSITIVTY = "ps_sound_sensor_sensitivty";
+    private static final String PS_STAR_TRAIL_ITERATIONS = "ps_star_trail_interations";
+    private static final String PS_STAR_TRAIL_EXPOSURE = "ps_star_trail_exposure";
+    private static final String PS_STAR_TRAIL_GAP = "ps_star_trail_gap";
+    private static final String PS_HDR_MIDDLE_EXP = "ps_hdr_middle_exp";
+    private static final String PS_HDR_NUM_EXP = "ps_hdr_num_exp";
+    private static final String PS_HDR_EV_STEP = "ps_hdr_ev_step";
+    private static final String PS_HDR_TIMELPASE_MIDDLE_EXP = "ps_hdr_timelapse_middle_exp";
+    private static final String PS_HDR_TIMELPASE_INTERVAL = "ps_hdr_timelapse_interval";
+    private static final String PS_HDR_TIMELPASE_EV_STEP = "ps_hdr_timelapse_ev_step";
+    private static final String PS_BRAMPING_ITERATIONS = "ps_bramping_iterations";
+    private static final String PS_BRAMPING_INTERVAL = "ps_bramping_interval";
+    private static final String PS_BRAMPING_START_EXP = "ps_bramping_start_exp";
+    private static final String PS_BRAMPING_END_EXP = "ps_bramping_end_exp";
+    private static final String PS_DISTANCELAPSE_DISTANCE = "ps_distancelapse_distance";
+    private static final String PS_TIMEWARP_ITERATIONS = "ps_timewarp_iterations";
+    private static final String PS_TIMEWARP_DURATION = "ps_timewarp_duration";
+    private static final String PS_TIMEWARP_CONTROL1_X = "ps_timewarp_control1_x";
+    private static final String PS_TIMEWARP_CONTROL1_Y = "ps_timewarp_control1_y";
+    private static final String PS_TIMEWARP_CONTROL2_X = "ps_timewarp_control2_x";
+    private static final String PS_TIMEWARP_CONTROL2_Y = "ps_timewarp_control2_y";
+    private static final String PS_WIFI_SLAVE_LAST_MASTER = "ps_wifi_slave_last_master";
+    private static final String PS_WIFI_MASTER_IS_ON = "ps_wifi_master_is_on";
+    private static final String PS_SHOW_DIALOG_AGAIN = "ps_show_dialog_again";
+    private static final String PS_LAUNCH_COUNT = "ps_launch_count";
+    private static final String PS_FIRST_LAUNCH_DATE = "ps_first_launch_date";
+    private static final String PS_DEFAULT_SHUTTER_SPEED = "ps_default_shutter_speed";
     private static final String LAST_FRAGMENT_DEFAULT = FragmentTags.GETTING_STARTED;
     private static final int LAST_LIST_ITEM_CHECKED_DEFAULT = 1;
     private static final long CAMERA_BEEP_LENGTH_DEFAULT = 150;
@@ -201,74 +201,74 @@ public class PhotoSniperApp {
 
     private void init() {
         // Load values store in the shares prefs
-        SharedPreferences prefs = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
 
         SAN_SERIF_LIGHT = Typeface.createFromAsset(mAppContext.getAssets(), "fonts/Roboto-Light.ttf");
         SAN_SERIF_THIN = Typeface.createFromAsset(mAppContext.getAssets(), "fonts/Roboto-Thin.ttf");
     }
 
     public boolean isFirstStarted() {
-        SharedPreferences prefs = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
-        boolean isFirstLaunch = prefs.getBoolean(TT_IS_FIRST_LAUNCH, true);
+        SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
+        boolean isFirstLaunch = prefs.getBoolean(PS_IS_FIRST_LAUNCH, true);
         // Subsequent calls should always return false;
         Editor editor = prefs.edit();
-        editor.putBoolean(TT_IS_FIRST_LAUNCH, false);
+        editor.putBoolean(PS_IS_FIRST_LAUNCH, false);
         editor.apply();
         return isFirstLaunch;
     }
 
     public String getLastFragmentTag() {
         if (UNINITIALIZED_STRING == mLastFragmentTag) {
-            SharedPreferences prefs = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
-            mLastFragmentTag = prefs.getString(TT_LAST_FRAGMENT, LAST_FRAGMENT_DEFAULT);
+            SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
+            mLastFragmentTag = prefs.getString(PS_LAST_FRAGMENT, LAST_FRAGMENT_DEFAULT);
         }
         return mLastFragmentTag;
     }
 
     public void setLastFragmentTag(String fragmentTag) {
-        SharedPreferences prefs = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
         Editor editor = prefs.edit();
-        editor.putString(TT_LAST_FRAGMENT, fragmentTag);
+        editor.putString(PS_LAST_FRAGMENT, fragmentTag);
         editor.apply();
         mLastFragmentTag = fragmentTag;
     }
 
     public String getLastActionBarLabel() {
         if (UNINITIALIZED_STRING == mLastActionBarLabel) {
-            SharedPreferences prefs = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
-            mLastActionBarLabel = prefs.getString(TT_LAST_ACTION_BAR_LABEL, LAST_ACTION_BAR_LABEL_DEFAULT);
+            SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
+            mLastActionBarLabel = prefs.getString(PS_LAST_ACTION_BAR_LABEL, LAST_ACTION_BAR_LABEL_DEFAULT);
         }
         return mLastActionBarLabel;
     }
 
     public void setLastActionBarLabel(String label) {
-        SharedPreferences prefs = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
         Editor editor = prefs.edit();
-        editor.putString(TT_LAST_ACTION_BAR_LABEL, label);
+        editor.putString(PS_LAST_ACTION_BAR_LABEL, label);
         editor.apply();
         mLastActionBarLabel = label;
     }
 
     public int getLastListItemChecked() {
         if (mLastListItemChecked == UNINITIALIZED) {
-            SharedPreferences prefs = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
-            mLastListItemChecked = prefs.getInt(TT_LAST_LIST_ITEM_CHECKED, LAST_LIST_ITEM_CHECKED_DEFAULT);
+            SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
+            mLastListItemChecked = prefs.getInt(PS_LAST_LIST_ITEM_CHECKED, LAST_LIST_ITEM_CHECKED_DEFAULT);
         }
         return mLastListItemChecked;
     }
 
     public void setLastListItemChecked(int listItemIndex) {
-        SharedPreferences prefs = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
         Editor editor = prefs.edit();
-        editor.putInt(TT_LAST_LIST_ITEM_CHECKED, listItemIndex);
+        editor.putInt(PS_LAST_LIST_ITEM_CHECKED, listItemIndex);
         editor.apply();
         mLastListItemChecked = listItemIndex;
     }
 
     public Boolean getShowAgain() {
         if (mShowDialogAgain == UNINITIALIZED_BOOL) {
-            SharedPreferences sharedPref = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
-            mShowDialogAgain = sharedPref.getBoolean(TT_SHOW_DIALOG_AGAIN, SHOW_DIALOG_AGAIN_DEFAULT);
+            SharedPreferences sharedPref = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
+            mShowDialogAgain = sharedPref.getBoolean(PS_SHOW_DIALOG_AGAIN, SHOW_DIALOG_AGAIN_DEFAULT);
         }
         return mShowDialogAgain;
     }
@@ -276,41 +276,41 @@ public class PhotoSniperApp {
     public void setShowDialogAgain() {
         mShowDialogAgain = false;
 
-        SharedPreferences prefs = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
         Editor editor = prefs.edit();
-        editor.putBoolean(TT_SHOW_DIALOG_AGAIN, false);
+        editor.putBoolean(PS_SHOW_DIALOG_AGAIN, false);
         editor.apply();
     }
 
     public int getLaunchCount() {
         if (mLaunchCount == UNINITIALIZED) {
-            SharedPreferences sharedPref = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
-            mLaunchCount = sharedPref.getInt(TT_LAUNCH_COUNT, LAUNCH_COUNT_DEFAULT);
+            SharedPreferences sharedPref = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
+            mLaunchCount = sharedPref.getInt(PS_LAUNCH_COUNT, LAUNCH_COUNT_DEFAULT);
         }
         return mLaunchCount;
     }
 
     public void setLaunchCount(int count) {
         mLaunchCount = count;
-        SharedPreferences sharedPref = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
         Editor editor = sharedPref.edit();
-        editor.putInt(TT_LAUNCH_COUNT, count);
+        editor.putInt(PS_LAUNCH_COUNT, count);
         editor.apply();
     }
 
     public long getFirstLaunchDate() {
         if (mDateFirstLaunched == UNINITIALIZED) {
-            SharedPreferences sharedPref = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
-            mDateFirstLaunched = sharedPref.getLong(TT_FIRST_LAUNCH_DATE, FIRST_LAUNCH_DEFAULT);
+            SharedPreferences sharedPref = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
+            mDateFirstLaunched = sharedPref.getLong(PS_FIRST_LAUNCH_DATE, FIRST_LAUNCH_DEFAULT);
         }
         return mDateFirstLaunched;
     }
 
     public void setFirstLaunchDate(long date) {
         mDateFirstLaunched = date;
-        SharedPreferences sharedPref = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
         Editor editor = sharedPref.edit();
-        editor.putLong(TT_FIRST_LAUNCH_DATE, date);
+        editor.putLong(PS_FIRST_LAUNCH_DATE, date);
         editor.apply();
     }
 
@@ -335,48 +335,48 @@ public class PhotoSniperApp {
 
     public long getTimeLapseInterval() {
         if (mTimeLapseInterval == UNINITIALIZED) {
-            SharedPreferences prefs = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
-            mTimeLapseInterval = prefs.getLong(TT_TIMELASPE_INTERVAL, TIMELASPE_INTERVAL_DEFAULT);
+            SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
+            mTimeLapseInterval = prefs.getLong(PS_TIMELASPE_INTERVAL, TIMELASPE_INTERVAL_DEFAULT);
         }
         return mTimeLapseInterval;
     }
 
     public void setTimeLapseInterval(long timeLapseInterval) {
-        SharedPreferences prefs = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
         Editor editor = prefs.edit();
-        editor.putLong(TT_TIMELASPE_INTERVAL, timeLapseInterval);
+        editor.putLong(PS_TIMELASPE_INTERVAL, timeLapseInterval);
         editor.apply();
         mTimeLapseInterval = timeLapseInterval;
     }
 
     public long getSelfTimedModeTime() {
         if (mSelfTimedModeTime == UNINITIALIZED) {
-            SharedPreferences prefs = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
-            mSelfTimedModeTime = prefs.getLong(TT_SELF_TIME_MODE_TIME, SELF_TIME_MODE_TIME_DEFAULT);
+            SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
+            mSelfTimedModeTime = prefs.getLong(PS_SELF_TIME_MODE_TIME, SELF_TIME_MODE_TIME_DEFAULT);
         }
         return mSelfTimedModeTime;
     }
 
     public void setSelfTimedModeTime(long time) {
-        SharedPreferences prefs = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
         Editor editor = prefs.edit();
-        editor.putLong(TT_SELF_TIME_MODE_TIME, time);
+        editor.putLong(PS_SELF_TIME_MODE_TIME, time);
         editor.apply();
         mSelfTimedModeTime = time;
     }
 
     public long getTimedModeTime() {
         if (mTimedModeTime == UNINITIALIZED) {
-            SharedPreferences prefs = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
-            mTimedModeTime = prefs.getLong(TT_TIME_MODE_TIME, TIME_MODE_TIME_DEFAULT);
+            SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
+            mTimedModeTime = prefs.getLong(PS_TIME_MODE_TIME, TIME_MODE_TIME_DEFAULT);
         }
         return mTimedModeTime;
     }
 
     public void setTimedModeTime(long time) {
-        SharedPreferences prefs = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
         Editor editor = prefs.edit();
-        editor.putLong(TT_TIME_MODE_TIME, time);
+        editor.putLong(PS_TIME_MODE_TIME, time);
         editor.apply();
         mTimedModeTime = time;
     }
@@ -413,256 +413,256 @@ public class PhotoSniperApp {
 
     public int getSoundSensorThreshold() {
         if (mSoundSensorThreshold == UNINITIALIZED) {
-            SharedPreferences prefs = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
-            mSoundSensorThreshold = prefs.getInt(TT_SOUND_SENSOR_THRESHOLD, SOUND_SENSOR_THRESHOLD_DEFAULT);
+            SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
+            mSoundSensorThreshold = prefs.getInt(PS_SOUND_SENSOR_THRESHOLD, SOUND_SENSOR_THRESHOLD_DEFAULT);
         }
         return mSoundSensorThreshold;
     }
 
     public void setSoundSensorThreshold(int amplitude) {
-        SharedPreferences prefs = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
         Editor editor = prefs.edit();
-        editor.putInt(TT_SOUND_SENSOR_THRESHOLD, amplitude);
+        editor.putInt(PS_SOUND_SENSOR_THRESHOLD, amplitude);
         editor.apply();
         mSoundSensorThreshold = amplitude;
     }
 
     public int getSoundSensorSensitivity() {
         if (mSoundSensorSensitivity == UNINITIALIZED) {
-            SharedPreferences prefs = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
-            mSoundSensorSensitivity = prefs.getInt(TT_SOUND_SENSOR_SENSITIVTY, SOUND_SENSOR_SENSITIVTY_DEFAULT);
+            SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
+            mSoundSensorSensitivity = prefs.getInt(PS_SOUND_SENSOR_SENSITIVTY, SOUND_SENSOR_SENSITIVTY_DEFAULT);
         }
         return mSoundSensorSensitivity;
     }
 
     public void setSoundSensorSensitivity(int amplitude) {
-        SharedPreferences prefs = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
         Editor editor = prefs.edit();
-        editor.putInt(TT_SOUND_SENSOR_SENSITIVTY, amplitude);
+        editor.putInt(PS_SOUND_SENSOR_SENSITIVTY, amplitude);
         editor.apply();
         mSoundSensorSensitivity = amplitude;
     }
 
     public int getStarTrailIterations() {
         if (mStarTrailInterations == UNINITIALIZED) {
-            SharedPreferences prefs = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
-            mStarTrailInterations = prefs.getInt(TT_STAR_TRAIL_ITERATIONS, STAR_TRAIL_ITERATIONS_DEFAULT);
+            SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
+            mStarTrailInterations = prefs.getInt(PS_STAR_TRAIL_ITERATIONS, STAR_TRAIL_ITERATIONS_DEFAULT);
         }
         return mStarTrailInterations;
     }
 
     public void setStarTrailIterations(int iterations) {
-        SharedPreferences prefs = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
         Editor editor = prefs.edit();
-        editor.putInt(TT_STAR_TRAIL_ITERATIONS, iterations);
+        editor.putInt(PS_STAR_TRAIL_ITERATIONS, iterations);
         editor.apply();
         mStarTrailInterations = iterations;
     }
 
     public long getStarTrailExposure() {
         if (mStarTrailExposure == UNINITIALIZED) {
-            SharedPreferences prefs = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
-            mStarTrailExposure = prefs.getLong(TT_STAR_TRAIL_EXPOSURE, STAR_TRAIL_EXPOSURE_DEFAULT);
+            SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
+            mStarTrailExposure = prefs.getLong(PS_STAR_TRAIL_EXPOSURE, STAR_TRAIL_EXPOSURE_DEFAULT);
         }
         return mStarTrailExposure;
     }
 
     public void setStarTrailExposure(long exposure) {
-        SharedPreferences prefs = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
         Editor editor = prefs.edit();
-        editor.putLong(TT_STAR_TRAIL_EXPOSURE, exposure);
+        editor.putLong(PS_STAR_TRAIL_EXPOSURE, exposure);
         editor.apply();
         mStarTrailExposure = exposure;
     }
 
     public long getStarTrailGap() {
         if (mStarTrailGap == UNINITIALIZED) {
-            SharedPreferences prefs = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
-            mStarTrailGap = prefs.getLong(TT_STAR_TRAIL_GAP, STAR_TRAIL_GAP_DEFAULT);
+            SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
+            mStarTrailGap = prefs.getLong(PS_STAR_TRAIL_GAP, STAR_TRAIL_GAP_DEFAULT);
         }
         return mStarTrailGap;
     }
 
     public void setStarTrailGap(long gap) {
-        SharedPreferences prefs = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
         Editor editor = prefs.edit();
-        editor.putLong(TT_STAR_TRAIL_GAP, gap);
+        editor.putLong(PS_STAR_TRAIL_GAP, gap);
         editor.apply();
         mStarTrailGap = gap;
     }
 
     public long getHDRMiddleExposure() {
         if (mHdrMiddleExposure == UNINITIALIZED) {
-            SharedPreferences prefs = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
-            mHdrMiddleExposure = prefs.getLong(TT_HDR_MIDDLE_EXP, LE_HDR_MIDDLE_EXPOSURE_DEFAULT);
+            SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
+            mHdrMiddleExposure = prefs.getLong(PS_HDR_MIDDLE_EXP, LE_HDR_MIDDLE_EXPOSURE_DEFAULT);
         }
         return mHdrMiddleExposure;
     }
 
     public void setHDRMiddleExposure(long hdrMiddleExposure) {
-        SharedPreferences prefs = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
         Editor editor = prefs.edit();
-        editor.putLong(TT_HDR_MIDDLE_EXP, hdrMiddleExposure);
+        editor.putLong(PS_HDR_MIDDLE_EXP, hdrMiddleExposure);
         editor.apply();
         mHdrMiddleExposure = hdrMiddleExposure;
     }
 
     public int getHDRNumExposures() {
         if (mHdrNumberExposures == UNINITIALIZED) {
-            SharedPreferences prefs = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
-            mHdrNumberExposures = prefs.getInt(TT_HDR_NUM_EXP, LE_HDR_NUM_EXPOSURES_DEFAULT);
+            SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
+            mHdrNumberExposures = prefs.getInt(PS_HDR_NUM_EXP, LE_HDR_NUM_EXPOSURES_DEFAULT);
         }
         return mHdrNumberExposures;
     }
 
     public void setHDRNumExposures(int hdrNumExposures) {
-        SharedPreferences prefs = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
         Editor editor = prefs.edit();
-        editor.putInt(TT_HDR_NUM_EXP, hdrNumExposures);
+        editor.putInt(PS_HDR_NUM_EXP, hdrNumExposures);
         editor.apply();
         mHdrNumberExposures = hdrNumExposures;
     }
 
     public float getHDREvStep() {
         if (mHdrEvStep == UNINITIALIZED) {
-            SharedPreferences prefs = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
-            mHdrEvStep = prefs.getFloat(TT_HDR_EV_STEP, LE_HDR_EV_STEP_DEFAULT);
+            SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
+            mHdrEvStep = prefs.getFloat(PS_HDR_EV_STEP, LE_HDR_EV_STEP_DEFAULT);
         }
         return mHdrEvStep;
     }
 
     public void setHDREvStep(float evStep) {
-        SharedPreferences prefs = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
         Editor editor = prefs.edit();
-        editor.putFloat(TT_HDR_EV_STEP, evStep);
+        editor.putFloat(PS_HDR_EV_STEP, evStep);
         editor.apply();
         mHdrEvStep = evStep;
     }
 
     public long getHDRTimeLapseMiddleExposure() {
         if (mHdrTimeLapseMiddleExposure == UNINITIALIZED) {
-            SharedPreferences prefs = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
-            mHdrTimeLapseMiddleExposure = prefs.getLong(TT_HDR_TIMELPASE_MIDDLE_EXP, LE_HDR_TIMELPASE_MIDDLE_EXPOSURE_DEFAULT);
+            SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
+            mHdrTimeLapseMiddleExposure = prefs.getLong(PS_HDR_TIMELPASE_MIDDLE_EXP, LE_HDR_TIMELPASE_MIDDLE_EXPOSURE_DEFAULT);
         }
         return mHdrTimeLapseMiddleExposure;
     }
 
     public void setHDRTimeLapseMiddleExposure(long hdrTimeLapseMiddleExposure) {
-        SharedPreferences prefs = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
         Editor editor = prefs.edit();
-        editor.putLong(TT_HDR_TIMELPASE_MIDDLE_EXP, hdrTimeLapseMiddleExposure);
+        editor.putLong(PS_HDR_TIMELPASE_MIDDLE_EXP, hdrTimeLapseMiddleExposure);
         editor.apply();
         mHdrTimeLapseMiddleExposure = hdrTimeLapseMiddleExposure;
     }
 
     public long getHDRTimeLapseInterval() {
         if (mHdrTimeLapseInterval == UNINITIALIZED) {
-            SharedPreferences prefs = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
-            mHdrTimeLapseInterval = prefs.getLong(TT_HDR_TIMELPASE_INTERVAL, LE_HDR_TIMELPASE_INTERVAL_DEFAULT);
+            SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
+            mHdrTimeLapseInterval = prefs.getLong(PS_HDR_TIMELPASE_INTERVAL, LE_HDR_TIMELPASE_INTERVAL_DEFAULT);
         }
         return mHdrTimeLapseInterval;
     }
 
     public void setHDRTimeLapseInterval(long duration) {
-        SharedPreferences prefs = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
         Editor editor = prefs.edit();
-        editor.putLong(TT_HDR_TIMELPASE_INTERVAL, duration);
+        editor.putLong(PS_HDR_TIMELPASE_INTERVAL, duration);
         editor.apply();
         mHdrTimeLapseInterval = duration;
     }
 
     public float getHDRTimeLapseEvStep() {
         if (mHdrTimeLapseEvStep == UNINITIALIZED) {
-            SharedPreferences prefs = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
-            mHdrTimeLapseEvStep = prefs.getFloat(TT_HDR_TIMELPASE_EV_STEP, LE_HDR_TIMELPASE_EV_STEP_DEFAULT);
+            SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
+            mHdrTimeLapseEvStep = prefs.getFloat(PS_HDR_TIMELPASE_EV_STEP, LE_HDR_TIMELPASE_EV_STEP_DEFAULT);
         }
         return mHdrTimeLapseEvStep;
     }
 
     public void setHDRTimeLapseEvStep(float evStep) {
-        SharedPreferences prefs = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
         Editor editor = prefs.edit();
-        editor.putFloat(TT_HDR_TIMELPASE_EV_STEP, evStep);
+        editor.putFloat(PS_HDR_TIMELPASE_EV_STEP, evStep);
         editor.apply();
         mHdrTimeLapseEvStep = evStep;
     }
 
     public int getBrampingIterations() {
         if (mBrampingIterations == UNINITIALIZED) {
-            SharedPreferences prefs = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
-            mBrampingIterations = prefs.getInt(TT_BRAMPING_ITERATIONS, BRAMPING_INTERATION_DEFAULT);
+            SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
+            mBrampingIterations = prefs.getInt(PS_BRAMPING_ITERATIONS, BRAMPING_INTERATION_DEFAULT);
         }
         return mBrampingIterations;
     }
 
     public void setBrampingIterations(int iterations) {
-        SharedPreferences prefs = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
         Editor editor = prefs.edit();
-        editor.putInt(TT_BRAMPING_ITERATIONS, iterations);
+        editor.putInt(PS_BRAMPING_ITERATIONS, iterations);
         editor.apply();
         mBrampingIterations = iterations;
     }
 
     public long getBrampingInterval() {
         if (mBrampingInterval == UNINITIALIZED) {
-            SharedPreferences prefs = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
-            mBrampingInterval = prefs.getLong(TT_BRAMPING_INTERVAL, BRAMPING_INTERVAL_DEFAULT);
+            SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
+            mBrampingInterval = prefs.getLong(PS_BRAMPING_INTERVAL, BRAMPING_INTERVAL_DEFAULT);
         }
         return mBrampingInterval;
     }
 
     public void setBrampingInterval(long duration) {
-        SharedPreferences prefs = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
         Editor editor = prefs.edit();
-        editor.putLong(TT_BRAMPING_INTERVAL, duration);
+        editor.putLong(PS_BRAMPING_INTERVAL, duration);
         editor.apply();
         mBrampingInterval = duration;
     }
 
     public long getBrampingStartExposure() {
         if (mBrampingStartExposure == UNINITIALIZED) {
-            SharedPreferences prefs = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
-            mBrampingStartExposure = prefs.getLong(TT_BRAMPING_START_EXP, BRAMPING_START_EXPOSURE_DEFAULT);
+            SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
+            mBrampingStartExposure = prefs.getLong(PS_BRAMPING_START_EXP, BRAMPING_START_EXPOSURE_DEFAULT);
         }
         return mBrampingStartExposure;
     }
 
     public void setBrampingStartExposure(long brampingStartExposure) {
-        SharedPreferences prefs = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
         Editor editor = prefs.edit();
-        editor.putLong(TT_BRAMPING_START_EXP, brampingStartExposure);
+        editor.putLong(PS_BRAMPING_START_EXP, brampingStartExposure);
         editor.apply();
         mBrampingStartExposure = brampingStartExposure;
     }
 
     public long getBrampingEndExposure() {
         if (mBrampingEndExposure == UNINITIALIZED) {
-            SharedPreferences prefs = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
-            mBrampingEndExposure = prefs.getLong(TT_BRAMPING_END_EXP, BRAMPING_END_EXPOSURE_DEFAULT);
+            SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
+            mBrampingEndExposure = prefs.getLong(PS_BRAMPING_END_EXP, BRAMPING_END_EXPOSURE_DEFAULT);
         }
         return mBrampingEndExposure;
     }
 
     public void setBrampingEndExposure(long brampingEndExposure) {
-        SharedPreferences prefs = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
         Editor editor = prefs.edit();
-        editor.putLong(TT_BRAMPING_END_EXP, brampingEndExposure);
+        editor.putLong(PS_BRAMPING_END_EXP, brampingEndExposure);
         editor.apply();
         mBrampingEndExposure = brampingEndExposure;
     }
 
     public int getDistanceLapseDistance() {
         if (mDistanceLapaseDistance == UNINITIALIZED) {
-            SharedPreferences prefs = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
-            mDistanceLapaseDistance = prefs.getInt(TT_DISTANCELAPSE_DISTANCE, DISTANCELAPSE_DISTANCE_DEFAULT);
+            SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
+            mDistanceLapaseDistance = prefs.getInt(PS_DISTANCELAPSE_DISTANCE, DISTANCELAPSE_DISTANCE_DEFAULT);
         }
         return mDistanceLapaseDistance;
     }
 
     public void setDistanceLapseDistance(int distance) {
-        SharedPreferences prefs = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
         Editor editor = prefs.edit();
-        editor.putInt(TT_DISTANCELAPSE_DISTANCE, distance);
+        editor.putInt(PS_DISTANCELAPSE_DISTANCE, distance);
         editor.apply();
         mDistanceLapaseDistance = distance;
     }
@@ -682,8 +682,8 @@ public class PhotoSniperApp {
 
     public int getDefaultShutterSpeedVal() {
         if (mDefaultShutterSpeed == UNINITIALIZED) {
-            SharedPreferences sharedPref = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
-            mDefaultShutterSpeed = sharedPref.getInt(TT_DEFAULT_SHUTTER_SPEED, ND_FILTER_SHUTTER_SPEED_DEFAULT);
+            SharedPreferences sharedPref = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
+            mDefaultShutterSpeed = sharedPref.getInt(PS_DEFAULT_SHUTTER_SPEED, ND_FILTER_SHUTTER_SPEED_DEFAULT);
         }
 
         return mDefaultShutterSpeed;
@@ -691,9 +691,9 @@ public class PhotoSniperApp {
 
     public void setDefaultShutterSpeedVal(int shutterSpeedLoc) {
         mDefaultShutterSpeed = shutterSpeedLoc;
-        SharedPreferences sharedPref = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
         Editor editor = sharedPref.edit();
-        editor.putInt(TT_DEFAULT_SHUTTER_SPEED, shutterSpeedLoc);
+        editor.putInt(PS_DEFAULT_SHUTTER_SPEED, shutterSpeedLoc);
         editor.apply();
     }
 
@@ -712,128 +712,128 @@ public class PhotoSniperApp {
 
     public int getTimeWarpIterations() {
         if (mTimeWarpInterations == UNINITIALIZED) {
-            SharedPreferences prefs = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
-            mTimeWarpInterations = prefs.getInt(TT_TIMEWARP_ITERATIONS, TIMEWARP_INTERATIONS_DEAFAULT);
+            SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
+            mTimeWarpInterations = prefs.getInt(PS_TIMEWARP_ITERATIONS, TIMEWARP_INTERATIONS_DEAFAULT);
         }
         return mTimeWarpInterations;
     }
 
     public void setTimeWarpIterations(int iterations) {
-        SharedPreferences prefs = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
         Editor editor = prefs.edit();
-        editor.putInt(TT_TIMEWARP_ITERATIONS, iterations);
+        editor.putInt(PS_TIMEWARP_ITERATIONS, iterations);
         editor.apply();
         mTimeWarpInterations = iterations;
     }
 
     public long getTimewarpDuration() {
         if (mTimeWarpDuration == UNINITIALIZED) {
-            SharedPreferences prefs = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
-            mTimeWarpDuration = prefs.getLong(TT_TIMEWARP_DURATION, TIMEWARP_DURATION_DEFAULT);
+            SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
+            mTimeWarpDuration = prefs.getLong(PS_TIMEWARP_DURATION, TIMEWARP_DURATION_DEFAULT);
         }
         return mTimeWarpDuration;
     }
 
     public void setTimewarpDuration(long exposure) {
-        SharedPreferences prefs = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
         Editor editor = prefs.edit();
-        editor.putLong(TT_TIMEWARP_DURATION, exposure);
+        editor.putLong(PS_TIMEWARP_DURATION, exposure);
         editor.apply();
         mTimeWarpDuration = exposure;
     }
 
     public float getTimewarpControl1X() {
         if (mTimewarpControl1X == UNINITIALIZED) {
-            SharedPreferences prefs = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
-            mTimewarpControl1X = prefs.getFloat(TT_TIMEWARP_CONTROL1_X, TIMEWARP_CONTROL1_X_DEFAULT);
+            SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
+            mTimewarpControl1X = prefs.getFloat(PS_TIMEWARP_CONTROL1_X, TIMEWARP_CONTROL1_X_DEFAULT);
         }
         return mTimewarpControl1X;
     }
 
     public void setTimewarpControl1X(float controlCoord) {
-        SharedPreferences prefs = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
         Editor editor = prefs.edit();
-        editor.putFloat(TT_TIMEWARP_CONTROL1_X, controlCoord);
+        editor.putFloat(PS_TIMEWARP_CONTROL1_X, controlCoord);
         editor.apply();
         mTimewarpControl1X = controlCoord;
     }
 
     public float getTimewarpControl1Y() {
         if (mTimewarpControl1Y == UNINITIALIZED) {
-            SharedPreferences prefs = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
-            mTimewarpControl1Y = prefs.getFloat(TT_TIMEWARP_CONTROL1_Y, TIMEWARP_CONTROL1_Y_DEFAULT);
+            SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
+            mTimewarpControl1Y = prefs.getFloat(PS_TIMEWARP_CONTROL1_Y, TIMEWARP_CONTROL1_Y_DEFAULT);
         }
         return mTimewarpControl1Y;
     }
 
     public void setTimewarpControl1Y(float controlCoord) {
-        SharedPreferences prefs = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
         Editor editor = prefs.edit();
-        editor.putFloat(TT_TIMEWARP_CONTROL1_Y, controlCoord);
+        editor.putFloat(PS_TIMEWARP_CONTROL1_Y, controlCoord);
         editor.apply();
         mTimewarpControl1Y = controlCoord;
     }
 
     public float getTimewarpControl2X() {
         if (mTimewarpControl2X == UNINITIALIZED) {
-            SharedPreferences prefs = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
-            mTimewarpControl2X = prefs.getFloat(TT_TIMEWARP_CONTROL2_X, TIMEWARP_CONTROL2_X_DEFAULT);
+            SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
+            mTimewarpControl2X = prefs.getFloat(PS_TIMEWARP_CONTROL2_X, TIMEWARP_CONTROL2_X_DEFAULT);
         }
         return mTimewarpControl2X;
     }
 
     public void setTimewarpControl2X(float controlCoord) {
-        SharedPreferences prefs = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
         Editor editor = prefs.edit();
-        editor.putFloat(TT_TIMEWARP_CONTROL2_X, controlCoord);
+        editor.putFloat(PS_TIMEWARP_CONTROL2_X, controlCoord);
         editor.apply();
         mTimewarpControl2X = controlCoord;
     }
 
     public float getTimewarpControl2Y() {
         if (mTimewarpControl2Y == UNINITIALIZED) {
-            SharedPreferences prefs = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
-            mTimewarpControl2Y = prefs.getFloat(TT_TIMEWARP_CONTROL2_Y, TIMEWARP_CONTROL2_Y_DEFAULT);
+            SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
+            mTimewarpControl2Y = prefs.getFloat(PS_TIMEWARP_CONTROL2_Y, TIMEWARP_CONTROL2_Y_DEFAULT);
         }
         return mTimewarpControl2Y;
     }
 
     public void setTimewarpControl2Y(float controlCoord) {
-        SharedPreferences prefs = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
         Editor editor = prefs.edit();
-        editor.putFloat(TT_TIMEWARP_CONTROL2_Y, controlCoord);
+        editor.putFloat(PS_TIMEWARP_CONTROL2_Y, controlCoord);
         editor.apply();
         mTimewarpControl2Y = controlCoord;
     }
 
     public String getSlaveLastMaster() {
         if (UNINITIALIZED_STRING == mLastConnectedMaster) {
-            SharedPreferences prefs = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
-            mLastConnectedMaster = prefs.getString(TT_WIFI_SLAVE_LAST_MASTER, WIFI_SLAVE_LAST_MASTER_DEFAULT);
+            SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
+            mLastConnectedMaster = prefs.getString(PS_WIFI_SLAVE_LAST_MASTER, WIFI_SLAVE_LAST_MASTER_DEFAULT);
         }
         return mLastConnectedMaster;
     }
 
     public void setSlaveLastMaster(String lastMaster) {
-        SharedPreferences prefs = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
         Editor editor = prefs.edit();
-        editor.putString(TT_WIFI_SLAVE_LAST_MASTER, lastMaster);
+        editor.putString(PS_WIFI_SLAVE_LAST_MASTER, lastMaster);
         editor.apply();
         mLastConnectedMaster = lastMaster;
     }
 
     public boolean isMasterOn() {
         if (mIsMasterON == UNINITIALIZED_BOOL) {
-            SharedPreferences prefs = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
-            mIsMasterON = prefs.getBoolean(TT_WIFI_MASTER_IS_ON, WIFI_MASTER_IS_ON_DEFAULT);
+            SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
+            mIsMasterON = prefs.getBoolean(PS_WIFI_MASTER_IS_ON, WIFI_MASTER_IS_ON_DEFAULT);
         }
         return mIsMasterON;
     }
 
     public void setMasterOn(boolean state) {
-        SharedPreferences prefs = mAppContext.getSharedPreferences(TT_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
         Editor editor = prefs.edit();
-        editor.putBoolean(TT_WIFI_MASTER_IS_ON, state);
+        editor.putBoolean(PS_WIFI_MASTER_IS_ON, state);
         editor.apply();
         mIsMasterON = state;
     }

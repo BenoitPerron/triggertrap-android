@@ -1,0 +1,1427 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
+    <string-array name="base_shutter_speeds">
+        <item>1/8000</item>
+        <item>1/6400</item>
+        <item>1/5000</item>
+        <item>1/4000</item>
+        <item>1/3200</item>
+        <item>1/2500</item>
+        <item>1/2000</item>
+        <item>1/1600</item>
+        <item>1/1250</item>
+        <item>1/1000</item>
+        <item>1/800</item>
+        <item>1/640</item>
+        <item>1/500</item>
+        <item>1/400</item>
+        <item>1/320</item>
+        <item>1/250</item>
+        <item>1/200</item>
+        <item>1/160</item>
+        <item>1/125</item>
+        <item>1/100</item>
+        <item>1/80</item>
+        <item>1/60</item>
+        <item>1/50</item>
+        <item>1/40</item>
+        <item>1/30</item>
+        <item>1/25</item>
+        <item>1/20</item>
+        <item>1/15</item>
+        <item>1/13</item>
+        <item>1/10</item>
+        <item>1/8</item>
+        <item>1/6</item>
+        <item>1/5</item>
+        <item>1/4</item>
+        <item>0\"3</item>
+        <item>0\"4</item>
+        <item>0\"5</item>
+        <item>0\"6</item>
+        <item>0\"8</item>
+        <item>@string/_1_second</item>
+        <item>@string/_1_1_third_second</item>
+        <item>@string/_1_2_third_second</item>
+        <item>@string/_2_second</item>
+        <item>@string/_2_half_second</item>
+        <item>@string/_3_1_fifth_second</item>
+        <item>@string/_4_second</item>
+        <item>@string/_5_second</item>
+        <item>@string/_6_second</item>
+        <item>@string/_8_second</item>
+        <item>@string/_10_second</item>
+        <item>@string/_13_second</item>
+        <item>@string/_15_second</item>
+        <item>@string/_20_second</item>
+        <item>@string/_25_second</item>
+        <item>@string/_30_second</item>
+    </string-array>
+    <string-array name="getting_started_body">
+        <item>@string/so_you_want</item>
+        <item>@string/you_can_access_each</item>
+        <item>@string/remember_that_your</item>
+        <item>@string/if_you_get_stuck</item>
+    </string-array>
+    <string-array name="getting_started_footer">
+        <item>@string/lets_get_started</item>
+        <item>@string/got_that_great</item>
+        <item>@string/empty_string</item>
+        <item>@string/anyway_enough_of</item>
+    </string-array>
+    <string-array name="getting_started_headers">
+        <item>@string/oh_hi_there</item>
+        <item>@string/in_triggertrap_mobile</item>
+        <item>@string/to_connect_the</item>
+        <item>@string/did_you_know</item>
+    </string-array>
+    <string-array name="getting_started_titles">
+        <item>@string/welcome_to_triggertrap</item>
+        <item>@string/navigating_the_app</item>
+        <item>@string/connecting_your_camera</item>
+        <item>@string/get_more_help</item>
+    </string-array>
+    <string-array name="nd_names">
+        <item>@string/neutral_density_2</item>
+        <item>@string/neutral_density_4</item>
+        <item>@string/neutral_density_8</item>
+        <item>@string/neutral_density_16</item>
+        <item>@string/neutral_density_32</item>
+        <item>@string/neutral_density_64</item>
+        <item>@string/neutral_density_128</item>
+        <item>@string/neutral_density_256</item>
+        <item>@string/neutral_density_512</item>
+        <item>@string/neutral_density_1024</item>
+        <item>@string/neutral_density_2048</item>
+        <item>@string/neutral_density_4096</item>
+        <item>@string/neutral_density_8192</item>
+        <item>@string/neutral_density_16384</item>
+        <item>@string/neutral_density_32768</item>
+        <item>@string/neutral_density_65536</item>
+        <item>@string/neutral_density_131072</item>
+        <item>@string/neutral_density_262144</item>
+        <item>@string/neutral_density_524288</item>
+        <item>@string/neutral_density_1048576</item>
+    </string-array>
+    <string-array name="nd_values">
+        <item>1/4000s</item>
+        <item>1/2000s</item>
+        <item>1/1000s</item>
+        <item>1/500s</item>
+        <item>1/250s</item>
+        <item>1/125s</item>
+        <item>1/60s</item>
+        <item>1/30s</item>
+        <item>1/15s</item>
+        <item>1/8s</item>
+        <item>1/4s</item>
+        <item>1/2s</item>
+        <item>1s</item>
+        <item>2s</item>
+        <item>4s</item>
+        <item>8s</item>
+        <item>15s</item>
+        <item>30s</item>
+        <item>1m</item>
+        <item>2m</item>
+        <item>4m</item>
+        <item>8m</item>
+        <item>15m</item>
+        <item>30m</item>
+        <item>1h</item>
+        <item>2h</item>
+        <item>4h</item>
+        <item>8h</item>
+        <item>16h</item>
+    </string-array>
+    <string-array name="pref_distance_speed_labels">
+        <item>@string/meters_per_second</item>
+        <item>@string/miles_per_hour</item>
+        <item>@string/kilometers_per_hour</item>
+    </string-array>
+    <string-array name="pref_distance_speed_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+    <string-array name="pref_distance_unit_labels">
+        <item>@string/meters_kilometers</item>
+        <item>@string/miles_yards</item>
+    </string-array>
+    <string-array name="pref_distance_unit_values">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+    <string-array name="pref_sensor_delay_setting_labels">
+        <item>@string/zero_seconds</item>
+        <item>@string/zero_point_one_seconds</item>
+        <item>@string/zero_point_two_seconds</item>
+        <item>@string/zero_point_three_seconds</item>
+        <item>@string/zero_point_four_seconds</item>
+        <item>@string/zero_point_five_seconds</item>
+        <item>@string/zero_point_six_seconds</item>
+        <item>@string/zero_point_seven_seconds</item>
+        <item>@string/zero_point_eight_seconds</item>
+        <item>@string/zero_point_nine_seconds</item>
+        <item>@string/point_one_seconds</item>
+        <item>@string/point_two_seconds</item>
+        <item>@string/point_three_seconds</item>
+        <item>@string/point_four_seconds</item>
+        <item>@string/point_five_seconds</item>
+        <item>@string/point_six_seconds</item>
+        <item>@string/point_seven_seconds</item>
+        <item>@string/point_eight_seconds</item>
+        <item>@string/point_nine_seconds</item>
+        <item>@string/one_second</item>
+        <item>@string/two_seconds</item>
+        <item>@string/three_seconds</item>
+        <item>@string/four_seconds</item>
+        <item>@string/five_seconds</item>
+    </string-array>
+    <string-array name="pref_sensor_delay_setting_values">
+        <item>0</item>
+        <item>10</item>
+        <item>20</item>
+        <item>30</item>
+        <item>40</item>
+        <item>50</item>
+        <item>60</item>
+        <item>70</item>
+        <item>80</item>
+        <item>90</item>
+        <item>100</item>
+        <item>200</item>
+        <item>300</item>
+        <item>400</item>
+        <item>500</item>
+        <item>600</item>
+        <item>700</item>
+        <item>800</item>
+        <item>900</item>
+        <item>1000</item>
+        <item>2000</item>
+        <item>3000</item>
+        <item>4000</item>
+        <item>5000</item>
+    </string-array>
+    <string-array name="pref_sensor_reset_delay_setting_labels">
+        <item>@string/zero_point_five_seconds</item>
+        <item>@string/point_five_seconds</item>
+        <item>@string/one_second</item>
+        <item>@string/two_seconds</item>
+        <item>@string/three_seconds</item>
+        <item>@string/four_seconds</item>
+        <item>@string/five_seconds</item>
+    </string-array>
+    <string-array name="pref_sensor_reset_delay_setting_values">
+        <item>50</item>
+        <item>500</item>
+        <item>1000</item>
+        <item>2000</item>
+        <item>3000</item>
+        <item>4000</item>
+        <item>5000</item>
+    </string-array>
+    <string-array name="pref_shutter_setting_labels">
+        <item>@string/flash_shutter</item>
+        <item>@string/one_fifty_shutter</item>
+        <item>@string/five_hundred_shutter</item>
+        <item>@string/one_thousand_shutter</item>
+        <item>@string/one_thousand_five_hundred_shutter</item>
+        <item>@string/three_thousand_shutter</item>
+    </string-array>
+    <string-array name="pref_shutter_setting_values">
+        <item>30</item>
+        <item>150</item>
+        <item>500</item>
+        <item>1000</item>
+        <item>1500</item>
+        <item>3000</item>
+    </string-array>
+    <string-array name="ps_cable_mode_icons">
+        <item>@drawable/icon_point_down</item>
+        <item>@drawable/icon_upload</item>
+        <item>@drawable/icon_download</item>
+        <item>@drawable/icon_lock</item>
+        <item>@drawable/icon_busy</item>
+        <item>@drawable/icon_history</item>
+    </string-array>
+    <string-array name="ps_cable_modes">
+        <item>@string/simple_cable_release</item>
+        <item>@string/quick_release</item>
+        <item>@string/press_and_hold</item>
+        <item>@string/press_to_lock</item>
+        <item>@string/timed_release</item>
+        <item>@string/self_timer</item>
+    </string-array>
+    <string-array name="ps_cable_modes_sub_text">
+        <item>@string/tap_the_button_to_take_a_picture</item>
+        <item>@string/release_button_to</item>
+        <item>@string/touch_to_start_release_to_stop</item>
+        <item>@string/touch_to_start_touch_to_stop</item>
+        <item>@string/choose_your_shutter_speed</item>
+        <item>@string/countdown_before</item>
+    </string-array>
+    <string-array name="ps_calculator_modes">
+        <item>@string/sunrise_sunset</item>
+        <item>@string/nd_calculator</item>
+    </string-array>
+    <string-array name="ps_calculators_mode_icons">
+        <item>@drawable/icon_brightness_medium</item>
+        <item>@drawable/icon_contrast</item>
+    </string-array>
+    <string-array name="ps_calculators_sub_text">
+        <item>@string/determine_sunrise_sunset</item>
+        <item>@string/determine_nd</item>
+    </string-array>
+    <string-array name="ps_camera_manufacturers">
+        <item>@string/canon</item>
+        <item>@string/contax</item>
+        <item>@string/fujifilm</item>
+        <item>@string/hasselblad</item>
+        <item>@string/kodak</item>
+        <item>@string/leica</item>
+        <item>@string/lytro</item>
+        <item>@string/minolta</item>
+        <item>@string/nikon</item>
+        <item>@string/olympus</item>
+        <item>@string/panasonic</item>
+        <item>@string/pentax</item>
+        <item>@string/samsung</item>
+        <item>@string/sigma</item>
+        <item>@string/sony</item>
+    </string-array>
+    <string-array name="ps_hdr_mode_icons">
+        <item>@drawable/icon_stack_star</item>
+        <item>@drawable/icon_stack_picture</item>
+    </string-array>
+    <string-array name="ps_hdr_modes">
+        <item>@string/le_hdr</item>
+        <item>@string/le_hdr_timelapse</item>
+    </string-array>
+    <string-array name="ps_hdr_modes_sub_text">
+        <item>@string/long_exposure_hdr_sets</item>
+        <item>@string/long_exposure_hdr_timelapse</item>
+    </string-array>
+    <string-array name="ps_mode_groups">
+        <item>@string/welcome</item>
+        <item>@string/cable_release_modes</item>
+        <item>@string/timelapse_modes</item>
+        <item>@string/sound_mode</item>
+        <item>@string/hdr_modes</item>
+        <!--
+        <item>@string/remote_triggers</item>
+        -->
+        <item>@string/calculators</item>
+        <!--
+        <item>@string/output_settings</item>
+        -->
+    </string-array>
+    <string-array name="ps_notifications">
+        <item>@string/press_to_lock</item>
+        <item>@string/timed_release</item>
+        <item>@string/timelapse</item>
+        <item>@string/timewarp</item>
+        <item>@string/star_trail</item>
+        <item>@string/bramping</item>
+        <item>@string/sound_sensor</item>
+        <item>@string/distancelapse</item>
+        <item>@string/le_hdr</item>
+        <item>@string/le_hdr_timelapse</item>
+        <!-- JPL
+        <item>@string/wifi_slave</item>
+        <item>@string/wifi_master</item>
+        <item>@string/running_pebble</item>
+        <item>@string/running_pebble</item>
+        -->
+        <item>@string/running_self_timer</item>
+    </string-array>
+    <string-array name="ps_remote_trigger_mode_icons">
+        <item>@drawable/icon_connection</item>
+        <item>@drawable/icon_pebble</item>
+    </string-array>
+    <string-array name="ps_settings_mode_icons">
+        <item>@drawable/icon_podcast</item>
+    </string-array>
+    <string-array name="ps_settings_modes_sub_text">
+        <item>@string/take_control</item>
+    </string-array>
+    <string-array name="ps_sound_mode_icons">
+        <item>@drawable/icon_mic</item>
+    </string-array>
+    <string-array name="ps_sound_modes">
+        <item>@string/sound_sensor</item>
+    </string-array>
+    <string-array name="ps_sound_modes_sub_text">
+        <item>@string/clap_whistle_or_tap</item>
+    </string-array>
+    <string-array name="ps_timer_mode_icons">
+        <item>@drawable/icon_stopwatch</item>
+        <item>@drawable/icon_wave</item>
+        <item>@drawable/icon_compass</item>
+        <item>@drawable/icon_star</item>
+        <item>@drawable/icon_brightness_contrast</item>
+    </string-array>
+    <string-array name="ps_timer_modes">
+        <item>@string/timelapse</item>
+        <item>@string/timewarp</item>
+        <item>@string/distancelapse</item>
+        <item>@string/star_trail</item>
+        <item>@string/bramping</item>
+    </string-array>
+    <string-array name="ps_timer_modes_sub_text">
+        <item>@string/travel_through_time</item>
+        <item>@string/timelapse_with_acceleration</item>
+        <item>@string/perfect_for_roadtrips</item>
+        <item>@string/extreme_exposure_control</item>
+        <item>@string/bulb_ramping_timelapse</item>
+    </string-array>
+    <string-array name="ps_welcome_mode_icons">
+        <item>@drawable/icon_info</item>
+        <!--
+        <item>@drawable/icon_cart</item>
+        -->
+    </string-array>
+    <string-array name="ps_welcome_modes">
+        <item>@string/getting_started</item>
+        <!--
+        <item>@string/cable_selector</item>
+        -->
+    </string-array>
+    <string-array name="ps_welcome_modes_sub_text">
+        <item>@string/a_quick_guide</item>
+        <!--
+        <item>@string/get_the_right_kit</item>
+        -->
+    </string-array>
+    <string-array name="roygbiv">
+        <item>Red</item>
+        <item>Green</item>
+        <item>Blue</item>
+    </string-array>
+    <integer-array name="shutter_speed_values">
+        <item>67</item>
+        <item>77</item>
+        <item>100</item>
+        <item>125</item>
+        <item>167</item>
+        <item>200</item>
+        <item>250</item>
+        <item>300</item>
+        <item>400</item>
+        <item>500</item>
+        <item>600</item>
+        <item>800</item>
+        <item>1000</item>
+        <item>1300</item>
+        <item>1600</item>
+        <item>2000</item>
+        <item>2500</item>
+        <item>3200</item>
+        <item>4000</item>
+        <item>5000</item>
+        <item>6000</item>
+        <item>8000</item>
+        <item>10000</item>
+        <item>13000</item>
+        <item>15000</item>
+        <item>20000</item>
+        <item>25000</item>
+        <item>30000</item>
+        <item>40000</item>
+        <item>50000</item>
+        <item>60000</item>
+        <item>80000</item>
+        <item>100000</item>
+        <item>125000</item>
+        <item>166667</item>
+        <item>208333</item>
+        <item>258000</item>
+        <item>344000</item>
+        <item>430000</item>
+        <item>510000</item>
+        <item>680000</item>
+        <item>850000</item>
+        <item>1020000</item>
+        <item>1360000</item>
+        <item>1700000</item>
+        <item>2040000</item>
+        <item>2720000</item>
+        <item>3400000</item>
+        <item>4080000</item>
+        <item>5440000</item>
+        <item>6800000</item>
+    </integer-array>
+    <string-array name="shutter_speeds">
+        <item>1/15</item>
+        <item>1/13</item>
+        <item>1/10</item>
+        <item>1/8</item>
+        <item>1/6</item>
+        <item>1/5</item>
+        <item>1/4</item>
+        <item>@string/nil_quote_3</item>
+        <item>@string/nil_quote_4</item>
+        <item>@string/nil_quote_5</item>
+        <item>@string/nil_quote_6</item>
+        <item>@string/nil_quote_8</item>
+        <item>@string/one_quote</item>
+        <item>@string/one_and_one_third</item>
+        <item>@string/one_and_two_third</item>
+        <item>@string/two_quote</item>
+        <item>@string/two_and_a_half</item>
+        <item>@string/three_and_one_fifth</item>
+        <item>@string/four_quote</item>
+        <item>@string/five_quote</item>
+        <item>@string/six_quote</item>
+        <item>@string/eight_quote</item>
+        <item>@string/ten_quote</item>
+        <item>@string/thirteen_quote</item>
+        <item>@string/fifteen_quote</item>
+        <item>@string/twenty_quote</item>
+        <item>@string/twentyfive_quote</item>
+        <item>@string/thirty_quote</item>
+        <item>@string/forty_quote</item>
+        <item>@string/fifty_quote</item>
+        <item>@string/s1_min</item>
+        <item>@string/s1_min_20</item>
+        <item>@string/s1_min_40</item>
+        <item>@string/s2_min_05</item>
+        <item>@string/s2_min_45</item>
+        <item>@string/s3_min_30</item>
+        <item>@string/s4_min_20</item>
+        <item>@string/s5_min_45</item>
+        <item>@string/s7_min_10</item>
+        <item>@string/s8_min_30</item>
+        <item>@string/s11_min_15</item>
+        <item>@string/s14_min_15</item>
+        <item>@string/s17_min</item>
+        <item>@string/s22_min_45</item>
+        <item>@string/s28_min_15</item>
+        <item>@string/s34_min</item>
+        <item>@string/s45_min_30</item>
+        <item>@string/s56_min_30</item>
+        <item>@string/s68_min</item>
+        <item>@string/s90_min_30</item>
+        <item>@string/s113_min_30</item>
+    </string-array>
+    <attr format="reference" name="abstractWheelViewStyle"/>
+    <attr format="dimension" name="arcWidth"/>
+    <attr format="boolean" name="centered"/>
+    <attr format="color" name="circleColor"/>
+    <attr format="integer" name="endAngle"/>
+    <attr format="integer" name="max"/>
+    <attr name="orientation">
+        <enum name="horizontal" value="0"/>
+        <enum name="vertical" value="1"/>
+    </attr>
+    <attr format="integer" name="progress"/>
+    <attr format="color" name="progressColor"/>
+    <attr format="dimension" name="progressWidth"/>
+    <attr format="integer" name="rotation"/>
+    <attr format="color" name="selectedColor"/>
+    <attr format="integer" name="startAngle"/>
+    <attr format="dimension" name="strokeWidth"/>
+    <attr format="color" name="unselectedColor"/>
+    <bool name="default_circle_indicator_centered">true</bool>
+    <bool name="default_circle_indicator_snap">false</bool>
+    <bool name="default_line_indicator_centered">true</bool>
+    <bool name="default_title_indicator_selected_bold">true</bool>
+    <bool name="default_underline_indicator_fades">true</bool>
+    <color name="background_tab_pressed">#6633B5E5</color>
+    <color name="com_mixpanel_android_selected">#66ffffff</color>
+    <color name="common_action_bar_splitter">#d2d2d2</color>
+    <color name="common_signin_btn_dark_text_default">@android:color/white</color>
+    <color name="common_signin_btn_dark_text_disabled">#FFAAAAAA</color>
+    <color name="common_signin_btn_dark_text_focused">@android:color/white</color>
+    <color name="common_signin_btn_dark_text_pressed">@android:color/white</color>
+    <color name="common_signin_btn_default_background">#FFDD4B39</color>
+    <color name="common_signin_btn_light_text_default">#FF737373</color>
+    <color name="common_signin_btn_light_text_disabled">#FFAAAAAA</color>
+    <color name="common_signin_btn_light_text_focused">#FF737373</color>
+    <color name="common_signin_btn_light_text_pressed">@android:color/white</color>
+    <color name="dark_grey">#ffcccccc</color>
+    <color name="default_circle_indicator_fill_color">#FFFFFFFF</color>
+    <color name="default_circle_indicator_page_color">#00000000</color>
+    <color name="default_circle_indicator_stroke_color">#FFDDDDDD</color>
+    <color name="default_line_indicator_selected_color">#FF33B5E5</color>
+    <color name="default_line_indicator_unselected_color">#FFBBBBBB</color>
+    <color name="default_title_indicator_footer_color">#FF33B5E5</color>
+    <color name="default_title_indicator_selected_color">#FFFFFFFF</color>
+    <color name="default_title_indicator_text_color">#BBFFFFFF</color>
+    <color name="default_underline_indicator_selected_color">#FF33B5E5</color>
+    <color name="item_sub_text_grey">#ffa6a4a4</color>
+    <color name="ps_black">#ff313131</color>
+    <color name="ps_button_circle_border_color">#ffc1241c</color>
+    <color name="ps_button_outer_circle_color">#ffFFC311</color>
+    <color name="ps_dark_grey">#ff838383</color>
+    <color name="ps_dark_red">#FFEE9511</color>
+    <color name="ps_drawer_header_bkgrd">#fff0f0f0</color>
+    <color name="ps_light_grey">#ffefefef</color>
+    <color name="ps_medium_grey">#ffdbdbdb</color>
+    <color name="ps_red">#ffFFC311</color>
+    <color name="ps_red_10">#ffFFC311</color>
+    <color name="ps_red_20">#ffEEC311</color>
+    <color name="ps_red_30">#ffCCC311</color>
+    <color name="ps_red_40">#ffAAA311</color>
+    <color name="ps_red_50">#ff889311</color>
+    <color name="ps_red_60">#ff668311</color>
+    <color name="ps_red_light">#FFE8660C</color>
+    <color name="ps_very_dark_red">#ffCD9231</color>
+    <color name="ps_vlight_grey">#fff6f6f6</color>
+    <color name="ps_white">#fffdfdfd</color>
+    <color name="sdl_bright_foreground_disabled_holo_dark">#ff4c4c4c</color>
+    <color name="sdl_bright_foreground_disabled_holo_light">#ffb2b2b2</color>
+    <color name="sdl_bright_foreground_holo_dark">#fff3f3f3</color>
+    <color name="sdl_bright_foreground_holo_light">#ff000000</color>
+    <color name="sdl_button_focused_dark">#4C0099cc</color>
+    <color name="sdl_button_focused_light">#4C33B5E5</color>
+    <color name="sdl_button_normal_dark">@android:color/transparent</color>
+    <color name="sdl_button_normal_light">@android:color/transparent</color>
+    <color name="sdl_button_pressed_dark">#990099cc</color>
+    <color name="sdl_button_pressed_light">#9933B5E5</color>
+    <color name="sdl_button_separator_dark">#12ffffff</color>
+    <color name="sdl_button_separator_light">#25000000</color>
+    <color name="sdl_button_text_dark">@color/sdl_primary_text_holo_dark</color>
+    <color name="sdl_button_text_light">@color/sdl_primary_text_holo_light</color>
+    <color name="sdl_message_text_dark">#FFFFFF</color>
+    <color name="sdl_message_text_light">#333333</color>
+    <color name="sdl_title_separator_dark">#ff0099cc</color>
+    <color name="sdl_title_separator_light">#33B5E5</color>
+    <color name="sdl_title_text_dark">#ff0099cc</color>
+    <color name="sdl_title_text_light">#33B5E5</color>
+    <color name="transparent">#00000000</color>
+    <color name="transparent_white">#66ffffff</color>
+    <color name="vpi__background_holo_dark">#ff000000</color>
+    <color name="vpi__background_holo_light">#fff3f3f3</color>
+    <color name="vpi__bright_foreground_disabled_holo_dark">#ff4c4c4c</color>
+    <color name="vpi__bright_foreground_disabled_holo_light">#ffb2b2b2</color>
+    <color name="vpi__bright_foreground_holo_dark">@color/vpi__background_holo_light</color>
+    <color name="vpi__bright_foreground_holo_light">@color/vpi__background_holo_dark</color>
+    <color name="vpi__bright_foreground_inverse_holo_dark">
+        @color/vpi__bright_foreground_holo_light
+    </color>
+    <color name="vpi__bright_foreground_inverse_holo_light">
+        @color/vpi__bright_foreground_holo_dark
+    </color>
+    <color name="wallet_bright_foreground_disabled_holo_light">#ffb2b2b2</color>
+    <color name="wallet_bright_foreground_holo_dark">#fff3f3f3</color>
+    <color name="wallet_bright_foreground_holo_light">#ff000000</color>
+    <color name="wallet_dim_foreground_disabled_holo_dark">#80bebebe</color>
+    <color name="wallet_dim_foreground_holo_dark">#bebebe</color>
+    <color name="wallet_dim_foreground_inverse_disabled_holo_dark">#80323232</color>
+    <color name="wallet_dim_foreground_inverse_holo_dark">#323232</color>
+    <color name="wallet_highlighted_text_holo_dark">#6633b5e5</color>
+    <color name="wallet_highlighted_text_holo_light">#6633b5e5</color>
+    <color name="wallet_hint_foreground_holo_dark">#808080</color>
+    <color name="wallet_hint_foreground_holo_light">#808080</color>
+    <color name="wallet_holo_blue_light">#ff33b5e5</color>
+    <color name="wallet_link_text_light">#0000ee</color>
+    <declare-styleable name="AbstractWheelView"><attr format="integer" name="visibleItems"/><attr format="boolean" name="isAllVisible"/><attr format="integer" name="itemOffsetPercent"/><attr format="dimension" name="itemsPadding"/><attr format="integer" name="selectionDividerDimmedAlpha"/><attr format="integer" name="selectionDividerActiveAlpha"/><attr format="reference" name="selectionDivider"/><attr format="integer" name="itemsDimmedAlpha"/><attr format="boolean" name="isCyclic"/></declare-styleable>
+    <declare-styleable name="AdsAttrs"><attr format="string" name="adSize"/><attr format="string" name="adSizes"/><attr format="string" name="adUnitId"/></declare-styleable>
+    <declare-styleable name="ArcProgress"><attr format="boolean" name="clockwise"/><attr name="progressWidth"/><attr name="progress"/><attr name="startAngle"/><attr name="endAngle"/><attr name="circleColor"/><attr name="progressColor"/><attr name="rotation"/></declare-styleable>
+    <declare-styleable name="CirclePageIndicator"><attr name="centered"/><attr format="color" name="fillColor"/><attr format="color" name="pageColor"/><attr name="android:orientation"/><attr format="dimension" name="radius"/><attr format="boolean" name="snap"/><attr format="color" name="strokeColor"/><attr name="strokeWidth"/><attr name="android:background"/></declare-styleable>
+    <declare-styleable name="DeadZone"><attr format="dimension" name="minSize"/><attr format="dimension" name="maxSize"/><attr format="integer" name="holdTime"/><attr format="integer" name="decayTime"/><attr name="orientation"/></declare-styleable>
+    <declare-styleable name="DialogStyle"><attr format="reference" name="dialogBackground"/><attr format="color|reference" name="titleTextColor"/><attr format="color|reference" name="titleSeparatorColor"/><attr format="color|reference" name="messageTextColor"/><attr format="color|reference" name="buttonTextColor"/><attr format="color|reference" name="buttonSeparatorColor"/><attr format="color|reference" name="buttonBackgroundColorNormal"/><attr format="color|reference" name="buttonBackgroundColorPressed"/><attr format="color|reference" name="buttonBackgroundColorFocused"/></declare-styleable>
+    <declare-styleable name="KeyButtonView"><attr format="integer" name="keyCode"/><attr format="boolean" name="keyRepeat"/><attr format="reference" name="glowBackground"/></declare-styleable>
+    <declare-styleable name="LinePageIndicator"><attr name="centered"/><attr name="unselectedColor"/><attr name="selectedColor"/><attr format="dimension" name="lineWidth"/><attr name="strokeWidth"/><attr format="dimension" name="gapWidth"/><attr name="android:background"/></declare-styleable>
+    <declare-styleable name="MapAttrs"><attr format="enum" name="mapType">
+      <enum name="none" value="0"/>
+      <enum name="normal" value="1"/>
+      <enum name="satellite" value="2"/>
+      <enum name="terrain" value="3"/>
+      <enum name="hybrid" value="4"/>
+    </attr><attr format="float" name="cameraBearing"/><attr format="float" name="cameraTargetLat"/><attr format="float" name="cameraTargetLng"/><attr format="float" name="cameraTilt"/><attr format="float" name="cameraZoom"/><attr format="boolean" name="uiCompass"/><attr format="boolean" name="uiRotateGestures"/><attr format="boolean" name="uiScrollGestures"/><attr format="boolean" name="uiTiltGestures"/><attr format="boolean" name="uiZoomControls"/><attr format="boolean" name="uiZoomGestures"/><attr format="boolean" name="useViewLifecycle"/><attr format="boolean" name="zOrderOnTop"/></declare-styleable>
+    <declare-styleable name="NotificationLinearLayout"><attr format="dimension" name="insetLeft"/></declare-styleable>
+    <declare-styleable name="NotificationRowLayout"><attr format="dimension" name="rowHeight"/></declare-styleable>
+    <declare-styleable name="OnGoingButton"><attr format="integer" name="animTime"/><attr format="boolean" name="toggle"/><attr format="boolean" name="oneShot"/></declare-styleable>
+    <declare-styleable name="PagerSlidingTabStrip"><attr format="color" name="indicatorColor"/><attr format="color" name="underlineColor"/><attr format="color" name="dividerColor"/><attr format="dimension" name="indicatorHeight"/><attr format="dimension" name="underlineHeight"/><attr format="dimension" name="dividerPadding"/><attr format="dimension" name="tabPaddingLeftRight"/><attr format="dimension" name="scrollOffset"/><attr format="reference" name="tabBackground"/><attr format="boolean" name="shouldExpand"/><attr format="boolean" name="textAllCaps"/></declare-styleable>
+    <declare-styleable name="RecentsPanelView"><attr format="reference" name="recentItemLayout"/></declare-styleable>
+    <declare-styleable name="SeekArc"><attr format="dimension" name="arcRadius"/><attr format="reference" name="thumb"/><attr format="dimension" name="thumbOffset"/><attr name="max"/><attr name="progressWidth"/><attr name="arcWidth"/><attr name="progress"/><attr name="rotation"/><attr name="startAngle"/><attr format="integer" name="sweepAngle"/><attr format="color" name="arcColor"/><attr name="progressColor"/><attr format="boolean" name="roundEdges"/><attr format="boolean" name="touchInside"/></declare-styleable>
+    <declare-styleable name="StyledDialogs"><attr format="reference" name="sdlDialogStyle"/><attr format="reference" name="sdlTitleTextStyle"/><attr format="reference" name="sdlMessageTextStyle"/></declare-styleable>
+    <declare-styleable name="TitlePageIndicator"><attr format="dimension" name="clipPadding"/><attr format="color" name="footerColor"/><attr format="dimension" name="footerLineHeight"/><attr name="footerIndicatorStyle">
+            <enum name="none" value="0"/>
+            <enum name="triangle" value="1"/>
+            <enum name="underline" value="2"/>
+        </attr><attr format="dimension" name="footerIndicatorHeight"/><attr format="dimension" name="footerIndicatorUnderlinePadding"/><attr format="dimension" name="footerPadding"/><attr name="linePosition">
+            <enum name="bottom" value="0"/>
+            <enum name="top" value="1"/>
+        </attr><attr name="selectedColor"/><attr format="boolean" name="selectedBold"/><attr name="android:textColor"/><attr name="android:textSize"/><attr format="dimension" name="titlePadding"/><attr format="dimension" name="topPadding"/><attr name="android:background"/></declare-styleable>
+    <declare-styleable name="ToggleSlider"><attr format="string" name="text"/></declare-styleable>
+    <declare-styleable name="UnderlinePageIndicator"><attr format="boolean" name="fades"/><attr format="integer" name="fadeDelay"/><attr format="integer" name="fadeLength"/><attr name="selectedColor"/><attr name="android:background"/></declare-styleable>
+    <declare-styleable name="ViewPagerIndicator"><attr format="reference" name="vpiCirclePageIndicatorStyle"/><attr format="reference" name="vpiIconPageIndicatorStyle"/><attr format="reference" name="vpiLinePageIndicatorStyle"/><attr format="reference" name="vpiTitlePageIndicatorStyle"/><attr format="reference" name="vpiTabPageIndicatorStyle"/><attr format="reference" name="vpiUnderlinePageIndicatorStyle"/></declare-styleable>
+    <declare-styleable name="WalletFragmentOptions"><attr format="enum" name="theme">
+            <enum name="holo_dark" value="0"/>
+            <enum name="holo_light" value="1"/>
+        </attr><attr format="enum" name="environment">
+            <enum name="production" value="1"/>
+            <enum name="sandbox" value="0"/>
+            <enum name="strict_sandbox" value="2"/>
+        </attr><attr format="reference" name="fragmentStyle"/><attr format="enum" name="fragmentMode">
+            <enum name="buyButton" value="1"/>
+            <enum name="selectionDetails" value="2"/>
+        </attr></declare-styleable>
+    <declare-styleable name="WalletFragmentStyle"><attr format="dimension" name="buyButtonHeight">
+            <enum name="match_parent" value="-1"/>
+            <enum name="wrap_content" value="-2"/>
+        </attr><attr format="dimension" name="buyButtonWidth">
+            <enum name="match_parent" value="-1"/>
+            <enum name="wrap_content" value="-2"/>
+        </attr><attr format="enum" name="buyButtonText">
+            <enum name="buy_with_google" value="1"/>
+            <enum name="buy_now" value="2"/>
+            <enum name="book_now" value="3"/>
+        </attr><attr format="enum" name="buyButtonAppearance">
+            <enum name="classic" value="1"/>
+            <enum name="grayscale" value="2"/>
+            <enum name="monochrome" value="3"/>
+        </attr><attr format="reference" name="maskedWalletDetailsTextAppearance"/><attr format="reference" name="maskedWalletDetailsHeaderTextAppearance"/><attr format="reference|color" name="maskedWalletDetailsBackground"/><attr format="reference" name="maskedWalletDetailsButtonTextAppearance"/><attr format="reference|color" name="maskedWalletDetailsButtonBackground"/><attr format="color" name="maskedWalletDetailsLogoTextColor"/><attr format="enum" name="maskedWalletDetailsLogoImageType">
+            <enum name="classic" value="1"/>
+            <enum name="monochrome" value="2"/>
+        </attr></declare-styleable>
+    <declare-styleable name="WheelHorizontalView"><attr format="dimension" name="selectionDividerWidth"/></declare-styleable>
+    <declare-styleable name="WheelVerticalView"><attr format="dimension" name="selectionDividerHeight"/></declare-styleable>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="big_font_size">120dp</dimen>
+    <dimen name="body_font_padding">4dp</dimen>
+    <dimen name="body_font_size">18sp</dimen>
+    <dimen name="circletimer_circle_stroke_progress_size">2dip</dimen>
+    <dimen name="circletimer_circle_stroke_size">1dip</dimen>
+    <dimen name="circletimer_diamond_size">9dip</dimen>
+    <dimen name="circletimer_marker_size">16dip</dimen>
+    <dimen name="default_circle_indicator_radius">3dp</dimen>
+    <dimen name="default_circle_indicator_stroke_width">1dp</dimen>
+    <dimen name="default_line_indicator_gap_width">4dp</dimen>
+    <dimen name="default_line_indicator_line_width">12dp</dimen>
+    <dimen name="default_line_indicator_stroke_width">1dp</dimen>
+    <dimen name="default_title_indicator_clip_padding">4dp</dimen>
+    <dimen name="default_title_indicator_footer_indicator_height">4dp</dimen>
+    <dimen name="default_title_indicator_footer_indicator_underline_padding">20dp</dimen>
+    <dimen name="default_title_indicator_footer_line_height">2dp</dimen>
+    <dimen name="default_title_indicator_footer_padding">7dp</dimen>
+    <dimen name="default_title_indicator_text_size">15dp</dimen>
+    <dimen name="default_title_indicator_title_padding">5dp</dimen>
+    <dimen name="default_title_indicator_top_padding">7dp</dimen>
+    <dimen name="dialpad_font_size">40dp</dimen>
+    <dimen name="drawlist_header_bottom_padding">15dp</dimen>
+    <dimen name="drawlist_header_top_padding">15dp</dimen>
+    <dimen name="drawlist_item_bottom_padding">0dp</dimen>
+    <dimen name="drawlist_item_top_padding">5dp</dimen>
+    <dimen name="drawlist_left_padding">8dp</dimen>
+    <dimen name="grid_1">4dp</dimen>
+    <dimen name="grid_10">40dp</dimen>
+    <dimen name="grid_11">44dp</dimen>
+    <dimen name="grid_12">48dp</dimen>
+    <dimen name="grid_13">52dp</dimen>
+    <dimen name="grid_14">56dp</dimen>
+    <dimen name="grid_15">60dp</dimen>
+    <dimen name="grid_16">64dp</dimen>
+    <dimen name="grid_17">68dp</dimen>
+    <dimen name="grid_18">72dp</dimen>
+    <dimen name="grid_2">8dp</dimen>
+    <dimen name="grid_20">80dp</dimen>
+    <dimen name="grid_26">104dp</dimen>
+    <dimen name="grid_27">108dp</dimen>
+    <dimen name="grid_28">112dp</dimen>
+    <dimen name="grid_3">12dp</dimen>
+    <dimen name="grid_4">16dp</dimen>
+    <dimen name="grid_43">172dp</dimen>
+    <dimen name="grid_44">176dp</dimen>
+    <dimen name="grid_45">180dp</dimen>
+    <dimen name="grid_46">184dp</dimen>
+    <dimen name="grid_5">20dp</dimen>
+    <dimen name="grid_55">220dp</dimen>
+    <dimen name="grid_57">228dp</dimen>
+    <dimen name="grid_58">232dp</dimen>
+    <dimen name="grid_6">24dp</dimen>
+    <dimen name="grid_7">28dp</dimen>
+    <dimen name="grid_8">32dp</dimen>
+    <dimen name="grid_9">36dp</dimen>
+    <dimen name="grid_90">360dp</dimen>
+    <dimen name="header_font_size">24sp</dimen>
+    <dimen name="label_font_size">14sp</dimen>
+    <dimen name="medium_font_padding">12dp</dimen>
+    <dimen name="medium_font_size">48sp</dimen>
+    <dimen name="simple_label_font_size">8sp</dimen>
+    <dimen name="small_font_size">40sp</dimen>
+    <dimen name="status_bar_height">48dp</dimen>
+    <dimen name="text_error_width">150dp</dimen>
+    <dimen name="text_size_extremly_large">38sp</dimen>
+    <dimen name="text_size_large">22sp</dimen>
+    <dimen name="text_size_massive">60sp</dimen>
+    <dimen name="text_size_medium">18sp</dimen>
+    <dimen name="text_size_micro">12sp</dimen>
+    <dimen name="text_size_small">14sp</dimen>
+    <dimen name="text_size_very_large">34sp</dimen>
+    <dimen name="timer_circle_diameter">300dip</dimen>
+    <dimen name="timer_circle_width">350dip</dimen>
+    <dimen name="timer_padding_left">16dip</dimen>
+    <dimen name="title_text_size">20sp</dimen>
+    <dimen name="very_small_font_size">32sp</dimen>
+    <item name="numbers_key" type="id"/>
+    <item name="sdl__negative_button" type="id"/>
+    <item name="sdl__neutral_button" type="id"/>
+    <item name="sdl__positive_button" type="id"/>
+    <integer name="default_circle_indicator_orientation">0</integer>
+    <integer name="default_pulse_length">150</integer>
+    <integer name="default_title_indicator_footer_indicator_style">2</integer>
+    <integer name="default_title_indicator_line_position">0</integer>
+    <integer name="default_underline_indicator_fade_delay">300</integer>
+    <integer name="default_underline_indicator_fade_length">400</integer>
+    <integer name="google_play_services_version">5089000</integer>
+    <plurals name="numberOfHours">
+        <item quantity="one">%d hour</item>
+        <item quantity="other">%d hours</item>
+    </plurals>
+    <plurals name="numberOfMinutes">
+        <item quantity="one">%d minute and</item>
+        <item quantity="other">%d minutes and</item>
+    </plurals>
+    <plurals name="numberOfSeconds">
+        <item quantity="one">%d second.</item>
+        <item quantity="other">%d seconds.</item>
+    </plurals>
+    <plurals name="numberOfStops">
+        <item quantity="one">%d stop</item>
+        <item quantity="other">%d stops</item>
+
+
+    </plurals>
+    <string name="BLEConnectionError">BLE Connection error</string>
+    <string name="BLE_Not_Supported">BLE_Not_Supported</string>
+    <string name="Connected_to">Connected to: </string>
+    <string name="_10_second">10</string>
+    <string name="_13_second">13</string>
+    <string name="_15_second">15</string>
+    <string name="_1_1_third_second">1\"3</string>
+    <string name="_1_2_third_second">1\"6</string>
+    <string name="_1_second">1</string>
+    <string name="_20_second">20</string>
+    <string name="_25_second">25</string>
+    <string name="_2_half_second">2\"5</string>
+    <string name="_2_second">2</string>
+    <string name="_30_second">30</string>
+    <string name="_3_1_fifth_second">3\"2</string>
+    <string name="_4_second">4</string>
+    <string name="_5_second">5</string>
+    <string name="_6_second">6</string>
+    <string name="_8_second">8</string>
+    <string name="a_quick_guide">A quick guide</string>
+    <string name="about">ABOUT</string>
+    <string name="action_BLEsettings">BLE Settings</string>
+    <string name="action_settings">Settings</string>
+    <string name="ampersand">\u0026</string>
+    <string name="anyway_enough_of">So for now - Have Fun!</string>
+    <string name="app_name">PhotoSniper</string>
+    <string name="bang">Bang</string>
+    <string name="base_shutter_speed">Base Shutter Speed</string>
+    <string name="ble_not_supported">BLE is not supported</string>
+    <string name="blue_slide">Blue</string>
+    <string name="bramping">Bramping</string>
+    <string name="bulb_ramping_timelapse">Bulb ramping timelapse</string>
+    <string name="button">Send</string>
+    <string name="buy_cable_cb1">Buy CB1 cable</string>
+    <string name="buy_cable_dc0">Buy DC0 cable</string>
+    <string name="buy_cable_dc1">Buy DC1 cable</string>
+    <string name="buy_cable_dc2">Buy DC2 cable</string>
+    <string name="buy_cable_e3">Buy E3 cable</string>
+    <string name="buy_cable_l1">Buy L1 cable</string>
+    <string name="buy_cable_n3">Buy N3 cable</string>
+    <string name="buy_cable_nx">Buy NX cable</string>
+    <string name="buy_cable_r9">Buy R9 cable</string>
+    <string name="buy_cable_s1">Buy S1 cable</string>
+    <string name="buy_cable_s2">Buy S2 cable</string>
+    <string name="buy_cable_uc1">Buy UC1 cable</string>
+    <string name="cable_release_modes">Simple Release Modes</string>
+    <string name="cable_selector">Cable Selector</string>
+    <string name="calculators">Calculators</string>
+    <string name="cancel">Cancel</string>
+    <string name="canon">Canon</string>
+    <string name="choose_your_shutter_speed">Choose your shutter speed</string>
+    <string name="clap_whistle_or_tap">Clap, whistle or tap</string>
+    <string name="com_mixpanel_android_close">Close</string>
+    <string name="com_mixpanel_android_done">Done</string>
+    <string name="com_mixpanel_android_exit">Exit</string>
+    <string name="com_mixpanel_android_logo">By Mixpanel</string>
+    <string name="com_mixpanel_android_next">Next question</string>
+    <string name="com_mixpanel_android_notification_image">Image not displayed</string>
+    <string name="com_mixpanel_android_previous">Previous question</string>
+    <string msgid="2523291102206661146" name="common_google_play_services_enable_button">Enable Google Play services</string>
+    <string msgid="227660514972886228" name="common_google_play_services_enable_text">This app won\'t work unless you enable Google Play services.</string>
+    <string msgid="5122002158466380389" name="common_google_play_services_enable_title">Enable Google Play services</string>
+    <string name="common_google_play_services_error_notification_requested_by_msg">Requested by <ns1:g id="app_name">%1$s</ns1:g></string>
+    <string msgid="7153882981874058840" name="common_google_play_services_install_button">Get Google Play services</string>
+    <string msgid="2122112764540849864" name="common_google_play_services_install_text_phone">This app won\'t run without Google Play services, which are missing from your phone.</string>
+    <string msgid="7351599665250191022" name="common_google_play_services_install_text_tablet">This app won\'t run without Google Play services, which are missing from your tablet.</string>
+    <string msgid="7215213145546190223" name="common_google_play_services_install_title">Get Google Play services</string>
+    <string name="common_google_play_services_invalid_account_text">The specified account does not exist on this device. Please choose a different account.</string>
+    <string name="common_google_play_services_invalid_account_title">Invalid Account</string>
+    <string name="common_google_play_services_needs_enabling_title">An application requires Google Play services to be enabled.</string>
+    <string name="common_google_play_services_network_error_text">A data connection is required to connect to Google Play services.</string>
+    <string name="common_google_play_services_network_error_title">Network Error</string>
+    <string name="common_google_play_services_notification_needs_installation_title">An application requires installation of Google Play services.</string>
+    <string name="common_google_play_services_notification_needs_update_title">An application requires an update for Google Play services.</string>
+    <string name="common_google_play_services_notification_ticker">Google Play services error</string>
+    <string name="common_google_play_services_unknown_issue">Unknown issue with Google Play services.</string>
+    <string name="common_google_play_services_unsupported_date_text">The date on the device appears to be incorrect. Please check the date on the device.</string>
+    <string name="common_google_play_services_unsupported_text">Google Play services, which some of your applications rely on, is not supported by your device. Please contact the manufacturer for assistance.</string>
+    <string name="common_google_play_services_unsupported_title">Google Play services</string>
+    <string msgid="6556509956452265614" name="common_google_play_services_update_button">Update</string>
+    <string msgid="9053896323427875356" name="common_google_play_services_update_text">This app won\'t run unless you update Google Play services.</string>
+    <string msgid="1788179980625863495" name="common_google_play_services_update_title">Update Google Play services</string>
+    <string name="common_signin_button_text">Sign in</string>
+    <string name="common_signin_button_text_long">Sign in with Google</string>
+    <string name="connect_error_description">PhotoSniper uses Google Play Services to get you location. We couldn\'t connect. Would you like to try again?</string>
+    <string name="connect_error_title">Google Play Services connection error</string>
+    <string name="connected">Connected</string>
+    <string name="connected_slave_devices">CONNECTED SLAVE DEVICES</string>
+    <string name="connecting_your_camera">Connecting your camera</string>
+    <string name="contax">Contax</string>
+    <string name="countdown_before">Photo in 3, 2, 1…</string>
+    <string name="determine_nd">Neutral Density Filter Calculator</string>
+    <string name="determine_sunrise_sunset">Sunrise and Sunset Calculator</string>
+    <string name="dialog_close">Close</string>
+    <string name="did_you_know">Did you know? We’re the friendliest folks the world has ever known (science fact).</string>
+    <string name="disconnect_slave_device">Disconnect Slave Device</string>
+    <string name="disconnected">Disconnected</string>
+    <string name="distance">DISTANCE</string>
+    <string name="distance_unit_s_">Distance Unit(s)</string>
+    <string name="distancelapse">DistanceLapse</string>
+    <string name="do_you_want_to_slave_device">Do you want to disconnect this slave device?</string>
+    <string name="duration_">Duration:</string>
+    <string name="eight_quote">8\"</string>
+    <string name="empty_string"/>
+    <string name="enable_gps">Enable GPS?</string>
+    <string name="end_">End:</string>
+    <string name="error_bluetooth_not_supported">Bluetooth not supported.</string>
+    <string name="ev_step">EV step</string>
+    <string name="exposure">Exposure:</string>
+    <string name="exposures_">Exposures:</string>
+    <string name="exposures_of_duration">exposures of duration</string>
+    <string name="exposures_over">exposures over</string>
+    <string name="extreme_exposure_control">Extreme exposure control</string>
+    <string name="fifteen_quote">15\"</string>
+    <string name="fifty_quote">50\"</string>
+    <string name="finding_loc">Finding location…</string>
+    <string name="first_light_at">First light at</string>
+    <string name="five_hundred_shutter">500 ms - slow camera</string>
+    <string name="five_quote">5\"</string>
+    <string name="five_seconds">5 seconds</string>
+    <string name="flash_shutter">30 ms - flash</string>
+    <string name="flick_the_switch">Flick the switch to \'on\' to become visible to others running PhotoSniper Mobile on your Wi-Fi network. When they connect to your device, you can trigger their cameras wirelessly.</string>
+    <string name="forty_quote">40\"</string>
+    <string name="four_quote">4\"</string>
+    <string name="four_seconds">4 seconds</string>
+    <string name="fujifilm">FujiFilm</string>
+    <string name="general">GENERAL</string>
+    <string name="get_more_help">Get more help</string>
+    <string name="get_the_right_kit">Get the right kit for the job</string>
+    <string name="getting_started">Getting Started</string>
+    <string name="google_play_error_description">PhotoSniper uses Google Play Location services to get location information, you cannot use distance lapse without a valid Google play account or Google Play App installed.</string>
+    <string name="google_play_error_title">PhotoSniper uses Google Play Services</string>
+    <string name="got_it_awesome_enough_babble_already_">Got it? Awesome. Enough babble already.</string>
+    <string name="got_that_great">Got that? Great! Now let’s connect your camera...</string>
+    <string name="gps_descripition">PhotoSniper distance lapse works best when GPS is enabled on your device. Would you like to enable GPS now?</string>
+    <string name="green_slide">Green</string>
+    <string name="hasselblad">Hasselblad</string>
+    <string name="hdr_error">Your HDR settings have generated invalid results. Try increasing your middle exposure or decreasing the number of exposures and EV step.</string>
+    <string name="hdr_error_title">HDR settings Error.</string>
+    <string name="hdr_modes">HDR Modes</string>
+    <string name="hours_label">h</string>
+    <string name="hr">hour</string>
+    <string name="hrs">hours</string>
+    <string name="if_you_get_stuck">If you get stuck, if you have any ideas you want to share or you just fancy a chat, remember you can get hold of us at night and day.</string>
+    <string name="in">in</string>
+    <string name="in_pebble">To install the PhotoSniper Pebble app on your watch select \'Install Pebble App\' in the Action menu. In Pebble mode we\'re using a Pebble smartwatch as a trigger. Connect to a Pebble, and wait for the Pebble to trigger this camera. How cool is that? Press the red button to start listening</string>
+    <string name="in_triggertrap_mobile">In PhotoSniper, you’ll find a fine selection of tasty triggering modes. Experiment to your heart’s content and click your creative photography into high gear!</string>
+    <string name="in_wifi_slave">In Wi-Fi slave mode we\'re using another PhotoSniper Mobile device as a trigger. Connect to the Master device, and wait for the other device to trigger this camera. How cool is that? Press the red button to start searching</string>
+    <string name="install_pebble_app">Install Pebble App</string>
+    <string name="installed_app_verison">Installed app version</string>
+    <string name="interval_">Interval:</string>
+    <string name="is_serial">Serial Present:</string>
+    <string name="kilometers_per_hour">Kilometers per hour</string>
+    <string name="km_h">km/h</string>
+    <string name="kodak">Kodak</string>
+    <string name="label_data">Data:</string>
+    <string name="label_device_address">Device address:</string>
+    <string name="label_state">State:</string>
+    <string name="last_light_at">Last light at</string>
+    <string name="le_hdr">LE HDR</string>
+    <string name="le_hdr_timelapse">LE HDR Timelapse</string>
+    <string name="leica">Leica</string>
+    <string name="let_s_get_triggering_">Let’s get triggering!!</string>
+    <string name="lets_get_started">Let’s get started, shall we?</string>
+    <string name="listening_for_pebble_trigger">Listening for Pebble Trigger</string>
+    <string name="loc_not_found">Check location services and try again.</string>
+    <string name="long_exposure_hdr_sets">Long exposure HDR sets</string>
+    <string name="long_exposure_hdr_timelapse">Long exposure HDR timelapse</string>
+    <string name="lytro">Lytro</string>
+    <string name="m_s">m/s</string>
+    <string name="master_devices">MASTER DEVICES</string>
+    <string name="meh_message">Send us an email and we’ll try make things better.</string>
+    <string name="meh_title">Oh no! Would you like some support?</string>
+    <string name="menu_connect">Connect</string>
+    <string name="menu_disconnect">Disconnect</string>
+    <string name="menu_scan">Scan</string>
+    <string name="menu_stop">Stop</string>
+    <string name="meter_abrievation">m</string>
+    <string name="meters">meters</string>
+    <string name="meters_kilometers">Meters/Kilometers</string>
+    <string name="meters_per_second">Meters per second</string>
+    <string name="middle_exposure">Middle exposure</string>
+    <string name="miles_per_hour">Miles Per Hour</string>
+    <string name="miles_yards">Miles/Yards</string>
+    <string name="min">minute and</string>
+    <string name="minolta">Minolta</string>
+    <string name="mins">minutes and</string>
+    <string name="minutes_label">m</string>
+    <string name="mph">mph</string>
+    <string name="my_name_is">My name is</string>
+    <string name="nav_drawer_close"/>
+    <string name="nav_drawer_open">PhotoSniper</string>
+    <string name="navigating_the_app">Navigating the App</string>
+    <string name="nd_calculator">ND Calculator</string>
+    <string name="nd_filter_end">filter:</string>
+    <string name="nd_filter_strength">ND Filter Strength</string>
+    <string name="neutral_density_1024">ND1024</string>
+    <string name="neutral_density_1048576">ND1048576</string>
+    <string name="neutral_density_128">ND128</string>
+    <string name="neutral_density_131072">ND131072</string>
+    <string name="neutral_density_16">ND16</string>
+    <string name="neutral_density_16384">ND16384</string>
+    <string name="neutral_density_2">ND2</string>
+    <string name="neutral_density_2048">ND2048</string>
+    <string name="neutral_density_256">ND256</string>
+    <string name="neutral_density_262144">ND262144</string>
+    <string name="neutral_density_32">ND32</string>
+    <string name="neutral_density_32768">ND32768</string>
+    <string name="neutral_density_4">ND4</string>
+    <string name="neutral_density_4096">ND4096</string>
+    <string name="neutral_density_512">ND512</string>
+    <string name="neutral_density_524288">ND524288</string>
+    <string name="neutral_density_64">ND64</string>
+    <string name="neutral_density_65536">ND65536</string>
+    <string name="neutral_density_8">ND8</string>
+    <string name="neutral_density_8192">ND8192</string>
+    <string name="next_sunrise">Sunrise Tomorrow</string>
+    <string name="next_sunset">Sunset Tomorrow</string>
+    <string name="nikon">Nikon</string>
+    <string name="nil_quote_3">0\"3</string>
+    <string name="nil_quote_4">0\"4</string>
+    <string name="nil_quote_5">0\"5</string>
+    <string name="nil_quote_6">0\"6</string>
+    <string name="nil_quote_8">0\"8</string>
+    <string name="no">No</string>
+    <string name="no_data">No data</string>
+    <string name="no_devices_found">NO DEVICES FOUND</string>
+    <string name="number_of_exposures">Number of exposures</string>
+    <string name="of_course_given_that_this_is_a">Of course, given that this is a Beta, there may be the odd quirk here and there. If you’d like to help us make the Android app better, please report any bugs and make any suggestions you have on our dedicated Android forum (http://tri.gg/betaforum)\n</string>
+    <string name="oh_hi_there">Oh, hi there! Pleased to meet you. </string>
+    <string name="ok">OK</string>
+    <string name="olympus">Olympus</string>
+    <string name="one_and_one_third">1\"3</string>
+    <string name="one_and_two_third">1\"6</string>
+    <string name="one_eight">\u0b76</string>
+    <string name="one_fifty_shutter">150 ms - camera</string>
+    <string name="one_half">\u00bd</string>
+    <string name="one_quote">1\"</string>
+    <string name="one_second">1 second</string>
+    <string name="one_sixteenth">\u0b75</string>
+    <string name="one_third">\u2153</string>
+    <string name="one_thousand_five_hundred_shutter">1500 ms - slow camera</string>
+    <string name="one_thousand_shutter">1000 ms - slow camera</string>
+    <string name="output_settings">Output Settings</string>
+    <string name="panasonic">Panasonic</string>
+    <string name="pause">Pause:</string>
+    <string name="pebble">Pebble</string>
+    <string name="pentax">Pentax</string>
+    <string name="perfect_for_roadtrips">Perfect for roadtrips</string>
+    <string name="point_eight_seconds">0.8 seconds</string>
+    <string name="point_five_seconds">0.5 seconds</string>
+    <string name="point_four_seconds">0.4 seconds</string>
+    <string name="point_nine_seconds">0.9 seconds</string>
+    <string name="point_one_seconds">0.1 seconds</string>
+    <string name="point_seven_seconds">0.7 seconds</string>
+    <string name="point_six_seconds">0.6 seconds</string>
+    <string name="point_three_seconds">0.3 seconds</string>
+    <string name="point_two_seconds">0.2 seconds</string>
+    <string name="press_and_hold">Press and Hold</string>
+    <string name="press_hold_text">Touch the button to open the shutter on your camera. To end your exposure just let go</string>
+    <string name="press_start_text">Touch the button to open the shutter on your camera. When you’re done, touch it again to end your exposure. Easy!</string>
+    <string name="press_to_lock">Press and Lock</string>
+    <string name="press_to_start">Press to open the shutter and press again to close the shutter</string>
+    <string name="ps_foreground_service_started">ps_foreground_service_started</string>
+    <string name="quick_release">Quick Release</string>
+    <string name="quick_release_text">Hold the button down, wait for the perfect moment,
+        then just let go!</string>
+    <string name="red_slide">Red</string>
+    <string name="release_button_to">Release button to take a picture</string>
+    <string name="remember_that_your">Remember that the app currently only triggers a shot so keep your camera ready configured at your preferences ;-)</string>
+    <string name="remote_triggers">Remote Triggers</string>
+    <string name="running_bramping">Running Bramping</string>
+    <string name="running_distance_lapse">Running DistanceLapse</string>
+    <string name="running_hdr">Running HDR</string>
+    <string name="running_hdr_timelapse">Running HDR timelapse</string>
+    <string name="running_pebble">Running Pebble</string>
+    <string name="running_press_to_start_and_stop">Running press and lock</string>
+    <string name="running_self_timer">Running Self Timer</string>
+    <string name="running_sound_trigger">Running Sound trigger</string>
+    <string name="running_star_trail">Running Star trail</string>
+    <string name="running_timed">Running Timed</string>
+    <string name="running_timelapse">Running Timelapse</string>
+    <string name="running_timewarp">Running TimeWarp</string>
+    <string name="running_wifi_master">Running Wi-Fi Master</string>
+    <string name="running_wifi_slave">Running Wi-Fi Slave</string>
+    <string name="s113_min_30">113\'30\"</string>
+    <string name="s11_min_15">11\'15\"</string>
+    <string name="s14_min_15">14\'15\"</string>
+    <string name="s17_min">17\'</string>
+    <string name="s1_min">1\'</string>
+    <string name="s1_min_20">1\'20\"</string>
+    <string name="s1_min_40">1\'40\"</string>
+    <string name="s22_min_45">22\'45\"</string>
+    <string name="s28_min_15">28\'15\"</string>
+    <string name="s2_min_05">2\'05\"</string>
+    <string name="s2_min_45">2\'45\"</string>
+    <string name="s34_min">34\'</string>
+    <string name="s3_min_30">3\'30\"</string>
+    <string name="s45_min_30">45\'30\"</string>
+    <string name="s4_min_20">4\'20\"</string>
+    <string name="s56_min_30">56\'30\"</string>
+    <string name="s5_min_45">5\'45\"</string>
+    <string name="s68_min">68\'</string>
+    <string name="s7_min_10">7\'10\"</string>
+    <string name="s8_min_30">8\'30\"</string>
+    <string name="s90_min_30">90\'30\"</string>
+    <string name="samsung">Samsung</string>
+    <string name="scnd">second.</string>
+    <string name="scnds">seconds.</string>
+    <string name="scope_dialog_message">Tell us what you think.</string>
+    <string name="scope_dialog_title">How\'s the PhotoSniper experience?</string>
+    <string name="scope_negative">Not Great</string>
+    <string name="scope_neutral">Like it</string>
+    <string name="scope_positive">Love it!</string>
+    <string name="sec">sec</string>
+    <string name="seconds_label">s</string>
+    <string name="self_timer">Self Timer</string>
+    <string name="self_timer_text">Set a time, tap the red button, and get in position!</string>
+    <string name="send_email">Email Us</string>
+    <string name="sensitivity">Sensitivity</string>
+    <string name="sensor_delay">Sensor Delay</string>
+    <string name="sensor_reset_delay">Sensor Reset Delay</string>
+    <string name="sensors">SENSORS</string>
+    <string name="set_sensor_delays">Set sensor delays</string>
+    <string name="set_the_trigger_pulse_length">Set the Trigger Pulse length</string>
+    <string name="shutter">shutter</string>
+    <string name="shutter_speed_with">Shutter Speed with</string>
+    <string name="sigma">Sigma</string>
+    <string name="simple">Tap the big red button to make the magic happen</string>
+    <string name="simple_cable_release">Simple Release</string>
+    <string name="six_quote">6\"</string>
+    <string name="so_you_want">So you want to trigger your camera? Good news! You’ve just turned your smartphone or tablet into the best camera triggering device that money can buy. Congratulations on your wise choice.</string>
+    <string name="sony">Sony</string>
+    <string name="sound_mode">Sound Modes</string>
+    <string name="sound_sensor">Sound Sensor</string>
+    <string name="speed_unit">Speed Unit</string>
+    <string name="star_trail">Star Trail</string>
+    <string name="start">Start</string>
+    <string name="start_">Start:</string>
+    <string name="stop">Stop</string>
+    <string name="sunrise">Sunrise Today</string>
+    <string name="sunrise_sunset">Solar Calculator</string>
+    <string name="sunset">Sunset Tonight</string>
+    <string name="take">Take</string>
+    <string name="take_control">Take control</string>
+    <string name="tap_the_button_to_take_a_picture">Tap the button to take a picture</string>
+    <string name="ten_quote">10\"</string>
+    <string name="thirteen_quote">13\"</string>
+    <string name="thirty_quote">30\"</string>
+    <string name="this_is_a_beta_">This is a Beta!</string>
+    <string name="three_and_one_fifth">3\"2</string>
+    <string name="three_seconds">3 seconds</string>
+    <string name="three_thousand_shutter">3000 ms - slow camera</string>
+    <string name="time_lapse">Set up a time interval for each shot of your timelapse</string>
+    <string name="time_lapse_error">Your timelapse interval is smaller than your pulse length!</string>
+    <string name="time_lapse_interval">Time Lapse interval</string>
+    <string name="timed">Select your favourite shutter speed. Press the button. Relax - the exposure ends when the timer runs down.</string>
+    <string name="timed_release">Timed Release</string>
+    <string name="timelapse">Timelapse</string>
+    <string name="timelapse_modes">Timelapse Modes</string>
+    <string name="timelapse_with_acceleration">Timelapse with acceleration</string>
+    <string name="timewarp">TimeWarp</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_devices">BLE Device Scan</string>
+    <string name="to_connect_the">To connect the app to your camera, You can either use WiFi Direct connection to running Remote App in your SONY camera or control your camera via BLE (SniperBox needed!!)</string>
+    <string name="to_play_love_message">Five stars that is!</string>
+    <string name="to_play_love_title">How about a high five for our developers?</string>
+    <string name="to_play_message">It will only take two ticks.</string>
+    <string name="to_play_negative">No Thanks</string>
+    <string name="to_play_neutral">Later</string>
+    <string name="to_play_positive">Sure</string>
+    <string name="to_play_title">Wow! Would you like to review PhotoSniper?</string>
+    <string name="touch_to_start_release_to_stop">Touch to start, release to stop</string>
+    <string name="touch_to_start_touch_to_stop">Touch to start. Touch to stop</string>
+    <string name="travel_through_time">Travel through time</string>
+    <string name="trigger">Trigger</string>
+    <string name="trigger_pulse_length">Trigger Pulse length</string>
+    <string name="trigger_remotely">Trigger remotely</string>
+    <string name="trigger_the_shutter">Trigger the shutter every</string>
+    <string name="trigger_with_your_pebble">Trigger with your Pebble</string>
+    <string name="triggertrap_idle">PhotoSniper is idle</string>
+    <string name="twenty_quote">20\"</string>
+    <string name="twentyfive_quote">25\"</string>
+    <string name="two_and_a_half">2\"5</string>
+    <string name="two_quote">2\"</string>
+    <string name="two_seconds">2 seconds</string>
+    <string name="two_thirds">\u2154</string>
+    <string name="unconnected">UNCONNECTED</string>
+    <string name="undefined_time">——:——</string>
+    <string name="unknown">Unknown</string>
+    <string name="unknown_characteristic">Unknown characteristic</string>
+    <string name="unknown_device">Unknown device</string>
+    <string name="unknown_service">Unknown service</string>
+    <string name="version">Version</string>
+    <string name="volume_warning_message">PhotoSniper needs your volume set to maximum</string>
+    <string name="volume_warning_title">Set your volume to maximum!</string>
+    <string name="wallet_buy_button_place_holder" translation_description="Text on a button that allows a user to make a payment with Google Wallet [CHAR LIMIT=30]">Buy with Google</string>
+    <string name="welcome">Welcome</string>
+    <string name="welcome_to_triggertrap">Welcome to PhotoSniper</string>
+    <string name="wi_fi_slave">Wi-Fi Slave </string>
+    <string name="wifi_master">Wi-Fi Master</string>
+    <string name="wifi_slave">Wi-Fi Slave</string>
+    <string name="with_a_gap_between">with a gap between each of</string>
+    <string name="would_you_like_to_stop_this_running_">Would you like to stop this running?</string>
+    <string name="yard_abrievation">yd</string>
+    <string name="yards">yards</string>
+    <string name="yes">Yes</string>
+    <string name="you_can_access_each">You can access each mode from the menu on the left-hand side on your screen. To open it either swipe from the left side of the screen, or tap the little menu button at the top.</string>
+    <string name="you_ve_installed_a_beta_version">You’ve installed a Beta version of our Android app. Which is pretty awesome, because it puts you in the 1%% sexiest people in the world category.</string>
+    <string name="zero_point_eight_seconds">0.08 seconds</string>
+    <string name="zero_point_five_seconds">0.05 seconds</string>
+    <string name="zero_point_four_seconds">0.04 seconds</string>
+    <string name="zero_point_nine_seconds">0.09 seconds</string>
+    <string name="zero_point_one_seconds">0.01 seconds</string>
+    <string name="zero_point_seven_seconds">0.07 seconds</string>
+    <string name="zero_point_six_seconds">0.06 seconds</string>
+    <string name="zero_point_three_seconds">0.03 seconds</string>
+    <string name="zero_point_two_seconds">0.02 seconds</string>
+    <string name="zero_seconds">0 seconds</string>
+    <style name="AppBaseTheme" parent="android:Theme.Light">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+    </style>
+    <style name="AppTheme" parent="TTBaseTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+        <!-- item name="sdlDialogStyle">@style/DialogStyleLight.Custom</item -->
+    </style>
+    <style name="DialogStyleDark">
+        <item name="dialogBackground">@drawable/sdl_background_dark</item>
+        <item name="titleTextColor">@color/sdl_title_text_dark</item>
+        <item name="titleSeparatorColor">@color/sdl_title_separator_dark</item>
+        <item name="messageTextColor">@color/sdl_message_text_dark</item>
+        <item name="buttonTextColor">@color/sdl_button_text_dark</item>
+        <item name="buttonSeparatorColor">@color/sdl_button_separator_dark</item>
+        <item name="buttonBackgroundColorNormal">@color/sdl_button_normal_dark</item>
+        <item name="buttonBackgroundColorPressed">@color/sdl_button_pressed_dark</item>
+        <item name="buttonBackgroundColorFocused">@color/sdl_button_focused_dark</item>
+    </style>
+    <style name="DialogStyleLight">
+        <item name="dialogBackground">@drawable/sdl_background_light</item>
+        <item name="titleTextColor">@color/sdl_title_text_light</item>
+        <item name="titleSeparatorColor">@color/sdl_title_separator_light</item>
+        <item name="messageTextColor">@color/sdl_message_text_light</item>
+        <item name="buttonTextColor">@color/sdl_button_text_light</item>
+        <item name="buttonSeparatorColor">@color/sdl_button_separator_light</item>
+        <item name="buttonBackgroundColorNormal">@color/sdl_button_normal_light</item>
+        <item name="buttonBackgroundColorPressed">@color/sdl_button_pressed_light</item>
+        <item name="buttonBackgroundColorFocused">@color/sdl_button_focused_light</item>
+    </style>
+    <style name="SDL"/>
+    <style name="SDL.Button" parent="@android:style/Widget.Button">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">@dimen/grid_3</item>
+        <item name="android:paddingBottom">@dimen/grid_3</item>
+        <item name="android:minHeight">48dip</item>
+        <item name="android:minWidth">64dip</item>
+        <item name="android:paddingLeft">4dip</item>
+        <item name="android:paddingRight">4dip</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:layout_gravity">center_vertical</item>
+    </style>
+    <style name="SDL.ButtonSeparator">
+        <item name="android:layout_width">1dp</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+    <style name="SDL.DatePicker">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:spinnersShown">true</item>
+        <item name="android:calendarViewShown">false</item>
+    </style>
+    <style name="SDL.Dialog" parent="android:Theme">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowActionModeOverlay">true</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
+        <item name="android:backgroundDimAmount">0.6</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+
+        <item name="sdlTitleTextStyle">@style/SDL.TextView.Title</item>
+        <item name="sdlMessageTextStyle">@style/SDL.TextView.Message</item>
+
+        <item name="sdlDialogStyle">@style/DialogStyleDark</item>
+    </style>
+    <style name="SDL.Group">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+    <style name="SDL.Group.ButtonPanel">
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <style name="SDL.Group.Content">
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <style name="SDL.Group.Horizontal">
+        <item name="android:orientation">horizontal</item>
+    </style>
+    <style name="SDL.Group.Horizontal.ButtonPanel">
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <style name="SDL.Group.Wrap">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+    <style name="SDL.HorizontalSeparator">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+    </style>
+    <style name="SDL.ListView" parent="@android:style/Widget.ListView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:cacheColorHint">@null</item>
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+    <style name="SDL.Progress" parent="@android:style/Widget.ProgressBar">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginRight">0dp</item>
+        <item name="android:layout_marginLeft">@dimen/grid_4</item>
+        <item name="android:layout_marginTop">@dimen/grid_4</item>
+        <item name="android:layout_marginBottom">@dimen/grid_4</item>
+    </style>
+    <style name="SDL.TextView" parent="@android:style/Widget.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <style name="SDL.TextView.Message">
+        <item name="android:textSize">16sp</item>
+        <item name="android:paddingTop">@dimen/grid_3</item>
+        <item name="android:paddingBottom">@dimen/grid_3</item>
+        <item name="android:paddingLeft">@dimen/grid_4</item>
+        <item name="android:paddingRight">@dimen/grid_4</item>
+    </style>
+    <style name="SDL.TextView.Title">
+        <item name="android:textSize">22sp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:paddingLeft">@dimen/grid_4</item>
+        <item name="android:paddingRight">@dimen/grid_4</item>
+        <item name="android:paddingTop">@dimen/grid_4</item>
+        <item name="android:paddingBottom">@dimen/grid_4</item>
+    </style>
+    <style name="SDL.TitleSeparator">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">2dp</item>
+    </style>
+    <style name="TextAppearance.TabPageIndicator" parent="Widget">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/vpi__dark_theme</item>
+    </style>
+    <style name="Theme.IAPTheme" parent="android:Theme">
+    <item name="android:windowIsTranslucent">true</item>
+    <item name="android:windowBackground">@android:color/transparent</item>
+    <item name="android:windowContentOverlay">@null</item>
+    <item name="android:windowNoTitle">true</item>
+    <item name="android:windowIsFloating">true</item>
+    <item name="android:backgroundDimEnabled">false</item>
+  </style>
+    <style name="Theme.PageIndicatorDefaults" parent="android:Theme">
+        <item name="vpiIconPageIndicatorStyle">@style/Widget.IconPageIndicator</item>
+        <item name="vpiTabPageIndicatorStyle">@style/Widget.TabPageIndicator</item>
+    </style>
+    <style name="WalletFragmentDefaultButtonTextAppearance">
+        <item name="android:textColor">@color/wallet_primary_text_holo_light</item>
+        <item name="android:textColorHighlight">@color/wallet_highlighted_text_holo_light</item>
+        <item name="android:textColorHint">@color/wallet_hint_foreground_holo_light</item>
+        <item name="android:textColorLink">@color/wallet_link_text_light</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+    <style name="WalletFragmentDefaultDetailsHeaderTextAppearance" parent="WalletFragmentDefaultDetailsTextAppearance">
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="WalletFragmentDefaultDetailsTextAppearance">
+        <item name="android:textColor">@color/wallet_secondary_text_holo_dark</item>
+        <item name="android:textColorHighlight">@color/wallet_highlighted_text_holo_dark</item>
+        <item name="android:textColorHint">@color/wallet_hint_foreground_holo_dark</item>
+        <item name="android:textColorLink">@color/wallet_holo_blue_light</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+    <style name="WalletFragmentDefaultStyle">
+        <item name="buyButtonHeight">48dp</item>
+        <item name="buyButtonWidth">match_parent</item>
+        <item name="buyButtonText">buy_with_google</item>
+        <item name="buyButtonAppearance">classic</item>
+        <item name="maskedWalletDetailsTextAppearance">@style/WalletFragmentDefaultDetailsTextAppearance</item>
+        <item name="maskedWalletDetailsHeaderTextAppearance">@style/WalletFragmentDefaultDetailsHeaderTextAppearance</item>
+        <item name="maskedWalletDetailsBackground">@color/wallet_bright_foreground_holo_light</item>
+        <item name="maskedWalletDetailsButtonBackground">@android:drawable/btn_default</item>
+        <item name="maskedWalletDetailsButtonTextAppearance">@style/WalletFragmentDefaultButtonTextAppearance</item>
+        <item name="maskedWalletDetailsLogoTextColor">@color/wallet_bright_foreground_holo_dark</item>
+        <item name="maskedWalletDetailsLogoImageType">classic</item>
+    </style>
+    <style name="Widget"/>
+    <style name="Widget.IconPageIndicator" parent="Widget">
+        <item name="android:layout_marginLeft">6dp</item>
+        <item name="android:layout_marginRight">6dp</item>
+    </style>
+    <style name="Widget.TabPageIndicator" parent="Widget">
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/vpi__tab_indicator</item>
+        <item name="android:paddingLeft">22dip</item>
+        <item name="android:paddingRight">22dip</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
+        <item name="android:textAppearance">@style/TextAppearance.TabPageIndicator</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:maxLines">1</item>
+    </style>
+    <style name="com_mixpanel_android_SurveyActivityAnimation">
+        <item name="android:windowEnterAnimation">@anim/com_mixpanel_android_fade_in</item>
+        <item name="android:windowExitAnimation">@anim/com_mixpanel_android_fade_out</item>
+    </style>
+    <style name="com_mixpanel_android_SurveyActivityTheme" parent="android:Theme">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowAnimationStyle">@style/com_mixpanel_android_SurveyActivityAnimation</item>
+    </style>
+</resources>

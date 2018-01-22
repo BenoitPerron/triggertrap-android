@@ -21,7 +21,7 @@ public class PulseHandler implements AudioBeeper.AudioBeeperListener {
 
     public PulseHandler(PulseListener listener, Context context) {
 //        mBeeper = new AudioBeeper(this, context);
-        WifiBeeper mWifiBeeper = new WifiBeeper(context);
+//        WifiBeeper mWifiBeeper = new WifiBeeper(context);
         mListener = listener;
     }
 

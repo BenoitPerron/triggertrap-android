@@ -130,8 +130,8 @@ public class CircleTimerView extends View {
         mRadiusOffset = Utils.calculateRadiusOffset(mProgressStrokeSize, mDiamondStrokeSize, mMarkerStrokeSize);
         mPaint.setAntiAlias(true);
         mPaint.setStyle(Paint.Style.STROKE);
-        mWhiteColor = mResources.getColor(R.color.tt_white);
-        mRedColor = mResources.getColor(R.color.tt_very_dark_red);
+        mWhiteColor = mResources.getColor(R.color.ps_white);
+        mRedColor = mResources.getColor(R.color.ps_very_dark_red);
         mScreenDensity = mResources.getDisplayMetrics().density;
         mFill.setAntiAlias(true);
         mFill.setStyle(Paint.Style.FILL);

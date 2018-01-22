@@ -1,0 +1,490 @@
+[
+    {
+        "outputFile": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-v14\\values-v14.xml",
+        "map": [
+            {
+                "to": {
+                    "startLine": 2,
+                    "startColumn": 4,
+                    "startOffset": 55,
+                    "endLine": 9,
+                    "endColumn": 12,
+                    "endOffset": 460
+                },
+                "from": {
+                    "file": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\values-v14\\styles.xml",
+                    "position": {
+                        "startLine": 71,
+                        "startColumn": 4,
+                        "startOffset": 3682,
+                        "endLine": 78,
+                        "endColumn": 12,
+                        "endOffset": 4094
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 10,
+                    "startColumn": 4,
+                    "startOffset": 465,
+                    "endLine": 12,
+                    "endColumn": 12,
+                    "endOffset": 645
+                },
+                "from": {
+                    "file": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\values-v14\\styles.xml",
+                    "position": {
+                        "startLine": 12,
+                        "startColumn": 4,
+                        "startOffset": 532,
+                        "endLine": 14,
+                        "endColumn": 12,
+                        "endOffset": 714
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 13,
+                    "startColumn": 4,
+                    "startOffset": 650,
+                    "endLine": 19,
+                    "endColumn": 12,
+                    "endOffset": 1007
+                },
+                "from": {
+                    "file": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\values-v14\\styles.xml",
+                    "position": {
+                        "startLine": 80,
+                        "startColumn": 4,
+                        "startOffset": 4102,
+                        "endLine": 86,
+                        "endColumn": 12,
+                        "endOffset": 4465
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 20,
+                    "startColumn": 4,
+                    "startOffset": 1012,
+                    "endLine": 23,
+                    "endColumn": 12,
+                    "endOffset": 1258
+                },
+                "from": {
+                    "file": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\values-v14\\styles.xml",
+                    "position": {
+                        "startLine": 16,
+                        "startColumn": 4,
+                        "startOffset": 722,
+                        "endLine": 19,
+                        "endColumn": 12,
+                        "endOffset": 971
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 24,
+                    "startColumn": 4,
+                    "startOffset": 1263,
+                    "endLine": 31,
+                    "endColumn": 12,
+                    "endOffset": 1675
+                },
+                "from": {
+                    "file": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\values-v14\\styles.xml",
+                    "position": {
+                        "startLine": 62,
+                        "startColumn": 4,
+                        "startOffset": 3255,
+                        "endLine": 69,
+                        "endColumn": 12,
+                        "endOffset": 3674
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 32,
+                    "startColumn": 4,
+                    "startOffset": 1680,
+                    "endLine": 38,
+                    "endColumn": 12,
+                    "endOffset": 2050
+                },
+                "from": {
+                    "file": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\values-v14\\styles.xml",
+                    "position": {
+                        "startLine": 54,
+                        "startColumn": 4,
+                        "startOffset": 2871,
+                        "endLine": 60,
+                        "endColumn": 12,
+                        "endOffset": 3247
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 39,
+                    "startColumn": 4,
+                    "startOffset": 2055,
+                    "endLine": 43,
+                    "endColumn": 12,
+                    "endOffset": 2367
+                },
+                "from": {
+                    "file": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\values-v14\\styles.xml",
+                    "position": {
+                        "startLine": 94,
+                        "startColumn": 4,
+                        "startOffset": 4743,
+                        "endLine": 98,
+                        "endColumn": 12,
+                        "endOffset": 5059
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 44,
+                    "startColumn": 4,
+                    "startOffset": 2372,
+                    "endLine": 46,
+                    "endColumn": 12,
+                    "endOffset": 2570
+                },
+                "from": {
+                    "file": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\values-v14\\styles.xml",
+                    "position": {
+                        "startLine": 8,
+                        "startColumn": 4,
+                        "startOffset": 288,
+                        "endLine": 10,
+                        "endColumn": 12,
+                        "endOffset": 488
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 47,
+                    "startColumn": 4,
+                    "startOffset": 2575,
+                    "endLine": 56,
+                    "endColumn": 12,
+                    "endOffset": 3188
+                },
+                "from": {
+                    "file": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\values-v14\\styles.xml",
+                    "position": {
+                        "startLine": 43,
+                        "startColumn": 4,
+                        "startOffset": 2241,
+                        "endLine": 52,
+                        "endColumn": 12,
+                        "endOffset": 2863
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 57,
+                    "startColumn": 4,
+                    "startOffset": 3193,
+                    "endLine": 64,
+                    "endColumn": 12,
+                    "endOffset": 3714
+                },
+                "from": {
+                    "file": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\values-v14\\styles.xml",
+                    "position": {
+                        "startLine": 34,
+                        "startColumn": 4,
+                        "startOffset": 1705,
+                        "endLine": 41,
+                        "endColumn": 12,
+                        "endOffset": 2233
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 65,
+                    "startColumn": 4,
+                    "startOffset": 3719,
+                    "endLine": 76,
+                    "endColumn": 12,
+                    "endOffset": 4426
+                },
+                "from": {
+                    "file": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\values-v14\\styles.xml",
+                    "position": {
+                        "startLine": 21,
+                        "startColumn": 4,
+                        "startOffset": 979,
+                        "endLine": 32,
+                        "endColumn": 12,
+                        "endOffset": 1697
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 77,
+                    "startColumn": 4,
+                    "startOffset": 4431,
+                    "endLine": 80,
+                    "endColumn": 12,
+                    "endOffset": 4646
+                },
+                "from": {
+                    "file": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\values-v14\\styles.xml",
+                    "position": {
+                        "startLine": 88,
+                        "startColumn": 4,
+                        "startOffset": 4473,
+                        "endLine": 91,
+                        "endColumn": 12,
+                        "endOffset": 4691
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 81,
+                    "startColumn": 4,
+                    "startOffset": 4651,
+                    "endLine": 86,
+                    "endColumn": 12,
+                    "endOffset": 4935
+                },
+                "from": {
+                    "file": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\values-v14\\styles.xml",
+                    "position": {
+                        "startLine": 136,
+                        "startColumn": 4,
+                        "startOffset": 6414,
+                        "endLine": 141,
+                        "endColumn": 12,
+                        "endOffset": 6703
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 87,
+                    "startColumn": 4,
+                    "startOffset": 4940,
+                    "endLine": 91,
+                    "endColumn": 12,
+                    "endOffset": 5185
+                },
+                "from": {
+                    "file": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\values-v14\\styles.xml",
+                    "position": {
+                        "startLine": 149,
+                        "startColumn": 4,
+                        "startOffset": 6959,
+                        "endLine": 153,
+                        "endColumn": 12,
+                        "endOffset": 7208
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 92,
+                    "startColumn": 4,
+                    "startOffset": 5190,
+                    "endLine": 96,
+                    "endColumn": 12,
+                    "endOffset": 5430
+                },
+                "from": {
+                    "file": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\values-v14\\styles.xml",
+                    "position": {
+                        "startLine": 155,
+                        "startColumn": 4,
+                        "startOffset": 7216,
+                        "endLine": 159,
+                        "endColumn": 12,
+                        "endOffset": 7460
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 97,
+                    "startColumn": 4,
+                    "startOffset": 5435,
+                    "endLine": 102,
+                    "endColumn": 12,
+                    "endOffset": 5708
+                },
+                "from": {
+                    "file": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\values-v14\\styles.xml",
+                    "position": {
+                        "startLine": 128,
+                        "startColumn": 4,
+                        "startOffset": 6105,
+                        "endLine": 133,
+                        "endColumn": 12,
+                        "endOffset": 6383
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 103,
+                    "startColumn": 4,
+                    "startOffset": 5713,
+                    "endLine": 107,
+                    "endColumn": 12,
+                    "endOffset": 5930
+                },
+                "from": {
+                    "file": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\values-v14\\styles.xml",
+                    "position": {
+                        "startLine": 101,
+                        "startColumn": 4,
+                        "startOffset": 5094,
+                        "endLine": 105,
+                        "endColumn": 12,
+                        "endOffset": 5315
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 108,
+                    "startColumn": 4,
+                    "startOffset": 5935,
+                    "endLine": 111,
+                    "endColumn": 12,
+                    "endOffset": 6107
+                },
+                "from": {
+                    "file": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\values-v14\\styles.xml",
+                    "position": {
+                        "startLine": 107,
+                        "startColumn": 4,
+                        "startOffset": 5323,
+                        "endLine": 110,
+                        "endColumn": 12,
+                        "endOffset": 5498
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 112,
+                    "startColumn": 4,
+                    "startOffset": 6112,
+                    "endLine": 116,
+                    "endColumn": 12,
+                    "endOffset": 6348
+                },
+                "from": {
+                    "file": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\values-v14\\styles.xml",
+                    "position": {
+                        "startLine": 143,
+                        "startColumn": 4,
+                        "startOffset": 6711,
+                        "endLine": 147,
+                        "endColumn": 12,
+                        "endOffset": 6951
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 117,
+                    "startColumn": 4,
+                    "startOffset": 6353,
+                    "endLine": 121,
+                    "endColumn": 12,
+                    "endOffset": 6568
+                },
+                "from": {
+                    "file": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\values-v14\\styles.xml",
+                    "position": {
+                        "startLine": 117,
+                        "startColumn": 4,
+                        "startOffset": 5687,
+                        "endLine": 121,
+                        "endColumn": 12,
+                        "endOffset": 5906
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 122,
+                    "startColumn": 4,
+                    "startOffset": 6573,
+                    "endLine": 125,
+                    "endColumn": 12,
+                    "endOffset": 6743
+                },
+                "from": {
+                    "file": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\values-v14\\styles.xml",
+                    "position": {
+                        "startLine": 112,
+                        "startColumn": 4,
+                        "startOffset": 5506,
+                        "endLine": 115,
+                        "endColumn": 12,
+                        "endOffset": 5679
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 126,
+                    "startColumn": 4,
+                    "startOffset": 6748,
+                    "endLine": 128,
+                    "endColumn": 12,
+                    "endOffset": 6910
+                },
+                "from": {
+                    "file": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\values-v14\\styles.xml",
+                    "position": {
+                        "startLine": 161,
+                        "startColumn": 4,
+                        "startOffset": 7468,
+                        "endLine": 163,
+                        "endColumn": 12,
+                        "endOffset": 7632
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 129,
+                    "startColumn": 4,
+                    "startOffset": 6915,
+                    "endLine": 132,
+                    "endColumn": 12,
+                    "endOffset": 7095
+                },
+                "from": {
+                    "file": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\values-v14\\styles.xml",
+                    "position": {
+                        "startLine": 123,
+                        "startColumn": 4,
+                        "startOffset": 5914,
+                        "endLine": 126,
+                        "endColumn": 12,
+                        "endOffset": 6097
+                    }
+                }
+            }
+        ]
+    }
+]

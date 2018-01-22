@@ -68,10 +68,10 @@ public class BezierWidget extends View {
         mTouchCircleRadius = (int) (mTouchCircleRadius * density);
         mInnerFramePadding = (int) (mInnerFramePadding * density);
 
-        int curveColor = res.getColor(R.color.tt_red);
-        int lineColor = res.getColor(R.color.tt_medium_grey);
-        int frameColor = res.getColor(R.color.tt_dark_grey);
-        int circleColor = res.getColor(R.color.tt_medium_grey);
+        int curveColor = res.getColor(R.color.ps_red);
+        int lineColor = res.getColor(R.color.ps_medium_grey);
+        int frameColor = res.getColor(R.color.ps_dark_grey);
+        int circleColor = res.getColor(R.color.ps_medium_grey);
 
         mCurvePaint.setColor(curveColor);
         mCurvePaint.setAntiAlias(true);

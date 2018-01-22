@@ -51,7 +51,7 @@ public class SimpleTimerView extends View {
         }
 
         Resources r = context.getResources();
-        int mWhiteColor = r.getColor(R.color.tt_white);
+        int mWhiteColor = r.getColor(R.color.ps_white);
         int mDefaultColor = mWhiteColor;
 
         mPaintBig.setAntiAlias(true);

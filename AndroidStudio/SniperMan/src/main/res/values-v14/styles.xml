@@ -15,7 +15,7 @@
     </style>
 
     <style name="TTActionBar" parent="android:style/Widget.Holo.Light.ActionBar">
-        <item name="android:background">@color/tt_red</item>
+        <item name="android:background">@color/ps_red</item>
         <item name="android:titleTextStyle">@style/TTBaseTheme.ActionBar.TitleTextStyle</item>
     </style>
 
@@ -25,15 +25,15 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/tt_black</item>
-        <item name="android:background">@color/tt_red</item>
+        <item name="android:textColor">@color/ps_black</item>
+        <item name="android:background">@color/ps_red</item>
         <item name="android:paddingTop">@dimen/drawlist_header_top_padding</item>
         <item name="android:paddingBottom">@dimen/drawlist_header_bottom_padding</item>
         <item name="android:paddingLeft">@dimen/drawlist_left_padding</item>
     </style>
 
     <style name="TTNavDrawerItemText" parent="TTNavDrawerTitleText">
-        <item name="android:textColor">@color/tt_black</item>
+        <item name="android:textColor">@color/ps_black</item>
         <item name="android:textSize">@dimen/text_size_medium</item>
         <item name="android:fontFamily">sans-serif-light</item>
         <item name="android:background">@drawable/drawer_list_item_selector</item>
@@ -43,7 +43,7 @@
 
     <style name="TTNavDrawerItemSubText" parent="TTNavDrawerItemText">
         <item name="android:layout_height">match_parent</item>
-        <item name="android:textColor">@color/tt_dark_grey</item>
+        <item name="android:textColor">@color/ps_dark_grey</item>
         <item name="android:textSize">@dimen/text_size_small</item>
         <item name="android:fontFamily">sans-serif-light</item>
         <item name="android:textStyle">normal</item>
@@ -53,7 +53,7 @@
     </style>
 
     <style name="TTBangTitleText">
-        <item name="android:textColor">@color/tt_black</item>
+        <item name="android:textColor">@color/ps_black</item>
         <item name="android:fontFamily">sans-serif-thin</item>
         <item name="android:textSize">@dimen/text_size_extremly_large</item>
         <item name="android:layout_width">wrap_content</item>
@@ -61,7 +61,7 @@
     </style>
 
     <style name="TTBangText">
-        <item name="android:textColor">@color/tt_dark_grey</item>
+        <item name="android:textColor">@color/ps_dark_grey</item>
         <item name="android:fontFamily">sans-serif-thin</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/text_size_medium</item>
@@ -70,7 +70,7 @@
     </style>
 
     <style name="CountDownText">
-        <item name="android:textColor">@color/tt_white</item>
+        <item name="android:textColor">@color/ps_white</item>
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/text_size_large</item>
@@ -79,7 +79,7 @@
     </style>
 
     <style name="SecondsText">
-        <item name="android:textColor">@color/tt_white</item>
+        <item name="android:textColor">@color/ps_white</item>
         <item name="android:fontFamily">sans-serif-thin</item>
         <item name="android:textSize">@dimen/text_size_large</item>
         <item name="android:layout_width">wrap_content</item>
@@ -88,7 +88,7 @@
 
     <style name="Theme.Tttheme.Widget" parent="@android:style/Theme.Holo">
         <item name="android:popupMenuStyle">@style/MyPopupMenu</item>
-        <item name="android:textColor">@color/tt_black</item>
+        <item name="android:textColor">@color/ps_black</item>
     </style>
 
     <!-- The base style for the TT app -->
@@ -135,32 +135,32 @@
 
     <!-- Dial pad -->
     <style name="dialpad">
-        <item name="android:textColor">@color/tt_white</item>
+        <item name="android:textColor">@color/ps_white</item>
         <item name="android:textSize">@dimen/dialpad_font_size</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:fontFamily">sans-serif-light</item>
     </style>
 
     <style name="sequenceLabels">
-        <item name="android:textColor">@color/tt_white</item>
+        <item name="android:textColor">@color/ps_white</item>
         <item name="android:fontFamily">sans-serif-thin</item>
         <item name="android:textSize">@dimen/text_size_medium</item>
     </style>
 
     <style name="exposure_duration_lables">
-        <item name="android:textColor">@color/tt_white</item>
+        <item name="android:textColor">@color/ps_white</item>
         <item name="android:fontFamily">sans-serif-thin</item>
         <item name="android:textSize">@dimen/text_size_small</item>
     </style>
 
     <style name="exposure_duration_values">
-        <item name="android:textColor">@color/tt_white</item>
+        <item name="android:textColor">@color/ps_white</item>
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:textSize">@dimen/text_size_small</item>
     </style>
 
     <style name="switch_text_appearance" parent="@android:style/TextAppearance.Holo.Small">
-        <item name="android:textColor">@color/tt_white</item>
+        <item name="android:textColor">@color/ps_white</item>
     </style>
 
     <!-- Themed Dialog Style -->
@@ -170,15 +170,15 @@
 
     <style name="DialogStyleLight.Custom">
 
-    <item name="titleTextColor">@color/tt_red</item>
-    <item name="titleSeparatorColor">@color/tt_red</item>
-    <item name="messageTextColor">@color/tt_dark_grey</item>
-    <item name="buttonTextColor">@color/tt_dark_grey</item>
-    <item name="buttonSeparatorColor">@color/tt_red</item>
-    <item name="buttonBackgroundColorNormal">@color/tt_white</item>
-    <item name="buttonBackgroundColorPressed">@color/tt_dark_red</item>
-    <item name="buttonBackgroundColorFocused">@color/tt_red</item>
-    <item name="dialogBackground">@color/tt_white</item>
+    <item name="titleTextColor">@color/ps_red</item>
+    <item name="titleSeparatorColor">@color/ps_red</item>
+    <item name="messageTextColor">@color/ps_dark_grey</item>
+    <item name="buttonTextColor">@color/ps_dark_grey</item>
+    <item name="buttonSeparatorColor">@color/ps_red</item>
+    <item name="buttonBackgroundColorNormal">@color/ps_white</item>
+    <item name="buttonBackgroundColorPressed">@color/ps_dark_red</item>
+    <item name="buttonBackgroundColorFocused">@color/ps_red</item>
+    <item name="dialogBackground">@color/ps_white</item>
 
     </style>
 

@@ -1,0 +1,34 @@
+[
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\color\\sdl_primary_text_holo_dark.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\styledDialogsLib\\build\\intermediates\\bundles\\default\\res\\color\\sdl_primary_text_holo_dark.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\color\\wallet_secondary_text_holo_dark.xml",
+        "source": "C:\\Users\\johannes\\.android\\build-cache\\e7c17129c6a129b581df3fca9ff85014a323f625\\output\\res\\color\\wallet_secondary_text_holo_dark.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\color\\wallet_primary_text_holo_light.xml",
+        "source": "C:\\Users\\johannes\\.android\\build-cache\\e7c17129c6a129b581df3fca9ff85014a323f625\\output\\res\\color\\wallet_primary_text_holo_light.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\color\\sdl_primary_text_holo_light.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\styledDialogsLib\\build\\intermediates\\bundles\\default\\res\\color\\sdl_primary_text_holo_light.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\color\\vpi__dark_theme.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\viewPagerIndicatorLib\\build\\intermediates\\bundles\\default\\res\\color\\vpi__dark_theme.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\color\\common_signin_btn_text_dark.xml",
+        "source": "C:\\Users\\johannes\\.android\\build-cache\\e7c17129c6a129b581df3fca9ff85014a323f625\\output\\res\\color\\common_signin_btn_text_dark.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\color\\common_signin_btn_text_light.xml",
+        "source": "C:\\Users\\johannes\\.android\\build-cache\\e7c17129c6a129b581df3fca9ff85014a323f625\\output\\res\\color\\common_signin_btn_text_light.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\color\\vpi__light_theme.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\viewPagerIndicatorLib\\build\\intermediates\\bundles\\default\\res\\color\\vpi__light_theme.xml"
+    }
+]

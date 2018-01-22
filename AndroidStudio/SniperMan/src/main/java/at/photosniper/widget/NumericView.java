@@ -32,7 +32,7 @@ public class NumericView extends LinearLayout implements DialpadManager.DialPadI
             Typeface mAndroidClockMonoThin = Typeface.createFromAsset(context.getAssets(), "fonts/AndroidClockMono-Thin.ttf");
             mAndroidClockMonoBold = Typeface.createFromAsset(context.getAssets(), "fonts/AndroidClockMono-Bold.ttf");
         }
-        mGrayColor = context.getResources().getColor(R.color.tt_dark_grey);
+        mGrayColor = context.getResources().getColor(R.color.ps_dark_grey);
     }
 
     @Override

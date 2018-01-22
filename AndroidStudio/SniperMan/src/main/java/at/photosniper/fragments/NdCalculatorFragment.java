@@ -124,7 +124,7 @@ public class NdCalculatorFragment extends PhotoSniperBaseFragment {
         View ndValueView = rootView.findViewById(R.id.nd_filter_picker);
         AbstractWheel ndValueWheel = (AbstractWheel) ndValueView.findViewById(R.id.wheelHorizontalView);
         ndValueAdapter.setItemResource(R.layout.wheel_double_text_centered);
-        ndValueAdapter.setItemTextResource();
+        ndValueAdapter.setItemTextResource(R.id.text);
         ndValueWheel.setViewAdapter(ndValueAdapter);
 
         ndValueWheel.addScrollingListener(new OnWheelScrollListener() {
@@ -149,7 +149,7 @@ public class NdCalculatorFragment extends PhotoSniperBaseFragment {
 
         AbstractWheel shutterSpeedWheel = (AbstractWheel) shutterSpeedView.findViewById(R.id.wheelHorizontalView);
         shutterSpeedAdapter.setItemResource(R.layout.wheel_text_centered);
-        shutterSpeedAdapter.setItemTextResource();
+        shutterSpeedAdapter.setItemTextResource(R.id.text);
         PhotoSniperApp app = PhotoSniperApp.getInstance(getActivity());
 
         shutterSpeedWheel.addScrollingListener(new OnWheelScrollListener() {

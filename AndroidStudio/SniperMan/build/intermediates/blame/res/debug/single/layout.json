@@ -1,0 +1,302 @@
+[
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\time_warp_settings.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\layout\\time_warp_settings.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\wifi_slave_item_empty.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\layout\\wifi_slave_item_empty.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\getting_started_content.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\layout\\getting_started_content.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\timelapse.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\layout\\timelapse.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\nd_calc_mode.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\layout\\nd_calc_mode.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\star_trail.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\layout\\star_trail.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\wheel_text_centered.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\layout\\wheel_text_centered.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\wheel_double_text_centered.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\layout\\wheel_double_text_centered.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\dialog_part_title.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\styledDialogsLib\\build\\intermediates\\bundles\\default\\res\\layout\\dialog_part_title.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\press_hold_mode.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\layout\\press_hold_mode.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\com_mixpanel_android_activity_notification_full.xml",
+        "source": "C:\\Users\\johannes\\.android\\build-cache\\864a13f44a55804ce45531aa7d4394d2a3dfe7e1\\output\\res\\layout\\com_mixpanel_android_activity_notification_full.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\dial_pad.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\layout\\dial_pad.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\custom_notification.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\layout\\custom_notification.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\time_picker_no_hours_small.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\layout\\time_picker_no_hours_small.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\cable_chooser.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\layout\\cable_chooser.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\cable_mode.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\layout\\cable_mode.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\numeric_input.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\layout\\numeric_input.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\dialog_part_button.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\styledDialogsLib\\build\\intermediates\\bundles\\default\\res\\layout\\dialog_part_button.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\dialog_part_datepicker.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\styledDialogsLib\\build\\intermediates\\bundles\\default\\res\\layout\\dialog_part_datepicker.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\pebble.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\layout\\pebble.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\bang_indicator.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\layout\\bang_indicator.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\running_action_dialog.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\layout\\running_action_dialog.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\listitem_device.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\layout\\listitem_device.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\com_mixpanel_android_activity_notification_mini.xml",
+        "source": "C:\\Users\\johannes\\.android\\build-cache\\864a13f44a55804ce45531aa7d4394d2a3dfe7e1\\output\\res\\layout\\com_mixpanel_android_activity_notification_mini.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\com_mixpanel_android_question_card.xml",
+        "source": "C:\\Users\\johannes\\.android\\build-cache\\864a13f44a55804ce45531aa7d4394d2a3dfe7e1\\output\\res\\layout\\com_mixpanel_android_question_card.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\bang.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\layout\\bang.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\dialog_part_button_separator.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\styledDialogsLib\\build\\intermediates\\bundles\\default\\res\\layout\\dialog_part_button_separator.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\quick_release_mode.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\layout\\quick_release_mode.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\exposure_duration.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\layout\\exposure_duration.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\com_mixpanel_android_first_choice_answer.xml",
+        "source": "C:\\Users\\johannes\\.android\\build-cache\\864a13f44a55804ce45531aa7d4394d2a3dfe7e1\\output\\res\\layout\\com_mixpanel_android_first_choice_answer.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\le_hdr.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\layout\\le_hdr.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\dialog_part_button_panel.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\styledDialogsLib\\build\\intermediates\\bundles\\default\\res\\layout\\dialog_part_button_panel.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\self_timer_mode.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\layout\\self_timer_mode.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\drawer_list_item.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\layout\\drawer_list_item.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\time_picker.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\layout\\time_picker.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\time_picker_seconds.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\layout\\time_picker_seconds.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\dialog_part_custom.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\styledDialogsLib\\build\\intermediates\\bundles\\default\\res\\layout\\dialog_part_custom.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\textview_hint.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\layout\\textview_hint.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\distance_lapse.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\layout\\distance_lapse.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\com_mixpanel_android_last_choice_answer.xml",
+        "source": "C:\\Users\\johannes\\.android\\build-cache\\864a13f44a55804ce45531aa7d4394d2a3dfe7e1\\output\\res\\layout\\com_mixpanel_android_last_choice_answer.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\activity_main.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\timed.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\layout\\timed.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\drawer_list_header_item.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\layout\\drawer_list_header_item.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\dialog_part_message.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\styledDialogsLib\\build\\intermediates\\bundles\\default\\res\\layout\\dialog_part_message.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\start_stop_mode.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\layout\\start_stop_mode.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\warning_message.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\layout\\warning_message.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\dialog_part_list.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\styledDialogsLib\\build\\intermediates\\bundles\\default\\res\\layout\\dialog_part_list.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\wifi_master_broadcast_textview.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\layout\\wifi_master_broadcast_textview.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\actionbar_indeterminate_progress.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\layout\\actionbar_indeterminate_progress.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\distance_progress.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\layout\\distance_progress.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\wifi_master.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\layout\\wifi_master.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\com_mixpanel_android_activity_survey.xml",
+        "source": "C:\\Users\\johannes\\.android\\build-cache\\864a13f44a55804ce45531aa7d4394d2a3dfe7e1\\output\\res\\layout\\com_mixpanel_android_activity_survey.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\time_warp.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\layout\\time_warp.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\wheel_text_stretch.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\layout\\wheel_text_stretch.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\sequence_timer.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\layout\\sequence_timer.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\time_picker_seconds_small.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\layout\\time_picker_seconds_small.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\ps_horizontal_picker.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\layout\\ps_horizontal_picker.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\com_mixpanel_android_middle_choice_answer.xml",
+        "source": "C:\\Users\\johannes\\.android\\build-cache\\864a13f44a55804ce45531aa7d4394d2a3dfe7e1\\output\\res\\layout\\com_mixpanel_android_middle_choice_answer.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\dialog_part_progress.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\styledDialogsLib\\build\\intermediates\\bundles\\default\\res\\layout\\dialog_part_progress.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\gatt_services_characteristics.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\layout\\gatt_services_characteristics.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\le_hdr_timelapse.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\layout\\le_hdr_timelapse.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\three_bottom_keys.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\layout\\three_bottom_keys.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\wifi_slave_item.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\layout\\wifi_slave_item.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\circle_timer.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\layout\\circle_timer.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\welcome.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\layout\\welcome.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\getting_started.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\layout\\getting_started.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\three_keys.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\layout\\three_keys.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\status_bar.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\layout\\status_bar.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\bramping.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\layout\\bramping.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\wifi_slave.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\layout\\wifi_slave.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\time_picker_small.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\layout\\time_picker_small.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\bang_controls.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\layout\\bang_controls.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\sunrise_sunset_mode.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\layout\\sunrise_sunset_mode.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\numeric_input_small.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\layout\\numeric_input_small.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\layout\\place_holder.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\layout\\place_holder.xml"
+    }
+]

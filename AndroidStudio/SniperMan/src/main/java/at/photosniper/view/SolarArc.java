@@ -99,18 +99,18 @@ public class SolarArc extends View {
         mDensity = context.getResources().getDisplayMetrics().density;
 
         mArcPaint = new Paint();
-        mArcPaint.setColor(getResources().getColor(R.color.tt_dark_grey));
+        mArcPaint.setColor(getResources().getColor(R.color.ps_dark_grey));
         mArcPaint.setPathEffect(new DashPathEffect(new float[]{DENSTIYOFFSET10 * mDensity, DENSITYOFFSET5 * mDensity}, 0));
         mArcPaint.setStyle(Paint.Style.STROKE);
         mArcPaint.setStrokeWidth(1 * mDensity);
         mArcPaint.setAntiAlias(true);
 
         mFillerPaint = new Paint();
-        mFillerPaint.setColor(getResources().getColor(R.color.tt_red));
+        mFillerPaint.setColor(getResources().getColor(R.color.ps_red));
         mFillerPaint.setAntiAlias(true);
 
         mGrayFillPaint = new Paint();
-        mGrayFillPaint.setColor(getResources().getColor(R.color.tt_dark_grey));
+        mGrayFillPaint.setColor(getResources().getColor(R.color.ps_dark_grey));
         mGrayFillPaint.setTextSize(DENSITYOFFSET15 * mDensity);
         mGrayFillPaint.setStyle(Paint.Style.FILL);
         mGrayFillPaint.setAntiAlias(true);

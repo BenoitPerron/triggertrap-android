@@ -42,8 +42,8 @@ public class TimerView extends LinearLayout implements DialpadManager.DialPadInp
             mAndroidClockMonoBold = Typeface.createFromAsset(context.getAssets(), "fonts/AndroidClockMono-Bold.ttf");
         }
 
-        int mWhiteColor = context.getResources().getColor(R.color.tt_white);
-        int mGrayColor = context.getResources().getColor(R.color.tt_dark_grey);
+        int mWhiteColor = context.getResources().getColor(R.color.ps_white);
+        int mGrayColor = context.getResources().getColor(R.color.ps_dark_grey);
 
     }
 

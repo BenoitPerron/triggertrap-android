@@ -13,7 +13,6 @@ import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -56,7 +55,6 @@ import at.photosniper.fragments.GettingStartedFragment;
 import at.photosniper.fragments.HdrFragment;
 import at.photosniper.fragments.HdrTimeLapseFragment;
 import at.photosniper.fragments.NdCalculatorFragment;
-import at.photosniper.fragments.PebbleFragment;
 import at.photosniper.fragments.PhotoSniperBaseFragment;
 import at.photosniper.fragments.PlaceHolderFragment;
 import at.photosniper.fragments.PressHoldFragment;
@@ -77,10 +75,10 @@ import at.photosniper.fragments.dialog.ErrorPlayServicesFragment;
 import at.photosniper.fragments.dialog.RunningActionDialog;
 import at.photosniper.fragments.handler.DrawerFragmentHandler;
 import at.photosniper.inputs.HeadsetWatcher;
-import at.photosniper.location.SniperManLocationService;
-import at.photosniper.service.SniperManService;
-import at.photosniper.service.SniperManService.TiggertrapServiceBinder;
-import at.photosniper.service.SniperManService.TriggertrapServiceListener;
+import at.photosniper.location.PhotoSniperLocationService;
+import at.photosniper.service.PhotoSniperService;
+import at.photosniper.service.PhotoSniperService.PhotoSniperServiceBinder;
+import at.photosniper.service.PhotoSniperService.PhotoSniperServiceListener;
 import at.photosniper.util.AppRater;
 import at.photosniper.util.DialpadManager;
 import at.photosniper.util.GattClient;
@@ -94,15 +92,8 @@ import no.nordicsemi.android.support.v18.scanner.ScanResult;
 import no.nordicsemi.android.support.v18.scanner.ScanSettings;
 
 
-//import com.getpebble.android.kit.PebbleKit;
-//import com.getpebble.android.kit.PebbleKit.FirmwareVersionInfo;
-// import com.at.the.gogo.photosniper.analytics.AnalyticTracker;
 
-public class MainActivity extends Activity implements PulseSequenceFragment.PulseSequenceListener,
-//        WifiSlaveListener,
-        // WifiMasterListener,
-        TriggertrapServiceListener, TimedFragment.TimedListener, StartStopListener, SoundSensorFragment.SoundSensorListener, SelfTimerFragment.SelfTimerListener, PressHoldFragment.PressHoldListener, CableReleaseFragment.SimpleModeListener, QuickReleaseFragment.QuickReleaseListener, DialpadManager.InputSelectionListener, DistanceLapseFragment.DistanceLapseListener
-        // ,PebbleListener
+public class MainActivity extends Activity implements PulseSequenceFragment.PulseSequenceListener, PhotoSniperServiceListener, TimedFragment.TimedListener, StartStopListener, SoundSensorFragment.SoundSensorListener, SelfTimerFragment.SelfTimerListener, PressHoldFragment.PressHoldListener, CableReleaseFragment.SimpleModeListener, QuickReleaseFragment.QuickReleaseListener, DialpadManager.InputSelectionListener, DistanceLapseFragment.DistanceLapseListener
         , SonyWiFiRPC.ConnectionListener, SonyWiFiRPC.ResponseHandler, SonyWiFiRPC.LiveViewCallback
 
 {
@@ -131,7 +122,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
     private View mStatusBar;
     private TextView mStatusBarText;
     private HeadsetWatcher mWhatcher;
-    private SniperManLocationService mLocationService = null;
+    private PhotoSniperLocationService mLocationService = null;
     private DrawerFragmentHandler mDrawerFragHandler = null;
     private String mInitialFragmentTag = PhotoSniperApp.FragmentTags.GETTING_STARTED;
     private final Bundle mInitialFragmentState = null;
@@ -140,7 +131,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
     // BLE --- start
     // Service params
     private Dialog serviceErrorDialog = null;
-    private SniperManService mService;
+    private PhotoSniperService mService;
     private boolean mTriggertrapServiceBound = false;
     private DialpadManager mDialPadManager = null;
     private WarningMessageManager mWarningMessageManager;
@@ -161,11 +152,14 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
 
         @Override
         public void onBatchScanResults(List<ScanResult> results) {
-            Log.i(TAG, "onBatchScanResults: " + results.toString());
+
 
             if (!results.isEmpty()) {
+                Log.i(TAG, "onBatchScanResults: " + results.toString());
                 ScanResult result = results.get(0);
                 connectBLE(result.getDevice());
+            } else {
+                Log.i(TAG, "onBatchScanResults: EMPTY");
             }
         }
 
@@ -186,14 +180,14 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
             // We've bound to LocalService, cast the IBinder and get
             // LocalService instance
             Log.d(TAG, "Service connected");
-            TiggertrapServiceBinder binder = (TiggertrapServiceBinder) service;
+            PhotoSniperServiceBinder binder = (PhotoSniperServiceBinder) service;
             mService = binder.getService();
             Log.d(TAG, "Service connected: " + mService.toString());
             mTriggertrapServiceBound = true;
             // Make sure the service is stopped just in case we started it in
             // foreground.
             // when we left the Main Activity
-            Intent intent = new Intent(MainActivity.this, SniperManService.class);
+            Intent intent = new Intent(MainActivity.this, PhotoSniperService.class);
             mService.goTobackground();
             stopService(intent);
             mService.setListener(MainActivity.this);
@@ -286,10 +280,10 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
 //        mWhatcher = new HeadsetWatcher(this, null);
 
         // Initialise Location service
-        mLocationService = new SniperManLocationService(this);
+        mLocationService = new PhotoSniperLocationService(this);
 
         if (!mTriggertrapServiceBound) {
-            Intent intent = new Intent(this, SniperManService.class);
+            Intent intent = new Intent(this, PhotoSniperService.class);
             bindService(intent, mTriggertrapServiceConnection, Activity.BIND_AUTO_CREATE);
         }
 
@@ -321,7 +315,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
         // Bind to the Triggertrap service when the actvity is shown.
         Log.d(TAG, "Service bound is: " + mTriggertrapServiceBound);
 
-        Intent intent = new Intent(MainActivity.this, SniperManService.class);
+        Intent intent = new Intent(MainActivity.this, PhotoSniperService.class);
         if (mService != null) {
             mService.goTobackground();
             stopService(intent);
@@ -395,18 +389,18 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
         // Make sure we reset the intent data
         setIntent(new Intent());
 
-        // if (mService.getState() == SniperManService.State.IN_PROGRESS ) {
+        // if (mService.getState() == PhotoSniperService.State.IN_PROGRESS ) {
         // Keep the service alive we are just rotating.
         if (isChangingConfigurations()) {
             Log.d(TAG, "Starting in progress service to keep it alive");
-            Intent intent = new Intent(this, SniperManService.class);
+            Intent intent = new Intent(this, PhotoSniperService.class);
             startService(intent);
         }
 
         // If not changing configuration, Activity is not visible so run service
         // in foreground
-        if (!isChangingConfigurations() && mService.getState() == SniperManService.State.IN_PROGRESS) {
-            Intent intent = new Intent(this, SniperManService.class);
+        if (!isChangingConfigurations() && mService.getState() == PhotoSniperService.State.IN_PROGRESS) {
+            Intent intent = new Intent(this, PhotoSniperService.class);
             startService(intent);
             mService.goToForeground();
         }
@@ -463,7 +457,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
                 break;
 
             // Handle the result of checking the Location service.
-            case SniperManLocationService.CONNECTION_FAILURE_RESOLUTION_REQUEST:
+            case PhotoSniperLocationService.CONNECTION_FAILURE_RESOLUTION_REQUEST:
                 if (serviceErrorDialog != null) {
                     serviceErrorDialog.dismiss();
                     serviceErrorDialog = null;
@@ -514,7 +508,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
     }
 
     private String getNotifcationText(int onGoingAction) {
-        String[] notifcations = getResources().getStringArray(R.array.tt_notifications);
+        String[] notifcations = getResources().getStringArray(R.array.ps_notifications);
         return notifcations[onGoingAction];
     }
 
@@ -555,12 +549,6 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
         mDrawerFragHandler.addDrawerPane(PhotoSniperApp.FragmentTags.DISTANCE_LAPSE, DistanceLapseFragment.class, mInitialFragmentState);
         mDrawerFragHandler.addDrawerPane(PhotoSniperApp.FragmentTags.HDR, HdrFragment.class, mInitialFragmentState);
         mDrawerFragHandler.addDrawerPane(PhotoSniperApp.FragmentTags.HDR_LAPSE, HdrTimeLapseFragment.class, mInitialFragmentState);
-//        mDrawerFragHandler.addDrawerPane(PhotoSniperApp.FragmentTags.WIFI_SLAVE,
-//                WifiSlaveFragment.class, mInitialFragmentState);
-//        mDrawerFragHandler.addDrawerPane(PhotoSniperApp.FragmentTags.WIFI_MASTER,
-//                WifiMasterFragment.class, mInitialFragmentState);
-//        mDrawerFragHandler.addDrawerPane(PhotoSniperApp.FragmentTags.PEBBLE,
-//                PebbleFragment.class, mInitialFragmentState);
         mDrawerFragHandler.addDrawerPane(PhotoSniperApp.FragmentTags.SUNRISESUNSET, SunriseSunsetFragment.class, mInitialFragmentState);
         mDrawerFragHandler.addDrawerPane(PhotoSniperApp.FragmentTags.ND_CALCULATOR, NdCalculatorFragment.class, mInitialFragmentState);
 
@@ -574,39 +562,39 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
 
     private void setUpModes() {
 
-        mModesGroups = getResources().getStringArray(R.array.tt_mode_groups);
-        mModes.add(getResources().getStringArray(R.array.tt_welcome_modes));
-        mModes.add(getResources().getStringArray(R.array.tt_cable_modes));
-        mModes.add(getResources().getStringArray(R.array.tt_timer_modes));
-        mModes.add(getResources().getStringArray(R.array.tt_sound_modes));
-        mModes.add(getResources().getStringArray(R.array.tt_hdr_modes));
+        mModesGroups = getResources().getStringArray(R.array.ps_mode_groups);
+        mModes.add(getResources().getStringArray(R.array.ps_welcome_modes));
+        mModes.add(getResources().getStringArray(R.array.ps_cable_modes));
+        mModes.add(getResources().getStringArray(R.array.ps_timer_modes));
+        mModes.add(getResources().getStringArray(R.array.ps_sound_modes));
+        mModes.add(getResources().getStringArray(R.array.ps_hdr_modes));
 //        mModes.add(remoteTriggerModes);
-        mModes.add(getResources().getStringArray(R.array.tt_calculator_modes));
-//        mModes.add(getResources().getStringArray(R.array.tt_settings_modes));
+        mModes.add(getResources().getStringArray(R.array.ps_calculator_modes));
+//        mModes.add(getResources().getStringArray(R.array.ps_settings_modes));
 
-        mModesSubText.add(getResources().getStringArray(R.array.tt_welcome_modes_sub_text));
-        mModesSubText.add(getResources().getStringArray(R.array.tt_cable_modes_sub_text));
-        mModesSubText.add(getResources().getStringArray(R.array.tt_timer_modes_sub_text));
-        mModesSubText.add(getResources().getStringArray(R.array.tt_sound_modes_sub_text));
-        mModesSubText.add(getResources().getStringArray(R.array.tt_hdr_modes_sub_text));
+        mModesSubText.add(getResources().getStringArray(R.array.ps_welcome_modes_sub_text));
+        mModesSubText.add(getResources().getStringArray(R.array.ps_cable_modes_sub_text));
+        mModesSubText.add(getResources().getStringArray(R.array.ps_timer_modes_sub_text));
+        mModesSubText.add(getResources().getStringArray(R.array.ps_sound_modes_sub_text));
+        mModesSubText.add(getResources().getStringArray(R.array.ps_hdr_modes_sub_text));
 
 //        mModesSubText.add(getResources().getStringArray(
-//                R.array.tt_remote_trigger_modes_sub_text));
-        mModesSubText.add(getResources().getStringArray(R.array.tt_calculators_sub_text));
+//                R.array.ps_remote_trigger_modes_sub_text));
+        mModesSubText.add(getResources().getStringArray(R.array.ps_calculators_sub_text));
 //        mModesSubText.add(getResources().getStringArray(
-//                R.array.tt_settings_modes_sub_text));
+//                R.array.ps_settings_modes_sub_text));
 
         // Setup icons
-        mModeIcons.add(getResources().obtainTypedArray(R.array.tt_welcome_mode_icons));
-        mModeIcons.add(getResources().obtainTypedArray(R.array.tt_cable_mode_icons));
-        mModeIcons.add(getResources().obtainTypedArray(R.array.tt_timer_mode_icons));
-        mModeIcons.add(getResources().obtainTypedArray(R.array.tt_sound_mode_icons));
-        mModeIcons.add(getResources().obtainTypedArray(R.array.tt_hdr_mode_icons));
+        mModeIcons.add(getResources().obtainTypedArray(R.array.ps_welcome_mode_icons));
+        mModeIcons.add(getResources().obtainTypedArray(R.array.ps_cable_mode_icons));
+        mModeIcons.add(getResources().obtainTypedArray(R.array.ps_timer_mode_icons));
+        mModeIcons.add(getResources().obtainTypedArray(R.array.ps_sound_mode_icons));
+        mModeIcons.add(getResources().obtainTypedArray(R.array.ps_hdr_mode_icons));
 //        mModeIcons.add(getResources().obtainTypedArray(
-//                R.array.tt_remote_trigger_mode_icons));
-        mModeIcons.add(getResources().obtainTypedArray(R.array.tt_calculators_mode_icons));
+//                R.array.ps_remote_trigger_mode_icons));
+        mModeIcons.add(getResources().obtainTypedArray(R.array.ps_calculators_mode_icons));
 //        mModeIcons.add(getResources().obtainTypedArray(
-//                R.array.tt_settings_mode_icons));
+//                R.array.ps_settings_mode_icons));
     }
 
     private void setUpNavigationDrawer() {
@@ -696,18 +684,17 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
         }
         // Handle action buttons
         switch (item.getItemId()) {
-            case R.id.action_settings:
+            case R.id.action_settings: {
                 Intent intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.action_pebble:
-                // String url = "http://tri.gg/tt-pebble.pbw";
-                String url = "pebble://appstore/52cb079345ffdd6857000014";
-                Intent pebbleIntent = new Intent(Intent.ACTION_VIEW);
-                pebbleIntent.setData(Uri.parse(url));
-                pebbleIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(pebbleIntent);
+            }
 
+            case R.id.action_ble: {
+                Intent intent = new Intent(this, BLEDeviceScanActivity.class);
+                startActivity(intent);
+                break;
+            }
             default:
                 break;
         }
@@ -899,14 +886,14 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
     }
 
     private void displaySatusBar() {
-        if (mService.getState() == SniperManService.State.IN_PROGRESS) {
+        if (mService.getState() == PhotoSniperService.State.IN_PROGRESS) {
             Log.d(TAG, "Service State is IN_PROGRESS");
             String currentFragTag = mDrawerFragHandler.getCurrentFragmentTag();
             Fragment fragment = getFragmentManager().findFragmentByTag(currentFragTag);
             if (fragment != null) {
                 if (fragment instanceof PhotoSniperBaseFragment) {
-                    PhotoSniperBaseFragment triggertrapFrag = (PhotoSniperBaseFragment) fragment;
-                    if (triggertrapFrag.getRunningAction() != mService.getOnGoingAction()) {
+                    PhotoSniperBaseFragment photosniperFragment = (PhotoSniperBaseFragment) fragment;
+                    if (photosniperFragment.getRunningAction() != mService.getOnGoingAction()) {
                         mStatusBar.setVisibility(View.VISIBLE);
                         mStatusBarText.setText(getNotifcationText(mService.getOnGoingAction()));
                         mStatusBar.startAnimation(mSlideUpFromBottom);
@@ -1854,29 +1841,25 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
 
     }
 
-    @Override
-    public void onPebbleTrigger() {
-        Log.d(TAG, "onPebbleTrigger");
-        String currentFragTag = mDrawerFragHandler.getCurrentFragmentTag();
-        Log.d(TAG, currentFragTag);
-        if (currentFragTag.equals(PhotoSniperApp.FragmentTags.PEBBLE)) {
-            Fragment fragment = getFragmentManager().findFragmentByTag(currentFragTag);
-            PebbleFragment pebbleFrag = (PebbleFragment) fragment;
-            if (pebbleFrag != null) {
-                pebbleFrag.onPebbleTrigger();
+//    @Override
+//    public void onPebbleTrigger() {
+//        Log.d(TAG, "onPebbleTrigger");
+//        String currentFragTag = mDrawerFragHandler.getCurrentFragmentTag();
+//        Log.d(TAG, currentFragTag);
+//        if (currentFragTag.equals(PhotoSniperApp.FragmentTags.PEBBLE)) {
+//            Fragment fragment = getFragmentManager().findFragmentByTag(currentFragTag);
+//            PebbleFragment pebbleFrag = (PebbleFragment) fragment;
+//            if (pebbleFrag != null) {
+//                pebbleFrag.onPebbleTrigger();
+//
+////                AnalyticTracker tracker = AnalyticTracker.getInstance(this);
+////                tracker.addProperty(AnalyticTracker.Property.MODE, "Pebble");
+////                tracker.trackEvent(AnalyticTracker.Event.SEQUENCE_COMPLETED);
+//            }
+//        }
+//
+//    }
 
-//                AnalyticTracker tracker = AnalyticTracker.getInstance(this);
-//                tracker.addProperty(AnalyticTracker.Property.MODE, "Pebble");
-//                tracker.trackEvent(AnalyticTracker.Event.SEQUENCE_COMPLETED);
-            }
-        }
-
-    }
-
-    @Override
-    public void onPebbleConnected() {
-        // TODO Auto-generated method stub
-    }
 
     @Override
     public void onInputSelected(DialpadManager.DialPadInput dialPadInput) {
@@ -1994,12 +1977,13 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
 //                    }
 //                }
 //            } else {
-                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+//                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+//                startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+//            }
+            } else {
+                Toast.makeText(this, "BLE is not supported", Toast.LENGTH_LONG).show();
+                finish();
             }
-        } else {
-            Toast.makeText(this, "BLE is not supported", Toast.LENGTH_LONG).show();
-            finish();
         }
     }
 

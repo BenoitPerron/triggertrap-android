@@ -56,7 +56,7 @@
             android:value="@integer/google_play_services_version"
             />
 
-        <service android:name="at.photosniper.service.SniperManService"/>
+        <service android:name="at.photosniper.service.PhotoSniperService"/>
     </application>
 
 </manifest>

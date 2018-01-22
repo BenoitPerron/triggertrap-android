@@ -24,7 +24,7 @@
     <string name="about">INFOS</string>
     <string name="action_settings">Einstellungen</string>
     <string name="anyway_enough_of">Wie auch immer, genug der Schwafelei.</string>
-    <string name="app_name">SniperMan</string>
+    <string name="app_name">PhotoSniper</string>
 
     <!-- Bang (Sound trigger) mode -->
     <string name="bang">Schall</string>

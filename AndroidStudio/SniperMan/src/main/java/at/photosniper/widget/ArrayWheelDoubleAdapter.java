@@ -10,7 +10,6 @@ import java.util.List;
 import antistatic.spinnerwheel.adapters.AbstractWheelTextAdapter;
 import at.photosniper.R;
 
-import static com.google.android.gms.internal.a.R;
 
 
 /**

@@ -70,7 +70,7 @@ public class AnalogClockPreview extends View {
         mDialHeight = (int) (mDialHeight * density);
         mDialStrokeWidth = (int) (mDialStrokeWidth * density);
 
-        final int dotColor = res.getColor(R.color.tt_red_30);
+        final int dotColor = res.getColor(R.color.ps_red_30);
         if (dotColor != 0) {
             mDotPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
             mDotPaint.setColor(dotColor);

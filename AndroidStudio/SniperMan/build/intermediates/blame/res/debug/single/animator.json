@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\animator\\fragment_fade_in.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\animator\\fragment_fade_in.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\animator\\fragment_slide_out.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\animator\\fragment_slide_out.xml"
+    }
+]

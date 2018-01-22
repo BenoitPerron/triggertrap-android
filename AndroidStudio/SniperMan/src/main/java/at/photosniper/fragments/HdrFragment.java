@@ -73,7 +73,7 @@ public class HdrFragment extends PulseSequenceFragment {
 
         final AbstractWheel hdrMiddle = (AbstractWheel) middleExposure.findViewById(R.id.wheelHorizontalView);
         middleAdapter.setItemResource(R.layout.wheel_text_centered);
-        middleAdapter.setItemTextResource();
+        middleAdapter.setItemTextResource(R.id.text);
         hdrMiddle.setViewAdapter(middleAdapter);
 
 
@@ -82,13 +82,13 @@ public class HdrFragment extends PulseSequenceFragment {
         final AbstractWheel numHdrExposures = (AbstractWheel) numExposure.findViewById(R.id.wheelHorizontalView);
         //NumericWheelAdapter numExpAdapter = new NumericWheelAdapter(getActivity(), 3, 19, "%1d");
         numExpAdapter.setItemResource(R.layout.wheel_text_centered);
-        numExpAdapter.setItemTextResource();
+        numExpAdapter.setItemTextResource(R.id.text);
         numHdrExposures.setViewAdapter(numExpAdapter);
 
 
         ArrayWheelAdapter<String> evAdapter = new ArrayWheelAdapter<>(getActivity(), new String[]{"1/3", "1/2", "1", "2"});
         evAdapter.setItemResource(R.layout.wheel_text_centered);
-        evAdapter.setItemTextResource();
+        evAdapter.setItemTextResource(R.id.text);
         View evSteps = mRootView.findViewById(R.id.hdrEvStep);
         final AbstractWheel hdrEv = (AbstractWheel) evSteps.findViewById(R.id.wheelHorizontalView);
         hdrEv.setViewAdapter(evAdapter);

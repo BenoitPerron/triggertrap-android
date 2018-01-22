@@ -40,7 +40,7 @@ import uk.me.jstott.sun.Time;
  */
 public class SunriseSunsetFragment extends PhotoSniperBaseFragment implements LocationListener {
 
-    private static final int PERCENTAGE_PROGRESS = 1;
+    public static final int PERCENTAGE_PROGRESS = 1;
     private static final int TIME_LIMIT = 30000;
     private static final int ANIMATION_DURATION = 1000;
     private static final int LOCATIONREQUESTDISTANCE = 10000;

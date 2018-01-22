@@ -1,0 +1,54 @@
+[
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\anim\\fade_out_scale.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\anim\\fade_out_scale.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\anim\\slide_out_to_top.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\anim\\slide_out_to_top.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\anim\\com_mixpanel_android_fade_in.xml",
+        "source": "C:\\Users\\johannes\\.android\\build-cache\\864a13f44a55804ce45531aa7d4394d2a3dfe7e1\\output\\res\\anim\\com_mixpanel_android_fade_in.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\anim\\slide_down_fade.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\anim\\slide_down_fade.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\anim\\fade_in_scale.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\anim\\fade_in_scale.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\anim\\com_mixpanel_android_slide_down.xml",
+        "source": "C:\\Users\\johannes\\.android\\build-cache\\864a13f44a55804ce45531aa7d4394d2a3dfe7e1\\output\\res\\anim\\com_mixpanel_android_slide_down.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\anim\\slide_in_from_bottom.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\anim\\slide_in_from_bottom.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\anim\\slide_in_from_top.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\anim\\slide_in_from_top.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\anim\\slide_out_to_bottom.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\anim\\slide_out_to_bottom.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\anim\\rotate.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\anim\\rotate.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\anim\\slide_up_show.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\anim\\slide_up_show.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\anim\\show_warning_message.xml",
+        "source": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\src\\main\\res\\anim\\show_warning_message.xml"
+    },
+    {
+        "merged": "C:\\Users\\johannes\\workspaces\\triggertrap-android\\AndroidStudio\\SniperMan\\build\\intermediates\\res\\merged\\debug\\anim\\com_mixpanel_android_fade_out.xml",
+        "source": "C:\\Users\\johannes\\.android\\build-cache\\864a13f44a55804ce45531aa7d4394d2a3dfe7e1\\output\\res\\anim\\com_mixpanel_android_fade_out.xml"
+    }
+]

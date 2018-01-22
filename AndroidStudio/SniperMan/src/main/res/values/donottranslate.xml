@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="tt_foreground_service_started">tt_foreground_service_started</string>
+    <string name="ps_foreground_service_started">ps_foreground_service_started</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="nav_drawer_close"></string>
     <string name="undefined_time">——:——</string>
     <string name="empty_string"></string>
 
-    <string-array name="tt_mode_groups">
+    <string-array name="ps_mode_groups">
         <item>@string/welcome</item>
         <item>@string/cable_release_modes</item>
         <item>@string/timelapse_modes</item>
@@ -21,13 +21,13 @@
         <item>@string/output_settings</item>
         -->
     </string-array>
-    <string-array name="tt_welcome_modes">
+    <string-array name="ps_welcome_modes">
         <item>@string/getting_started</item>
         <!--
         <item>@string/cable_selector</item>
         -->
     </string-array>
-    <string-array name="tt_cable_modes">
+    <string-array name="ps_cable_modes">
         <item>@string/simple_cable_release</item>
         <item>@string/quick_release</item>
         <item>@string/press_and_hold</item>
@@ -35,42 +35,42 @@
         <item>@string/timed_release</item>
         <item>@string/self_timer</item>
     </string-array>
-    <string-array name="tt_timer_modes">
+    <string-array name="ps_timer_modes">
         <item>@string/timelapse</item>
         <item>@string/timewarp</item>
         <item>@string/distancelapse</item>
         <item>@string/star_trail</item>
         <item>@string/bramping</item>
     </string-array>
-    <string-array name="tt_sound_modes">
+    <string-array name="ps_sound_modes">
         <item>@string/sound_sensor</item>
     </string-array>
-    <string-array name="tt_hdr_modes">
+    <string-array name="ps_hdr_modes">
         <item>@string/le_hdr</item>
         <item>@string/le_hdr_timelapse</item>
     </string-array>
     <!--
-    <string-array name="tt_remote_trigger_modes">
+    <string-array name="ps_remote_trigger_modes">
         <item>@string/wifi_slave</item>
         <item>@string/pebble</item>
     </string-array>
     -->
-    <string-array name="tt_calculator_modes">
+    <string-array name="ps_calculator_modes">
         <item>@string/sunrise_sunset</item>
         <item>@string/nd_calculator</item>
     </string-array>
     <!--
-    <string-array name="tt_settings_modes">
+    <string-array name="ps_settings_modes">
         <item>@string/wifi_master</item>
     </string-array>
     -->
-    <string-array name="tt_welcome_modes_sub_text">
+    <string-array name="ps_welcome_modes_sub_text">
         <item>@string/a_quick_guide</item>
         <!--
         <item>@string/get_the_right_kit</item>
         -->
     </string-array>
-    <string-array name="tt_cable_modes_sub_text">
+    <string-array name="ps_cable_modes_sub_text">
         <item>@string/tap_the_button_to_take_a_picture</item>
         <item>@string/release_button_to</item>
         <item>@string/touch_to_start_release_to_stop</item>
@@ -78,36 +78,36 @@
         <item>@string/choose_your_shutter_speed</item>
         <item>@string/countdown_before</item>
     </string-array>
-    <string-array name="tt_timer_modes_sub_text">
+    <string-array name="ps_timer_modes_sub_text">
         <item>@string/travel_through_time</item>
         <item>@string/timelapse_with_acceleration</item>
         <item>@string/perfect_for_roadtrips</item>
         <item>@string/extreme_exposure_control</item>
         <item>@string/bulb_ramping_timelapse</item>
     </string-array>
-    <string-array name="tt_hdr_modes_sub_text">
+    <string-array name="ps_hdr_modes_sub_text">
         <item>@string/long_exposure_hdr_sets</item>
         <item>@string/long_exposure_hdr_timelapse</item>
     </string-array>
-    <string-array name="tt_sound_modes_sub_text">
+    <string-array name="ps_sound_modes_sub_text">
         <item>@string/clap_whistle_or_tap</item>
     </string-array>
     <!--
-    <string-array name="tt_remote_trigger_modes_sub_text">
+    <string-array name="ps_remote_trigger_modes_sub_text">
         <item>@string/trigger_remotely</item>
         <item>@string/trigger_with_your_pebble</item>
     </string-array>
     -->
-    <string-array name="tt_calculators_sub_text">
+    <string-array name="ps_calculators_sub_text">
         <item>@string/determine_sunrise_sunset</item>
         <item>@string/determine_nd</item>
     </string-array>
-    <string-array name="tt_settings_modes_sub_text">
+    <string-array name="ps_settings_modes_sub_text">
         <item>@string/take_control</item>
     </string-array>
 
     <!-- Notifications -->
-    <string-array name="tt_notifications">
+    <string-array name="ps_notifications">
         <item>@string/press_to_lock</item>
         <item>@string/timed_release</item>
         <item>@string/timelapse</item>
@@ -476,13 +476,13 @@
 
     <!-- Icons -->
 
-    <string-array name="tt_welcome_mode_icons">
+    <string-array name="ps_welcome_mode_icons">
         <item>@drawable/icon_info</item>
         <!--
         <item>@drawable/icon_cart</item>
         -->
     </string-array>
-    <string-array name="tt_cable_mode_icons">
+    <string-array name="ps_cable_mode_icons">
         <item>@drawable/icon_point_down</item>
         <item>@drawable/icon_upload</item>
         <item>@drawable/icon_download</item>
@@ -490,29 +490,29 @@
         <item>@drawable/icon_busy</item>
         <item>@drawable/icon_history</item>
     </string-array>
-    <string-array name="tt_timer_mode_icons">
+    <string-array name="ps_timer_mode_icons">
         <item>@drawable/icon_stopwatch</item>
         <item>@drawable/icon_wave</item>
         <item>@drawable/icon_compass</item>
         <item>@drawable/icon_star</item>
         <item>@drawable/icon_brightness_contrast</item>
     </string-array>
-    <string-array name="tt_sound_mode_icons">
+    <string-array name="ps_sound_mode_icons">
         <item>@drawable/icon_mic</item>
     </string-array>
-    <string-array name="tt_hdr_mode_icons">
+    <string-array name="ps_hdr_mode_icons">
         <item>@drawable/icon_stack_star</item>
         <item>@drawable/icon_stack_picture</item>
     </string-array>
-    <string-array name="tt_remote_trigger_mode_icons">
+    <string-array name="ps_remote_trigger_mode_icons">
         <item>@drawable/icon_connection</item>
         <item>@drawable/icon_pebble</item>
     </string-array>
-    <string-array name="tt_calculators_mode_icons">
+    <string-array name="ps_calculators_mode_icons">
         <item>@drawable/icon_brightness_medium</item>
         <item>@drawable/icon_contrast</item>
     </string-array>
-    <string-array name="tt_settings_mode_icons">
+    <string-array name="ps_settings_mode_icons">
         <item>@drawable/icon_podcast</item>
     </string-array>
 
@@ -533,7 +533,7 @@
     <string name="sigma">Sigma</string>
     <string name="sony">Sony</string>
 
-    <string-array name="tt_camera_manufacturers">
+    <string-array name="ps_camera_manufacturers">
         <item>@string/canon</item>
         <item>@string/contax</item>
         <item>@string/fujifilm</item>

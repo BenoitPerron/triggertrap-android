@@ -87,12 +87,12 @@ public class HdrTimeLapseFragment extends PulseSequenceFragment {
 
         final AbstractWheel hdrMiddle = (AbstractWheel) middleExposure.findViewById(R.id.wheelHorizontalView);
         middleAdapter.setItemResource(R.layout.wheel_text_centered);
-        middleAdapter.setItemTextResource();
+        middleAdapter.setItemTextResource(R.id.text);
         hdrMiddle.setViewAdapter(middleAdapter);
 
         ArrayWheelAdapter<String> evAdapter = new ArrayWheelAdapter<>(getActivity(), new String[]{"1/3", "1/2", "1", "2"});
         evAdapter.setItemResource(R.layout.wheel_text_centered);
-        evAdapter.setItemTextResource();
+        evAdapter.setItemTextResource(R.id.text);
         View evSteps = mRootView.findViewById(R.id.hdrEvStep);
         final AbstractWheel hdrEv = (AbstractWheel) evSteps.findViewById(R.id.wheelHorizontalView);
         hdrEv.setViewAdapter(evAdapter);

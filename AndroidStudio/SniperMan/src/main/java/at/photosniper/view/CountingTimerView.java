@@ -92,10 +92,10 @@ public class CountingTimerView extends View {
         }
         mAccessibilityManager = (AccessibilityManager) context.getSystemService(Context.ACCESSIBILITY_SERVICE);
         Resources r = context.getResources();
-        mWhiteColor = r.getColor(R.color.tt_white);
+        mWhiteColor = r.getColor(R.color.ps_white);
         mDefaultColor = mWhiteColor;
-        mPressedColor = r.getColor(R.color.tt_medium_grey);
-        mRedColor = r.getColor(R.color.tt_red);
+        mPressedColor = r.getColor(R.color.ps_medium_grey);
+        mRedColor = r.getColor(R.color.ps_red);
 
         mPaintBig.setAntiAlias(true);
         mPaintBig.setStyle(Paint.Style.STROKE);

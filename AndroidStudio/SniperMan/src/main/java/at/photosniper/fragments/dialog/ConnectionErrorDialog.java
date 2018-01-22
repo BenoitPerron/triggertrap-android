@@ -7,7 +7,7 @@ import android.view.View;
 
 import at.photosniper.R;
 
-import at.photosniper.location.SniperManLocationService;
+import at.photosniper.location.PhotoSniperLocationService;
 import eu.inmite.android.lib.dialogs.BaseDialogFragment;
 import eu.inmite.android.lib.dialogs.SimpleDialogFragment;
 
@@ -21,17 +21,17 @@ import eu.inmite.android.lib.dialogs.SimpleDialogFragment;
 public class ConnectionErrorDialog extends SimpleDialogFragment {
 
     private Dialog mServiceErrorDialog;
-    private SniperManLocationService mLocationService;
+    private PhotoSniperLocationService mLocationService;
 
     private void setDialog(Dialog serviceErrorDialog) {
         this.mServiceErrorDialog = serviceErrorDialog;
     }
 
-    private void setLocationService(SniperManLocationService locService) {
+    private void setLocationService(PhotoSniperLocationService locService) {
         this.mLocationService = locService;
     }
 
-    public void show(Activity activity, SniperManLocationService locService, Dialog dialog) {
+    public void show(Activity activity, PhotoSniperLocationService locService, Dialog dialog) {
         ConnectionErrorDialog connectionDialog = new ConnectionErrorDialog();
 
         connectionDialog.setDialog(dialog);
@@ -43,7 +43,7 @@ public class ConnectionErrorDialog extends SimpleDialogFragment {
     @Override
     public BaseDialogFragment.Builder build(BaseDialogFragment.Builder builder) {
         builder.setView(LayoutInflater.from(getActivity()).inflate(R.layout.running_action_dialog, null));
-        builder.setTitle().setMessage();
+        builder.setTitle(R.string.connect_error_title).setMessage(R.string.connect_error_description);
         builder.setPositiveButton(R.string.yes, new View.OnClickListener() {
             public void onClick(View v) {
                 dismiss();

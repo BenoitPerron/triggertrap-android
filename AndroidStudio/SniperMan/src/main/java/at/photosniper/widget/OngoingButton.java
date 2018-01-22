@@ -95,9 +95,9 @@ public class OngoingButton extends View {
         int mCircleBoarderWidth = (int) (CIRCLE_BOARDER_WIDTH * density);
         mFinalCircleRadius = (int) (ANIM_FINAL_RADIUS * density);
 
-        int circleColor = res.getColor(R.color.tt_button_circle_border_color);
-        int circleBoarderColor = res.getColor(R.color.tt_button_circle_border_color);
-        int outerColor = res.getColor(R.color.tt_button_outer_circle_color);
+        int circleColor = res.getColor(R.color.ps_button_circle_border_color);
+        int circleBoarderColor = res.getColor(R.color.ps_button_circle_border_color);
+        int outerColor = res.getColor(R.color.ps_button_outer_circle_color);
 
         if (attrs != null) {
             // Attribute initialization
