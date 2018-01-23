@@ -42,8 +42,7 @@
         <activity
             android:name="at.photosniper.activities.SettingsActivity"
             android:label="@string/app_name"
-            android:parentActivityName="at.photosniper.activities.MainActivity"
-            >
+            android:parentActivityName="at.photosniper.activities.MainActivity">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
@@ -51,12 +50,21 @@
                 android:value="at.photosniper.activities.MainActivity"/>
         </activity>
 
+        <activity
+            android:name="at.photosniper.activities.BLEDeviceScanActivity"
+            android:label="@string/app_name">
+        </activity>
+        <activity android:name="at.photosniper.activities.BLEDeviceControlActivity"/>
+
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version"
             />
 
         <service android:name="at.photosniper.service.PhotoSniperService"/>
+        <service
+            android:name="at.photosniper.service.BluetoothLeService"
+            android:enabled="true"/>
     </application>
 
 </manifest>

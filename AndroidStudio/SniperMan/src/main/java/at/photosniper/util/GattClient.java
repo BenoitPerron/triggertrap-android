@@ -36,16 +36,18 @@ public class GattClient {
     private static final UUID DESCRIPTOR_CONFIG = UUID.fromString("00002902-0000-1000-8000-00805f9b34fb");
     public static UUID DESCRIPTOR_USER_DESC = UUID.fromString("00002901-0000-1000-8000-00805f9b34fb");
 
-    public static final UUID SERVICE_UUID = UUID.fromString("795090c7-420d-4048-a24e-18e60180e23c");
-    private static final UUID CHARACTERISTIC_COUNTER_UUID = UUID.fromString("31517c58-66bf-470c-b662-e352a6c80cba");
-    private static final UUID CHARACTERISTIC_INTERACTOR_UUID = UUID.fromString("0b89d2d4-0ea6-4141-86bb-0c5fb91ab14a");
+    public static final UUID SERVICE_UUID = UUID.fromString(GattAttributes.HM_10_CONF); // UUID.fromString("795090c7-420d-4048-a24e-18e60180e23c");
+    private static final UUID CHARACTERISTIC_RXTX_UUID = UUID.fromString(GattAttributes.HM_RX_TX);// UUID.fromString("31517c58-66bf-470c-b662-e352a6c80cba");
+    private static final UUID CHARACTERISTIC_INTERACTOR_UUID = CHARACTERISTIC_RXTX_UUID; //UUID.fromString("0b89d2d4-0ea6-4141-86bb-0c5fb91ab14a");
     private Context mContext;
     private OnCounterReadListener mListener;
     private String mDeviceAddress;
     private BluetoothManager mBluetoothManager;
     private BluetoothAdapter mBluetoothAdapter;
     private BluetoothGatt mBluetoothGatt;
+
     private final BluetoothGattCallback mGattCallback = new BluetoothGattCallback() {
+
         @Override
         public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
             if (newState == BluetoothProfile.STATE_CONNECTED) {
@@ -64,7 +66,7 @@ public class GattClient {
 
                 BluetoothGattService service = gatt.getService(SERVICE_UUID);
                 if (service != null) {
-                    BluetoothGattCharacteristic characteristic = service.getCharacteristic(CHARACTERISTIC_COUNTER_UUID);
+                    BluetoothGattCharacteristic characteristic = service.getCharacteristic(CHARACTERISTIC_RXTX_UUID);
                     if (characteristic != null) {
                         gatt.setCharacteristicNotification(characteristic, true);
 
@@ -94,13 +96,13 @@ public class GattClient {
         @Override
         public void onDescriptorWrite(BluetoothGatt gatt, BluetoothGattDescriptor descriptor, int status) {
             if (DESCRIPTOR_CONFIG.equals(descriptor.getUuid())) {
-                BluetoothGattCharacteristic characteristic = gatt.getService(SERVICE_UUID).getCharacteristic(CHARACTERISTIC_COUNTER_UUID);
+                BluetoothGattCharacteristic characteristic = gatt.getService(SERVICE_UUID).getCharacteristic(CHARACTERISTIC_RXTX_UUID);
                 gatt.readCharacteristic(characteristic);
             }
         }
 
         private void readCounterCharacteristic(BluetoothGattCharacteristic characteristic) {
-            if (CHARACTERISTIC_COUNTER_UUID.equals(characteristic.getUuid())) {
+            if (CHARACTERISTIC_RXTX_UUID.equals(characteristic.getUuid())) {
                 byte[] data = characteristic.getValue();
                 int value = Ints.fromByteArray(data);
                 mListener.onCounterRead(value);
@@ -129,10 +131,10 @@ public class GattClient {
     public static byte[] getUserDescription(UUID characteristicUUID) {
         String desc;
 
-        if (CHARACTERISTIC_COUNTER_UUID.equals(characteristicUUID)) {
-            desc = "Indicates the number of time you have been awesome so far";
+        if (CHARACTERISTIC_RXTX_UUID.equals(characteristicUUID)) {
+            desc = "RX TX I/O";
         } else if (CHARACTERISTIC_INTERACTOR_UUID.equals(characteristicUUID)) {
-            desc = "Write any value here to move the cat’s paw and increment the awesomeness counter";
+            desc = "same";
         } else {
             desc = "";
         }
@@ -176,7 +178,7 @@ public class GattClient {
 
     public void writeInteractor() {
         BluetoothGattCharacteristic interactor = mBluetoothGatt.getService(SERVICE_UUID).getCharacteristic(CHARACTERISTIC_INTERACTOR_UUID);
-        interactor.setValue("!");
+        interactor.setValue("SNAP!".getBytes());
         mBluetoothGatt.writeCharacteristic(interactor);
     }
 

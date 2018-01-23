@@ -375,6 +375,7 @@
 
     <!-- bluetooth -->
     <string name="BLE_Not_Supported">BLE_Not_Supported</string>
+    <string name="BLE_Device">BLE_Device</string>
     <string name="BLEConnectionError">BLE Connection error</string>
 
     <string name="ble_not_supported">BLE is not supported</string>

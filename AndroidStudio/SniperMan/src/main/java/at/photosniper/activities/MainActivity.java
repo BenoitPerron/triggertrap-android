@@ -10,6 +10,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
@@ -17,7 +18,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
-import android.os.ParcelUuid;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
@@ -95,7 +95,6 @@ import no.nordicsemi.android.support.v18.scanner.ScanSettings;
 
 public class MainActivity extends Activity implements PulseSequenceFragment.PulseSequenceListener, PhotoSniperServiceListener, TimedFragment.TimedListener, StartStopListener, SoundSensorFragment.SoundSensorListener, SelfTimerFragment.SelfTimerListener, PressHoldFragment.PressHoldListener, CableReleaseFragment.SimpleModeListener, QuickReleaseFragment.QuickReleaseListener, DialpadManager.InputSelectionListener, DistanceLapseFragment.DistanceLapseListener
         , SonyWiFiRPC.ConnectionListener, SonyWiFiRPC.ResponseHandler, SonyWiFiRPC.LiveViewCallback
-
 {
 
     // Saved instance keys
@@ -136,44 +135,11 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
     private DialpadManager mDialPadManager = null;
     private WarningMessageManager mWarningMessageManager;
     private boolean mScanning;
-    private final Runnable mStopScanRunnable = new Runnable() {
-        @Override
-        public void run() {
-            Toast.makeText(getApplicationContext(), "No devices found", Toast.LENGTH_SHORT).show();
-            stopLeScan();
-        }
-    };
-    private final ScanCallback mScanCallback = new ScanCallback() {
-        @Override
-        public void onScanResult(int callbackType, ScanResult result) {
-            // We scan with report delay > 0. This will never be called.
-            Log.i(TAG, "onScanResult: " + result.getDevice().getAddress());
-        }
 
-        @Override
-        public void onBatchScanResults(List<ScanResult> results) {
-
-
-            if (!results.isEmpty()) {
-                Log.i(TAG, "onBatchScanResults: " + results.toString());
-                ScanResult result = results.get(0);
-                connectBLE(result.getDevice());
-            } else {
-                Log.i(TAG, "onBatchScanResults: EMPTY");
-            }
-        }
-
-        @Override
-        public void onScanFailed(int errorCode) {
-            Log.w(TAG, "Scan failed: " + errorCode);
-            stopLeScan();
-        }
-    };
-    // BLE --- stop
     /*
      * Service binding and handling code
      */
-    private final ServiceConnection mTriggertrapServiceConnection = new ServiceConnection() {
+    private final ServiceConnection mPhotoSniperServiceConnection = new ServiceConnection() {
 
         @Override
         public void onServiceConnected(ComponentName className, IBinder service) {
@@ -284,7 +250,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
 
         if (!mTriggertrapServiceBound) {
             Intent intent = new Intent(this, PhotoSniperService.class);
-            bindService(intent, mTriggertrapServiceConnection, Activity.BIND_AUTO_CREATE);
+            bindService(intent, mPhotoSniperServiceConnection, Activity.BIND_AUTO_CREATE);
         }
 
         // getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_IS_FORWARD_NAVIGATION);
@@ -385,7 +351,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
         if (isFinishing()) {
             Log.d(TAG, "MainActivity is Finishing");
         }
-        Log.d(TAG, "Stopping Activity, isChangingConfigurations: " + isChangingConfigurations() + " Service state: " + mService.getState());
+        Log.d(TAG, "Stopping Activity, isChangingConfigurations: " + isChangingConfigurations() + " Service state: " + ((mService != null) ? mService.getState() : "NULL"));
         // Make sure we reset the intent data
         setIntent(new Intent());
 
@@ -399,11 +365,14 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
 
         // If not changing configuration, Activity is not visible so run service
         // in foreground
-        if (!isChangingConfigurations() && mService.getState() == PhotoSniperService.State.IN_PROGRESS) {
+        if (mService != null) {
+            if (!isChangingConfigurations() && mService.getState() == PhotoSniperService.State.IN_PROGRESS) {
             Intent intent = new Intent(this, PhotoSniperService.class);
             startService(intent);
             mService.goToForeground();
+            }
         }
+
 
 //        setVolumeControlStream(AudioManager.STREAM_RING);
 
@@ -421,7 +390,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
         if (mTriggertrapServiceBound) {
             Log.d(TAG, "Unbinding service");
             // mService.setListener(null);
-            unbindService(mTriggertrapServiceConnection);
+            unbindService(mPhotoSniperServiceConnection);
             mTriggertrapServiceBound = false;
         }
 
@@ -1953,6 +1922,42 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
 
     // BLE        --------------> Connection  Stuff <--------------
 
+    private final Runnable mStopScanRunnable = new Runnable() {
+        @Override
+        public void run() {
+            Toast.makeText(getApplicationContext(), "No devices found", Toast.LENGTH_SHORT).show();
+            stopLeScan();
+        }
+    };
+    private final ScanCallback mScanCallback = new ScanCallback() {
+        @Override
+        public void onScanResult(int callbackType, ScanResult result) {
+            // We scan with report delay > 0. This will never be called.
+            Log.i(TAG, "onScanResult: " + result.getDevice().getAddress());
+        }
+
+        @Override
+        public void onBatchScanResults(List<ScanResult> results) {
+
+
+            if (!results.isEmpty()) {
+                Log.i(TAG, "onBatchScanResults: " + results.toString());
+                ScanResult result = results.get(0);
+                connectBLE(result.getDevice());
+            } else {
+                Log.i(TAG, "onBatchScanResults: EMPTY");
+            }
+        }
+
+        @Override
+        public void onScanFailed(int errorCode) {
+            Log.w(TAG, "Scan failed: " + errorCode);
+            stopLeScan();
+        }
+    };
+    // BLE --- stop
+
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -1996,7 +2001,23 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
 
         ScanSettings settings = new ScanSettings.Builder().setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY).setReportDelay(1000).build();
         List<ScanFilter> filters = new ArrayList<>();
-        filters.add(new ScanFilter.Builder().setServiceUuid(new ParcelUuid(GattClient.SERVICE_UUID)).build());
+//        filters.add(new ScanFilter.Builder().setServiceUuid(new ParcelUuid(GattClient.SERVICE_UUID)).build());
+
+        // get profile here
+        String ourBLEDevice = "";
+        try {
+            SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+            ourBLEDevice = sharedPref.getString(getString(R.string.BLE_Device), "");
+
+        } catch (Exception x) {
+            Log.i(TAG, "no BLE Device stored ");
+        }
+
+        if ((ourBLEDevice != null) && (ourBLEDevice.length() > 1)) {
+            filters.add(new ScanFilter.Builder().setDeviceAddress(ourBLEDevice).build());
+        }
+
+
         mScanner.startScan(filters, settings, mScanCallback);
 
         // Stops scanning after a pre-defined scan period.
