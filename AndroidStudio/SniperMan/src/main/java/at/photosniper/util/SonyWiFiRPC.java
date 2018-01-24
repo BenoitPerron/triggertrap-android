@@ -35,7 +35,7 @@ public class SonyWiFiRPC {
     private static final String RPC_NETWORK = "SonyWiFiRPC network";
     private static final int SSDP_TIMEOUT = 1000;
 
-    private final Set<ConnectionListener> connectionListeners = new HashSet<>();
+    private final Set<SonyWiFiConnectionListener> sonyWiFiConnectionListeners = new HashSet<>();
     private final Map<Object, ResponseHandler<?>> responseHandlers = new HashMap<>();
     private RpcClient rpcClient;
     private Throwable initializationError;
@@ -70,7 +70,7 @@ public class SonyWiFiRPC {
                 availableSelfTimers = Ints.asList(selfTimers.getAvailableTimers());
             }
 
-            onConnected(cameraServiceUrl);
+            onSonyWifiConnected(cameraServiceUrl);
 
         } catch (Exception e) {
             onConnectionFailed(e);
@@ -78,10 +78,10 @@ public class SonyWiFiRPC {
     }
 
     //    @UiThread
-    private void onConnected(String cameraServiceUrl) {
+    private void onSonyWifiConnected(String cameraServiceUrl) {
         initialized = true;
-        for (ConnectionListener callback : connectionListeners) {
-            callback.onConnected();
+        for (SonyWiFiConnectionListener callback : sonyWiFiConnectionListeners) {
+            callback.onSonyWiFiConnected();
         }
     }
 
@@ -90,26 +90,27 @@ public class SonyWiFiRPC {
         Log.e("@@@@@", "SonyWiFiRPC connect failed", e);
         initialized = true;
         initializationError = e;
-        for (ConnectionListener callback : connectionListeners) {
-            callback.onConnectionFailed(e);
+        for (SonyWiFiConnectionListener callback : sonyWiFiConnectionListeners) {
+            callback.onSonyWiFiConnectionFailed(e);
         }
+        Log.i("@@@@@", "SonyWiFiRPC connect failed - not a problem..");
     }
 
     //    @UiThread (propagation = UiThread.Propagation.REUSE)
-    public void registerInitCallback(ConnectionListener callback) {
+    public void registerInitCallback(SonyWiFiConnectionListener callback) {
         if (initialized) {
             if (initializationError == null) {
-                callback.onConnected();
+                callback.onSonyWiFiConnected();
             } else {
-                callback.onConnectionFailed(initializationError);
+                callback.onSonyWiFiConnectionFailed(initializationError);
             }
         }
-        connectionListeners.add(callback);
+        sonyWiFiConnectionListeners.add(callback);
     }
 
     //    @UiThread (propagation = UiThread.Propagation.REUSE)
-    public void unregisterInitCallback(ConnectionListener callback) {
-        connectionListeners.remove(callback);
+    public void unregisterInitCallback(SonyWiFiConnectionListener callback) {
+        sonyWiFiConnectionListeners.remove(callback);
     }
 
     //    @UiThread (propagation = UiThread.Propagation.REUSE)
@@ -206,10 +207,10 @@ public class SonyWiFiRPC {
         }.start();
     }
 
-    public interface ConnectionListener {
-        void onConnected();
+    public interface SonyWiFiConnectionListener {
+        void onSonyWiFiConnected();
 
-        void onConnectionFailed(Throwable e);
+        void onSonyWiFiConnectionFailed(Throwable e);
     }
 
     public interface ResponseHandler<Response extends BaseResponse<?>> {

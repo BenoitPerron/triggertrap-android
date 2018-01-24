@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.os.AsyncTask;
 import android.os.Binder;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -23,7 +22,6 @@ import android.widget.RemoteViews;
 import com.praetoriandroid.cameraremote.rpc.ActTakePictureRequest;
 import com.praetoriandroid.cameraremote.rpc.ActTakePictureResponse;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 
 import at.photosniper.PhotoSniperApp;
@@ -36,9 +34,7 @@ import at.photosniper.outputs.OutputDispatcher.OutputListener;
 import at.photosniper.util.PulseGenerator;
 import at.photosniper.util.SonyWiFiRPC;
 import at.photosniper.util.StopwatchTimer;
-import at.photosniper.wifi.IZeroConf;
 import at.photosniper.wifi.PhotoSniperServiceInfo;
-import at.photosniper.wifi.PhotoSniperSlaveInfo;
 import at.photosniper.wifi.SlaveSocket;
 
 
@@ -80,12 +76,6 @@ public class PhotoSniperService extends Service implements OutputListener, Slave
     // Start Stop mode
     private StopwatchTimer mStopwatchTimer;
 
-    // Wifi vars
-    private IZeroConf mZeroConf;
-    private SlaveSocket mSlaveSocket;
-    private final ArrayList<PhotoSniperServiceInfo> mAvailableMasters = new ArrayList<>();
-    private String mConnectedMasterName = "";
-    private boolean mIsWifiMasterOn = false;
 
     // Sound Sensor
     private MicVolumeMonitor mMicVolumeMonitor;
@@ -142,13 +132,10 @@ public class PhotoSniperService extends Service implements OutputListener, Slave
 
 
         // TODO Create a factory here to get Correct ZeroConf Implementation
-//        mZeroConf = new ZeroConfJmdns(this);
-        // mZeroConf = new ZeroConfNds(this);
         mMicVolumeMonitor = new MicVolumeMonitor(this);
 
         mPowerManager = (PowerManager) getSystemService(POWER_SERVICE);
 
-        mConnectedMasterName = this.getResources().getString(R.string.unconnected);
 
     }
 
@@ -170,12 +157,7 @@ public class PhotoSniperService extends Service implements OutputListener, Slave
         Log.d(TAG, "Service onDestroy: listener is " + mListener);
         unregisterReceiver(stopServiceReceiver);
         mOutputDispatcher.close();
-        mZeroConf.unwatch();
-        mZeroConf.unregisterMaster();
-        mZeroConf.close();
-        if (mSlaveSocket != null) {
-            mSlaveSocket.close();
-        }
+
         mMicVolumeMonitor.stop();
         mMicVolumeMonitor.release();
 
@@ -184,9 +166,7 @@ public class PhotoSniperService extends Service implements OutputListener, Slave
     public void goToForeground() {
         Log.d(TAG, "Moving service to Foreground");
         String notificationText = getNotifcationText(mOnGoingAction);
-        if (mOnGoingAction == PhotoSniperApp.OnGoingAction.WI_FI_SLAVE) {
-            notificationText = getWifiSlaveNotification();
-        }
+
         // mNotificationBuilder.setContentText(notificationText);
         mRemoteViews.setCharSequence(R.id.notificationDescription, "setText", notificationText);
         PendingIntent notificationPendingIntent = getNotifcationPendingIntent();
@@ -243,9 +223,6 @@ public class PhotoSniperService extends Service implements OutputListener, Slave
         return isActive;
     }
 
-    public boolean isWifiMasterOn() {
-        return mIsWifiMasterOn;
-    }
 
     public void stopCurrentAction() {
         switch (mOnGoingAction) {
@@ -263,9 +240,6 @@ public class PhotoSniperService extends Service implements OutputListener, Slave
                 break;
             case PhotoSniperApp.OnGoingAction.DISTANCE_LAPSE:
                 stopLocationUpdates();
-                break;
-            case PhotoSniperApp.OnGoingAction.WI_FI_SLAVE:
-                unWatchMasterWifi();
                 break;
             case PhotoSniperApp.OnGoingAction.BRAMPING:
             case PhotoSniperApp.OnGoingAction.TIMEWARP:
@@ -420,9 +394,6 @@ public class PhotoSniperService extends Service implements OutputListener, Slave
                     break;
                 case PhotoSniperApp.OnGoingAction.TIMELAPSE:
                     notificationText = getNotifcationText(mOnGoingAction) + " " + mSequenceInterationCount + " " + formatMilliSecondsTime(millisUntilFinished);
-                    break;
-                case PhotoSniperApp.OnGoingAction.WI_FI_SLAVE:
-                    notificationText = getWifiSlaveNotification();
                     break;
                 case PhotoSniperApp.OnGoingAction.STAR_TRAIL:
                 case PhotoSniperApp.OnGoingAction.HDR:
@@ -960,88 +931,7 @@ public class PhotoSniperService extends Service implements OutputListener, Slave
         mState = State.IDLE;
     }
 
-    /*
-     * Wifi methods
-     */
-    public ArrayList<PhotoSniperServiceInfo> getAvailableMasters() {
-        return mAvailableMasters;
-    }
 
-    public ArrayList<PhotoSniperSlaveInfo> getConnectedSlaves() {
-        return mZeroConf.getConnectedSlaves();
-    }
-
-    private String getWifiSlaveNotification() {
-        String notificationText = getNotifcationText(mOnGoingAction);
-
-        if (mConnectedMasterName.equals(getResources().getString(R.string.unconnected))) {
-            notificationText += " " + mConnectedMasterName;
-        } else {
-            notificationText += " " + getResources().getString(R.string.Connected_to) + " " + mConnectedMasterName;
-        }
-        // mNotificationBuilder.setContentText(notificationText);
-        mRemoteViews.setCharSequence(R.id.notificationDescription, "setText", notificationText);
-        return notificationText;
-
-    }
-
-    public void watchMasterWifi() {
-
-        mZeroConf.watch();
-        mOnGoingAction = PhotoSniperApp.OnGoingAction.WI_FI_SLAVE;
-        mState = State.IN_PROGRESS;
-
-    }
-
-    public void unWatchMasterWifi() {
-        mZeroConf.unwatch();
-        // Close any sockets that might be open.
-        disconnectFromMaster();
-        mOnGoingAction = PhotoSniperApp.OnGoingAction.NONE;
-        mState = State.IDLE;
-
-    }
-
-    public void registerWifiMaster() {
-
-        AsyncTask<Void, Void, Void> registerMasterTask = new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected Void doInBackground(Void... params) {
-                mZeroConf.registerMaster();
-                return null;
-            }
-        };
-        registerMasterTask.execute();
-    }
-
-    public void unRegsiterMaster() {
-        AsyncTask<Void, Void, Void> unregisterMasterTask = new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected Void doInBackground(Void... params) {
-                mZeroConf.unregisterMaster();
-                return null;
-            }
-        };
-        unregisterMasterTask.execute();
-    }
-
-    public void disconnectSlaveFromMaster(String uniqueName) {
-        mZeroConf.disconnectSlaveFromMaster(uniqueName);
-    }
-
-    public void onWifiMasterRegistered(PhotoSniperServiceInfo info) {
-        mIsWifiMasterOn = true;
-        //if (mListener != null) {
-        mListener.onWifiMasterRegsitered(info);
-        //}
-    }
-
-    public void onWifiMasterUnregistered() {
-        mIsWifiMasterOn = false;
-        if (mListener != null) {
-            mListener.onWifiMasterUnregister();
-        }
-    }
 
     public void onClientConnectionReceived(String name, String uniqueName) {
         mListener.onClientConnected(name, uniqueName);
@@ -1051,29 +941,6 @@ public class PhotoSniperService extends Service implements OutputListener, Slave
         mListener.onClientDisconnected(name, uniqueName);
     }
 
-    private void connectToMaster(String name, String ipAddress, int port) {
-        Log.d(TAG, "Connect to master");
-        if (mSlaveSocket == null) {
-            mSlaveSocket = new SlaveSocket(this);
-        } else {
-            mSlaveSocket.close();
-        }
-        mSlaveSocket.connect(ipAddress, port);
-        mConnectedMasterName = name;
-
-        upDateNotification(0);
-
-    }
-
-    private void disconnectFromMaster() {
-        Log.d(TAG, "Disconnect from master");
-        if (mSlaveSocket != null) {
-            Log.d(TAG, "Closing the slave socket");
-            mSlaveSocket.close();
-        }
-        mConnectedMasterName = getResources().getString(R.string.unconnected);
-
-    }
 
     /**
      * Listener for SlaveSocket
@@ -1082,42 +949,6 @@ public class PhotoSniperService extends Service implements OutputListener, Slave
     public void onSlaveBeep() {
         playWifiSlaveBeep();
 
-    }
-
-    public void wiFiMasterAdded(String name, String ipAddress, int port) {
-        PhotoSniperServiceInfo masterInfo = new PhotoSniperServiceInfo(name, ipAddress, port);
-        mAvailableMasters.add(masterInfo);
-
-        if (!mIsRunningInForeground) {
-            mListener.onWifiMasterAdded(masterInfo);
-        }
-
-        if (masterInfo.getName().equals(PhotoSniperApp.getInstance(this).getSlaveLastMaster())) {
-
-            connectToMaster(masterInfo.getName(), masterInfo.getIpAddress(), masterInfo.getPort());
-        }
-
-        upDateNotification(0);
-    }
-
-    public void wiFiMasterRemoved(String name, String ipAddress, int port) {
-        // Log.d(TAG,"wiFiMasterRemoved");
-        PhotoSniperServiceInfo masterInfo = new PhotoSniperServiceInfo(name, ipAddress, port);
-        // mAvailableMasters.remove(masterInfo);
-        for (PhotoSniperServiceInfo serviceInfo : mAvailableMasters) {
-            if (serviceInfo.getName().equals(name)) {
-                mAvailableMasters.remove(serviceInfo);
-                break;
-            }
-        }
-
-        if (!mIsRunningInForeground) {
-            mListener.onWifiMasterRemoved(masterInfo);
-        }
-        if (masterInfo.getName().equals(mConnectedMasterName)) {
-            mConnectedMasterName = getResources().getString(R.string.unconnected);
-        }
-        upDateNotification(0);
     }
 
 
@@ -1171,7 +1002,7 @@ public class PhotoSniperService extends Service implements OutputListener, Slave
 
         // ... and for BLE
         if (PhotoSniperApp.getInstance(this).getBLEgattClient() != null) {
-            PhotoSniperApp.getInstance(this).getBLEgattClient().writeInteractor();
+            PhotoSniperApp.getInstance(this).getBLEgattClient().writeCommand();
         }
 
 

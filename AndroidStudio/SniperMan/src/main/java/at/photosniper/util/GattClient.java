@@ -20,8 +20,6 @@ import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.util.Log;
 
-import com.google.common.primitives.Ints;
-
 import java.nio.charset.Charset;
 import java.util.UUID;
 
@@ -33,14 +31,14 @@ public class GattClient {
 
 
     // UUID for the UART BTLE client characteristic which is necessary for notifications.
-    private static final UUID DESCRIPTOR_CONFIG = UUID.fromString("00002902-0000-1000-8000-00805f9b34fb");
-    public static UUID DESCRIPTOR_USER_DESC = UUID.fromString("00002901-0000-1000-8000-00805f9b34fb");
+    private static final UUID DESCRIPTOR_CONFIG = UUID.fromString(GattAttributes.CLIENT_CHARACTERISTIC_CONFIG_DESC); // UUID.fromString("00002902-0000-1000-8000-00805f9b34fb");
+//    public static UUID DESCRIPTOR_USER_DESC = UUID.fromString("00002901-0000-1000-8000-00805f9b34fb");
 
-    public static final UUID SERVICE_UUID = UUID.fromString(GattAttributes.HM_10_CONF); // UUID.fromString("795090c7-420d-4048-a24e-18e60180e23c");
-    private static final UUID CHARACTERISTIC_RXTX_UUID = UUID.fromString(GattAttributes.HM_RX_TX);// UUID.fromString("31517c58-66bf-470c-b662-e352a6c80cba");
+    public static final UUID SERVICE_UUID = UUID.fromString(GattAttributes.HM_10_CUSTOM_SERVICE); // UUID.fromString("795090c7-420d-4048-a24e-18e60180e23c");
+    private static final UUID CHARACTERISTIC_RXTX_UUID = UUID.fromString(GattAttributes.HM_RX_TX_CUSTOM_CHARACTERISTIC);// UUID.fromString("31517c58-66bf-470c-b662-e352a6c80cba");
     private static final UUID CHARACTERISTIC_INTERACTOR_UUID = CHARACTERISTIC_RXTX_UUID; //UUID.fromString("0b89d2d4-0ea6-4141-86bb-0c5fb91ab14a");
     private Context mContext;
-    private OnCounterReadListener mListener;
+    private OnCharacteristicReadListener mListener;
     private String mDeviceAddress;
     private BluetoothManager mBluetoothManager;
     private BluetoothAdapter mBluetoothAdapter;
@@ -55,7 +53,7 @@ public class GattClient {
                 gatt.discoverServices();
             } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
                 Log.i(TAG, "Disconnected from GATT client");
-                mListener.onConnected(false);
+                mListener.onBLEConnected(false);
             }
         }
 
@@ -77,7 +75,7 @@ public class GattClient {
                         }
                     }
                 }
-                mListener.onConnected(connected);
+                mListener.onBLEConnected(connected);
             } else {
                 Log.w(TAG, "onServicesDiscovered received: " + status);
             }
@@ -85,12 +83,12 @@ public class GattClient {
 
         @Override
         public void onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
-            readCounterCharacteristic(characteristic);
+            readCharacteristic(characteristic);
         }
 
         @Override
         public void onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
-            readCounterCharacteristic(characteristic);
+            readCharacteristic(characteristic);
         }
 
         @Override
@@ -101,11 +99,15 @@ public class GattClient {
             }
         }
 
-        private void readCounterCharacteristic(BluetoothGattCharacteristic characteristic) {
+        private void readCharacteristic(BluetoothGattCharacteristic characteristic) {
             if (CHARACTERISTIC_RXTX_UUID.equals(characteristic.getUuid())) {
                 byte[] data = characteristic.getValue();
-                int value = Ints.fromByteArray(data);
-                mListener.onCounterRead(value);
+
+                String characteristicData = new String(data);
+
+                Log.i(TAG, "Characteristic: " + characteristic.getUuid() + " ->  " + characteristicData);
+
+                mListener.onBLECharacteristicRead(characteristicData);
             }
         }
     };
@@ -142,7 +144,7 @@ public class GattClient {
         return desc.getBytes(Charset.forName("UTF-8"));
     }
 
-    public void onCreate(Context context, String deviceAddress, OnCounterReadListener listener) throws RuntimeException {
+    public void onCreate(Context context, String deviceAddress, OnCharacteristicReadListener listener) throws RuntimeException {
         mContext = context;
         mListener = listener;
         mDeviceAddress = deviceAddress;
@@ -176,7 +178,7 @@ public class GattClient {
         mContext.unregisterReceiver(mBluetoothReceiver);
     }
 
-    public void writeInteractor() {
+    public void writeCommand() {
         BluetoothGattCharacteristic interactor = mBluetoothGatt.getService(SERVICE_UUID).getCharacteristic(CHARACTERISTIC_INTERACTOR_UUID);
         interactor.setValue("SNAP!".getBytes());
         mBluetoothGatt.writeCharacteristic(interactor);
@@ -216,9 +218,9 @@ public class GattClient {
         }
     }
 
-    public interface OnCounterReadListener {
-        void onCounterRead(int value);
+    public interface OnCharacteristicReadListener {
+        void onBLECharacteristicRead(String value);
 
-        void onConnected(boolean success);
+        void onBLEConnected(boolean success);
     }
 }
