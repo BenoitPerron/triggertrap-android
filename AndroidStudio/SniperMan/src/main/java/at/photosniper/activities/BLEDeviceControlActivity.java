@@ -150,6 +150,8 @@ public class BLEDeviceControlActivity extends Activity {
 
         getActionBar().setTitle(mDeviceName);
         getActionBar().setDisplayHomeAsUpEnabled(true);
+
+
         Intent gattServiceIntent = new Intent(this, BluetoothLeService.class);
         bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
     }
@@ -289,10 +291,9 @@ public class BLEDeviceControlActivity extends Activity {
     private void makeChange() {
         String str = RGBFrame[0] + "," + RGBFrame[1] + "," + RGBFrame[2] + "\n";
         Log.d(TAG, "Sending result=" + str);
-        final byte[] tx = str.getBytes();
 
         if (mConnected) {
-            characteristicTX.setValue(tx);
+            characteristicTX.setValue(str.getBytes());
             mBluetoothLeService.writeCharacteristic(characteristicTX);
             mBluetoothLeService.setCharacteristicNotification(characteristicRX, true);
         }

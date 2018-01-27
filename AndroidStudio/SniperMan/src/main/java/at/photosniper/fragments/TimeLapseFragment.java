@@ -123,7 +123,7 @@ public class TimeLapseFragment extends TimeFragment implements DialpadManager.In
         mTimeView.setUpdateListener(this);
         mErrorIcon = (ImageView) mRootView.findViewById(R.id.errorIcon);
 
-        if (mTimeView.getTime() < PhotoSniperApp.getInstance(getActivity()).getBeepLength()) {
+        if (mTimeView.getTime() < 0) {
             mErrorIcon.setRotationY(0);
             mErrorIcon.setVisibility(View.VISIBLE);
             mValidState = ValidState.IN_VALID;
@@ -397,7 +397,7 @@ public class TimeLapseFragment extends TimeFragment implements DialpadManager.In
 
     @Override
     public void onInputUpdated() {
-        if (mTimeView.getTime() < PhotoSniperApp.getInstance(getActivity()).getBeepLength()) {
+        if (mTimeView.getTime() < 0) {
             if (mValidState != ValidState.IN_VALID) {
                 mErrorIcon.setVisibility(View.VISIBLE);
                 mErrorIcon.setRotationY(90);

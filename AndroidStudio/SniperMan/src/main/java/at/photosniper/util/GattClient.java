@@ -24,6 +24,9 @@ import java.nio.charset.Charset;
 import java.util.UUID;
 
 import static android.content.Context.BLUETOOTH_SERVICE;
+import static at.photosniper.service.BluetoothLeService.UUID_DESCRIPTOR;
+import static at.photosniper.service.BluetoothLeService.UUID_HM_RX_TX;
+import static at.photosniper.service.BluetoothLeService.UUID_SERVICE;
 
 public class GattClient {
 
@@ -31,12 +34,13 @@ public class GattClient {
 
 
     // UUID for the UART BTLE client characteristic which is necessary for notifications.
-    private static final UUID DESCRIPTOR_CONFIG = UUID.fromString(GattAttributes.CLIENT_CHARACTERISTIC_CONFIG_DESC); // UUID.fromString("00002902-0000-1000-8000-00805f9b34fb");
+//    private static final UUID DESCRIPTOR_CONFIG = UUID.fromString(GattAttributes.CLIENT_CHARACTERISTIC_CONFIG_DESC); // UUID.fromString("00002902-0000-1000-8000-00805f9b34fb");
 //    public static UUID DESCRIPTOR_USER_DESC = UUID.fromString("00002901-0000-1000-8000-00805f9b34fb");
 
-    public static final UUID SERVICE_UUID = UUID.fromString(GattAttributes.HM_10_CUSTOM_SERVICE); // UUID.fromString("795090c7-420d-4048-a24e-18e60180e23c");
-    private static final UUID CHARACTERISTIC_RXTX_UUID = UUID.fromString(GattAttributes.HM_RX_TX_CUSTOM_CHARACTERISTIC);// UUID.fromString("31517c58-66bf-470c-b662-e352a6c80cba");
-    private static final UUID CHARACTERISTIC_INTERACTOR_UUID = CHARACTERISTIC_RXTX_UUID; //UUID.fromString("0b89d2d4-0ea6-4141-86bb-0c5fb91ab14a");
+//    public static final UUID SERVICE_UUID = UUID.fromString(GattAttributes.HM_10_CUSTOM_SERVICE); // UUID.fromString("795090c7-420d-4048-a24e-18e60180e23c");
+//    private static final UUID CHARACTERISTIC_RXTX_UUID = UUID.fromString(GattAttributes.HM_RX_TX_CUSTOM_CHARACTERISTIC);// UUID.fromString("31517c58-66bf-470c-b662-e352a6c80cba");
+//    private static final UUID CHARACTERISTIC_INTERACTOR_UUID = CHARACTERISTIC_RXTX_UUID; //UUID.fromString("0b89d2d4-0ea6-4141-86bb-0c5fb91ab14a");
+
     private Context mContext;
     private OnCharacteristicReadListener mListener;
     private String mDeviceAddress;
@@ -62,13 +66,13 @@ public class GattClient {
             if (status == BluetoothGatt.GATT_SUCCESS) {
                 boolean connected = false;
 
-                BluetoothGattService service = gatt.getService(SERVICE_UUID);
+                BluetoothGattService service = gatt.getService(UUID_SERVICE);
                 if (service != null) {
-                    BluetoothGattCharacteristic characteristic = service.getCharacteristic(CHARACTERISTIC_RXTX_UUID);
+                    BluetoothGattCharacteristic characteristic = service.getCharacteristic(UUID_HM_RX_TX);
                     if (characteristic != null) {
                         gatt.setCharacteristicNotification(characteristic, true);
 
-                        BluetoothGattDescriptor descriptor = characteristic.getDescriptor(DESCRIPTOR_CONFIG);
+                        BluetoothGattDescriptor descriptor = characteristic.getDescriptor(UUID_DESCRIPTOR);
                         if (descriptor != null) {
                             descriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
                             connected = gatt.writeDescriptor(descriptor);
@@ -93,14 +97,14 @@ public class GattClient {
 
         @Override
         public void onDescriptorWrite(BluetoothGatt gatt, BluetoothGattDescriptor descriptor, int status) {
-            if (DESCRIPTOR_CONFIG.equals(descriptor.getUuid())) {
-                BluetoothGattCharacteristic characteristic = gatt.getService(SERVICE_UUID).getCharacteristic(CHARACTERISTIC_RXTX_UUID);
+            if (UUID_DESCRIPTOR.equals(descriptor.getUuid())) {
+                BluetoothGattCharacteristic characteristic = gatt.getService(UUID_SERVICE).getCharacteristic(UUID_HM_RX_TX);
                 gatt.readCharacteristic(characteristic);
             }
         }
 
         private void readCharacteristic(BluetoothGattCharacteristic characteristic) {
-            if (CHARACTERISTIC_RXTX_UUID.equals(characteristic.getUuid())) {
+            if (UUID_HM_RX_TX.equals(characteristic.getUuid())) {
                 byte[] data = characteristic.getValue();
 
                 String characteristicData = new String(data);
@@ -133,9 +137,9 @@ public class GattClient {
     public static byte[] getUserDescription(UUID characteristicUUID) {
         String desc;
 
-        if (CHARACTERISTIC_RXTX_UUID.equals(characteristicUUID)) {
+        if (UUID_HM_RX_TX.equals(characteristicUUID)) {
             desc = "RX TX I/O";
-        } else if (CHARACTERISTIC_INTERACTOR_UUID.equals(characteristicUUID)) {
+        } else if (UUID_HM_RX_TX.equals(characteristicUUID)) {
             desc = "same";
         } else {
             desc = "";
@@ -158,6 +162,7 @@ public class GattClient {
         // Register for system Bluetooth events
         IntentFilter filter = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
         mContext.registerReceiver(mBluetoothReceiver, filter);
+
         if (!mBluetoothAdapter.isEnabled()) {
             Log.w(TAG, "Bluetooth is currently disabled... enabling");
             mBluetoothAdapter.enable();
@@ -179,9 +184,14 @@ public class GattClient {
     }
 
     public void writeCommand() {
-        BluetoothGattCharacteristic interactor = mBluetoothGatt.getService(SERVICE_UUID).getCharacteristic(CHARACTERISTIC_INTERACTOR_UUID);
+        BluetoothGattCharacteristic interactor = mBluetoothGatt.getService(UUID_SERVICE).getCharacteristic(UUID_HM_RX_TX);
         interactor.setValue("SNAP!".getBytes());
-        mBluetoothGatt.writeCharacteristic(interactor);
+        if (!mBluetoothGatt.writeCharacteristic(interactor)) {
+            Log.w(TAG, "writeCharacteristic failed!!");
+        } else {
+            mBluetoothGatt.setCharacteristicNotification(interactor, true);
+        }
+
     }
 
     private boolean checkBluetoothSupport(BluetoothAdapter bluetoothAdapter) {

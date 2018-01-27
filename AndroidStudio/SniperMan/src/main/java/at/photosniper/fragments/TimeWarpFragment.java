@@ -639,7 +639,7 @@ public class TimeWarpFragment extends TimeFragment implements DialpadManager.Inp
         }
 
         protected ArrayList<Float> doInBackground(Void... arg0) {
-            long[] pauses = mInterpolator.getOriginalPauses(mTimewarpDurationView.getTime(), mTimewarpIterationsView.getValue(), PhotoSniperApp.getInstance(getActivity()).getBeepLength());
+            long[] pauses = mInterpolator.getOriginalPauses(mTimewarpDurationView.getTime(), mTimewarpIterationsView.getValue(), 0);
 
             overlapCoords.clear();
             int MAXIMUM_OVERLAPS = 150;

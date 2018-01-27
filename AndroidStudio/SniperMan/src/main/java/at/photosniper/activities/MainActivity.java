@@ -18,7 +18,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
-import android.os.ParcelUuid;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
@@ -93,9 +92,7 @@ import no.nordicsemi.android.support.v18.scanner.ScanResult;
 import no.nordicsemi.android.support.v18.scanner.ScanSettings;
 
 
-
-public class MainActivity extends Activity implements PulseSequenceFragment.PulseSequenceListener, PhotoSniperServiceListener, TimedFragment.TimedListener, StartStopListener, SoundSensorFragment.SoundSensorListener, SelfTimerFragment.SelfTimerListener, PressHoldFragment.PressHoldListener, CableReleaseFragment.SimpleModeListener, QuickReleaseFragment.QuickReleaseListener, DialpadManager.InputSelectionListener, DistanceLapseFragment.DistanceLapseListener, SonyWiFiRPC.SonyWiFiConnectionListener, SonyWiFiRPC.ResponseHandler, SonyWiFiRPC.LiveViewCallback
-{
+public class MainActivity extends Activity implements PulseSequenceFragment.PulseSequenceListener, PhotoSniperServiceListener, TimedFragment.TimedListener, StartStopListener, SoundSensorFragment.SoundSensorListener, SelfTimerFragment.SelfTimerListener, PressHoldFragment.PressHoldListener, CableReleaseFragment.SimpleModeListener, QuickReleaseFragment.QuickReleaseListener, DialpadManager.InputSelectionListener, DistanceLapseFragment.DistanceLapseListener, SonyWiFiRPC.SonyWiFiConnectionListener, SonyWiFiRPC.ResponseHandler, SonyWiFiRPC.LiveViewCallback {
 
     // Saved instance keys
     public static final String FRAGMENT_STATE = "fragment_state";
@@ -362,9 +359,9 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
         // in foreground
         if (mService != null) {
             if (!isChangingConfigurations() && mService.getState() == PhotoSniperService.State.IN_PROGRESS) {
-            Intent intent = new Intent(this, PhotoSniperService.class);
-            startService(intent);
-            mService.goToForeground();
+                Intent intent = new Intent(this, PhotoSniperService.class);
+                startService(intent);
+                mService.goToForeground();
             }
         }
 
@@ -1934,11 +1931,12 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
         public void onScanResult(int callbackType, ScanResult result) {
             // We scan with report delay > 0. This will never be called.
             Log.i(TAG, "onScanResult: " + result.getDevice().getAddress());
+            stopLeScan();
+            connectBLE(result.getDevice());
         }
 
         @Override
         public void onBatchScanResults(List<ScanResult> results) {
-
 
             if (!results.isEmpty()) {
                 Log.i(TAG, "onBatchScanResults: " + results.toString());
@@ -1965,6 +1963,12 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
             // Ensures Bluetooth is enabled on the device
             BluetoothManager btManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
             BluetoothAdapter btAdapter = btManager.getAdapter();
+
+            if (!btAdapter.isEnabled()) {
+                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+            }
+
             if (btAdapter.isEnabled()) {
 
                 startLeScan();
@@ -1977,16 +1981,17 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
 //                        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_PERMISSION_LOCATION);
 //                    }
 //                }
-//            } else {
-//                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-//                startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-//            }
             } else {
-                Toast.makeText(this, "BLE is not enabled/supported", Toast.LENGTH_LONG).show();
-                finish();
+                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
             }
+        } else {
+            Toast.makeText(this, "BLE is not enabled/supported", Toast.LENGTH_LONG).show();
+//                finish();
+
         }
     }
+
 
     private boolean isBleSupported() {
         return getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE);
@@ -1996,14 +2001,14 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
 
         mScanning = true;
 
-        ScanSettings settings = new ScanSettings.Builder().setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY).setReportDelay(1000).build();
+        ScanSettings settings = new ScanSettings.Builder().setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY).setReportDelay(0).build();
         List<ScanFilter> filters = new ArrayList<>();
 //        filters.add(new ScanFilter.Builder().setServiceUuid(new ParcelUuid(GattClient.SERVICE_UUID)).build());
 
         // get profile here
         String ourBLEDevice = "";
         try {
-            SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+            SharedPreferences sharedPref = getSharedPreferences("BLE", Context.MODE_PRIVATE);
             ourBLEDevice = sharedPref.getString(getString(R.string.BLE_Device), "");
 
         } catch (Exception x) {
@@ -2012,14 +2017,21 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
 
         if ((ourBLEDevice != null) && (ourBLEDevice.length() > 1)) {
             filters.add(new ScanFilter.Builder().setDeviceAddress(ourBLEDevice).build());
+
+            if (isBleSupported()) {
+                mScanner.startScan(filters, settings, mScanCallback);
+                // Stops scanning after a pre-defined scan period.
+                mStopScanHandler.postDelayed(mStopScanRunnable, SCAN_TIMEOUT_MS);
+            }
+
         } else {
-            filters.add(new ScanFilter.Builder().setServiceUuid(new ParcelUuid(GattClient.SERVICE_UUID)).build());
+//            filters.add(new ScanFilter.Builder().setServiceUuid(new ParcelUuid(UUID_SERVICE)).build());
+
+            Intent intent = new Intent(this, BLEDeviceScanActivity.class);
+            startActivity(intent);
+
         }
 
-        mScanner.startScan(filters, settings, mScanCallback);
-
-        // Stops scanning after a pre-defined scan period.
-        mStopScanHandler.postDelayed(mStopScanRunnable, SCAN_TIMEOUT_MS);
 
 //        invalidateOptionsMenu();
     }
@@ -2028,8 +2040,14 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
         if (mScanning) {
             mScanning = false;
 
-            mScanner.stopScan(mScanCallback);
-            mStopScanHandler.removeCallbacks(mStopScanRunnable);
+            try {
+                mScanner.stopScan(mScanCallback);
+                mStopScanHandler.removeCallbacks(mStopScanRunnable);
+                Log.d(TAG, "BLE Scanning stopped");
+            } catch (NullPointerException exception) {
+                Log.e(TAG, "Can't stop BLE scan. Unexpected NullPointerException", exception);
+            }
+
 
 //            invalidateOptionsMenu();
         }
@@ -2054,6 +2072,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
                 });
             }
 
+
             @Override
             public void onBLEConnected(final boolean success) {
                 runOnUiThread(new Runnable() {
@@ -2061,9 +2080,11 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
                     public void run() {
                         if (!success) {
                             Toast.makeText(MainActivity.this, R.string.BLEConnectionError, Toast.LENGTH_LONG).show();
-                            PhotoSniperApp.getInstance(MainActivity.this).setBLEgattClient(null);
 
+                            PhotoSniperApp.getInstance(MainActivity.this).setBLEgattClient(null);
                             // start to listen again ?
+                        } else {
+                            PhotoSniperApp.getInstance(MainActivity.this).setBLEgattClient(mGattClient);
                         }
 
                     }
@@ -2071,7 +2092,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
             }
         });
 
-        PhotoSniperApp.getInstance(this).setBLEgattClient(mGattClient);
+//        PhotoSniperApp.getInstance(this).setBLEgattClient(mGattClient);
 
 //        Intent intent = new Intent(this, InteractActivity.class);
 //        intent.putExtra(InteractActivity.EXTRA_DEVICE_ADDRESS, device.getAddress());
@@ -2079,8 +2100,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
 //        finish();
     }
 
-    // BLE --- stop
-
+// BLE --- stop
 
 
     private interface DrawerGroups {

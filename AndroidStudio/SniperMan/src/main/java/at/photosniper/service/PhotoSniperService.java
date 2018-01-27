@@ -35,10 +35,9 @@ import at.photosniper.util.PulseGenerator;
 import at.photosniper.util.SonyWiFiRPC;
 import at.photosniper.util.StopwatchTimer;
 import at.photosniper.wifi.PhotoSniperServiceInfo;
-import at.photosniper.wifi.SlaveSocket;
 
 
-public class PhotoSniperService extends Service implements OutputListener, SlaveSocket.SlaveListener, MicVolumeMonitor.VolumeListener, PhotoSniperLocationService.LocationListener
+public class PhotoSniperService extends Service implements OutputListener, MicVolumeMonitor.VolumeListener, PhotoSniperLocationService.LocationListener
 {
 
     private static final String TAG = PhotoSniperService.class.getSimpleName();
@@ -561,21 +560,11 @@ public class PhotoSniperService extends Service implements OutputListener, Slave
             mListener.onServiceStartSimple();
         }
 
-        trigger(PhotoSniperApp.getInstance(this).getBeepLength());
+        trigger(0);
 
 
     }
 
-    /*
-     *
-     */
-    private void playWifiSlaveBeep() {
-
-        if (mListener != null) {
-            mListener.onServiceStartSimple();
-        }
-        trigger(PhotoSniperApp.getInstance(this).getBeepLength());
-    }
 
     /*
      * Timed mode methods
@@ -679,7 +668,7 @@ public class PhotoSniperService extends Service implements OutputListener, Slave
     }
 
     private void finishSelfTimerMode() {
-        trigger(PhotoSniperApp.getInstance(this).getBeepLength());
+        trigger(0);
 
         stopSelfTimerMode();
     }
@@ -788,7 +777,7 @@ public class PhotoSniperService extends Service implements OutputListener, Slave
     }
 
     public void onQuickStopPress() {
-        trigger(PhotoSniperApp.getInstance(this).getBeepLength());
+        trigger(0);
         mStopwatchTimer.cancel();
         mListener.onServicePressStop();
         mState = State.IDLE;
@@ -816,7 +805,7 @@ public class PhotoSniperService extends Service implements OutputListener, Slave
 
     @Override
     public void onExceedThreshold(int amplitude) {
-        trigger(PhotoSniperApp.getInstance(this).getBeepLength());
+        trigger(0);
         if (mListener != null && !mIsRunningInForeground) {
             mListener.onSoundExceedThreshold(amplitude);
         }
@@ -876,7 +865,7 @@ public class PhotoSniperService extends Service implements OutputListener, Slave
 
         if (mAccumulativeDistance >= mTriggerDistance) {
             // Trigger a beep if we travel greater than the Trigger distance.
-            trigger(PhotoSniperApp.getInstance(this).getBeepLength());
+            trigger(0);
             mAccumulativeDistance = mAccumulativeDistance % mTriggerDistance;
         }
 
@@ -939,16 +928,6 @@ public class PhotoSniperService extends Service implements OutputListener, Slave
 
     public void onClientDisconnectionReceived(String name, String uniqueName) {
         mListener.onClientDisconnected(name, uniqueName);
-    }
-
-
-    /**
-     * Listener for SlaveSocket
-     */
-    @Override
-    public void onSlaveBeep() {
-        playWifiSlaveBeep();
-
     }
 
 

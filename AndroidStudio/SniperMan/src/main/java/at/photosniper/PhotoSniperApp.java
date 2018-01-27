@@ -314,16 +314,16 @@ public class PhotoSniperApp {
         editor.apply();
     }
 
-    public long getBeepLength() {
-        // Get the Beep Length from the DEFAULT share prefs made with the
-        // preferences.xml
-        if (mBeepLength == UNINITIALIZED) {
-            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mAppContext);
-            String pulseLengthStr = sharedPref.getString(SettingsFragment.PULSE_LENGTH_SETTING, "");
-            mBeepLength = Long.parseLong(pulseLengthStr);
-        }
-        return mBeepLength;
-    }
+//    public long getBeepLength() {
+//        // Get the Beep Length from the DEFAULT share prefs made with the
+//        // preferences.xml
+//        if (mBeepLength == UNINITIALIZED) {
+//            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mAppContext);
+//            String pulseLengthStr = sharedPref.getString(SettingsFragment.PULSE_LENGTH_SETTING, "");
+//            mBeepLength = Long.parseLong(pulseLengthStr);
+//        }
+//        return mBeepLength;
+//    }
 
     public void setBeepLength(long beepLength) {
         mBeepLength = beepLength;
