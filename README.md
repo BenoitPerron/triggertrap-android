@@ -1,14 +1,16 @@
-# Triggertrap Read Me & Licence
+# Photosniper Read Me & Licence
 
-Triggertrap is an app that makes it easy for photographers to use their phone as a wired remote control. 
+Photosniper is an app that makes it easy for photographers to use their phone as a wireless remote control. 
 
-The Triggertrap system consists of 3 parts: 
+The Photosniper system consists of 3 parts: 
 
-- An app for iOS or Android
-- A Mobile Dongle that turns an audio signal into a switch
+- An app for Android
+- A Mobile Dongle that turns an Bluetooth/WiFi signal into either a IR signal or a shutter command over a specific connection wire
 - A Camera Connection Cable for a specific camera. 
 
-Triggertrap is a commercial project that was conceived in 2010, launched in 2011, and ultimately went out of business in 2017. 
+SONY cameras that support wlan control - are supported directly to be triggered from the app
+
+Software is based on original triggertrap implementation 
 
 # Credits
 
