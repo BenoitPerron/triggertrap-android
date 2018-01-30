@@ -183,9 +183,9 @@ public class GattClient {
         mContext.unregisterReceiver(mBluetoothReceiver);
     }
 
-    public void writeCommand() {
+    public void writeCommand(String command) {
         BluetoothGattCharacteristic interactor = mBluetoothGatt.getService(UUID_SERVICE).getCharacteristic(UUID_HM_RX_TX);
-        interactor.setValue("SNAP!".getBytes());
+        interactor.setValue(command.getBytes());
         if (!mBluetoothGatt.writeCharacteristic(interactor)) {
             Log.w(TAG, "writeCharacteristic failed!!");
         } else {

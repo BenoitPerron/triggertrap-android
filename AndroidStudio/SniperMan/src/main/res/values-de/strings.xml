@@ -23,6 +23,7 @@
     <string name="a_quick_guide">Eine Schnellanleitung</string>
     <string name="about">INFOS</string>
     <string name="action_settings">Einstellungen</string>
+    <string name="action_BLEsettings">BLE Einstellungen</string>
     <string name="anyway_enough_of">Wie auch immer, genug der Schwafelei.</string>
     <string name="app_name">PhotoSniper</string>
 
@@ -384,5 +385,43 @@
 
     <!-- styled Dlg -->
     <string name="dialog_close">Schließen</string>
+
+
+    <!-- bluetooth -->
+    <string name="BLE_Not_Supported">BLE nicht unterstützt</string>
+    <string name="BLE_Device">BLE Gerät</string>
+    <string name="BLEConnectionError">BLE Verbindungsfehler</string>
+
+    <string name="ble_not_supported">BLE ist nicht unterstützt</string>
+
+    <string name="label_data">Data:</string>
+    <string name="label_device_address">Device address:</string>
+    <string name="label_state">Status:</string>
+    <string name="no_data">Keine Daten</string>
+    <string name="connected">Connected</string>
+    <string name="disconnected">Disconnected</string>
+    <string name="title_devices">BLE Device Scan</string>
+    <string name="error_bluetooth_not_supported">Bluetooth nicht supported.</string>
+
+    <string name="unknown_device">unbekanntes Gerät</string>
+    <string name="unknown_characteristic">Unknown characteristic</string>
+    <string name="unknown_service">Unknown service</string>
+
+    <!-- Menu items -->
+    <string name="menu_connect">Verbinden</string>
+    <string name="menu_disconnect">Trennen</string>
+    <string name="menu_scan">Scannen</string>
+    <string name="menu_stop">Stop</string>
+    <string name="is_serial">Serial Present:</string>
+    <string-array name="roygbiv">
+        <item>Red</item>
+        <item>Green</item>
+        <item>Blue</item>
+    </string-array>
+    <string name="button">Send</string>
+    <string name="red_slide">Red</string>
+    <string name="blue_slide">Blue</string>
+    <string name="green_slide">Green</string>
+
 
 </resources>

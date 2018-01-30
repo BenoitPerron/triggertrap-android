@@ -981,7 +981,7 @@ public class PhotoSniperService extends Service implements OutputListener, MicVo
 
         // ... and for BLE
         if (PhotoSniperApp.getInstance(this).getBLEgattClient() != null) {
-            PhotoSniperApp.getInstance(this).getBLEgattClient().writeCommand();
+            PhotoSniperApp.getInstance(this).getBLEgattClient().writeCommand("A,100,100,1!");
         }
 
 
