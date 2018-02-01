@@ -59,7 +59,6 @@ public class BrampingFragment extends PulseSequenceFragment implements DialpadMa
     private long mDuration;
     private long mInterval;
     private boolean mSyncCircle = false;
-    private boolean mScrolling = false;
     private boolean mAutomaticAdjustStart = false;
     private boolean mAutomaticAdjustEnd = false;
     private String[] mShutterSpeeds;
@@ -106,7 +105,7 @@ public class BrampingFragment extends PulseSequenceFragment implements DialpadMa
 
 
         //String [] validShutterSpeeds  = getValidShutterSpeeds();
-        ArrayWheelAdapter<String> exposureAdapter = new ArrayWheelAdapter<String>(getActivity(), mShutterSpeeds);
+        ArrayWheelAdapter<String> exposureAdapter = new ArrayWheelAdapter<>(getActivity(), mShutterSpeeds);
 
         exposureAdapter.setItemResource(R.layout.wheel_text_centered);
         exposureAdapter.setItemTextResource(R.id.text);
@@ -123,7 +122,7 @@ public class BrampingFragment extends PulseSequenceFragment implements DialpadMa
         setUpCircleTimer();
         setUpDuration();
         setValidShutterSpeeds();
-        resetVolumeWarning();
+
         return mRootView;
     }
 
@@ -195,7 +194,6 @@ public class BrampingFragment extends PulseSequenceFragment implements DialpadMa
             public void onToggleOn() {
                 Log.d(TAG, "onToggleON");
                 onStartTimer();
-                checkVolume();
 
             }
 
@@ -247,11 +245,9 @@ public class BrampingFragment extends PulseSequenceFragment implements DialpadMa
     private void setUpStartExposureSetting(final AbstractWheel exposure) {
         exposure.addScrollingListener(new OnWheelScrollListener() {
             public void onScrollingStarted(AbstractWheel wheel) {
-                mScrolling = true;
             }
 
             public void onScrollingFinished(AbstractWheel wheel) {
-                mScrolling = false;
                 Log.d(TAG, "New shutter speed: " + mShutterSpeedValues[exposure.getCurrentItem()]);
                 mStartExposure = mShutterSpeedValues[exposure.getCurrentItem()];
                 if (mAutomaticAdjustStart) {
@@ -298,11 +294,9 @@ public class BrampingFragment extends PulseSequenceFragment implements DialpadMa
     private void setUpEndExposureSetting(final AbstractWheel exposure) {
         exposure.addScrollingListener(new OnWheelScrollListener() {
             public void onScrollingStarted(AbstractWheel wheel) {
-                mScrolling = true;
             }
 
             public void onScrollingFinished(AbstractWheel wheel) {
-                mScrolling = false;
                 Log.d(TAG, "New shutter speed: " + mShutterSpeedValues[exposure.getCurrentItem()]);
                 mEndExposure = mShutterSpeedValues[exposure.getCurrentItem()];
                 if (mAutomaticAdjustEnd) {
@@ -593,16 +587,10 @@ public class BrampingFragment extends PulseSequenceFragment implements DialpadMa
         seconds = seconds - minutes * 60;
         hours = minutes / 60;
         minutes = minutes - hours * 60;
-        StringBuilder formattedTime = new StringBuilder().append(hours).append("h ").append(String.format("%02d", minutes)).append("m ").append(String.format("%02d", seconds)).append("s")
+
+        return String.valueOf(hours) + "h " + String.format("%02d", minutes) + "m " + String.format("%02d", seconds) + "s";
 //				.append(String.format("%02d", hundreds))
-                ;
 
-        return formattedTime.toString();
-
-    }
-
-    public int getCurrentExposureCount() {
-        return mCurrentExposureCount;
     }
 
 }

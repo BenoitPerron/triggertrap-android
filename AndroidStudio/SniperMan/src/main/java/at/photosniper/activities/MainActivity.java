@@ -19,6 +19,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -43,7 +44,6 @@ import com.praetoriandroid.cameraremote.LiveViewFetcher;
 import com.praetoriandroid.cameraremote.rpc.BaseResponse;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import at.photosniper.PhotoSniperApp;
@@ -69,12 +69,9 @@ import at.photosniper.fragments.SunriseSunsetFragment;
 import at.photosniper.fragments.TimeLapseFragment;
 import at.photosniper.fragments.TimeWarpFragment;
 import at.photosniper.fragments.TimedFragment;
-import at.photosniper.fragments.WifiMasterFragment;
-import at.photosniper.fragments.WifiSlaveFragment;
 import at.photosniper.fragments.dialog.ErrorPlayServicesFragment;
 import at.photosniper.fragments.dialog.RunningActionDialog;
 import at.photosniper.fragments.handler.DrawerFragmentHandler;
-import at.photosniper.inputs.HeadsetWatcher;
 import at.photosniper.location.PhotoSniperLocationService;
 import at.photosniper.service.PhotoSniperService;
 import at.photosniper.service.PhotoSniperService.PhotoSniperServiceBinder;
@@ -84,7 +81,6 @@ import at.photosniper.util.DialpadManager;
 import at.photosniper.util.GattClient;
 import at.photosniper.util.SonyWiFiRPC;
 import at.photosniper.util.WarningMessageManager;
-import at.photosniper.wifi.PhotoSniperServiceInfo;
 import no.nordicsemi.android.support.v18.scanner.BluetoothLeScannerCompat;
 import no.nordicsemi.android.support.v18.scanner.ScanCallback;
 import no.nordicsemi.android.support.v18.scanner.ScanFilter;
@@ -117,7 +113,6 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
     private DrawerLayout mDrawerLayout;
     private View mStatusBar;
     private TextView mStatusBarText;
-    private HeadsetWatcher mWhatcher;
     private PhotoSniperLocationService mLocationService = null;
     private DrawerFragmentHandler mDrawerFragHandler = null;
     private String mInitialFragmentTag = PhotoSniperApp.FragmentTags.GETTING_STARTED;
@@ -282,10 +277,6 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
         }
 
         attemptSonyConnect();
-
-
-        // Analytics stuff
-        // AnalyticTracker.getInstance(this).startSession();
     }
 
     private void attemptSonyConnect() {
@@ -364,13 +355,6 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
                 mService.goToForeground();
             }
         }
-
-
-//        setVolumeControlStream(AudioManager.STREAM_RING);
-
-
-        // Analytics stuff
-        //AnalyticTracker.getInstance(this).endSession();
     }
 
     @Override
@@ -745,22 +729,6 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
                     mDrawerFragHandler.onDrawerSelected(this, PhotoSniperApp.FragmentTags.HDR_LAPSE, true, false);
                 }
                 break;
-//            case DrawerGroups.REMOTE_MODES:
-//                if (position == 0) {
-//                    mDrawerFragHandler.onDrawerSelected(this,
-//                            PhotoSniperApp.FragmentTags.WIFI_SLAVE, true, false);
-//                } else if (position == 1) {
-//                    mDrawerFragHandler.onDrawerSelected(this,
-//                            PhotoSniperApp.FragmentTags.PEBBLE, true, false);
-//                }
-//                break;
-//            case DrawerGroups.SETTINGS:
-//                if (position == 0) {
-//
-//                    mDrawerFragHandler.onDrawerSelected(this,
-//                            PhotoSniperApp.FragmentTags.WIFI_MASTER, true, false);
-//                }
-//                break;
 
             case DrawerGroups.CALCULATORS:
                 if (position == 0) {
@@ -823,19 +791,6 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
                 DistanceLapseFragment disrFrag = (DistanceLapseFragment) ttFragment;
                 disrFrag.onDistanceLapseUpdate(mService.getAccumulativeDistance(), mService.getSpeed());
             }
-/*
-            if (mService.isFragmentActive(currentFragTag)
-                    && ttFragment instanceof WifiSlaveFragment) {
-                WifiSlaveFragment slaveFrag = (WifiSlaveFragment) ttFragment;
-                slaveFrag.addAvaiableMasters(mService.getAvailableMasters());
-            }
-
-            if (ttFragment instanceof WifiMasterFragment) {
-                WifiMasterFragment masterFrag = (WifiMasterFragment) ttFragment;
-                ttFragment.setActionState(mService.isWifiMasterOn());
-                masterFrag.addConnectedSlaves(mService.getConnectedSlaves());
-            }
-*/
 
             displaySatusBar();
         }
@@ -942,30 +897,16 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
                 if (timewarpFrag != null) {
                     timewarpFrag.onPulseStop();
 
-                    long sequenceMillis = Calendar.getInstance().getTimeInMillis() - mService.getSequenceStartStopTime().getTimeInMillis();
+//                    long sequenceMillis = Calendar.getInstance().getTimeInMillis() - mService.getSequenceStartStopTime().getTimeInMillis();
 
-//                    AnalyticTracker tracker = AnalyticTracker.getInstance(this);
-//                    tracker.addProperty(AnalyticTracker.Property.MODE, "TimeWarp");
-//                    tracker.addProperty(AnalyticTracker.Property.NO_EXPOSURES_TAKEN,
-//                            timewarpFrag.getCurrentExposureCount());
-//                    tracker.addProperty(AnalyticTracker.Property.SEQUENCE_DURATION, sequenceMillis);
-//                    tracker.trackEvent(AnalyticTracker.Event.SEQUENCE_COMPLETED);
                 }
                 break;
             case PhotoSniperApp.OnGoingAction.STAR_TRAIL:
                 StarTrailFragment startFrag = (StarTrailFragment) fragment;
                 if (startFrag != null) {
 
-                    long sequenceMillis = Calendar.getInstance().getTimeInMillis() - mService.getSequenceStartStopTime().getTimeInMillis();
+//                    long sequenceMillis = Calendar.getInstance().getTimeInMillis() - mService.getSequenceStartStopTime().getTimeInMillis();
 
-//                    AnalyticTracker tracker = AnalyticTracker.getInstance(this);
-//                    tracker.addProperty(AnalyticTracker.Property.MODE, "Star Trail");
-//                    tracker.addProperty(AnalyticTracker.Property.NO_EXPOSURES_TAKEN,
-//                            startFrag.getExposureCount());
-//                    tracker.addProperty(AnalyticTracker.Property.EXPOSURE_DURATION,
-//                            startFrag.getExposureTime());
-//                    tracker.addProperty(AnalyticTracker.Property.SEQUENCE_DURATION, sequenceMillis);
-//                    tracker.trackEvent(AnalyticTracker.Event.SEQUENCE_COMPLETED);
                 }
 
                 break;
@@ -974,28 +915,16 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
                 if (brampFrag != null) {
                     brampFrag.onPulseStop();
 
-                    long sequenceMillis = Calendar.getInstance().getTimeInMillis() - mService.getSequenceStartStopTime().getTimeInMillis();
+//                    long sequenceMillis = Calendar.getInstance().getTimeInMillis() - mService.getSequenceStartStopTime().getTimeInMillis();
 
-//                    AnalyticTracker tracker = AnalyticTracker.getInstance(this);
-//                    tracker.addProperty(AnalyticTracker.Property.MODE, "Bramping");
-//                    tracker.addProperty(AnalyticTracker.Property.NO_EXPOSURES_TAKEN,
-//                            brampFrag.getCurrentExposureCount());
-//                    tracker.addProperty(AnalyticTracker.Property.SEQUENCE_DURATION, sequenceMillis);
-//                    tracker.trackEvent(AnalyticTracker.Event.SEQUENCE_COMPLETED);
                 }
 
                 break;
             case PhotoSniperApp.OnGoingAction.HDR:
                 HdrFragment hdrFragment = (HdrFragment) fragment;
                 if (hdrFragment != null) {
-                    long sequenceMillis = Calendar.getInstance().getTimeInMillis() - mService.getSequenceStartStopTime().getTimeInMillis();
+//                    long sequenceMillis = Calendar.getInstance().getTimeInMillis() - mService.getSequenceStartStopTime().getTimeInMillis();
 
-//                    AnalyticTracker tracker = AnalyticTracker.getInstance(this);
-//                    tracker.addProperty(AnalyticTracker.Property.MODE, "LE HDR");
-//                    tracker.addProperty(AnalyticTracker.Property.NO_EXPOSURES_TAKEN,
-//                            hdrFragment.getCompletedExposures());
-//                    tracker.addProperty(AnalyticTracker.Property.SEQUENCE_DURATION, sequenceMillis);
-//                    tracker.trackEvent(AnalyticTracker.Event.SEQUENCE_COMPLETED);
                 }
 
                 break;
@@ -1003,31 +932,17 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
 
                 HdrTimeLapseFragment hdrTimeLapseFragment = (HdrTimeLapseFragment) fragment;
                 if (hdrTimeLapseFragment != null) {
-                    long sequenceMillis = Calendar.getInstance().getTimeInMillis() - mService.getSequenceStartStopTime().getTimeInMillis();
+//                    long sequenceMillis = Calendar.getInstance().getTimeInMillis() - mService.getSequenceStartStopTime().getTimeInMillis();
 
-//                    AnalyticTracker tracker = AnalyticTracker.getInstance(this);
-//                    tracker.addProperty(AnalyticTracker.Property.MODE, "LE HDR Timelapse");
-//                    tracker.addProperty(AnalyticTracker.Property.NO_EXPOSURES_TAKEN,
-//                            hdrTimeLapseFragment.getCompletedExposures());
-//                    tracker.addProperty(AnalyticTracker.Property.SEQUENCE_DURATION, sequenceMillis);
-//                    tracker.trackEvent(AnalyticTracker.Event.SEQUENCE_COMPLETED);
                 }
                 break;
 
             case PhotoSniperApp.OnGoingAction.TIMELAPSE:
 
-                long sequenceMillis = Calendar.getInstance().getTimeInMillis() - mService.getSequenceStartStopTime().getTimeInMillis();
+//                long sequenceMillis = Calendar.getInstance().getTimeInMillis() - mService.getSequenceStartStopTime().getTimeInMillis();
 
-                TimeLapseFragment timeLapseFragment = (TimeLapseFragment) fragment;
+//                TimeLapseFragment timeLapseFragment = (TimeLapseFragment) fragment;
 
-//                AnalyticTracker tracker = AnalyticTracker.getInstance(this);
-//                tracker.addProperty(AnalyticTracker.Property.MODE, "Timelapse");
-//                tracker.addProperty(AnalyticTracker.Property.NO_EXPOSURES_TAKEN,
-//                        timeLapseFragment.getCurrentExposureCount());
-//                tracker.addProperty(AnalyticTracker.Property.EXPOSURE_DURATION,
-//                        PhotoSniperApp.getInstance(this).getBeepLength());
-//                tracker.addProperty(AnalyticTracker.Property.SEQUENCE_DURATION, sequenceMillis);
-//                tracker.trackEvent(AnalyticTracker.Event.SEQUENCE_COMPLETED);
 
                 break;
         }
@@ -1106,20 +1021,6 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
 
     }
 
-    /*
-     * Listener for Wifi slave Fragment
-	 */
-//    @Override
-//    public void onWatchMaster() {
-//        mService.watchMasterWifi();
-//
-//    }
-//
-//    @Override
-//    public void onUnwatchMaster() {
-//        mService.unWatchMasterWifi();
-//
-//    }
 
     @Override
     public void onStopSoundSensor() {
@@ -1138,20 +1039,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
     public void onDisableSoundThreshold() {
         mService.disableSoundThreshold();
 
-        long sequenceMillis = Calendar.getInstance().getTimeInMillis() - mService.getSequenceStartStopTime().getTimeInMillis();
-
-//        AnalyticTracker tracker = AnalyticTracker.getInstance(this);
-//        tracker.addProperty(AnalyticTracker.Property.MODE, "Sound Sensor");
-//        tracker.addProperty(AnalyticTracker.Property.NO_EXPOSURES_TAKEN,
-//                mShotsTakenCount);
-//        tracker.addProperty(AnalyticTracker.Property.SENSOR_DELAY,
-//                PhotoSniperApp.getInstance(this).getSensorDelay());
-//        tracker.addProperty(AnalyticTracker.Property.SENSOR_RESET_DELAY,
-//                PhotoSniperApp.getInstance(this).getSensorResetDelay());
-//        tracker.addProperty(AnalyticTracker.Property.EXPOSURE_DURATION,
-//                PhotoSniperApp.getInstance(this).getBeepLength());
-//        tracker.addProperty(AnalyticTracker.Property.SEQUENCE_DURATION, sequenceMillis);
-//        tracker.trackEvent(AnalyticTracker.Event.SEQUENCE_COMPLETED);
+//        long sequenceMillis = Calendar.getInstance().getTimeInMillis() - mService.getSequenceStartStopTime().getTimeInMillis();
 
         mShotsTakenCount = 0;
 
@@ -1187,21 +1075,12 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
         if (mService != null) {
             mService.stopLocationUpdates();
 
-            Fragment fragment = getFragmentManager().findFragmentByTag(PhotoSniperApp.FragmentTags.DISTANCE_LAPSE);
+//            Fragment fragment = getFragmentManager().findFragmentByTag(PhotoSniperApp.FragmentTags.DISTANCE_LAPSE);
 
-            DistanceLapseFragment distanceLapsefragment = (DistanceLapseFragment) fragment;
+//            DistanceLapseFragment distanceLapsefragment = (DistanceLapseFragment) fragment;
 
-            long sequenceMillis = Calendar.getInstance().getTimeInMillis() - mService.getSequenceStartStopTime().getTimeInMillis();
+//            long sequenceMillis = Calendar.getInstance().getTimeInMillis() - mService.getSequenceStartStopTime().getTimeInMillis();
 
-//            AnalyticTracker tracker = AnalyticTracker.getInstance(this);
-//            tracker.addProperty(AnalyticTracker.Property.MODE, "DistanceLapse");
-//            tracker.addProperty(AnalyticTracker.Property.NO_EXPOSURES_TAKEN, distanceLapsefragment.getExposureCount());
-//            tracker.addProperty(AnalyticTracker.Property.EXPOSURE_DURATION, PhotoSniperApp.getInstance(this).getBeepLength());
-//            tracker.addProperty(AnalyticTracker.Property.SEQUENCE_DURATION, sequenceMillis);
-//            tracker.addProperty(AnalyticTracker.Property.SPEED_UNIT, PhotoSniperApp.getInstance(this).getDistlapseSpeedUnit());
-//            tracker.addProperty(AnalyticTracker.Property.DISTANCE_UNIT,
-//                    PhotoSniperApp.getInstance(this).getDistlapseUnit());
-//            tracker.trackEvent(AnalyticTracker.Event.SEQUENCE_COMPLETED);
         }
     }
 
@@ -1222,26 +1101,18 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
     @Override
     public void onServiceStartSimple() {
         String currentFragTag = mDrawerFragHandler.getCurrentFragmentTag();
-//        if (currentFragTag.equals(PhotoSniperApp.FragmentTags.SIMPLE)) {
-//            AnalyticTracker tracker = AnalyticTracker.getInstance(this);
-//            tracker.addProperty(AnalyticTracker.Property.MODE, "Simple Cable Release");
-//            tracker.addProperty(AnalyticTracker.Property.NO_EXPOSURES_TAKEN, 1);
-//            tracker.addProperty(AnalyticTracker.Property.EXPOSURE_DURATION,
-//                    PhotoSniperApp.getInstance(this).getBeepLength());
-//            tracker.trackEvent(AnalyticTracker.Event.SEQUENCE_COMPLETED);
-//        }
 
     }
 
     public void onQuickPressStarted() {
-        mService.onQuickStartPress();
+        mService.onQuickPressStart();
     }
     /*
     * Listener for quick release Fragment
      */
 
-    public void onQuickPressStopped() {
-        mService.onQuickStopPress();
+    public void onQuickPressStopped(final String command) {
+        mService.onQuickPressStop(command);
     }
 
     @Override
@@ -1290,12 +1161,6 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
                 PressHoldFragment pressHoldFragment = (PressHoldFragment) fragment;
                 pressHoldFragment.stopStopwatch();
 
-//                AnalyticTracker tracker = AnalyticTracker.getInstance(this);
-//                tracker.addProperty(AnalyticTracker.Property.MODE, "Press and Hold");
-//                tracker.addProperty(AnalyticTracker.Property.NO_EXPOSURES_TAKEN, 1);
-//                tracker.addProperty(AnalyticTracker.Property.SEQUENCE_DURATION, pressHoldFragment.getLastTimeSet());
-//                tracker.addProperty(AnalyticTracker.Property.EXPOSURE_DURATION, pressHoldFragment.getLastTimeSet());
-//                tracker.trackEvent(AnalyticTracker.Event.SEQUENCE_COMPLETED);
             }
             // Check if we need to remove the status bar
             // displaySatusBar();
@@ -1305,12 +1170,6 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
                 QuickReleaseFragment quickReleaseFragmentFragment = (QuickReleaseFragment) fragment;
                 quickReleaseFragmentFragment.stopStopwatch();
 
-//                AnalyticTracker tracker = AnalyticTracker.getInstance(this);
-//                tracker.addProperty(AnalyticTracker.Property.MODE, "Quick Release");
-//                tracker.addProperty(AnalyticTracker.Property.NO_EXPOSURES_TAKEN, 1);
-//                tracker.addProperty(AnalyticTracker.Property.EXPOSURE_DURATION,
-//                        PhotoSniperApp.getInstance(this).getBeepLength());
-//                tracker.trackEvent(AnalyticTracker.Event.SEQUENCE_COMPLETED);
             }
         }
     }
@@ -1347,12 +1206,6 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
             StartStopFragment startStopFrag = (StartStopFragment) fragment;
             startStopFrag.stopStopwatch();
 
-//            AnalyticTracker tracker = AnalyticTracker.getInstance(this);
-//            tracker.addProperty(AnalyticTracker.Property.MODE, "Press and lock");
-//            tracker.addProperty(AnalyticTracker.Property.NO_EXPOSURES_TAKEN, 1);
-//            tracker.addProperty(AnalyticTracker.Property.SEQUENCE_DURATION, startStopFrag.getLastTimeSet());
-//            tracker.addProperty(AnalyticTracker.Property.EXPOSURE_DURATION, startStopFrag.getLastTimeSet());
-//            tracker.trackEvent(AnalyticTracker.Event.SEQUENCE_COMPLETED);
         }
         // Check if we need to remove the status bar
         // displaySatusBar();
@@ -1406,12 +1259,6 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
                 TimedFragment timedFrag = (TimedFragment) fragment;
                 timedFrag.stopTimer();
 
-//                AnalyticTracker tracker = AnalyticTracker.getInstance(this);
-//                tracker.addProperty(AnalyticTracker.Property.MODE, "Timed Release");
-//                tracker.addProperty(AnalyticTracker.Property.NO_EXPOSURES_TAKEN, 1);
-//                tracker.addProperty(AnalyticTracker.Property.EXPOSURE_DURATION, timedFrag.getTimerDuration());
-//                tracker.addProperty(AnalyticTracker.Property.SEQUENCE_DURATION, timedFrag.getTimerDuration());
-//                tracker.trackEvent(AnalyticTracker.Event.SEQUENCE_COMPLETED);
             }
 
 
@@ -1425,13 +1272,6 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
                 SelfTimerFragment timerFrag = (SelfTimerFragment) fragment;
                 timerFrag.stopTimer();
 
-//                AnalyticTracker tracker = AnalyticTracker.getInstance(this);
-//                tracker.addProperty(AnalyticTracker.Property.MODE, "Self Timer");
-//                tracker.addProperty(AnalyticTracker.Property.NO_EXPOSURES_TAKEN, 1);
-//                tracker.addProperty(AnalyticTracker.Property.EXPOSURE_DURATION,
-//                        PhotoSniperApp.getInstance(this).getBeepLength());
-//                tracker.addProperty(AnalyticTracker.Property.SEQUENCE_DURATION, timerFrag.getTimerDuration());
-//                tracker.trackEvent(AnalyticTracker.Event.SEQUENCE_COMPLETED);
             }
         }
 
@@ -1689,133 +1529,6 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
         }
     }
 
-    @Override
-    public void onWifiMasterAdded(final PhotoSniperServiceInfo info) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                String currentFragTag = mDrawerFragHandler.getCurrentFragmentTag();
-                if (currentFragTag.equals(PhotoSniperApp.FragmentTags.WIFI_SLAVE)) {
-                    Fragment fragment = getFragmentManager().findFragmentByTag(currentFragTag);
-                    WifiSlaveFragment slaveFrag = (WifiSlaveFragment) fragment;
-                    slaveFrag.addMaster(info);
-                }
-
-            }
-        });
-
-    }
-
-    @Override
-    public void onWifiMasterRemoved(final PhotoSniperServiceInfo info) {
-        // Log.d(TAG,"onWifiMasterRemoved");
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                String currentFragTag = mDrawerFragHandler.getCurrentFragmentTag();
-                if (currentFragTag.equals(PhotoSniperApp.FragmentTags.WIFI_SLAVE)) {
-                    Fragment fragment = getFragmentManager().findFragmentByTag(currentFragTag);
-                    WifiSlaveFragment slaveFrag = (WifiSlaveFragment) fragment;
-                    slaveFrag.removeMaster(info);
-                }
-
-            }
-        });
-
-    }
-
-    @Override
-    public void onWifiMasterRegsitered(final PhotoSniperServiceInfo info) {
-
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                String currentFragTag = mDrawerFragHandler.getCurrentFragmentTag();
-                if (currentFragTag.equals(PhotoSniperApp.FragmentTags.WIFI_MASTER)) {
-                    Fragment fragment = getFragmentManager().findFragmentByTag(currentFragTag);
-                    WifiMasterFragment masterFrag = (WifiMasterFragment) fragment;
-                    masterFrag.wifimasterRegistered(info);
-                }
-            }
-        });
-
-    }
-
-    @Override
-    public void onWifiMasterUnregister() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (mDrawerFragHandler != null) {
-                    try {
-                        String currentFragTag = mDrawerFragHandler.getCurrentFragmentTag();
-                        if (currentFragTag.equals(PhotoSniperApp.FragmentTags.WIFI_MASTER)) {
-                            Fragment fragment = getFragmentManager().findFragmentByTag(currentFragTag);
-                            WifiMasterFragment masterFrag = (WifiMasterFragment) fragment;
-                            masterFrag.wifiMasterUnregister();
-                        }
-                    } catch (NullPointerException ignored) {
-
-                    }
-                }
-
-            }
-        });
-
-    }
-
-    @Override
-    public void onClientConnected(final String name, final String uniqueName) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                String currentFragTag = mDrawerFragHandler.getCurrentFragmentTag();
-                if (currentFragTag.equals(PhotoSniperApp.FragmentTags.WIFI_MASTER)) {
-                    Fragment fragment = getFragmentManager().findFragmentByTag(currentFragTag);
-                    WifiMasterFragment masterFrag = (WifiMasterFragment) fragment;
-                    masterFrag.onClientConnected(name, uniqueName);
-                }
-
-            }
-        });
-
-    }
-
-    @Override
-    public void onClientDisconnected(final String name, final String uniqueName) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                String currentFragTag = mDrawerFragHandler.getCurrentFragmentTag();
-                if (currentFragTag.equals(PhotoSniperApp.FragmentTags.WIFI_MASTER)) {
-                    Fragment fragment = getFragmentManager().findFragmentByTag(currentFragTag);
-                    WifiMasterFragment masterFrag = (WifiMasterFragment) fragment;
-                    masterFrag.onClientDisconnected(name, uniqueName);
-                }
-
-            }
-        });
-
-    }
-
-//    @Override
-//    public void onPebbleTrigger() {
-//        Log.d(TAG, "onPebbleTrigger");
-//        String currentFragTag = mDrawerFragHandler.getCurrentFragmentTag();
-//        Log.d(TAG, currentFragTag);
-//        if (currentFragTag.equals(PhotoSniperApp.FragmentTags.PEBBLE)) {
-//            Fragment fragment = getFragmentManager().findFragmentByTag(currentFragTag);
-//            PebbleFragment pebbleFrag = (PebbleFragment) fragment;
-//            if (pebbleFrag != null) {
-//                pebbleFrag.onPebbleTrigger();
-//
-////                AnalyticTracker tracker = AnalyticTracker.getInstance(this);
-////                tracker.addProperty(AnalyticTracker.Property.MODE, "Pebble");
-////                tracker.trackEvent(AnalyticTracker.Event.SEQUENCE_COMPLETED);
-//            }
-//        }
-//
-//    }
 
 
     @Override
@@ -1845,19 +1558,6 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
 
     }
 
-//    @Override
-//    public void onDisconnectSlave() {
-//        Log.d(TAG, "onDisconnectSlave");
-//        mService.disconnectFromMaster();
-//    }
-//
-//    public void onConnectSlave(String name, String ipAddress, int port) {
-//        mService.connectToMaster(name, ipAddress, port);
-//    }
-//
-//    public boolean checkWifiMasterOn() {
-//        return mService.isWifiMasterOn();
-//    }
 
 	/*
      * Listener for Wifi Master Fragment
@@ -1893,7 +1593,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, int[] grantResults) {
         if (requestCode == REQUEST_PERMISSION_LOCATION && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             Log.i(TAG, "Permission accepted");
         } else {
@@ -1987,8 +1687,6 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
             }
         } else {
             Toast.makeText(this, "BLE is not enabled/supported", Toast.LENGTH_LONG).show();
-//                finish();
-
         }
     }
 
@@ -2125,7 +1823,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
         }
     }
 
-    public class DrawerExpandableListAdapter extends BaseExpandableListAdapter {
+    private class DrawerExpandableListAdapter extends BaseExpandableListAdapter {
 
         final LayoutInflater inflater = (LayoutInflater) MainActivity.this.getSystemService(MainActivity.LAYOUT_INFLATER_SERVICE);
 
@@ -2133,11 +1831,11 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
             return mModes.get(groupPosition)[childPosition];
         }
 
-        public String getChildSubText(int groupPosition, int childPosition) {
+        String getChildSubText(int groupPosition, int childPosition) {
             return mModesSubText.get(groupPosition)[childPosition];
         }
 
-        public int getIcon(int groupPosition, int childPosition) {
+        int getIcon(int groupPosition, int childPosition) {
             int icon;
             if (groupPosition > (mModeIcons.size() - 1)) {
                 icon = R.drawable.icon_happy;

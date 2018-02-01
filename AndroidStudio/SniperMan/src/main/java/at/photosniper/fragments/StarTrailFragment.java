@@ -102,7 +102,7 @@ public class StarTrailFragment extends PulseSequenceFragment {
         setUpButton();
         setUpAnimations();
         setUpCircleTimer();
-        resetVolumeWarning();
+
         return mRootView;
     }
 
@@ -165,7 +165,7 @@ public class StarTrailFragment extends PulseSequenceFragment {
             public void onToggleOn() {
                 Log.d(TAG, "onToggleON");
                 onStartTimer();
-                checkVolume();
+
             }
 
             @Override

@@ -173,7 +173,7 @@ public class TimeLapseFragment extends TimeFragment implements DialpadManager.In
         });
         setUpButton();
         setKeyBoardSize();
-        resetVolumeWarning();
+
         return mRootView;
     }
 
@@ -186,7 +186,6 @@ public class TimeLapseFragment extends TimeFragment implements DialpadManager.In
                 Log.d(TAG, "onToggleON");
                 mCurrentExposureCount = 0;
                 onStartTimer();
-                checkVolume();
             }
 
             @Override

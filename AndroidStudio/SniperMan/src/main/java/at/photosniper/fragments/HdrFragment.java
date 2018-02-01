@@ -36,9 +36,6 @@ public class HdrFragment extends PulseSequenceFragment {
     private int mCurrentNumExposures = 3;
     private int mCurrentExposuresTaken;
 
-    // Scrolling flag
-    private boolean mScrolling = false;
-
     private View mRootView;
     private OngoingButton mButton;
 
@@ -100,7 +97,7 @@ public class HdrFragment extends PulseSequenceFragment {
         setUpButton();
         setUpAnimations();
         setUpCircleTimer();
-        resetVolumeWarning();
+
         return mRootView;
     }
 
@@ -116,11 +113,9 @@ public class HdrFragment extends PulseSequenceFragment {
     private void setUpMiddleExposure(final AbstractWheel hdrMiddle) {
         hdrMiddle.addScrollingListener(new OnWheelScrollListener() {
             public void onScrollingStarted(AbstractWheel wheel) {
-                mScrolling = true;
             }
 
             public void onScrollingFinished(AbstractWheel wheel) {
-                mScrolling = false;
                 Log.d(TAG, "New shutter speed: " + mShutterSpeedValues[hdrMiddle.getCurrentItem()]);
                 mCurrentMiddleSpeed = mShutterSpeedValues[hdrMiddle.getCurrentItem()];
             }
@@ -142,11 +137,9 @@ public class HdrFragment extends PulseSequenceFragment {
     private void setUpNumberExposures(final AbstractWheel numExposures) {
         numExposures.addScrollingListener(new OnWheelScrollListener() {
             public void onScrollingStarted(AbstractWheel wheel) {
-                mScrolling = true;
             }
 
             public void onScrollingFinished(AbstractWheel wheel) {
-                mScrolling = false;
                 int index = numExposures.getCurrentItem();
                 mCurrentNumExposures = mNumExposures[index];
                 Log.d(TAG, "CurrentExposure Number: " + mCurrentNumExposures);
@@ -169,11 +162,9 @@ public class HdrFragment extends PulseSequenceFragment {
     private void setUpEvValues(final AbstractWheel hdrEv) {
         hdrEv.addScrollingListener(new OnWheelScrollListener() {
             public void onScrollingStarted(AbstractWheel wheel) {
-                mScrolling = true;
             }
 
             public void onScrollingFinished(AbstractWheel wheel) {
-                mScrolling = false;
 
                 mCurrentEvValue = mEvValues[hdrEv.getCurrentItem()];
             }
@@ -200,7 +191,6 @@ public class HdrFragment extends PulseSequenceFragment {
             public void onToggleOn() {
                 Log.d(TAG, "onToggleON");
                 onStartTimer();
-                checkVolume();
             }
 
             @Override
@@ -405,7 +395,4 @@ public class HdrFragment extends PulseSequenceFragment {
         }
     }
 
-    public int getCompletedExposures() {
-        return mCurrentExposuresTaken;
-    }
 }

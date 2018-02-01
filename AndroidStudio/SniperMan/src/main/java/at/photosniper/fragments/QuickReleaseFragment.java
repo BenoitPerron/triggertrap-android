@@ -11,7 +11,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import at.photosniper.R;
-
 import at.photosniper.view.CircleTimerView;
 import at.photosniper.view.CountingTimerView;
 import at.photosniper.widget.OngoingButton;
@@ -53,7 +52,7 @@ public class QuickReleaseFragment extends PhotoSniperBaseFragment {
 
         super.onDetach();
         if (mState == State.STARTED) {
-            mListener.onQuickPressStopped();
+            mListener.onQuickPressStopped(getBLECommand());
             mState = State.STOPPED;
         }
 
@@ -72,7 +71,7 @@ public class QuickReleaseFragment extends PhotoSniperBaseFragment {
                 if (event.getAction() == MotionEvent.ACTION_UP) {
                     if (mListener != null) {
                         if (mState == State.STARTED) {
-                            mListener.onQuickPressStopped();
+                            mListener.onQuickPressStopped(getBLECommand());
                         }
                     }
                     return true;
@@ -89,7 +88,7 @@ public class QuickReleaseFragment extends PhotoSniperBaseFragment {
             public void onTouchUp() {
                 if (mListener != null) {
                     if (mState == State.STARTED) {
-                        mListener.onQuickPressStopped();
+                        mListener.onQuickPressStopped(getBLECommand());
                     }
                 }
             }
@@ -98,12 +97,11 @@ public class QuickReleaseFragment extends PhotoSniperBaseFragment {
             public void onTouchDown() {
                 if (mListener != null) {
                     mListener.onQuickPressStarted();
-                    checkVolume();
                 }
             }
         });
         setUpCircleTimer();
-        resetVolumeWarning();
+
         return mRootView;
     }
 
@@ -168,6 +166,13 @@ public class QuickReleaseFragment extends PhotoSniperBaseFragment {
     public interface QuickReleaseListener {
         void onQuickPressStarted();
 
-        void onQuickPressStopped();
+        void onQuickPressStopped(final String command);
     }
+
+    // BLE
+    private String getBLECommand() {
+        return "A,100,100,1";
+    }
+
+
 }

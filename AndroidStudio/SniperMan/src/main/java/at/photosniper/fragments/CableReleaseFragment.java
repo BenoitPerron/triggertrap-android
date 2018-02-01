@@ -54,12 +54,12 @@ public class CableReleaseFragment extends PhotoSniperBaseFragment {
                 //startStopwatch();
                 if (mListener != null) {
                     mListener.onPressSimple();
-                    checkVolume();
+
                 }
             }
         });
 
-        resetVolumeWarning();
+
         return rootView;
     }
 

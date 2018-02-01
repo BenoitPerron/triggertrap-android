@@ -104,7 +104,7 @@ public class HdrTimeLapseFragment extends PulseSequenceFragment {
         setUpButton();
         setUpCircleTimer();
         setUpAnimations();
-        resetVolumeWarning();
+
         return mRootView;
     }
 
@@ -238,7 +238,7 @@ public class HdrTimeLapseFragment extends PulseSequenceFragment {
             public void onToggleOn() {
                 Log.d(TAG, "onToggleON");
                 onStartTimer();
-                checkVolume();
+
             }
 
             @Override
@@ -424,10 +424,6 @@ public class HdrTimeLapseFragment extends PulseSequenceFragment {
             mPulseSeqListener.onPulseSequenceCancelled();
             //mProgressCountText.setText(String.valueOf(0));
         }
-    }
-
-    public int getCompletedExposures() {
-        return mCurrentExposureCount;
     }
 
 

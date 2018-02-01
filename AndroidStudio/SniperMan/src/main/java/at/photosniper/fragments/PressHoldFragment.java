@@ -99,12 +99,10 @@ public class PressHoldFragment extends PhotoSniperBaseFragment {
             public void onTouchDown() {
                 if (mListener != null) {
                     mListener.onPressStarted();
-                    checkVolume();
                 }
             }
         });
         setUpCircleTimer();
-        resetVolumeWarning();
         return mRootView;
     }
 

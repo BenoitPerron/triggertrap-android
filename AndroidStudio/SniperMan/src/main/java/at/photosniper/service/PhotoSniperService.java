@@ -16,7 +16,6 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.widget.RemoteViews;
 
 import com.praetoriandroid.cameraremote.rpc.ActTakePictureRequest;
@@ -34,7 +33,6 @@ import at.photosniper.outputs.OutputDispatcher.OutputListener;
 import at.photosniper.util.PulseGenerator;
 import at.photosniper.util.SonyWiFiRPC;
 import at.photosniper.util.StopwatchTimer;
-import at.photosniper.wifi.PhotoSniperServiceInfo;
 
 
 public class PhotoSniperService extends Service implements OutputListener, MicVolumeMonitor.VolumeListener, PhotoSniperLocationService.LocationListener
@@ -57,7 +55,7 @@ public class PhotoSniperService extends Service implements OutputListener, MicVo
     private long[] mSequence;
     private int mSequenceCursor = 0;
     private int mSequenceCount = 0;
-    private int mSequenceInterationCount = 0;
+    private int mSequenceIterationCount = 0;
     private long mTimeToNextExposure = 0;
     private long mTotalTimeForSequence = 0;
     private OutputDispatcher mOutputDispatcher;
@@ -66,7 +64,7 @@ public class PhotoSniperService extends Service implements OutputListener, MicVo
     // Used to track the total time for the completed/remaining exposures and
     // gaps.
     private long mCompletedIterationsTime = 0;
-    private long mRemaingIterationsTime = 0;
+    private long mRemainingIterationsTime = 0;
     private long mRemainingSequenceTime = 0;
 
     // Timed mode
@@ -114,9 +112,9 @@ public class PhotoSniperService extends Service implements OutputListener, MicVo
         Bitmap largeIconBitmap = iconDrawable.getBitmap();
         int height = (int) this.getResources().getDimension(android.R.dimen.notification_large_icon_height);
         int width = (int) this.getResources().getDimension(android.R.dimen.notification_large_icon_width);
-        largeIconBitmap = Bitmap.createScaledBitmap(largeIconBitmap, width, height, false);
+//        largeIconBitmap = Bitmap.createScaledBitmap(largeIconBitmap, width, height, false);
 
-        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         mRemoteViews = new RemoteViews(getPackageName(), R.layout.custom_notification);
 
@@ -273,7 +271,7 @@ public class PhotoSniperService extends Service implements OutputListener, MicVo
         }
         mRepeatSequence = repeat;
         mSequence = sequence;
-        mSequenceInterationCount = 1;
+        mSequenceIterationCount = 1;
         mSequenceCount = 0;
         mSequenceCursor = 0;
         mState = State.IN_PROGRESS;
@@ -281,7 +279,7 @@ public class PhotoSniperService extends Service implements OutputListener, MicVo
         mTimeToNextExposure = (int) (sequence[mSequenceCursor] + sequence[mSequenceCursor + 1]);
 
         mTotalTimeForSequence = PulseGenerator.getSequenceTime(sequence);
-        mRemaingIterationsTime = mTotalTimeForSequence;
+        mRemainingIterationsTime = mTotalTimeForSequence;
         mCompletedIterationsTime = 0;
 
         playNextPulseInSequence();
@@ -296,7 +294,7 @@ public class PhotoSniperService extends Service implements OutputListener, MicVo
                 mCountDownTimer.cancel();
             }
             mSequenceCount = 0;
-            mSequenceInterationCount++;
+            mSequenceIterationCount++;
             if (mListener != null && !mIsRunningInForeground) {
                 mListener.onPulseSequenceIterate(mSequence);
             }
@@ -305,8 +303,8 @@ public class PhotoSniperService extends Service implements OutputListener, MicVo
                 mTimeToNextExposure = (int) (mSequence[mSequenceCursor] + mSequence[mSequenceCursor + 1]);
                 mTotalTimeForSequence = PulseGenerator.getSequenceTime(mSequence);
             }
-            mRemaingIterationsTime = mTotalTimeForSequence;
-            mRemainingSequenceTime = mRemaingIterationsTime;
+            mRemainingIterationsTime = mTotalTimeForSequence;
+            mRemainingSequenceTime = mRemainingIterationsTime;
             mCompletedIterationsTime = 0;
         }
 
@@ -345,7 +343,7 @@ public class PhotoSniperService extends Service implements OutputListener, MicVo
             private int intervalCount = 0;
 
             public void onTick(long millisUntilFinished) {
-                mRemainingSequenceTime = mRemaingIterationsTime - (mTimeToNextExposure - millisUntilFinished);
+                mRemainingSequenceTime = mRemainingIterationsTime - (mTimeToNextExposure - millisUntilFinished);
                 intervalCount++;
                 if (mListener != null && !mIsRunningInForeground) {
                     updatePulseListenerProgress(millisUntilFinished);
@@ -364,9 +362,9 @@ public class PhotoSniperService extends Service implements OutputListener, MicVo
                 }
 
                 mCompletedIterationsTime += mTimeToNextExposure;
-                mRemaingIterationsTime = mTotalTimeForSequence - mCompletedIterationsTime;
+                mRemainingIterationsTime = mTotalTimeForSequence - mCompletedIterationsTime;
                 // Log.d(TAG,"Remain iterations time: " +
-                // mRemaingIterationsTime);
+                // mRemainingIterationsTime);
                 // Log.d(TAG,"Completed iterations time:" +
                 // mCompletedIterationsTime);
             }
@@ -392,7 +390,7 @@ public class PhotoSniperService extends Service implements OutputListener, MicVo
                     notificationText = getNotifcationText(mOnGoingAction) + " " + formatMilliSecondsTime(millisUntilFinished);
                     break;
                 case PhotoSniperApp.OnGoingAction.TIMELAPSE:
-                    notificationText = getNotifcationText(mOnGoingAction) + " " + mSequenceInterationCount + " " + formatMilliSecondsTime(millisUntilFinished);
+                    notificationText = getNotifcationText(mOnGoingAction) + " " + mSequenceIterationCount + " " + formatMilliSecondsTime(millisUntilFinished);
                     break;
                 case PhotoSniperApp.OnGoingAction.STAR_TRAIL:
                 case PhotoSniperApp.OnGoingAction.HDR:
@@ -401,7 +399,7 @@ public class PhotoSniperService extends Service implements OutputListener, MicVo
                     notificationText = getNotifcationText(mOnGoingAction) + " " + mSequenceCount + " " + formatMilliSecondsTime(mRemainingSequenceTime);
                     break;
                 case PhotoSniperApp.OnGoingAction.HDR_TIMELAPSE:
-                    notificationText = getNotifcationText(mOnGoingAction) + " " + mSequenceInterationCount + " " + formatMilliSecondsTime(mRemainingSequenceTime);
+                    notificationText = getNotifcationText(mOnGoingAction) + " " + mSequenceIterationCount + " " + formatMilliSecondsTime(mRemainingSequenceTime);
                 default:
                     // Do nothing
 
@@ -416,13 +414,13 @@ public class PhotoSniperService extends Service implements OutputListener, MicVo
     private void updatePulseListenerStart() {
         switch (mOnGoingAction) {
             case PhotoSniperApp.OnGoingAction.TIMELAPSE:
-                mListener.onPulseStart(mSequenceInterationCount, 0, mTimeToNextExposure, 0);
+                mListener.onPulseStart(mSequenceIterationCount, 0, mTimeToNextExposure, 0);
                 break;
             case PhotoSniperApp.OnGoingAction.HDR:
                 mListener.onPulseStart(mSequenceCount, (mSequence.length / 2), mTimeToNextExposure, mTotalTimeForSequence);
                 break;
             case PhotoSniperApp.OnGoingAction.HDR_TIMELAPSE:
-                mListener.onPulseStart(mSequenceInterationCount, (mSequence.length / 2), mTimeToNextExposure, mTotalTimeForSequence);
+                mListener.onPulseStart(mSequenceIterationCount, (mSequence.length / 2), mTimeToNextExposure, mTotalTimeForSequence);
                 break;
             case PhotoSniperApp.OnGoingAction.STAR_TRAIL:
                 mListener.onPulseStart(mSequenceCount, (mSequence.length / 2), mTimeToNextExposure, mTotalTimeForSequence);
@@ -442,7 +440,7 @@ public class PhotoSniperService extends Service implements OutputListener, MicVo
     private void updatePulseListenerProgress(long remainingPulseTime) {
         switch (mOnGoingAction) {
             case PhotoSniperApp.OnGoingAction.TIMELAPSE:
-                mListener.onPulseUpdate(mSequence, mSequenceInterationCount, mTimeToNextExposure, remainingPulseTime, 0);
+                mListener.onPulseUpdate(mSequence, mSequenceIterationCount, mTimeToNextExposure, remainingPulseTime, 0);
                 break;
             case PhotoSniperApp.OnGoingAction.HDR:
             case PhotoSniperApp.OnGoingAction.HDR_TIMELAPSE:
@@ -618,9 +616,8 @@ public class PhotoSniperService extends Service implements OutputListener, MicVo
         seconds = seconds - minutes * 60;
         hours = minutes / 60;
         minutes = minutes - hours * 60;
-        StringBuilder formattedTime = new StringBuilder().append(String.format("%02d", hours)).append(":").append(String.format("%02d", minutes)).append(":").append(String.format("%02d", seconds)).append(":").append(String.format("%02d", hundreds));
 
-        return formattedTime.toString();
+        return String.format("%02d", hours) + ":" + String.format("%02d", minutes) + ":" + String.format("%02d", seconds) + ":" + String.format("%02d", hundreds);
 
     }
 
@@ -758,7 +755,7 @@ public class PhotoSniperService extends Service implements OutputListener, MicVo
      * Listener for QuickRelease
      */
 
-    public void onQuickStartPress() {
+    public void onQuickPressStart() {
         if (checkInProgressState()) {
             return;
         }
@@ -776,7 +773,7 @@ public class PhotoSniperService extends Service implements OutputListener, MicVo
         mState = State.IN_PROGRESS;
     }
 
-    public void onQuickStopPress() {
+    public void onQuickPressStop(final String command) {
         trigger(0);
         mStopwatchTimer.cancel();
         mListener.onServicePressStop();
@@ -922,15 +919,6 @@ public class PhotoSniperService extends Service implements OutputListener, MicVo
 
 
 
-    public void onClientConnectionReceived(String name, String uniqueName) {
-        mListener.onClientConnected(name, uniqueName);
-    }
-
-    public void onClientDisconnectionReceived(String name, String uniqueName) {
-        mListener.onClientDisconnected(name, uniqueName);
-    }
-
-
     /*
      * Listeners for OutputDispatcher
      */
@@ -991,9 +979,9 @@ public class PhotoSniperService extends Service implements OutputListener, MicVo
         mSequenceStartStopTime = Calendar.getInstance();
     }
 
-    public Calendar getSequenceStartStopTime() {
-        return mSequenceStartStopTime;
-    }
+//    public Calendar getSequenceStartStopTime() {
+//        return mSequenceStartStopTime;
+//    }
 
     public interface State {
         int IN_PROGRESS = 0;
@@ -1078,21 +1066,6 @@ public class PhotoSniperService extends Service implements OutputListener, MicVo
         void onPulseFinished();
 
         void onPulseSequenceIterate(long[] sequence);
-
-        // Listeners for wifi slave
-        void onWifiMasterAdded(PhotoSniperServiceInfo info);
-
-        void onWifiMasterRemoved(PhotoSniperServiceInfo info);
-
-        // Listeners for wifi master
-        void onWifiMasterRegsitered(PhotoSniperServiceInfo info);
-
-        void onWifiMasterUnregister();
-
-        void onClientConnected(String name, String uniqueName);
-
-        void onClientDisconnected(String name, String uniqueName);
-
 
     }
 

@@ -30,7 +30,7 @@ public class PhotoSniperBaseFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        resetVolumeWarning();
+//        resetVolumeWarning();
     }
 
     public int getRunningAction() {
@@ -43,18 +43,6 @@ public class PhotoSniperBaseFragment extends Fragment {
         return mStateBundle;
     }
 
-    /*After the volume warning has been shown we need to reset to show again*/
-    void resetVolumeWarning() {
-//		  Intent intent = new Intent(WarningMessageManager.ACTION);
-//          intent.putExtra(WarningMessageManager.ACTION_TYPE, WarningMessageManager.Action.RESET);
-//          LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(intent);
-    }
-
-    void checkVolume() {
-//		  Intent intent = new Intent(WarningMessageManager.ACTION);
-//          intent.putExtra(WarningMessageManager.ACTION_TYPE, WarningMessageManager.Action.SHOW);
-//          LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(intent);
-    }
 
     public void setActionState(boolean actionState) {
 

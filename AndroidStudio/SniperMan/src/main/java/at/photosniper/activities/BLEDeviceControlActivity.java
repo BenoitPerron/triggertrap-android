@@ -36,7 +36,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
 
 import at.photosniper.R;
 import at.photosniper.service.BluetoothLeService;
@@ -58,7 +57,6 @@ public class BLEDeviceControlActivity extends Activity {
     private TextView mConnectionState;
     private TextView mDataField;
     private SeekBar mRed, mGreen, mBlue;
-    private String mDeviceName;
     private String mDeviceAddress;
     //  private ExpandableListView mGattServicesList;
     private BluetoothLeService mBluetoothLeService;
@@ -67,7 +65,7 @@ public class BLEDeviceControlActivity extends Activity {
     private BluetoothGattCharacteristic characteristicRX;
 
 
-    public final static UUID HM_RX_TX = UUID.fromString(GattAttributes.HM_RX_TX_CUSTOM_CHARACTERISTIC);
+//    public final static UUID HM_RX_TX = UUID.fromString(GattAttributes.HM_RX_TX_CUSTOM_CHARACTERISTIC);
 
     private final String LIST_NAME = "NAME";
     private final String LIST_UUID = "UUID";
@@ -130,7 +128,7 @@ public class BLEDeviceControlActivity extends Activity {
         setContentView(R.layout.gatt_services_characteristics);
 
         final Intent intent = getIntent();
-        mDeviceName = intent.getStringExtra(EXTRAS_DEVICE_NAME);
+        String mDeviceName = intent.getStringExtra(EXTRAS_DEVICE_NAME);
         mDeviceAddress = intent.getStringExtra(EXTRAS_DEVICE_ADDRESS);
 
         // Sets up UI references.

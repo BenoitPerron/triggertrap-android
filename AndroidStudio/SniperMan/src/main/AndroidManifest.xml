@@ -2,7 +2,7 @@
 <manifest package="at.photosniper"
           xmlns:android="http://schemas.android.com/apk/res/android"
           android:versionCode="20180131"
-          android:versionName="0.0.5 pink Banana">
+          android:versionName="0.0.6 red Banana">
 
     <uses-sdk
         android:minSdkVersion="18"

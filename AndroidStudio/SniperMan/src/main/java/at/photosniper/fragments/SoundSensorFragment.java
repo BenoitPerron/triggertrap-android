@@ -85,7 +85,6 @@ public class SoundSensorFragment extends PhotoSniperBaseFragment implements Volu
                     if (mListener != null) {
                         mListener.onEnableSoundThreshold();
                         //volMonitor.enabledThreshold();
-                        checkVolume();
                     }
                 }
             }
@@ -155,7 +154,6 @@ public class SoundSensorFragment extends PhotoSniperBaseFragment implements Volu
             mListener.onSetMicSensitivity(mMicSensitivity.getProgress());
         }
 
-        resetVolumeWarning();
         return rootView;
     }
 

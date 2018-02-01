@@ -70,7 +70,6 @@ public class StartStopFragment extends PhotoSniperBaseFragment {
                 //showCountDown()
                 if (mListener != null) {
                     mListener.onStopwatchStarted();
-                    checkVolume();
                 }
 
             }
@@ -87,7 +86,6 @@ public class StartStopFragment extends PhotoSniperBaseFragment {
         });
 
         setUpCircleTimer();
-        resetVolumeWarning();
         return mRootView;
     }
 

@@ -42,7 +42,7 @@ public class PhotoSniperApp {
     private static final int ND_FILTER_SHUTTER_SPEED_DEFAULT = 0;
     // Shared preference keys
     private static final String PS_PREFS = "photosniper_prefs";
-    private static final String PS_MODE = "ps_mode";
+    //    private static final String PS_MODE = "ps_mode";
     private static final String PS_IS_FIRST_LAUNCH = "ps_is_first_launch";
     private static final String PS_LAST_FRAGMENT = "ps_last_fragment";
     private static final String PS_LAST_ACTION_BAR_LABEL = "ps_last_action_bar_label";
@@ -80,13 +80,11 @@ public class PhotoSniperApp {
     private static final String PS_DEFAULT_SHUTTER_SPEED = "ps_default_shutter_speed";
     private static final String LAST_FRAGMENT_DEFAULT = FragmentTags.GETTING_STARTED;
     private static final int LAST_LIST_ITEM_CHECKED_DEFAULT = 1;
-    private static final long CAMERA_BEEP_LENGTH_DEFAULT = 150;
+    //    private static final long CAMERA_BEEP_LENGTH_DEFAULT = 150;
     private static final float LE_HDR_TIMELPASE_EV_STEP_DEFAULT = 0.5f;
     private static final int BRAMPING_INTERATION_DEFAULT = 360;
     private static final long BRAMPING_INTERVAL_DEFAULT = 10000;
     private static final int UNINITIALIZED = -1;
-    private static final String UNINITIALIZED_STRING = null;
-    private static final Boolean UNINITIALIZED_BOOL = null;
     // Gap between beeps in millisconds
     private static final long BEEP_GAP = 750;
     private static final long HDR_GAP = 1000;
@@ -96,8 +94,8 @@ public class PhotoSniperApp {
     public Typeface SAN_SERIF_LIGHT = null;
     private Typeface SAN_SERIF_THIN = null;
     private final Context mAppContext;
-    private String mLastFragmentTag = UNINITIALIZED_STRING;
-    private String mLastActionBarLabel = UNINITIALIZED_STRING;
+    private String mLastFragmentTag = null;
+    private String mLastActionBarLabel = null;
     private int mLastListItemChecked = UNINITIALIZED;
     private long mBeepLength = UNINITIALIZED;
     // Time lapse interval in milliseconds.
@@ -140,13 +138,13 @@ public class PhotoSniperApp {
     private float mTimewarpControl2X = UNINITIALIZED;
     private float mTimewarpControl2Y = UNINITIALIZED;
     // App Rating Values
-    private Boolean mShowDialogAgain = UNINITIALIZED_BOOL;
+    private Boolean mShowDialogAgain = null;
     private int mLaunchCount = UNINITIALIZED;
     private long mDateFirstLaunched = UNINITIALIZED;
     // Wifi slave values
-    private String mLastConnectedMaster = UNINITIALIZED_STRING;
+    private String mLastConnectedMaster = null;
     // Wif Master values
-    private Boolean mIsMasterON = UNINITIALIZED_BOOL;
+    private Boolean mIsMasterON = null;
     // ND Filter Values
     private int mDefaultShutterSpeed = UNINITIALIZED;
 
@@ -201,7 +199,7 @@ public class PhotoSniperApp {
 
     private void init() {
         // Load values store in the shares prefs
-        SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
+//        SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
 
         SAN_SERIF_LIGHT = Typeface.createFromAsset(mAppContext.getAssets(), "fonts/Roboto-Light.ttf");
         SAN_SERIF_THIN = Typeface.createFromAsset(mAppContext.getAssets(), "fonts/Roboto-Thin.ttf");
@@ -218,7 +216,7 @@ public class PhotoSniperApp {
     }
 
     public String getLastFragmentTag() {
-        if (UNINITIALIZED_STRING == mLastFragmentTag) {
+        if (null == mLastFragmentTag) {
             SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
             mLastFragmentTag = prefs.getString(PS_LAST_FRAGMENT, LAST_FRAGMENT_DEFAULT);
         }
@@ -234,7 +232,7 @@ public class PhotoSniperApp {
     }
 
     public String getLastActionBarLabel() {
-        if (UNINITIALIZED_STRING == mLastActionBarLabel) {
+        if (null == mLastActionBarLabel) {
             SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
             mLastActionBarLabel = prefs.getString(PS_LAST_ACTION_BAR_LABEL, LAST_ACTION_BAR_LABEL_DEFAULT);
         }
@@ -266,7 +264,7 @@ public class PhotoSniperApp {
     }
 
     public Boolean getShowAgain() {
-        if (mShowDialogAgain == UNINITIALIZED_BOOL) {
+        if (mShowDialogAgain == null) {
             SharedPreferences sharedPref = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
             mShowDialogAgain = sharedPref.getBoolean(PS_SHOW_DIALOG_AGAIN, SHOW_DIALOG_AGAIN_DEFAULT);
         }
@@ -807,7 +805,7 @@ public class PhotoSniperApp {
     }
 
     public String getSlaveLastMaster() {
-        if (UNINITIALIZED_STRING == mLastConnectedMaster) {
+        if (null == mLastConnectedMaster) {
             SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
             mLastConnectedMaster = prefs.getString(PS_WIFI_SLAVE_LAST_MASTER, WIFI_SLAVE_LAST_MASTER_DEFAULT);
         }
@@ -823,7 +821,7 @@ public class PhotoSniperApp {
     }
 
     public boolean isMasterOn() {
-        if (mIsMasterON == UNINITIALIZED_BOOL) {
+        if (mIsMasterON == null) {
             SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
             mIsMasterON = prefs.getBoolean(PS_WIFI_MASTER_IS_ON, WIFI_MASTER_IS_ON_DEFAULT);
         }
@@ -841,7 +839,7 @@ public class PhotoSniperApp {
     public interface FragmentTags {
         String NONE = "none";
         String GETTING_STARTED = "getting_started";
-        String BUY_DONGLE = "buy_dongle";
+        //        String BUY_DONGLE = "buy_dongle";
         String SIMPLE = "simple";
         String QUICK_RELEASE = "quick_release";
         String PRESS_AND_HOLD = "press_and_hold";
@@ -858,7 +856,7 @@ public class PhotoSniperApp {
         String HDR_LAPSE = "hdr_lapse";
         String WIFI_SLAVE = "wifi_slave";
         String WIFI_MASTER = "wifi_master";
-        String PEBBLE = "pebble";
+        //        String PEBBLE = "pebble";
         String PLACEHOLDER = "placeholder";
         String SUNRISESUNSET = "sunrise_sunset";
         String ND_CALCULATOR = "nd_calculator";
@@ -880,7 +878,7 @@ public class PhotoSniperApp {
         int WI_FI_SLAVE = 10;
         int WI_FI_MASTER = 11;
         int PRESS_AND_HOLD = 12;
-        int PEBBLE = 13;
+        //        int PEBBLE = 13;
         int SELF_TIMER = 14;
         int QUICK_RELEASE = 15;
     }

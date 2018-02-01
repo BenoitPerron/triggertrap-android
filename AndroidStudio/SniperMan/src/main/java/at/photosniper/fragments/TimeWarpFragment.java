@@ -23,11 +23,10 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import at.photosniper.PhotoSniperApp;
-import at.photosniper.R;
-
 import java.util.ArrayList;
 
+import at.photosniper.PhotoSniperApp;
+import at.photosniper.R;
 import at.photosniper.util.CubicBezierInterpolator;
 import at.photosniper.util.DialpadManager;
 import at.photosniper.util.PulseGenerator;
@@ -45,7 +44,7 @@ public class TimeWarpFragment extends TimeFragment implements DialpadManager.Inp
     public static final int MINIMUM_TIMEWARP_GAP = 10;
     private static final String TAG = TimeWarpFragment.class.getSimpleName();
     private final ArrayList<Float> overlapCoords = new ArrayList<>();
-    private CalculateOverLaps calculateOverLaps = new CalculateOverLaps();
+    private CalculateOverLaps calculateOverLaps = null;
     private DialpadManager.InputSelectionListener mInputListener = null;
     private View mRootView;
     private OngoingButton mButton;
@@ -87,6 +86,7 @@ public class TimeWarpFragment extends TimeFragment implements DialpadManager.Inp
         super.onAttach(activity);
         try {
             mInputListener = (DialpadManager.InputSelectionListener) activity;
+            calculateOverLaps = new CalculateOverLaps(activity);
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString() + " must implement DialpadManager.InputSelectionListener");
         }
@@ -165,7 +165,7 @@ public class TimeWarpFragment extends TimeFragment implements DialpadManager.Inp
 
         setUpControlPoints();
         setUpInterpolator();
-        resetVolumeWarning();
+
         setUpPreview();
 
         return mRootView;
@@ -193,7 +193,7 @@ public class TimeWarpFragment extends TimeFragment implements DialpadManager.Inp
             public void onToggleOn() {
                 Log.d(TAG, "onToggleON");
                 onStartTimer();
-                checkVolume();
+
                 //startPulseSequence();
             }
 
@@ -627,6 +627,11 @@ public class TimeWarpFragment extends TimeFragment implements DialpadManager.Inp
 
     private class CalculateOverLaps extends AsyncTask<Void, Void, ArrayList<Float>> {
 
+        Activity activity;
+
+        CalculateOverLaps(Activity activity) {
+            this.activity = activity;
+        }
 
         private void addOverlaps(int startIndex, int endIndex, long[] pauses) {
             for (int i = startIndex; i < endIndex; i++) {
@@ -638,8 +643,25 @@ public class TimeWarpFragment extends TimeFragment implements DialpadManager.Inp
             }
         }
 
+        private long[] getPausesValues() {
+            final long[] values = new long[2];
+
+            activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+
+                    values[0] = mTimewarpDurationView.getTime();
+                    values[1] = mTimewarpIterationsView.getValue();
+
+                }
+            });
+            return values;
+        }
+
         protected ArrayList<Float> doInBackground(Void... arg0) {
-            long[] pauses = mInterpolator.getOriginalPauses(mTimewarpDurationView.getTime(), mTimewarpIterationsView.getValue(), 0);
+
+            long[] values = getPausesValues();
+            long[] pauses = mInterpolator.getOriginalPauses(values[0], (int) values[1], 0);
 
             overlapCoords.clear();
             int MAXIMUM_OVERLAPS = 150;

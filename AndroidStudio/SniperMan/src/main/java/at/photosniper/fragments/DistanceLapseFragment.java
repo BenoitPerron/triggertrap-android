@@ -157,7 +157,7 @@ public class DistanceLapseFragment extends PhotoSniperBaseFragment {
         setUpAnimations();
         setKeyBoardSize();
         setUpDistanceTrigger();
-        resetVolumeWarning();
+
         return mRootView;
     }
 
@@ -219,7 +219,7 @@ public class DistanceLapseFragment extends PhotoSniperBaseFragment {
             public void onToggleOn() {
                 Log.d(TAG, "onToggleON");
                 onStartDistanceLapse();
-                checkVolume();
+
             }
 
             @Override

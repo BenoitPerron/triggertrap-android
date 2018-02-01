@@ -94,7 +94,7 @@ public class SelfTimerFragment extends PhotoSniperBaseFragment {
         setUpCircleTimer();
         setUpButton();
         setKeyBoardSize();
-        resetVolumeWarning();
+
         return mRootView;
     }
 
@@ -108,7 +108,7 @@ public class SelfTimerFragment extends PhotoSniperBaseFragment {
                 if (mListener != null) {
                     if (mTimeView.getTime() != 0) {
                         mListener.onSelfTimerStarted(mTimeView.getTime());
-                        checkVolume();
+
                     } else {
                         mButton.stopAnimation();
                     }
@@ -264,9 +264,6 @@ public class SelfTimerFragment extends PhotoSniperBaseFragment {
         syncCircle = false;
     }
 
-    public long getTimerDuration() {
-        return mTimerDuration;
-    }
 
     public interface SelfTimerListener {
         void onSelfTimerStarted(long time);
