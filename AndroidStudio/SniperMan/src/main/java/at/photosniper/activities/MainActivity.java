@@ -265,7 +265,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
         PhotoSniperApp.getInstance(this).setSonyWiFiRpc(new SonyWiFiRPC());
         PhotoSniperApp.getInstance(this).getSonyWiFiRpc().registerInitCallback(this);
 
-        // Bind to the Triggertrap service when the actvity is shown.
+        // Bind to the PhotoSniper service when the actvity is shown.
         Log.d(TAG, "Service bound is: " + mPhotoSniperServiceBound);
 
         Intent intent = new Intent(MainActivity.this, PhotoSniperService.class);
