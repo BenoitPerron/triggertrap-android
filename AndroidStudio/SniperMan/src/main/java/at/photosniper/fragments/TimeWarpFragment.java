@@ -604,7 +604,7 @@ public class TimeWarpFragment extends TimeFragment implements DialpadManager.Inp
     private void onUpdateBezierWidget() {
 
         calculateOverLaps.cancel(true);
-        calculateOverLaps = new CalculateOverLaps();
+        calculateOverLaps = new CalculateOverLaps(getActivity());
         calculateOverLaps.execute();
 
     }
