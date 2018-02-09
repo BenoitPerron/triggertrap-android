@@ -361,7 +361,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
     protected void onDestroy() {
         Log.d(TAG, "Flushing Mixpanel");
         //AnalyticTracker.getInstance(this).flush();
-        Log.d(TAG, "Destorying activity");
+        Log.d(TAG, "Destroying activity");
         // Only unbind from the service if the activity has been destroyed
         if (mPhotoSniperServiceBound) {
             Log.d(TAG, "Unbinding service");
@@ -375,7 +375,6 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
             PhotoSniperApp.getInstance(this).getBLEgattClient().onDestroy();
             PhotoSniperApp.getInstance(this).setBLEgattClient(null);
         }
-
 
         mWarningMessageManager.stopListening();
         super.onDestroy();
@@ -395,14 +394,13 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
         Log.d(TAG, "Returning request code: " + requestCode);
         Log.d(TAG, "Returning result code: " + resultCode);
 
-
         switch (requestCode) {
 
             case REQUEST_ENABLE_BT:
 
                 if (resultCode == Activity.RESULT_CANCELED) {
                     Toast.makeText(this, "You must turn Bluetooth on, to use this app", Toast.LENGTH_LONG).show();
-                    finish();
+                    finish();  // ?? sure ?!
                 }
                 break;
 
@@ -513,6 +511,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
     private void setUpModes() {
 
         mModesGroups = getResources().getStringArray(R.array.ps_mode_groups);
+
         mModes.add(getResources().getStringArray(R.array.ps_welcome_modes));
         mModes.add(getResources().getStringArray(R.array.ps_cable_modes));
         mModes.add(getResources().getStringArray(R.array.ps_timer_modes));
@@ -695,11 +694,34 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
                 }
                 break;
             case DrawerGroups.TIME_MODE:
+//                if (position == 0) {
+//                    mDrawerFragHandler.onDrawerSelected(this, PhotoSniperApp.FragmentTags.TIMELAPSE, true, false);
+//                } else if (position == 1) {
+//                    mDrawerFragHandler.onDrawerSelected(this, PhotoSniperApp.FragmentTags.TIMEWARP, true, false);
+//                } else if (position == 2) {
+//                    mDrawerFragHandler.onDrawerSelected(this, PhotoSniperApp.FragmentTags.DISTANCE_LAPSE, true, false);
+//                    if (mLocationService.servicesConnected(serviceErrorDialog)) {
+//                        if (mService != null) {
+//                            mService.setTTLocationService(mLocationService);
+//                        }
+//                        DistanceLapseFragment distanceFragment = (DistanceLapseFragment) getFragmentManager().findFragmentByTag(PhotoSniperApp.FragmentTags.DISTANCE_LAPSE);
+//                        if (distanceFragment != null) {
+//                            distanceFragment.setDistanceLapseState();
+//                        }
+//                    }
+//                } else if (position == 3) {
+//                    mDrawerFragHandler.onDrawerSelected(this, PhotoSniperApp.FragmentTags.STARTRAIL, true, false);
+//                } else if (position == 4) {
+//                    mDrawerFragHandler.onDrawerSelected(this, PhotoSniperApp.FragmentTags.BRAMPING, true, false);
+//                }
+
                 if (position == 0) {
-                    mDrawerFragHandler.onDrawerSelected(this, PhotoSniperApp.FragmentTags.TIMELAPSE, true, false);
-                } else if (position == 1) {
                     mDrawerFragHandler.onDrawerSelected(this, PhotoSniperApp.FragmentTags.TIMEWARP, true, false);
+                } else if (position == 1) {
+                    mDrawerFragHandler.onDrawerSelected(this, PhotoSniperApp.FragmentTags.STARTRAIL, true, false);
                 } else if (position == 2) {
+                    mDrawerFragHandler.onDrawerSelected(this, PhotoSniperApp.FragmentTags.BRAMPING, true, false);
+                } else if (position == 3) {
                     mDrawerFragHandler.onDrawerSelected(this, PhotoSniperApp.FragmentTags.DISTANCE_LAPSE, true, false);
                     if (mLocationService.servicesConnected(serviceErrorDialog)) {
                         if (mService != null) {
@@ -710,11 +732,9 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
                             distanceFragment.setDistanceLapseState();
                         }
                     }
-                } else if (position == 3) {
-                    mDrawerFragHandler.onDrawerSelected(this, PhotoSniperApp.FragmentTags.STARTRAIL, true, false);
-                } else if (position == 4) {
-                    mDrawerFragHandler.onDrawerSelected(this, PhotoSniperApp.FragmentTags.BRAMPING, true, false);
                 }
+
+
                 break;
             case DrawerGroups.SOUND_MODES:
                 if (position == 0) {
@@ -1104,8 +1124,8 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
 
     }
 
-    public void onQuickPressStarted() {
-        mService.onQuickPressStart();
+    public void onQuickPressStarted(final String command) {
+        mService.onQuickPressStart(command);
     }
     /*
     * Listener for quick release Fragment
@@ -1778,7 +1798,9 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
                     public void run() {
                         if (!success) {
                             Toast.makeText(MainActivity.this, R.string.BLEConnectionError, Toast.LENGTH_LONG).show();
-
+                            if (mGattClient != null) {
+                                mGattClient.onDestroy();
+                            }
                             PhotoSniperApp.getInstance(MainActivity.this).setBLEgattClient(null);
                             // start to listen again ?
                         } else {

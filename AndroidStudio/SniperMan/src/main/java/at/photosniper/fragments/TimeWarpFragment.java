@@ -123,10 +123,10 @@ public class TimeWarpFragment extends TimeFragment implements DialpadManager.Inp
         showHide.setImageDrawable(getResources().getDrawable(R.drawable.tickup));
 
 
-        TextView exposures = (TextView) mRootView.findViewById(R.id.exposuresText);
-        TextView gap = (TextView) mRootView.findViewById(R.id.gapText);
-        TextView exposureLabel = (TextView) mRootView.findViewById(R.id.exposureLabel);
-        TextView pauseLabel = (TextView) mRootView.findViewById(R.id.PauseLabel);
+//        TextView exposures = (TextView) mRootView.findViewById(R.id.exposuresText);
+//        TextView gap = (TextView) mRootView.findViewById(R.id.gapText);
+//        TextView exposureLabel = (TextView) mRootView.findViewById(R.id.exposureLabel);
+//        TextView pauseLabel = (TextView) mRootView.findViewById(R.id.PauseLabel);
 
         mCurrentExposureCount = 1;
 
@@ -616,9 +616,9 @@ public class TimeWarpFragment extends TimeFragment implements DialpadManager.Inp
         onUpdateBezierWidget();
     }
 
-    public int getCurrentExposureCount() {
-        return mCurrentExposureCount;
-    }
+//    public int getCurrentExposureCount() {
+//        return mCurrentExposureCount;
+//    }
 
     public interface PreviewState {
         int PREVIEW_RUNNING = 0;

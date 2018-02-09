@@ -22,6 +22,7 @@ import com.praetoriandroid.cameraremote.rpc.ActTakePictureRequest;
 import com.praetoriandroid.cameraremote.rpc.ActTakePictureResponse;
 
 import java.util.Calendar;
+import java.util.StringTokenizer;
 
 import at.photosniper.PhotoSniperApp;
 import at.photosniper.R;
@@ -35,8 +36,7 @@ import at.photosniper.util.SonyWiFiRPC;
 import at.photosniper.util.StopwatchTimer;
 
 
-public class PhotoSniperService extends Service implements OutputListener, MicVolumeMonitor.VolumeListener, PhotoSniperLocationService.LocationListener
-{
+public class PhotoSniperService extends Service implements OutputListener, MicVolumeMonitor.VolumeListener, PhotoSniperLocationService.LocationListener {
 
     private static final String TAG = PhotoSniperService.class.getSimpleName();
     private static final String STOP_SERVICE_ACTION = "stop_service_action";
@@ -558,7 +558,7 @@ public class PhotoSniperService extends Service implements OutputListener, MicVo
             mListener.onServiceStartSimple();
         }
 
-        trigger(0);
+        trigger("<B,0,0;D,100,0;C,0,0>");
 
 
     }
@@ -665,7 +665,7 @@ public class PhotoSniperService extends Service implements OutputListener, MicVo
     }
 
     private void finishSelfTimerMode() {
-        trigger(0);
+        trigger("<B,0,0;D,100,0;C,0,0>");
 
         stopSelfTimerMode();
     }
@@ -755,7 +755,7 @@ public class PhotoSniperService extends Service implements OutputListener, MicVo
      * Listener for QuickRelease
      */
 
-    public void onQuickPressStart() {
+    public void onQuickPressStart(final String command) {
         if (checkInProgressState()) {
             return;
         }
@@ -771,10 +771,12 @@ public class PhotoSniperService extends Service implements OutputListener, MicVo
             }
         }.start();
         mState = State.IN_PROGRESS;
+
+        trigger(command);
     }
 
     public void onQuickPressStop(final String command) {
-        trigger(0);
+        trigger(command);
         mStopwatchTimer.cancel();
         mListener.onServicePressStop();
         mState = State.IDLE;
@@ -802,7 +804,7 @@ public class PhotoSniperService extends Service implements OutputListener, MicVo
 
     @Override
     public void onExceedThreshold(int amplitude) {
-        trigger(0);
+        trigger("<B,0,0;D,100,0;C,0,0>");
         if (mListener != null && !mIsRunningInForeground) {
             mListener.onSoundExceedThreshold(amplitude);
         }
@@ -862,7 +864,7 @@ public class PhotoSniperService extends Service implements OutputListener, MicVo
 
         if (mAccumulativeDistance >= mTriggerDistance) {
             // Trigger a beep if we travel greater than the Trigger distance.
-            trigger(0);
+            trigger("<B,0,0;D,100,0;C,0,0>");
             mAccumulativeDistance = mAccumulativeDistance % mTriggerDistance;
         }
 
@@ -918,7 +920,6 @@ public class PhotoSniperService extends Service implements OutputListener, MicVo
     }
 
 
-
     /*
      * Listeners for OutputDispatcher
      */
@@ -947,8 +948,9 @@ public class PhotoSniperService extends Service implements OutputListener, MicVo
 
     }
 
-    private void trigger(long length) {
-        mOutputDispatcher.trigger(length);
+    private void trigger(final String cmdSentence) {
+
+        mOutputDispatcher.trigger(0);
 
         // this is a quick hack for SONY ...........
         if (PhotoSniperApp.getInstance(this).isSonyRPCAvailable()) {
@@ -969,11 +971,75 @@ public class PhotoSniperService extends Service implements OutputListener, MicVo
 
         // ... and for BLE
         if (PhotoSniperApp.getInstance(this).getBLEgattClient() != null) {
-            PhotoSniperApp.getInstance(this).getBLEgattClient().writeCommand("A,100,100,1!");
+
+
+            PhotoSniperApp.getInstance(this).getBLEgattClient().writeCommand(translateCmd(cmdSentence));
         }
 
 
     }
+
+    final static byte CMD_START_TAG = (byte) 0xFE;
+    final static byte CMD_END_TAG = (byte) 0xFF;
+
+    private byte[] translateCmd(final String cmdSequence) {
+        byte[] data = new byte[1024];
+
+        StringTokenizer tokenizer = new StringTokenizer(cmdSequence, ",;<>!");
+
+        // A,100,100,1 -> 0x650xFF0x01
+
+        data[0] = CMD_START_TAG;
+
+        int x = 1;
+        while (tokenizer.hasMoreTokens()) {
+            // cmd ( char )
+            char cmd = (char) tokenizer.nextToken().getBytes()[0];
+
+            byte cmdId;
+            // see https://github.com/H3153nb3rg/triggertrap-android/wiki/The-SniperBox
+            switch (cmd) {
+                case 'B':
+                    cmdId = 0x02;
+                    break;
+                case 'C':
+                    cmdId = 0x03;
+                    break;
+                case 'D':
+                    cmdId = 0x01;
+                    break;
+                case 'K':
+                    cmdId = 0x00;
+                    break;
+                case 'H':
+                    cmdId = 0x04;
+                    break;
+                case 'I':
+                    cmdId = 0x05;
+                    break;
+                case 'J':
+                    cmdId = 0x06;
+                    break;
+                default:
+                    cmdId = 0x05;
+            }
+
+            data[x++] = cmdId;
+            // param1 (word)
+            short temp = Short.parseShort(tokenizer.nextToken());
+            // Big endian Network byte order encoding
+            data[x++] = (byte) ((temp >> 8) & 0xFF);
+            data[x++] = (byte) (temp & 0xFF);
+            // param2 (byte)
+            data[x++] = Byte.parseByte(tokenizer.nextToken());
+        }
+        data[0] = CMD_START_TAG;
+        data[x] = CMD_END_TAG;
+
+        return data;
+
+    }
+
 
     public void resetSequenceStartStopTime() {
         mSequenceStartStopTime = Calendar.getInstance();

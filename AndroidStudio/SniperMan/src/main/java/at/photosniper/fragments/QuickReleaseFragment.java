@@ -52,7 +52,7 @@ public class QuickReleaseFragment extends PhotoSniperBaseFragment {
 
         super.onDetach();
         if (mState == State.STARTED) {
-            mListener.onQuickPressStopped(getBLECommand());
+            mListener.onQuickPressStopped(getBLECommand(false));
             mState = State.STOPPED;
         }
 
@@ -71,7 +71,7 @@ public class QuickReleaseFragment extends PhotoSniperBaseFragment {
                 if (event.getAction() == MotionEvent.ACTION_UP) {
                     if (mListener != null) {
                         if (mState == State.STARTED) {
-                            mListener.onQuickPressStopped(getBLECommand());
+                            mListener.onQuickPressStopped(getBLECommand(false));
                         }
                     }
                     return true;
@@ -88,7 +88,7 @@ public class QuickReleaseFragment extends PhotoSniperBaseFragment {
             public void onTouchUp() {
                 if (mListener != null) {
                     if (mState == State.STARTED) {
-                        mListener.onQuickPressStopped(getBLECommand());
+                        mListener.onQuickPressStopped(getBLECommand(false));
                     }
                 }
             }
@@ -96,7 +96,7 @@ public class QuickReleaseFragment extends PhotoSniperBaseFragment {
             @Override
             public void onTouchDown() {
                 if (mListener != null) {
-                    mListener.onQuickPressStarted();
+                    mListener.onQuickPressStarted(getBLECommand(false));
                 }
             }
         });
@@ -164,14 +164,14 @@ public class QuickReleaseFragment extends PhotoSniperBaseFragment {
     }
 
     public interface QuickReleaseListener {
-        void onQuickPressStarted();
+        void onQuickPressStarted(final String command);
 
         void onQuickPressStopped(final String command);
     }
 
     // BLE
-    private String getBLECommand() {
-        return "A,100,100,1";
+    private String getBLECommand(boolean start) {
+        return (start ? "<B,0,0,1>" : "<C,0,0,1>");
     }
 
 

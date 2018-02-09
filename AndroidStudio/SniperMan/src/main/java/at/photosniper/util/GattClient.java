@@ -180,12 +180,18 @@ public class GattClient {
             stopClient();
         }
 
-        mContext.unregisterReceiver(mBluetoothReceiver);
+        try {
+            mContext.unregisterReceiver(mBluetoothReceiver);
+        } catch (Exception x) {
+            Log.w(TAG, "unregisterReceiver failed!!");
+        }
     }
 
-    public void writeCommand(String command) {
+    public void writeCommand(byte[] command) {
         BluetoothGattCharacteristic interactor = mBluetoothGatt.getService(UUID_SERVICE).getCharacteristic(UUID_HM_RX_TX);
-        interactor.setValue(command.getBytes());
+
+        interactor.setValue(command);
+
         if (!mBluetoothGatt.writeCharacteristic(interactor)) {
             Log.w(TAG, "writeCharacteristic failed!!");
         } else {

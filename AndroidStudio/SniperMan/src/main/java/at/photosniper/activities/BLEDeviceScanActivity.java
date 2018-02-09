@@ -116,10 +116,10 @@ public class BLEDeviceScanActivity extends ListActivity {
         // Ensures Bluetooth is enabled on the device.  If Bluetooth is not currently enabled,
         // fire an intent to display a dialog asking the user to grant permission to enable it.
 
-            if (!mBluetoothAdapter.isEnabled()) {
-                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-            }
+        if (!mBluetoothAdapter.isEnabled()) {
+            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+        }
 
         // Initializes list view adapter.
         mLeDeviceListAdapter = new LeDeviceListAdapter();
@@ -149,9 +149,6 @@ public class BLEDeviceScanActivity extends ListActivity {
         final BluetoothDevice device = mLeDeviceListAdapter.getDevice(position);
         if (device == null)
             return;
-        final Intent intent = new Intent(this, BLEDeviceControlActivity.class);
-        intent.putExtra(BLEDeviceControlActivity.EXTRAS_DEVICE_NAME, device.getName());
-        intent.putExtra(BLEDeviceControlActivity.EXTRAS_DEVICE_ADDRESS, device.getAddress());
 
         // store device for later on
         SharedPreferences sharedPref = getSharedPreferences("BLE", Context.MODE_PRIVATE);
@@ -165,7 +162,15 @@ public class BLEDeviceScanActivity extends ListActivity {
             mBluetoothAdapter.stopLeScan(mLeScanCallback);
             mScanning = false;
         }
-        startActivity(intent);
+
+
+        finish();
+
+//        final Intent intent = new Intent(this, BLEDeviceControlActivity.class);
+//        intent.putExtra(BLEDeviceControlActivity.EXTRAS_DEVICE_NAME, device.getName());
+//        intent.putExtra(BLEDeviceControlActivity.EXTRAS_DEVICE_ADDRESS, device.getAddress());
+//
+//        startActivity(intent);
     }
 
     private void scanLeDevice(final boolean enable) {
