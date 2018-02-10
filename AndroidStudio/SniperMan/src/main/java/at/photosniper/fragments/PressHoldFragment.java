@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import at.photosniper.PhotoSniperApp;
 import at.photosniper.R;
-
 import at.photosniper.view.CircleTimerView;
 import at.photosniper.view.CountingTimerView;
 import at.photosniper.widget.OngoingButton;
@@ -171,6 +170,7 @@ public class PressHoldFragment extends PhotoSniperBaseFragment {
             }
         }
     }
+
 
     public interface PressHoldListener {
         void onPressStarted();

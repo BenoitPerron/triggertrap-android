@@ -168,6 +168,7 @@ public class StartStopFragment extends PhotoSniperBaseFragment {
         return mLastSetTime;
     }
 
+
     public interface StartStopListener {
         void onStopwatchStarted();
 

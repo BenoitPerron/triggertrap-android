@@ -9,17 +9,16 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import at.photosniper.R;
-
 import at.photosniper.widget.OngoingButton;
 
 
-public class CableReleaseFragment extends PhotoSniperBaseFragment {
+public class SimpleReleaseFragment extends PhotoSniperBaseFragment {
 
-    private static final String TAG = CableReleaseFragment.class.getSimpleName();
+    private static final String TAG = SimpleReleaseFragment.class.getSimpleName();
     private OngoingButton mShutterButton;
     private SimpleModeListener mListener = null;
 
-    public CableReleaseFragment() {
+    public SimpleReleaseFragment() {
 
     }
 

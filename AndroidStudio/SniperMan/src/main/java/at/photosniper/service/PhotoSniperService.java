@@ -125,7 +125,7 @@ public class PhotoSniperService extends Service implements OutputListener, MicVo
 
         mOutputDispatcher = new OutputDispatcher(this, this);
         mNotificationManager = (NotificationManager) getSystemService(Service.NOTIFICATION_SERVICE);
-        mNotificationBuilder = new Notification.Builder(this).setContent(mRemoteViews).setTicker("PhotoSniper", mRemoteViews).setSmallIcon(R.drawable.notification_icon);
+        mNotificationBuilder = new Notification.Builder(this).setContent(mRemoteViews).setTicker("PhotoSniper", mRemoteViews).setSmallIcon(R.drawable.ic_stat_onesignal_default);
 
 
         // TODO Create a factory here to get Correct ZeroConf Implementation
@@ -558,7 +558,7 @@ public class PhotoSniperService extends Service implements OutputListener, MicVo
             mListener.onServiceStartSimple();
         }
 
-        trigger("<B,0,0;D,100,0;C,0,0>");
+        trigger(getBLECommand("SimpleRelease", true));
 
 
     }
@@ -715,6 +715,9 @@ public class PhotoSniperService extends Service implements OutputListener, MicVo
         }.start();
         mState = State.IN_PROGRESS;
         mOutputDispatcher.start();
+
+        trigger(getBLECommand("StartStop", true));
+
     }
 
     public void stopStopWatch() {
@@ -723,6 +726,8 @@ public class PhotoSniperService extends Service implements OutputListener, MicVo
         mState = State.IDLE;
         mOnGoingAction = PhotoSniperApp.OnGoingAction.NONE;
         mOutputDispatcher.stop();
+
+        trigger(getBLECommand("StartStop", false));
     }
 
     public void onStartPress() {
@@ -741,6 +746,8 @@ public class PhotoSniperService extends Service implements OutputListener, MicVo
         }.start();
         mState = State.IN_PROGRESS;
         mOutputDispatcher.start();
+
+        trigger(getBLECommand("PressHold", true));
     }
 
     public void onStopPress() {
@@ -749,6 +756,8 @@ public class PhotoSniperService extends Service implements OutputListener, MicVo
         mState = State.IDLE;
         mOnGoingAction = PhotoSniperApp.OnGoingAction.NONE;
         mOutputDispatcher.stop();
+
+        trigger(getBLECommand("PressHold", false));
     }
 
     /**
@@ -772,11 +781,13 @@ public class PhotoSniperService extends Service implements OutputListener, MicVo
         }.start();
         mState = State.IN_PROGRESS;
 
-        trigger(command);
+        // trigger(command);
     }
 
     public void onQuickPressStop(final String command) {
+
         trigger(command);
+
         mStopwatchTimer.cancel();
         mListener.onServicePressStop();
         mState = State.IDLE;
@@ -804,7 +815,9 @@ public class PhotoSniperService extends Service implements OutputListener, MicVo
 
     @Override
     public void onExceedThreshold(int amplitude) {
-        trigger("<B,0,0;D,100,0;C,0,0>");
+
+        trigger(getBLECommand("Sound", true));
+
         if (mListener != null && !mIsRunningInForeground) {
             mListener.onSoundExceedThreshold(amplitude);
         }
@@ -864,7 +877,7 @@ public class PhotoSniperService extends Service implements OutputListener, MicVo
 
         if (mAccumulativeDistance >= mTriggerDistance) {
             // Trigger a beep if we travel greater than the Trigger distance.
-            trigger("<B,0,0;D,100,0;C,0,0>");
+            trigger(getBLECommand("Distance", true));
             mAccumulativeDistance = mAccumulativeDistance % mTriggerDistance;
         }
 
@@ -1141,6 +1154,31 @@ public class PhotoSniperService extends Service implements OutputListener, MicVo
             // methods
             return PhotoSniperService.this;
         }
+    }
+
+    // BLE
+    private String getBLECommand(String useCase, boolean start) {
+
+        String cmd = "";
+
+        if (useCase.equalsIgnoreCase("SimpleRelease")) {
+            cmd = (start ? "<B,0,0;D,100,0;C,0,0>" : "<B,0,0;D,100,0;C,0,0>");
+        } else if (useCase.equalsIgnoreCase("PressHold")) {
+
+            cmd = (start ? "<B,0,0>" : "<C,0,0>");
+        } else if (useCase.equalsIgnoreCase("StartStop")) {
+
+            cmd = (start ? "<B,0,0>" : "<C,0,0>");
+        } else if (useCase.equalsIgnoreCase("Distance")) {
+
+            cmd = (start ? "<B,0,0;D,100,0;C,0,0>" : "<B,0,0;D,100,0;C,0,0>");
+        } else if (useCase.equalsIgnoreCase("Sound")) {
+
+            cmd = (start ? "<B,0,0;D,100,0;C,0,0>" : "<B,0,0;D,100,0;C,0,0>");
+        }
+
+
+        return cmd;
     }
 
 

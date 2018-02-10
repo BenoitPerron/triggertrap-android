@@ -49,7 +49,7 @@ import java.util.List;
 import at.photosniper.PhotoSniperApp;
 import at.photosniper.R;
 import at.photosniper.fragments.BrampingFragment;
-import at.photosniper.fragments.CableReleaseFragment;
+import at.photosniper.fragments.SimpleReleaseFragment;
 import at.photosniper.fragments.DistanceLapseFragment;
 import at.photosniper.fragments.GettingStartedFragment;
 import at.photosniper.fragments.HdrFragment;
@@ -88,7 +88,7 @@ import no.nordicsemi.android.support.v18.scanner.ScanResult;
 import no.nordicsemi.android.support.v18.scanner.ScanSettings;
 
 
-public class MainActivity extends Activity implements PulseSequenceFragment.PulseSequenceListener, PhotoSniperServiceListener, TimedFragment.TimedListener, StartStopListener, SoundSensorFragment.SoundSensorListener, SelfTimerFragment.SelfTimerListener, PressHoldFragment.PressHoldListener, CableReleaseFragment.SimpleModeListener, QuickReleaseFragment.QuickReleaseListener, DialpadManager.InputSelectionListener, DistanceLapseFragment.DistanceLapseListener, SonyWiFiRPC.SonyWiFiConnectionListener, SonyWiFiRPC.ResponseHandler, SonyWiFiRPC.LiveViewCallback {
+public class MainActivity extends Activity implements PulseSequenceFragment.PulseSequenceListener, PhotoSniperServiceListener, TimedFragment.TimedListener, StartStopListener, SoundSensorFragment.SoundSensorListener, SelfTimerFragment.SelfTimerListener, PressHoldFragment.PressHoldListener, SimpleReleaseFragment.SimpleModeListener, QuickReleaseFragment.QuickReleaseListener, DialpadManager.InputSelectionListener, DistanceLapseFragment.DistanceLapseListener, SonyWiFiRPC.SonyWiFiConnectionListener, SonyWiFiRPC.ResponseHandler, SonyWiFiRPC.LiveViewCallback {
 
     // Saved instance keys
     public static final String FRAGMENT_STATE = "fragment_state";
@@ -483,7 +483,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
 //        mDrawerFragHandler.addDrawerPane(PhotoSniperApp.FragmentTags.BUY_DONGLE,
 //                CableSelectorFragment.class, mInitialFragmentState);
 
-        mDrawerFragHandler.addDrawerPane(PhotoSniperApp.FragmentTags.SIMPLE, CableReleaseFragment.class, mInitialFragmentState);
+        mDrawerFragHandler.addDrawerPane(PhotoSniperApp.FragmentTags.SIMPLE, SimpleReleaseFragment.class, mInitialFragmentState);
         mDrawerFragHandler.addDrawerPane(PhotoSniperApp.FragmentTags.QUICK_RELEASE, QuickReleaseFragment.class, mInitialFragmentState);
         mDrawerFragHandler.addDrawerPane(PhotoSniperApp.FragmentTags.PRESS_AND_HOLD, PressHoldFragment.class, mInitialFragmentState);
         mDrawerFragHandler.addDrawerPane(PhotoSniperApp.FragmentTags.PRESS_TO_START, StartStopFragment.class, mInitialFragmentState);
@@ -1548,7 +1548,6 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
                 }
         }
     }
-
 
 
     @Override

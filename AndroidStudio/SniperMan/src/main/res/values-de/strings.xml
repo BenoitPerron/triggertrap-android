@@ -20,7 +20,7 @@
     <string name="_8_second">8</string>-->
 
     <!-- Welcome modes sub text -->
-    <string name="a_quick_guide">Eine Schnellanleitung</string>
+    <string name="a_quick_guide">Schnellanleitung</string>
     <string name="about">INFOS</string>
     <string name="action_settings">Einstellungen</string>
     <string name="action_BLEsettings">BLE Einstellungen</string>
@@ -46,7 +46,7 @@
     <string name="buy_cable_s1">Kaufen S1 Kabel</string>
     <string name="buy_cable_s2">Kaufen S2 Kabel</string>
     <string name="buy_cable_uc1">Kaufen UC1 Kabel</string>
-    <string name="cable_release_modes">Kabel-Auslöse-Modi</string>
+    <string name="cable_release_modes">Einfache-Modi</string>
     <string name="cable_selector">Kabel Selector</string>
     <string name="calculators">Rechner</string>
     <string name="cancel">Abbrechen</string>
@@ -63,7 +63,7 @@
 
     <!-- Calculator modes sub text -->
     <string name="determine_sunrise_sunset">Sonnenauf &amp; untergangsrechner</string>
-    <string name="did_you_know">Wussten Sie schon? Wir sind die freundlichsten Menschen, die die Welt je gesehen hat (ja, das ist ein wissenschaftlicher Fakt).</string>
+    <string name="did_you_know">SniperBox und PhotoSniper sind Opensource!</string>
     <string name="disconnect_slave_device">Verbindung zu Slave-Gerät trennen</string>
     <string name="distance">ENTFERNUNG</string>
     <string name="distance_unit_s_">Entfernungseinheiten</string>
@@ -81,7 +81,7 @@
     <!-- Star trial -->
     <string name="exposures_of_duration">Belichtungen der Dauer</string>
     <string name="exposures_over">Belichtungen über</string>
-    <string name="extreme_exposure_control">Extrem-Belichtungskontrolle</string>
+    <string name="extreme_exposure_control">einfacher Zeitraffer</string>
     <string name="finding_loc">Finde Position…</string>
 
     <!-- Solar Event Calendar -->
@@ -99,7 +99,7 @@
     <!-- Preferences (Settings) -->
     <string name="general">ALLGEMEIN</string>
     <string name="get_more_help">Weitere Hilfe erhalten</string>
-    <string name="get_the_right_kit">Nutzen sie die richtige ausrüstung</string>
+    <string name="get_the_right_kit">Nutzen sie die richtige Ausrüstung</string>
 
     <!-- Welcome modes -->
     <string name="getting_started">Erste Schritte</string>
@@ -138,7 +138,7 @@
 
     <!-- HDR modes -->
     <string name="le_hdr">LZB-HDR</string>
-    <string name="le_hdr_timelapse">LZB-HDR Zeitraff.</string>
+    <string name="le_hdr_timelapse">LZB-HDR Zeitraffer</string>
 
     <!-- Beta -->
     <string name="let_s_get_triggering_">Aber genug mit dem Gerede; fangen wir an, auszulösen!</string>
@@ -198,7 +198,7 @@
     <string name="no_devices_found">KEINE GERÄTE GEFUNDEN</string>
     <string name="number_of_exposures">Anzahl der Belichtungen</string>
     <string name="of_course_given_that_this_is_a">Da dies eine Betaversion ist, kann es hier und da natürlich noch ein paar Macken geben. Wenn Sie uns beim Verbessern der Android-App helfen möchten, dann berichten Sie bitte alle auftretenden Fehler und machen Sie Verbesserungsvorschläge in unserem speziellen Android-Forum (http://tri.gg/betaforum)\n</string>
-    <string name="oh_hi_there">Oh, hallo Sie! Ich bin froh, Sie zu treffen. </string>
+    <string name="oh_hi_there">Hallo! Schön Sie hier zu sehen!</string>
     <string name="ok">OK</string>
     <string name="one_fifty_shutter">150 ms - Kamera</string>
     <string name="one_second">1 Sekunde</string>
@@ -237,7 +237,7 @@
     <string name="running_press_to_start_and_stop">Drücken und Halten läuft</string>
     <string name="running_self_timer">Laufende Selbstauslöser</string>
     <string name="running_sound_trigger">Soundauslöser läuft</string>
-    <string name="running_star_trail">Sternspurenmodus läuft</string>
+    <string name="running_star_trail">Zeitraffer läuft</string>
     <string name="running_timed">Zeitgesteuerter Modus läuft</string>
     <string name="running_timelapse">Zeitraffer läuft</string>
     <string name="running_timewarp">TimeWarp läuft</string>
@@ -272,14 +272,14 @@
     <string name="simple">Klicken Sie auf den großen, roten Knopf damit die Magie losgeht.</string>
 
     <!-- Cable release modes -->
-    <string name="simple_cable_release">Einfacher Kabelauslöser</string>
-    <string name="so_you_want">So, Sie möchten also Ihre Kamera auslösen? Dann habe ich gute Neuigkeiten! Sie haben Ihr Smartphone oder Ihr Tablet gerade in den besten Kameraauslöser verwandelt, den Geld überhaupt kaufen kann. Gratulation zu Ihrer weisen Wahl!</string>
+    <string name="simple_cable_release">Einfacher Auslöser</string>
+    <string name="so_you_want">So, Sie möchten also Ihre Kamera auslösen? Dann habe ich gute Neuigkeiten! Sie haben Ihr Smartphone oder Ihr Tablet gerade in den flexibelsten Kameraauslöser verwandelt. Gratulation zu Ihrer weisen Wahl!</string>
     <string name="sound_mode">Soundmodi</string>
 
     <!-- Sound modes -->
     <string name="sound_sensor">Schallsensor</string>
     <string name="speed_unit">Geschwindigkeits-Einheit</string>
-    <string name="star_trail">Sternspuren</string>
+    <string name="star_trail">Zeitraffer</string>
     <string name="start">Starten</string>
     <string name="start_">Start:</string>
     <string name="stop">Stoppen</string>

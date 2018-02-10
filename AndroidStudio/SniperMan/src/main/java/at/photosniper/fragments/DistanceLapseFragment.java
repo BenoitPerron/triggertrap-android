@@ -21,7 +21,6 @@ import android.widget.TextView;
 
 import at.photosniper.PhotoSniperApp;
 import at.photosniper.R;
-
 import at.photosniper.fragments.dialog.EnableGPSDialog;
 import at.photosniper.fragments.preference.SettingsFragment;
 import at.photosniper.util.DialpadManager;

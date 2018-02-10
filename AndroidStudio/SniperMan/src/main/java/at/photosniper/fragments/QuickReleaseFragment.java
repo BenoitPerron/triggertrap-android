@@ -96,7 +96,7 @@ public class QuickReleaseFragment extends PhotoSniperBaseFragment {
             @Override
             public void onTouchDown() {
                 if (mListener != null) {
-                    mListener.onQuickPressStarted(getBLECommand(false));
+                    mListener.onQuickPressStarted(getBLECommand(true));
                 }
             }
         });
@@ -163,16 +163,18 @@ public class QuickReleaseFragment extends PhotoSniperBaseFragment {
         }
     }
 
+    // BLE
+    private String getBLECommand(boolean start) {
+        return (start ? "" : "<B,0,0;D,100,0;C,0,0>");
+    }
+
+
     public interface QuickReleaseListener {
         void onQuickPressStarted(final String command);
 
         void onQuickPressStopped(final String command);
     }
 
-    // BLE
-    private String getBLECommand(boolean start) {
-        return (start ? "<B,0,0,1>" : "<C,0,0,1>");
-    }
 
 
 }
