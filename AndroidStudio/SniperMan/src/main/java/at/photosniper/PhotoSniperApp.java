@@ -804,37 +804,43 @@ public class PhotoSniperApp {
         mTimewarpControl2Y = controlCoord;
     }
 
-    public String getSlaveLastMaster() {
-        if (null == mLastConnectedMaster) {
-            SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
-            mLastConnectedMaster = prefs.getString(PS_WIFI_SLAVE_LAST_MASTER, WIFI_SLAVE_LAST_MASTER_DEFAULT);
-        }
-        return mLastConnectedMaster;
+//    public String getSlaveLastMaster() {
+//        if (null == mLastConnectedMaster) {
+//            SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
+//            mLastConnectedMaster = prefs.getString(PS_WIFI_SLAVE_LAST_MASTER, WIFI_SLAVE_LAST_MASTER_DEFAULT);
+//        }
+//        return mLastConnectedMaster;
+//    }
+//
+//    public void setSlaveLastMaster(String lastMaster) {
+//        SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
+//        Editor editor = prefs.edit();
+//        editor.putString(PS_WIFI_SLAVE_LAST_MASTER, lastMaster);
+//        editor.apply();
+//        mLastConnectedMaster = lastMaster;
+//    }
+//
+//    public boolean isMasterOn() {
+//        if (mIsMasterON == null) {
+//            SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
+//            mIsMasterON = prefs.getBoolean(PS_WIFI_MASTER_IS_ON, WIFI_MASTER_IS_ON_DEFAULT);
+//        }
+//        return mIsMasterON;
+//    }
+//
+//    public void setMasterOn(boolean state) {
+//        SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
+//        Editor editor = prefs.edit();
+//        editor.putBoolean(PS_WIFI_MASTER_IS_ON, state);
+//        editor.apply();
+//        mIsMasterON = state;
+//    }
+
+    public boolean isSynchroneMode() {
+        return (getSonyWiFiRpc() != null);
     }
 
-    public void setSlaveLastMaster(String lastMaster) {
-        SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
-        Editor editor = prefs.edit();
-        editor.putString(PS_WIFI_SLAVE_LAST_MASTER, lastMaster);
-        editor.apply();
-        mLastConnectedMaster = lastMaster;
-    }
 
-    public boolean isMasterOn() {
-        if (mIsMasterON == null) {
-            SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
-            mIsMasterON = prefs.getBoolean(PS_WIFI_MASTER_IS_ON, WIFI_MASTER_IS_ON_DEFAULT);
-        }
-        return mIsMasterON;
-    }
-
-    public void setMasterOn(boolean state) {
-        SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
-        Editor editor = prefs.edit();
-        editor.putBoolean(PS_WIFI_MASTER_IS_ON, state);
-        editor.apply();
-        mIsMasterON = state;
-    }
 
     public interface FragmentTags {
         String NONE = "none";

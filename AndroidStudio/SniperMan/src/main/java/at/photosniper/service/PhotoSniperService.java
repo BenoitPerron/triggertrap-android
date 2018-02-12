@@ -265,6 +265,10 @@ public class PhotoSniperService extends Service implements OutputListener, MicVo
         return isInProgress;
     }
 
+    public void runBatchInsteadPulse(final String cmdSequence) {
+        trigger(cmdSequence);
+    }
+
     public void startPulseSequence(int onGoingAction, long[] sequence, boolean repeat) {
         if (checkInProgressState()) {
             return;
@@ -961,6 +965,10 @@ public class PhotoSniperService extends Service implements OutputListener, MicVo
 
     }
 
+    final static byte[] CMD_START_TAG = {0x00, 0x01, 0x02, 0x03};
+    final static byte[] CMD_END_TAG = {(byte) 0xff, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF};
+
+
     private void trigger(final String cmdSentence) {
 
         mOutputDispatcher.trigger(0);
@@ -982,18 +990,16 @@ public class PhotoSniperService extends Service implements OutputListener, MicVo
             });
         }
 
-        // ... and for BLE
-        if (PhotoSniperApp.getInstance(this).getBLEgattClient() != null) {
+        if ((cmdSentence != null) && (cmdSentence.length() > 2)) {
+            // ... and for BLE
+            if (PhotoSniperApp.getInstance(this).getBLEgattClient() != null) {
+                PhotoSniperApp.getInstance(this).getBLEgattClient().writeCommand(CMD_START_TAG);
+                PhotoSniperApp.getInstance(this).getBLEgattClient().writeCommand(translateCmd(cmdSentence));
+                PhotoSniperApp.getInstance(this).getBLEgattClient().writeCommand(CMD_END_TAG);
+            }
 
-
-            PhotoSniperApp.getInstance(this).getBLEgattClient().writeCommand(translateCmd(cmdSentence));
         }
-
-
     }
-
-    final static byte CMD_START_TAG = (byte) 0xFE;
-    final static byte CMD_END_TAG = (byte) 0xFF;
 
     private byte[] translateCmd(final String cmdSequence) {
         byte[] data = new byte[1024];
@@ -1002,9 +1008,7 @@ public class PhotoSniperService extends Service implements OutputListener, MicVo
 
         // A,100,100,1 -> 0x650xFF0x01
 
-        data[0] = CMD_START_TAG;
-
-        int x = 1;
+        int x = 0;
         while (tokenizer.hasMoreTokens()) {
             // cmd ( char )
             char cmd = (char) tokenizer.nextToken().getBytes()[0];
@@ -1013,28 +1017,28 @@ public class PhotoSniperService extends Service implements OutputListener, MicVo
             // see https://github.com/H3153nb3rg/triggertrap-android/wiki/The-SniperBox
             switch (cmd) {
                 case 'B':
-                    cmdId = 0x02;
-                    break;
-                case 'C':
-                    cmdId = 0x03;
-                    break;
-                case 'D':
                     cmdId = 0x01;
                     break;
-                case 'K':
-                    cmdId = 0x00;
+                case 'C':
+                    cmdId = 0x02;
                     break;
-                case 'H':
+                case 'D':
+                    cmdId = 0x03;
+                    break;
+                case 'K':
                     cmdId = 0x04;
                     break;
-                case 'I':
+                case 'H':
                     cmdId = 0x05;
                     break;
-                case 'J':
+                case 'I':
                     cmdId = 0x06;
                     break;
+                case 'J':
+                    cmdId = 0x07;
+                    break;
                 default:
-                    cmdId = 0x05;
+                    cmdId = 0x00;
             }
 
             data[x++] = cmdId;
@@ -1046,8 +1050,6 @@ public class PhotoSniperService extends Service implements OutputListener, MicVo
             // param2 (byte)
             data[x++] = Byte.parseByte(tokenizer.nextToken());
         }
-        data[0] = CMD_START_TAG;
-        data[x] = CMD_END_TAG;
 
         return data;
 

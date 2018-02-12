@@ -28,9 +28,9 @@ import at.photosniper.util.DialpadManager;
 import at.photosniper.widget.ErrorPopup;
 import at.photosniper.widget.OngoingButton;
 
-public class TimeLapseFragment extends TimeFragment implements DialpadManager.InputUpdatedListener {
+public class TimeLapseOldFragment extends TimeFragment implements DialpadManager.InputUpdatedListener {
 
-    private static final String TAG = TimeLapseFragment.class.getSimpleName();
+    private static final String TAG = TimeLapseOldFragment.class.getSimpleName();
 
     private View mRootView;
     private OngoingButton mButton;
@@ -70,7 +70,7 @@ public class TimeLapseFragment extends TimeFragment implements DialpadManager.In
         }
     };
 
-    public TimeLapseFragment() {
+    public TimeLapseOldFragment() {
         mRunningAction = PhotoSniperApp.OnGoingAction.TIMELAPSE;
     }
 

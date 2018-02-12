@@ -35,7 +35,7 @@ public class StarTrailFragment extends PulseSequenceFragment {
     private TimerView mExposureTimeInput;
     private TimerView mGapTimeInput;
 
-    private NumericView mNumericInput;
+    private NumericView mNrOfPicturesInput;
     private View mButtonContainer;
     private View mCountDownLayout;
 
@@ -116,21 +116,21 @@ public class StarTrailFragment extends PulseSequenceFragment {
     public void onStop() {
         super.onStop();
         //Persist the state of the star trail mode
-        PhotoSniperApp.getInstance(getActivity()).setStarTrailIterations(mNumericInput.getValue());
+        PhotoSniperApp.getInstance(getActivity()).setStarTrailIterations(mNrOfPicturesInput.getValue());
         PhotoSniperApp.getInstance(getActivity()).setStarTrailExposure(mExposureTimeInput.getTime());
         PhotoSniperApp.getInstance(getActivity()).setStarTrailGap(mGapTimeInput.getTime());
     }
 
     private void setUpIterations() {
-        mNumericInput = (NumericView) mRootView.findViewById(R.id.starIterations);
-        mNumericInput.setOnTouchListener(new View.OnTouchListener() {
+        mNrOfPicturesInput = (NumericView) mRootView.findViewById(R.id.starIterations);
+        mNrOfPicturesInput.setOnTouchListener(new View.OnTouchListener() {
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-                        if (mNumericInput.getState() == TimerView.State.UN_SELECTED) {
-                            mInputListener.onInputSelected(mNumericInput);
+                        if (mNrOfPicturesInput.getState() == TimerView.State.UN_SELECTED) {
+                            mInputListener.onInputSelected(mNrOfPicturesInput);
                         } else {
                             mInputListener.onInputDeSelected();
                         }
@@ -152,7 +152,7 @@ public class StarTrailFragment extends PulseSequenceFragment {
             mExposure = PhotoSniperApp.getInstance(getActivity()).getStarTrailExposure();
             mGap = PhotoSniperApp.getInstance(getActivity()).getStarTrailGap();
         }
-        mNumericInput.initValue(mInitialIterations);
+        mNrOfPicturesInput.initValue(mInitialIterations);
 
     }
 
@@ -279,20 +279,26 @@ public class StarTrailFragment extends PulseSequenceFragment {
 
         if (mState == State.STOPPED) {
 
-            if (mNumericInput.getValue() == 0 || mExposureTimeInput.getTime() == 0 || mGapTimeInput.getTime() == 0) {
+            if (mNrOfPicturesInput.getValue() == 0 || mExposureTimeInput.getTime() == 0 || mGapTimeInput.getTime() == 0) {
                 mButton.stopAnimation();
                 return;
             }
 
             mState = State.STARTED;
 
+
             mCountDownLayout.setVisibility(View.VISIBLE);
             mCountDownLayout.startAnimation(mSlideInFromTop);
             mCircleTimerView.setPassedTime(0, false);
 
+            if (PhotoSniperApp.getInstance(getActivity()).isSynchroneMode()) {
+                mPulseSequence = mPulseGenerator.getStarTrailSequence(mNrOfPicturesInput.getValue(), mExposureTimeInput.getTime(), mGapTimeInput.getTime());
+                mPulseSeqListener.onPulseSequenceCreated(PhotoSniperApp.OnGoingAction.STAR_TRAIL, mPulseSequence, false);
+            } else {
+                String cmdSequence = mPulseGenerator.getStarTrailSequenceCommand(mNrOfPicturesInput.getValue(), mExposureTimeInput.getTime(), mGapTimeInput.getTime());
+                mPulseSeqListener.onRunBatchInsteadPulse(cmdSequence);
+            }
 
-            mPulseSequence = mPulseGenerator.getStarTrailSequence(mNumericInput.getValue(), mExposureTimeInput.getTime(), mGapTimeInput.getTime());
-            mPulseSeqListener.onPulseSequenceCreated(PhotoSniperApp.OnGoingAction.STAR_TRAIL, mPulseSequence, false);
 
             long totaltime = PulseGenerator.getSequenceTime(mPulseSequence);
             Log.d(TAG, "Total time Circle: " + totaltime);
@@ -325,7 +331,7 @@ public class StarTrailFragment extends PulseSequenceFragment {
     }
 
     public int getExposureCount() {
-        return mNumericInput.getValue();
+        return mNrOfPicturesInput.getValue();
     }
 
 

@@ -29,6 +29,8 @@ public class PulseSequenceFragment extends PhotoSniperBaseFragment {
         void onPulseSequenceCreated(int ongoingAction, long[] sequence, boolean repeat);
 
         void onPulseSequenceCancelled();
+
+        void onRunBatchInsteadPulse(final String cmdSequence);
     }
 
 }

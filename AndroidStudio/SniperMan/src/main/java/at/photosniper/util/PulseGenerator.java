@@ -65,6 +65,11 @@ public class PulseGenerator {
         return sequence;
     }
 
+    public String getStarTrailSequenceCommand(int count, long pulseLength, long gap) {
+
+        return "<B,0,0;D," + pulseLength + ",1;C,0,0;K" + count + ",0>";
+    }
+
     /**
      * Generate a HDR or HDR timelapse sequence
      *

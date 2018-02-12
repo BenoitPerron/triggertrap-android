@@ -66,7 +66,7 @@ import at.photosniper.fragments.StarTrailFragment;
 import at.photosniper.fragments.StartStopFragment;
 import at.photosniper.fragments.StartStopFragment.StartStopListener;
 import at.photosniper.fragments.SunriseSunsetFragment;
-import at.photosniper.fragments.TimeLapseFragment;
+import at.photosniper.fragments.TimeLapseOldFragment;
 import at.photosniper.fragments.TimeWarpFragment;
 import at.photosniper.fragments.TimedFragment;
 import at.photosniper.fragments.dialog.ErrorPlayServicesFragment;
@@ -489,7 +489,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
         mDrawerFragHandler.addDrawerPane(PhotoSniperApp.FragmentTags.PRESS_TO_START, StartStopFragment.class, mInitialFragmentState);
         mDrawerFragHandler.addDrawerPane(PhotoSniperApp.FragmentTags.TIMED, TimedFragment.class, mInitialFragmentState);
         mDrawerFragHandler.addDrawerPane(PhotoSniperApp.FragmentTags.SELF_TIMER, SelfTimerFragment.class, mInitialFragmentState);
-        mDrawerFragHandler.addDrawerPane(PhotoSniperApp.FragmentTags.TIMELAPSE, TimeLapseFragment.class, mInitialFragmentState);
+        mDrawerFragHandler.addDrawerPane(PhotoSniperApp.FragmentTags.TIMELAPSE, TimeLapseOldFragment.class, mInitialFragmentState);
         mDrawerFragHandler.addDrawerPane(PhotoSniperApp.FragmentTags.TIMEWARP, TimeWarpFragment.class, mInitialFragmentState);
         mDrawerFragHandler.addDrawerPane(PhotoSniperApp.FragmentTags.STARTRAIL, StarTrailFragment.class, mInitialFragmentState);
         mDrawerFragHandler.addDrawerPane(PhotoSniperApp.FragmentTags.BRAMPING, BrampingFragment.class, mInitialFragmentState);
@@ -895,13 +895,18 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
     /*
      * Listener for PulseSequence Fragments
      */
+
+    @Override
+    public void onRunBatchInsteadPulse(final String cmdSequence) {
+        mService.runBatchInsteadPulse(cmdSequence);
+    }
+
     @Override
     public void onPulseSequenceCreated(int onGoingAction, long[] sequence, boolean repeat) {
         if (mPhotoSniperServiceBound) {
             Log.d(TAG, "Starting Pulse sequence: Action:" + onGoingAction);
             mService.startPulseSequence(onGoingAction, sequence, repeat);
             mService.resetSequenceStartStopTime();
-
         }
     }
 
@@ -961,7 +966,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
 
 //                long sequenceMillis = Calendar.getInstance().getTimeInMillis() - mService.getSequenceStartStopTime().getTimeInMillis();
 
-//                TimeLapseFragment timeLapseFragment = (TimeLapseFragment) fragment;
+//                TimeLapseOldFragment timeLapseFragment = (TimeLapseOldFragment) fragment;
 
 
                 break;
@@ -1366,7 +1371,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
             case PhotoSniperApp.OnGoingAction.TIMELAPSE:
                 // Is the timelapse fragment currently active?
                 if (currentFragTag.equals(PhotoSniperApp.FragmentTags.TIMELAPSE)) {
-                    TimeLapseFragment timeLapseFrag = (TimeLapseFragment) fragment;
+                    TimeLapseOldFragment timeLapseFrag = (TimeLapseOldFragment) fragment;
                     timeLapseFrag.onPulseStarted(exposures, timeToNextExposure);
                 }
                 break;
@@ -1425,7 +1430,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
             case PhotoSniperApp.OnGoingAction.TIMELAPSE:
                 // Is the timelapse fragment currently active?
                 if (currentFragTag.equals(PhotoSniperApp.FragmentTags.TIMELAPSE)) {
-                    TimeLapseFragment timeLapseFrag = (TimeLapseFragment) fragment;
+                    TimeLapseOldFragment timeLapseFrag = (TimeLapseOldFragment) fragment;
                     timeLapseFrag.onPulseUpdate(exposures, timeToNext, remainingPulseTime);
                 }
                 break;
