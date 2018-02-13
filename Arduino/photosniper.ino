@@ -1,21 +1,44 @@
+#include <multiCameraIrControl.h>
+
 #include <SoftwareSerial.h>
-#include <string.h>
+// #include <string.h>
 
 #define BLUETOOTH_SPEED 9600 //This is the default baudrate that HC-10 uses
 
 #define PIN_RX 3
 #define PIN_TX 2
 #define PIN_IR 6
+#define PIN_AF 7    	//Pin for Autofocus-Optocoupler
+#define PIN_SHUTTER  8  //Pin for Shutter-Optocoupler
 
-#define CMD_END_CHAR '!'
+//Camera Storage Delay
+#define Camera_delay      250     //Time in ms for which the script will be delayed after one cyle in infinite mode. In this Time the camera will store the Photo on the SD Card. Increase Value if your camera skips some cycles.
+#define MIROR_UP false 
+
+// IR CameraIDs
+#define IR_CAM_NONE 0
+#define IR_CAM_CANON 1
+#define IR_CAM_NIKON 2
+#define IR_CAM_MINOLTA 3
+#define IR_CAM_OLYMPUS 4
+#define IR_CAM_PENTAX 5
+#define IR_CAM_SONY 6
+
+#define CMD_START_TAG '<'
+#define CMD_END_TAG '>'
 
 SoftwareSerial bleSerial(PIN_RX, PIN_TX); // RX, TX§
 
 const byte numChars = 64;
-char commndBuffer[numChars];  // an array to store the received data
+char commndBuffer[numChars];  	// an array to store the received data
 
-boolean ir_enabled = false;   // use IR in general
+boolean ir_enabled = false;   	// use IR in general
+boolean cam_busy = false;   	// processing cmds
+boolean shutterReleased = false; // shutter busy
 
+int old_ir_id = IR_CAM_NONE;
+
+IRCamera *camera = NULL;
 
 void setup() {
   //initialize serial port for logs
@@ -29,18 +52,10 @@ void setup() {
   bleSerial.write("AT+ROLE1");
   bleSerial.write("AT+TYPE1"); //Simple pairing
 
-  Serial.println("<Arduino is ready>");
+  Serial.println("<SniperBox is ready>");
 
 }
 void loop() {
-  // if (bleSerial.available()) {
-  //     Serial.write(bleSerial.read());
-  //     // Serial.write("in receive");
-  //  }
-  //Serial.write("in loop");
-  //  if (Serial.available()) {
-  //    bleSerial.write(Serial.read());
-  //  }
 
   recvCommand();
 
@@ -55,112 +70,94 @@ void recvCommand() {
 
   // maybe shorter -> bleSerial.readBytesUntil(CMD_END_CHAR, commndBuffer, sizeof(commndBuffer) / sizeof(char) );
 
+  boolean inCmd = false;
+
   while (bleSerial.available() > 0 ) {
     rc = bleSerial.read();
 
-    if (rc != CMD_END_CHAR) {
-      commndBuffer[ndx] = rc;
-      ndx++;
-      if (ndx >= numChars) {
-        ndx = numChars - 1;
-      }
-    }
-    else
+    // all commands are 3 byte sequences !! BEGIN & END TAGS are stripped
+
+    if (!cam_busy)
     {
-      commndBuffer[ndx] = '\0'; // terminate the string
-      ndx = 0;
+      if (rc != CMD_END_TAG) {
 
-      String cmd(commndBuffer);
+        if (inCmd)
+        {
+          commndBuffer[ndx] = rc;
+          ndx++;
+          if (ndx >= numChars) {
+            ndx = numChars - 1;
+          }
+        }
+        else
+        {
+          inCmd = (rc == CMD_START_TAG);
+        }
 
-      processCommand(commndBuffer);
+      }
+      else
+      {
+        inCmd = false;
+        // String cmd(commndBuffer);
+        cam_busy = true;
+
+        processCommandChain(commndBuffer, ndx);
+
+        cam_busy = false;
+        commndBuffer[ndx] = '\0'; // terminate the string
+        ndx = 0;
+
+      }
     }
   }
 }
 
-void processCommand(char* cmdSequence) {
+void processCommandChain(char* cmdSequence, int bytesUsed) {
 
   Serial.println(cmdSequence);
 
   // first we get the single groups
-  char* command = strtok(cmdSequence, ";");
+  // char* command = strtok(cmdSequence, ";");
 
-  while (command)
+  int x = 0;
+  while ( x < bytesUsed )
   {
-     char* params = strtok(command, ",");
+    char* cmd = cmdSequence[x++];
+    word* param1 = cmdSequence[x];
+    x += 2;
+    byte* param2 = cmdSequence[x++];
 
-    // int token=0;
-    // while (params != null)
-    // {
-    if ( *command == 'B')
-    {
-      closeTrigger();
-      break;
-    }
-    else
-    {
-      if ( *command == 'C')
-      {
-        openTrigger();
-        break;
-      }
-      else
-      {
-        if ( *command == 'I')
-        {
-          return;
-        }
-        else
-        {
-          if ( *command == 'J')
-          {
-            params++;
-            int enableBLE = atoi(*params);
+    processCommand(cmd, param1, param2);
 
-            toggleBLE(enableBLE);
-          }
-          else
-          {
-            if ( *command == 'H')
-            {
-              params++;
-              int ir_id = atoi(*params);
-              chooseIR(ir_id);
-              break;
-            }
-            else
-            {
-              if ( *command == 'A')
-              {
-                params++;
-                int delay = atoi(*params);
-                params++;
-                int expose = atoi(*params);
-                params++;
-                int loop = 1;
-                if (params)
-                {
-                  loop = atoi(*params);
-                }
-                takeSinglePicture (delay, expose, loop);
-                break;
-              }
-              else
-              {
-                Serial.print("unknown command:");
-                Serial.println(command);
-              }
-            }
-          }
-        }
-      }
-    }
-    // TODO: looping over sequence is NYI !!!!
   }
-
-  // token++;
-  // }
-
 }
+
+void processCommand(char cmd, word param1, byte param2)
+{
+  switch (cmd)
+  {
+    case 'B' :
+      closeShutter();
+      break;
+    case 'C' :
+      openShutter();
+      break;
+    case 'J' :
+      toggleBLE(param1);
+      break;
+    case 'H' :
+      chooseIR(param1);
+      break;
+    case 'A' :
+      takeSinglePicture (param1, param2, 1);  // TODO: loop
+      break;
+    default:
+      Serial.print("unknown command:");
+      Serial.println(cmd);
+
+  }
+}
+
 
 
 
@@ -168,29 +165,59 @@ void processCommand(char* cmdSequence) {
 
 
 // B
-void closeTrigger()
+void closeShutter()
 {
+	if (shutterReleased)
+		return;
+	
   // close wire switch
   Serial.println("close Shutter");
 
+    if(MIROR_UP == true){    //Use if Mirror Up Setting is Activated
+    //Trigger Mirror-Up is set
+    digitalWrite(PIN_AF, HIGH);  //Activate Focus
+    delay(40);  //Give the Camera some time to react
+    digitalWrite(PIN_SHUTTER, HIGH); //Activate Shutter
+    delay(100);  //Wait for the camera to move mirror up, then Deactivate Shutter/AF
+    digitalWrite(PIN_SHUTTER, LOW); //Deactivate Shutter
+    digitalWrite(PIN_AF, LOW);  //Deactivate Focus
+    delay(250);   //Pause to reduce vibrations of the camera
+    //Mirror is now UP, Start Trigger routine
+  }
+  
+	//Set AF and Shutter Pin to high
+    digitalWrite(PIN_AF, HIGH);  //Activate Focus
+    delay(40);  //Give the Camera some time to react
+    digitalWrite(PIN_SHUTTER, HIGH); //Activate Shutter  
+
+	shutterReleased = true; 
+  
   // close IR switch
   if (ir_enabled)
   {
     Serial.println("close IR Shutter");
+    camera->shotNow();
   }
 
 }
 
 // C
-void openTrigger()
+void openShutter()
 {
   // open wire switch
   Serial.println("open Shutter");
+  
+	//Reset AF and Shutter Pin to LOW
+    digitalWrite(PIN_SHUTTER, LOW); //Deactivate Shutter
+    digitalWrite(PIN_AF, LOW);  //Deactivate Focus
+    //delay(200);  //Give the Camera a short break
+  
   // open IR switch
   if (ir_enabled)
   {
     Serial.println("open IR Shutter");
   }
+  shutterReleased = false;
 }
 
 // A
@@ -200,10 +227,10 @@ void takeSinglePicture ( int delay_ms, int expose_ms, int loop )
   {
 
     delayMicroseconds(delay_ms << 10);
-    closeTrigger();
+    closeShutter();
 
     delayMicroseconds(expose_ms << 10);
-    openTrigger();
+    openShutter();
   }
 }
 
@@ -213,7 +240,46 @@ void chooseIR( int cameraType)
   Serial.print("IR group selected:");
   Serial.println(cameraType);
 
-  ir_enabled = (cameraType < 0);
+  ir_enabled = (cameraType > IR_CAM_NONE);
+
+  if ( ir_enabled )
+  {
+    if ( cameraType != old_ir_id)
+    {
+      // delete old
+      if ( camera )
+      {
+        delete camera;
+        camera = NULL;
+      }
+    }
+    if ( !camera )
+    {
+      old_ir_id = cameraType;
+      switch (cameraType)
+      {
+        case IR_CAM_CANON :
+          camera = new Canon(PIN_IR);
+          break;
+        case IR_CAM_NIKON :
+          camera = new Nikon(PIN_IR);
+          break;
+        case IR_CAM_MINOLTA :
+          camera = new Minolta(PIN_IR);
+          break;
+        case IR_CAM_OLYMPUS :
+          camera = new Olympus(PIN_IR);
+          break;
+        case IR_CAM_PENTAX :
+          camera = new Pentax(PIN_IR);
+          break;
+        case IR_CAM_SONY :
+          camera = new Sony(PIN_IR);
+          break;
+      }
+    }
+  }
+
 
   // ....
 }
@@ -231,7 +297,7 @@ void toggleBLE( int enableBLE)
   {
     bleSerial.write("12345678901234567890123456789012345678901234567890123456789012345678901234567890");
   }
-  
+
   // enable/disable BLE
 }
 
