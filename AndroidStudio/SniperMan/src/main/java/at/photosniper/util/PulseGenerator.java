@@ -67,7 +67,22 @@ public class PulseGenerator {
 
     public String getStarTrailSequenceCommand(int count, long pulseLength, long gap) {
 
-        return "<B,0,0;D," + pulseLength + ",1;C,0,0;K" + count + ",0>";
+        int iterations = (int) (pulseLength / 65534);
+
+        int delay = (int) (pulseLength % 65534);
+
+
+        String cmd = "<B,0,0;";
+        if (iterations > 1) {
+            cmd += "D,65535," + iterations + ";";
+        }
+        if (delay > 0) {
+            cmd += "D," + delay + ",1;";
+        }
+
+        cmd += "C,0,0;K" + count + ",0>";
+
+        return cmd;
     }
 
     /**
