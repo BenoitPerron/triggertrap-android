@@ -56,7 +56,7 @@
         <item name="android:paddingBottom">@dimen/drawlist_item_bottom_padding</item>
     </style>
     <style name="TTNavDrawerItemText" parent="TTNavDrawerTitleText">
-        <item name="android:textColor">@color/ps_black</item>
+        <item name="android:textColor">@color/ps_medium_grey</item>
         <item name="android:textSize">@dimen/text_size_medium</item>
         <item name="android:fontFamily">sans-serif-light</item>
         <item name="android:background">@drawable/drawer_list_item_selector</item>
