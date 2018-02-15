@@ -38,7 +38,7 @@
 
     <!-- Sound modes -->
     <string name="sound_sensor">Sound Sensor</string>
-
+    <string name="light_sensor">Light Sensor</string>
     <!-- HDR modes -->
     <string name="le_hdr">LE HDR</string>
     <string name="le_hdr_timelapse">LE HDR Timelapse</string>
