@@ -34,20 +34,8 @@
     <string name="bulb_ramping_timelapse">Bulb Ramping Zeitraffer</string>
 
     <!-- Cable Chooser -->
-    <string name="buy_cable_cb1">Kaufen CB1 Kabel</string>
-    <string name="buy_cable_dc0">Kaufen DC0 Kabel</string>
-    <string name="buy_cable_dc1">Kaufen DC1 Kabel</string>
-    <string name="buy_cable_dc2">Kaufen DC2 Kabel</string>
-    <string name="buy_cable_e3">Kaufen E3 Kabel</string>
-    <string name="buy_cable_l1">Kaufen L1 Kabel</string>
-    <string name="buy_cable_n3">Kaufen N3 Kabel</string>
-    <string name="buy_cable_nx">Kaufen NX Kabel</string>
-    <string name="buy_cable_r9">Kaufen R9 Kabel</string>
-    <string name="buy_cable_s1">Kaufen S1 Kabel</string>
-    <string name="buy_cable_s2">Kaufen S2 Kabel</string>
-    <string name="buy_cable_uc1">Kaufen UC1 Kabel</string>
+
     <string name="cable_release_modes">Einfache-Modi</string>
-    <string name="cable_selector">Kabel Selector</string>
     <string name="calculators">Rechner</string>
     <string name="cancel">Abbrechen</string>
     <string name="choose_your_shutter_speed">Wählen Sie Ihre Verschlusszeit</string>

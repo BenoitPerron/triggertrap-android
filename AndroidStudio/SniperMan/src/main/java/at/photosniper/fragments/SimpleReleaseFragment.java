@@ -38,7 +38,7 @@ public class SimpleReleaseFragment extends PhotoSniperBaseFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.cable_mode, container, false);
+        View rootView = inflater.inflate(R.layout.simple_mode, container, false);
         mShutterButton = (OngoingButton) rootView.findViewById(R.id.shutterButton);
         TextView title = (TextView) rootView.findViewById(R.id.releaseTitle);
         title.setTypeface(SAN_SERIF_LIGHT);

@@ -11,7 +11,7 @@
     <string name="welcome">Welcome</string>
     <string name="cable_release_modes">Simple Release Modes</string>
     <string name="timelapse_modes">Timelapse Modes</string>
-    <string name="sound_mode">Sound Modes</string>
+    <string name="sound_mode">Sensor Modes</string>
     <string name="hdr_modes">HDR Modes</string>
     <string name="remote_triggers">Remote Triggers</string>
     <string name="output_settings">Output Settings</string>
@@ -19,7 +19,7 @@
 
     <!-- Welcome modes -->
     <string name="getting_started">Getting Started</string>
-    <string name="cable_selector">Cable Selector</string>
+
 
     <!-- Cable release modes -->
     <string name="simple_cable_release">Simple Release</string>
@@ -339,21 +339,6 @@
     <string name="meh_message">Send us an email and we’ll try make things better.</string>
     <string name="meh_title">Oh no! Would you like some support?</string>
     <string name="send_email">Email Us</string>
-
-    <!-- Cable Chooser -->
-    <string name="buy_cable_cb1">Buy CB1 cable</string>
-    <string name="buy_cable_dc0">Buy DC0 cable</string>
-    <string name="buy_cable_dc1">Buy DC1 cable</string>
-    <string name="buy_cable_dc2">Buy DC2 cable</string>
-    <string name="buy_cable_e3">Buy E3 cable</string>
-    <string name="buy_cable_l1">Buy L1 cable</string>
-    <string name="buy_cable_n3">Buy N3 cable</string>
-    <string name="buy_cable_nx">Buy NX cable</string>
-    <string name="buy_cable_r9">Buy R9 cable</string>
-    <string name="buy_cable_s1">Buy S1 cable</string>
-    <string name="buy_cable_s2">Buy S2 cable</string>
-    <string name="buy_cable_uc1">Buy UC1 cable</string>
-
 
     <string name="neutral_density_2">ND2</string>
     <string name="neutral_density_4">ND4</string>

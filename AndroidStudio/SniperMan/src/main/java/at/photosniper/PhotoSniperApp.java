@@ -17,6 +17,8 @@ public class PhotoSniperApp {
     private static final int SELF_TIME_MODE_TIME_DEFAULT = 30000;
     private static final int SOUND_SENSOR_THRESHOLD_DEFAULT = 50;
     private static final int SOUND_SENSOR_SENSITIVTY_DEFAULT = 50;
+    private static final int LIGHT_SENSOR_THRESHOLD_DEFAULT = 50;
+    private static final int LIGHT_SENSOR_SENSITIVTY_DEFAULT = 50;
     private static final int STAR_TRAIL_ITERATIONS_DEFAULT = 10;
     private static final long STAR_TRAIL_EXPOSURE_DEFAULT = 90000;
     private static final long STAR_TRAIL_GAP_DEFAULT = 5000;
@@ -52,6 +54,8 @@ public class PhotoSniperApp {
     private static final String PS_SELF_TIME_MODE_TIME = "ps_self_time_mode_time";
     private static final String PS_SOUND_SENSOR_THRESHOLD = "ps_sound_sensor_threshold";
     private static final String PS_SOUND_SENSOR_SENSITIVTY = "ps_sound_sensor_sensitivty";
+    private static final String PS_LIGHT_SENSOR_THRESHOLD = "ps_light_sensor_threshold";
+    private static final String PS_LIGHT_SENSOR_SENSITIVTY = "ps_light_sensor_sensitivty";
     private static final String PS_STAR_TRAIL_ITERATIONS = "ps_star_trail_interations";
     private static final String PS_STAR_TRAIL_EXPOSURE = "ps_star_trail_exposure";
     private static final String PS_STAR_TRAIL_GAP = "ps_star_trail_gap";
@@ -109,6 +113,8 @@ public class PhotoSniperApp {
     private int mSensorDelay = UNINITIALIZED;
     private int mSoundSensorThreshold = UNINITIALIZED;
     private int mSoundSensorSensitivity = UNINITIALIZED;
+    private int mLightSensorThreshold = UNINITIALIZED;
+    private int mLightSensorSensitivity = UNINITIALIZED;
     // Star trial values
     private int mStarTrailInterations = UNINITIALIZED;
     private long mStarTrailExposure = UNINITIALIZED;
@@ -409,10 +415,42 @@ public class PhotoSniperApp {
         mSensorDelay = sensorDelay;
     }
 
+    public int getLightSensorThreshold() {
+        if (mLightSensorThreshold == UNINITIALIZED) {
+            SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
+            mLightSensorThreshold = prefs.getInt(PS_LIGHT_SENSOR_THRESHOLD, LIGHT_SENSOR_THRESHOLD_DEFAULT);
+        }
+        return mSoundSensorThreshold;
+    }
+
+    public void setLightSensorThreshold(int amplitude) {
+        SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
+        Editor editor = prefs.edit();
+        editor.putInt(PS_LIGHT_SENSOR_THRESHOLD, amplitude);
+        editor.apply();
+        mLightSensorThreshold = amplitude;
+    }
+
+    public int getLightSensorSensitivity() {
+        if (mLightSensorSensitivity == UNINITIALIZED) {
+            SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
+            mLightSensorSensitivity = prefs.getInt(PS_LIGHT_SENSOR_SENSITIVTY, LIGHT_SENSOR_SENSITIVTY_DEFAULT);
+        }
+        return mLightSensorSensitivity;
+    }
+
+    public void setLightSensorSensitivity(int amplitude) {
+        SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
+        Editor editor = prefs.edit();
+        editor.putInt(PS_LIGHT_SENSOR_SENSITIVTY, amplitude);
+        editor.apply();
+        mLightSensorSensitivity = amplitude;
+    }
+
     public int getSoundSensorThreshold() {
         if (mSoundSensorThreshold == UNINITIALIZED) {
             SharedPreferences prefs = mAppContext.getSharedPreferences(PS_PREFS, Context.MODE_PRIVATE);
-            mSoundSensorThreshold = prefs.getInt(PS_SOUND_SENSOR_THRESHOLD, SOUND_SENSOR_THRESHOLD_DEFAULT);
+            mSoundSensorThreshold = prefs.getInt(PS_LIGHT_SENSOR_THRESHOLD, LIGHT_SENSOR_THRESHOLD_DEFAULT);
         }
         return mSoundSensorThreshold;
     }
@@ -440,6 +478,7 @@ public class PhotoSniperApp {
         editor.apply();
         mSoundSensorSensitivity = amplitude;
     }
+
 
     public int getStarTrailIterations() {
         if (mStarTrailInterations == UNINITIALIZED) {
@@ -841,7 +880,6 @@ public class PhotoSniperApp {
     }
 
 
-
     public interface FragmentTags {
         String NONE = "none";
         String GETTING_STARTED = "getting_started";
@@ -857,6 +895,7 @@ public class PhotoSniperApp {
         String STARTRAIL = "startrail";
         String BRAMPING = "bramping";
         String BANG = "bang";
+        String BANG2 = "bang2";
         String DISTANCE_LAPSE = "distance_lapse";
         String HDR = "hdr";
         String HDR_LAPSE = "hdr_lapse";
@@ -878,6 +917,7 @@ public class PhotoSniperApp {
         int STAR_TRAIL = 4;
         int BRAMPING = 5;
         int BANG = 6;
+        int BANG2 = 16;
         int DISTANCE_LAPSE = 7;
         int HDR = 8;
         int HDR_TIMELAPSE = 9;

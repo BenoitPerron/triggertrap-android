@@ -12,48 +12,49 @@ import android.widget.TextView;
 
 import at.photosniper.PhotoSniperApp;
 import at.photosniper.R;
-
-import at.photosniper.inputs.MicVolumeMonitor.VolumeListener;
+import at.photosniper.inputs.LightMonitor;
 import at.photosniper.view.ArcProgress;
 import at.photosniper.widget.OngoingButton;
 import at.photosniper.widget.SeekArc;
 
-public class SoundSensorFragment extends PhotoSniperBaseFragment implements VolumeListener {
+public class LightSensorFragment extends PhotoSniperBaseFragment implements LightMonitor.LightListener {
 
-    private static final String TAG = SoundSensorFragment.class.getSimpleName();
+    private static final String TAG = LightSensorFragment.class.getSimpleName();
 
     private ArcProgress mProgressArc;
-    private SeekBar mMicSensitivity;
+    private SeekBar mLightSensorSensitivity;
     private TextView mBangText;
     private OngoingButton mButton;
-    private int mState = States.MIC_CLOSED;
+    private int mState = States.SENSOR_CLOSED;
 
     private int mThresholdProgress;
     private int mSensitivityProgress;
 
-    private SoundSensorListener mListener = null;
+    private LightSensorListener mListener = null;
 
-    public SoundSensorFragment() {
-        mRunningAction = PhotoSniperApp.OnGoingAction.BANG;
+    public LightSensorFragment() {
+        mRunningAction = PhotoSniperApp.OnGoingAction.BANG2;
     }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        // This makes sure that the container activity has implemented
-        // the callback interface. If not, it throws an exception
+// This makes sure that the container activity has implemented
+// the callback interface. If not, it throws an exception
         try {
-            mListener = (SoundSensorListener) activity;
+            mListener = (LightSensorListener) activity;
         } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString() + " must implement SoundSensorListener");
+            throw new ClassCastException(activity.toString() + " must implement LightSensorListener");
+
         }
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mThresholdProgress = PhotoSniperApp.getInstance(getActivity()).getSoundSensorThreshold();
-        mSensitivityProgress = PhotoSniperApp.getInstance(getActivity()).getSoundSensorSensitivity();
+
+        mThresholdProgress = PhotoSniperApp.getInstance(getActivity()).getLightSensorThreshold();
+        mSensitivityProgress = PhotoSniperApp.getInstance(getActivity()).getLightSensorSensitivity();
     }
 
     @Override
@@ -68,10 +69,10 @@ public class SoundSensorFragment extends PhotoSniperBaseFragment implements Volu
         sensitivity.setTypeface(SAN_SERIF_LIGHT);
 
         mProgressArc = (ArcProgress) rootView.findViewById(R.id.bangVolumeDisplay);
-        mMicSensitivity = (SeekBar) rootView.findViewById(R.id.bangSensitivity);
+        mLightSensorSensitivity = (SeekBar) rootView.findViewById(R.id.bangSensitivity);
         SeekArc mThreshold = (SeekArc) rootView.findViewById(R.id.bangThreshold);
 
-        //thresholdIndicator = (ImageButton) rootView.findViewById(R.id.thresholdIndicator);
+//thresholdIndicator = (ImageButton) rootView.findViewById(R.id.thresholdIndicator);
         mBangText = (TextView) rootView.findViewById(R.id.bangText);
 
         mButton = (OngoingButton) rootView.findViewById(R.id.bangButton);
@@ -79,45 +80,41 @@ public class SoundSensorFragment extends PhotoSniperBaseFragment implements Volu
 
             @Override
             public void onToggleOn() {
-                if (mState == States.MIC_CLOSED) {
-                    mState = States.MIC_OPEN;
+                if (mState == States.SENSOR_CLOSED) {
+                    mState = States.SENSOR_OPEN;
                     Log.d(TAG, "Enabling threshold....");
                     if (mListener != null) {
-                        mListener.onEnableSoundThreshold();
-                        //volMonitor.enabledThreshold();
+                        mListener.onEnableLightThreshold();
                     }
                 }
             }
 
             @Override
             public void onToggleOff() {
-                if (mState == States.MIC_OPEN) {
-                    mState = States.MIC_CLOSED;
+                if (mState == States.SENSOR_OPEN) {
+                    mState = States.SENSOR_CLOSED;
                     Log.d(TAG, "Disabling threshold....");
                     if (mListener != null) {
-                        //volMonitor.disableThreshold();
-                        mListener.onDisableSoundThreshold();
+                        mListener.onDisableLightThreshold();
                     }
                 }
             }
 
         });
 
-        mMicSensitivity.setProgress(mSensitivityProgress);
+        mLightSensorSensitivity.setProgress(mSensitivityProgress);
         mThreshold.setProgress(mThresholdProgress);
 
-        mMicSensitivity.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        mLightSensorSensitivity.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                //micSensValue.setText(String.valueOf(progress));
-
+//micSensValue.setText(String.valueOf(progress));
                 if (mListener != null) {
-                    //volMonitor.setMicSensitivity(mMicSensitivity.getProgress());
-                    mListener.onSetMicSensitivity(mMicSensitivity.getProgress());
-                    mSensitivityProgress = mMicSensitivity.getProgress();
-
+//volMonitor.setMicSensitivity(mLightSensorSensitivity.getProgress());
+                    mListener.onSetLightSensorSensitivity(mLightSensorSensitivity.getProgress());
+                    mSensitivityProgress = mLightSensorSensitivity.getProgress();
                 }
-                //mProgressBar.setMax(volMonitor.getVolumeRange());
+//mProgressBar.setMax(volMonitor.getSensorRange());
             }
 
             @Override
@@ -133,8 +130,8 @@ public class SoundSensorFragment extends PhotoSniperBaseFragment implements Volu
             @Override
             public void onProgressChanged(SeekArc seekArc, int progress, boolean fromUser) {
                 if (mListener != null) {
-                    //volMonitor.setThreshold(progress);
-                    mListener.onSetSoundThreshold(progress);
+
+                    mListener.onSetLightSensorThreshold(progress);
                     mThresholdProgress = progress;
                 }
             }
@@ -148,10 +145,9 @@ public class SoundSensorFragment extends PhotoSniperBaseFragment implements Volu
             }
         });
 
-        //volMonitor = new MicVolumeMonitor(this);
         if (mListener != null) {
-            //volMonitor.setMicSensitivity(mMicSensitivity.getProgress());
-            mListener.onSetMicSensitivity(mMicSensitivity.getProgress());
+
+            mListener.onSetLightSensorSensitivity(mLightSensorSensitivity.getProgress());
         }
 
         return rootView;
@@ -166,60 +162,57 @@ public class SoundSensorFragment extends PhotoSniperBaseFragment implements Volu
     public void onStart() {
         Log.d(TAG, "onstart");
         super.onStart();
-        startVolumeMonitor();
+        startSensorMonitor();
     }
 
     @Override
     public void onStop() {
         Log.d(TAG, "onstop");
         super.onStop();
-        stopVolumeMonitor();
-        PhotoSniperApp.getInstance(getActivity()).setSoundSensorSensitivity(mSensitivityProgress);
-        PhotoSniperApp.getInstance(getActivity()).setSoundSensorThreshold(mThresholdProgress);
+        stopSensorMonitor();
+
+        PhotoSniperApp.getInstance(getActivity()).setLightSensorSensitivity(mSensitivityProgress);
+        PhotoSniperApp.getInstance(getActivity()).setLightSensorThreshold(mThresholdProgress);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        //volMonitor.release();
+//volMonitor.release();
     }
 
-    private void startVolumeMonitor() {
+    private void startSensorMonitor() {
         if (mListener != null) {
-            //volMonitor.start();
-            mListener.onStartSoundSensor();
+//volMonitor.start();
+            mListener.onStartLightSensor();
         }
-
     }
 
-    private void stopVolumeMonitor() {
+    private void stopSensorMonitor() {
         if (mListener != null) {
-            //volMonitor.stop();
-            mListener.onStopSoundSensor();
+//volMonitor.stop();
+            mListener.onStopLightSensor();
         }
         mProgressArc.setProgress(0);
     }
 
     @Override
-    public void onVolumeUpdate(int amplitude) {
+    public void onLightUpdate(int amplitude) {
         if (mProgressArc != null) {
             mProgressArc.setProgress(amplitude);
             getActivity().runOnUiThread(new Runnable() {
                 public void run() {
-                    // thresholdIndicator.setBackgroundColor(Color.GREEN);
                     mBangText.setTextColor(Color.BLACK);
                 }
+
             });
         }
-
     }
 
     @Override
-    public void onExceedVolumeThreshold(int amplitude) {
+    public void onExceedLightThreshold(int amplitude) {
         getActivity().runOnUiThread(new Runnable() {
             public void run() {
-                //thresholdIndicator.setBackgroundColor(Color.RED);
-                //Log.d(TAG, "BANG!!!!");
                 mBangText.setTextColor(Color.RED);
             }
         });
@@ -228,15 +221,15 @@ public class SoundSensorFragment extends PhotoSniperBaseFragment implements Volu
     @Override
     public void setActionState(boolean actionState) {
         if (actionState) {
-            mState = States.MIC_OPEN;
+            mState = States.SENSOR_OPEN;
         } else {
-            mState = States.MIC_CLOSED;
+            mState = States.SENSOR_CLOSED;
         }
         setInitialUiState();
     }
 
     private void setInitialUiState() {
-        if (mState == States.MIC_OPEN) {
+        if (mState == States.SENSOR_OPEN) {
             mButton.startAnimation();
         } else {
             if (mButton != null) {
@@ -247,21 +240,21 @@ public class SoundSensorFragment extends PhotoSniperBaseFragment implements Volu
 
 
     private interface States {
-        int MIC_OPEN = 0;
-        int MIC_CLOSED = 1;
+        int SENSOR_OPEN = 0;
+        int SENSOR_CLOSED = 1;
     }
 
-    public interface SoundSensorListener {
-        void onStartSoundSensor();
+    public interface LightSensorListener {
+        void onStartLightSensor();
 
-        void onStopSoundSensor();
+        void onStopLightSensor();
 
-        void onEnableSoundThreshold();
+        void onEnableLightThreshold();
 
-        void onDisableSoundThreshold();
+        void onDisableLightThreshold();
 
-        void onSetMicSensitivity(int sensitivity);
+        void onSetLightSensorSensitivity(int sensitivity);
 
-        void onSetSoundThreshold(int threshold);
+        void onSetLightSensorThreshold(int threshold);
     }
 }

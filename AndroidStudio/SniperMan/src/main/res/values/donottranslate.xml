@@ -504,7 +504,7 @@
     <string-array name="ps_sensor_mode_icons">
         <item>@drawable/icon_mic</item>
         <item>@drawable/icon_stopwatch</item>
-        <item>@drawable/icon_compass</item>
+        <item>@drawable/icon_lightbulb</item>
     </string-array>
     <string-array name="ps_hdr_mode_icons">
         <item>@drawable/icon_stack_star</item>

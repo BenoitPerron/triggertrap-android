@@ -80,7 +80,7 @@ public class MicVolumeMonitor {
                                     //Trigger the output after the sensor delay
                                     handler.postDelayed(new Runnable() {
                                         public void run() {
-                                            mListener.onExceedThreshold(percentAmplitude);
+                                            mListener.onExceedVolumeThreshold(percentAmplitude);
                                         }
                                     }, PhotoSniperApp.getInstance(null).getSensorDelay());
 
@@ -152,7 +152,7 @@ public class MicVolumeMonitor {
     public interface VolumeListener {
         void onVolumeUpdate(int amplitude);
 
-        void onExceedThreshold(int amplitude);
+        void onExceedVolumeThreshold(int amplitude);
     }
 
 }
