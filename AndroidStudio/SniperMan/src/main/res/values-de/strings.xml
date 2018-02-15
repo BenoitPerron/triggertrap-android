@@ -54,6 +54,8 @@
 
     <!-- Sound modes sub text -->
     <string name="clap_whistle_or_tap">Klatschen, Pfeifen oder Klopfen</string>
+    <string name="blink">Licht ein oder ausschalten</string>
+    
     <string name="connect_error_description">PhotoSniper nutzt Google Play Dienste, um Ihre Position zu erfahren. Die Verbindung konnte nicht hergestellt werden. Möchten Sie es noch einmal versuchen?</string>
     <string name="connect_error_title">Verbindungsfehler der Google Play Dienste</string>
     <string name="connected_slave_devices">VERBUNDENE SLAVE-GERÄTE</string>
