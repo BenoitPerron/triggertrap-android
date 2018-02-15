@@ -32,13 +32,16 @@
     <!-- Timer modes -->
     <string name="timelapse">Timelapse</string>
     <string name="timewarp">TimeWarp</string>
-    <string name="distancelapse">DistanceLapse</string>
+    
+    
     <string name="star_trail">Star Trail</string>
     <string name="bramping">Bramping</string>
 
     <!-- Sound modes -->
     <string name="sound_sensor">Sound Sensor</string>
     <string name="light_sensor">Light Sensor</string>
+    <string name="distancelapse">DistanceLapse</string>
+    
     <!-- HDR modes -->
     <string name="le_hdr">LE HDR</string>
     <string name="le_hdr_timelapse">LE HDR Timelapse</string>
@@ -75,6 +78,7 @@
 
     <!-- Sound modes sub text -->
     <string name="clap_whistle_or_tap">Clap, whistle or tap</string>
+    <string name="blink">Change ambient light</string>
 
     <!-- HDR modes sub text -->
     <string name="long_exposure_hdr_sets">Long exposure HDR sets</string>
