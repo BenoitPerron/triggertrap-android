@@ -40,10 +40,12 @@
         <item>@string/timewarp</item>
         <item>@string/star_trail</item>
         <item>@string/bramping</item>
-        <item>@string/distancelapse</item>
+        
     </string-array>
-    <string-array name="ps_sound_modes">
+    <string-array name="ps_sensor_modes">
         <item>@string/sound_sensor</item>
+        <item>@string/light_sensor</item>
+        <item>@string/distancelapse</item>
     </string-array>
     <string-array name="ps_hdr_modes">
         <item>@string/le_hdr</item>
@@ -83,14 +85,16 @@
         <item>@string/timelapse_with_acceleration</item>
         <item>@string/extreme_exposure_control</item>
         <item>@string/bulb_ramping_timelapse</item>
-        <item>@string/perfect_for_roadtrips</item>
+        
     </string-array>
     <string-array name="ps_hdr_modes_sub_text">
         <item>@string/long_exposure_hdr_sets</item>
         <item>@string/long_exposure_hdr_timelapse</item>
     </string-array>
-    <string-array name="ps_sound_modes_sub_text">
+    <string-array name="ps_sensor_modes_sub_text">
         <item>@string/clap_whistle_or_tap</item>
+        <item>@string/blink</item>
+        <item>@string/perfect_for_roadtrips</item>
     </string-array>
     <!--
     <string-array name="ps_remote_trigger_modes_sub_text">
@@ -491,14 +495,16 @@
         <item>@drawable/icon_history</item>
     </string-array>
     <string-array name="ps_timer_mode_icons">
-        <!-- <item>@drawable/icon_stopwatch</item> -->
+        
         <item>@drawable/icon_wave</item>
         <item>@drawable/icon_star</item>
         <item>@drawable/icon_brightness_contrast</item>
-        <item>@drawable/icon_compass</item>
+        
     </string-array>
-    <string-array name="ps_sound_mode_icons">
+    <string-array name="ps_sensor_mode_icons">
         <item>@drawable/icon_mic</item>
+        <item>@drawable/icon_stopwatch</item>
+        <item>@drawable/icon_compass</item>
     </string-array>
     <string-array name="ps_hdr_mode_icons">
         <item>@drawable/icon_stack_star</item>
