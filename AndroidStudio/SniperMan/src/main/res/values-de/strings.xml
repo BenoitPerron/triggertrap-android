@@ -28,7 +28,7 @@
     <string name="app_name">PhotoSniper</string>
 
     <!-- Bang (Sound trigger) mode -->
-    <string name="bang">Schall</string>
+    <string name="bang">Bang!</string>
     <string name="base_shutter_speed">Basis Verschlusszeit</string>
     <string name="bramping">Bulb Ramping</string>
     <string name="bulb_ramping_timelapse">Bulb Ramping Zeitraffer</string>
@@ -274,10 +274,11 @@
     <!-- Cable release modes -->
     <string name="simple_cable_release">Einfacher Auslöser</string>
     <string name="so_you_want">So, Sie möchten also Ihre Kamera auslösen? Dann habe ich gute Neuigkeiten! Sie haben Ihr Smartphone oder Ihr Tablet gerade in den flexibelsten Kameraauslöser verwandelt. Gratulation zu Ihrer weisen Wahl!</string>
-    <string name="sound_mode">Soundmodi</string>
+    <string name="sound_mode">Sensor modi</string>
 
     <!-- Sound modes -->
     <string name="sound_sensor">Schallsensor</string>
+    <string name="light_sensor">Licht sensor</string>
     <string name="speed_unit">Geschwindigkeits-Einheit</string>
     <string name="star_trail">Zeitraffer</string>
     <string name="start">Starten</string>
