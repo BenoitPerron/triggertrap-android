@@ -46,12 +46,7 @@
     <string name="le_hdr">LE HDR</string>
     <string name="le_hdr_timelapse">LE HDR Timelapse</string>
 
-    <!-- Remote trigger modes -->
-    <string name="wifi_slave">Wi-Fi Slave</string>
-    <string name="pebble">Pebble</string>
 
-    <!-- Output settings modes -->
-    <string name="wifi_master">Wi-Fi Master</string>
 
     <!-- Calculators Modes -->
     <string name="sunrise_sunset">Solar Calculator</string>
@@ -110,8 +105,6 @@
     <string name="running_hdr_timelapse">Running HDR timelapse</string>
     <string name="running_self_timer">Running Self Timer</string>
 
-    <string name="running_wifi_slave">Running Wi-Fi Slave</string>
-    <string name="running_pebble">Running Pebble</string>
 
     <!-- Cable modes -->
     <string name="simple">Tap the big red button to make the magic happen</string>
@@ -149,24 +142,6 @@
     <!-- Status bar -->
     <string name="triggertrap_idle">PhotoSniper is idle</string>
 
-    <!-- Wifi slave -->
-    <string name="in_wifi_slave">In Wi-Fi slave mode we\'re using another PhotoSniper Mobile device as a trigger. Connect to the Master device, and wait for the other device to trigger this camera. How cool is that? Press the red button to start searching</string>
-    <string name="no_devices_found">NO DEVICES FOUND</string>
-    <string name="master_devices">MASTER DEVICES</string>
-    <string name="wi_fi_slave">Wi-Fi Slave </string>
-    <string name="Connected_to">Connected to: </string>
-    <string name="unconnected">UNCONNECTED</string>
-
-    <!-- Pebble -->
-    <string name="in_pebble">To install the PhotoSniper Pebble app on your watch select \'Install Pebble App\' in the Action menu. In Pebble mode we\'re using a Pebble smartwatch as a trigger. Connect to a Pebble, and wait for the Pebble to trigger this camera. How cool is that? Press the red button to start listening</string>
-
-    <!-- Wifi Master -->
-    <string name="flick_the_switch">Flick the switch to \'on\' to become visible to others running PhotoSniper Mobile on your Wi-Fi network. When they connect to your device, you can trigger their cameras wirelessly.</string>
-    <string name="connected_slave_devices">CONNECTED SLAVE DEVICES</string>
-    <string name="disconnect_slave_device">Disconnect Slave Device</string>
-    <string name="do_you_want_to_slave_device">Do you want to disconnect this slave device?</string>
-    <string name="running_wifi_master">Running Wi-Fi Master</string>
-    <string name="my_name_is">My name is</string>
 
     <!-- Bang (Sound trigger) mode -->
     <string name="bang">Bang</string>

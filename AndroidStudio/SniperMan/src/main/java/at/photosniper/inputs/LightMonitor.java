@@ -50,58 +50,6 @@ public class LightMonitor implements SensorEventListener {
         mLight = mSensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
 
     }
-/* private void startBufferedRead() {
- new Thread(new Runnable() {
-
- public void run() {
- while (mIsRecording) {
- double sum = 0;
- int readSize = mRecorder.read(mBuffer, 0, mBuffer.length);
- for (int i = 0;
- i < readSize;
- i++) {
- sum += mBuffer[i] * mBuffer[i];
- }
- if (readSize > 0) {
- final double amplitude = sum / readSize;
- int rmsAmplitude = (int) Math.sqrt(amplitude);
- //Pass amplitude to listener if (mListener != null) {
- rmsAmplitude = (rmsAmplitude <= mVolumeRange) ? rmsAmplitude : mVolumeRange;
- //Get the amplitude as a percentage in the range 0-100
- final int percentAmplitude = (int) ((float) (rmsAmplitude) / mVolumeRange * 100);
-
- final long currentTime = System.currentTimeMillis();
-
- if (currentTime - lastUpdateTime > VOLUME_UPDATE_INTERVAL) {
- lastUpdateTime = currentTime;
- mListener.onVolumeUpdate(percentAmplitude);
- }
- if (rmsAmplitude > mThreshold && mIsThresholdEnabled) {
- if (currentTime - lastTriggerTime > PhotoSniperApp.getInstance(null).getSensorResetDelay()) {
- lastTriggerTime = currentTime;
-
- //Trigger the output after the sensor delay handler.postDelayed(new Runnable() {
- public void run() {
- mListener.onExceedVolumeThreshold(percentAmplitude);
- }
- }
-, PhotoSniperApp.getInstance(null).getSensorDelay());
-
- }
- }
- }
- }
- else {
- //Pass 0 amplitude if we have no sample. if (mListener != null) {
- mListener.onVolumeUpdate(0);
- }
- }
- }
- }
- }
-).start();
- }
-*/
 
     public void start() {
         if (!mIsRecording) {
@@ -124,16 +72,18 @@ public class LightMonitor implements SensorEventListener {
 
     @Override
     public final void onAccuracyChanged(Sensor sensor, int accuracy) {
-
+// is ma wurscht!
     }
 
-    float rmsAmplitude = 0;
+    float maxAmplitude = 0;
 
     @Override
     public final void onSensorChanged(SensorEvent event) {
+
         float lux = event.values[0];
-        if (Math.abs(lux) > rmsAmplitude) {
-            rmsAmplitude = Math.abs(lux);
+
+        if (Math.abs(lux) > maxAmplitude) {
+            maxAmplitude = Math.abs(lux);
         }
         lastValueMeasured = (int) Math.abs(lux);
 
