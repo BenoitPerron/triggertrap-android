@@ -1,5 +1,6 @@
 package at.photosniper.inputs;
 
+import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -30,22 +31,22 @@ public class LightMonitor implements SensorEventListener {
     private Sensor mLight;
     private final Handler handler = new Handler();
 
+    private final static int BUFFER_SIZE = 100;
 
-    private LightMonitor() {
-        initRecorder();
-    }
+    private int eventBuffer[] = new int[BUFFER_SIZE];
+    private int eventCntr = 0;
 
 
-    public LightMonitor(LightListener listener) {
+    public LightMonitor(Context context, LightListener listener) {
         mListener = listener;
-        initRecorder();
+        initRecorder(context);
 
     }
 
 
-    private void initRecorder() {
+    private void initRecorder(Context context) {
 
-        mSensorManager = null; //getSystemService(Context.SENSOR_SERVICE);
+        mSensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
         mLight = mSensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
 
     }
@@ -66,7 +67,8 @@ public class LightMonitor implements SensorEventListener {
  int rmsAmplitude = (int) Math.sqrt(amplitude);
  //Pass amplitude to listener if (mListener != null) {
  rmsAmplitude = (rmsAmplitude <= mVolumeRange) ? rmsAmplitude : mVolumeRange;
- //Get the amplitude as a percentage in the range 0-100 final int percentAmplitude = (int) ((float) (rmsAmplitude) / mVolumeRange * 100);
+ //Get the amplitude as a percentage in the range 0-100
+ final int percentAmplitude = (int) ((float) (rmsAmplitude) / mVolumeRange * 100);
 
  final long currentTime = System.currentTimeMillis();
 
@@ -106,6 +108,8 @@ public class LightMonitor implements SensorEventListener {
             mIsRecording = true;
 
             mSensorManager.registerListener(this, mLight, SensorManager.SENSOR_DELAY_NORMAL);
+
+            eventCntr = 0;
         }
     }
 
@@ -132,8 +136,23 @@ public class LightMonitor implements SensorEventListener {
             rmsAmplitude = Math.abs(lux);
         }
         lastValueMeasured = (int) Math.abs(lux);
-        final int percentAmplitude = (int) ((float) (lastValueMeasured) / ((mVolumeRange / 100)));
-        // final int percentAmplitude = (int) ((float) (lastValueMeasured) / rmsAmplitude * 100);
+
+        eventBuffer[eventCntr % BUFFER_SIZE] = lastValueMeasured;
+
+        long sum = 0;
+
+        for (int i = 0; i < BUFFER_SIZE; i++) {
+            sum += (eventBuffer[(eventCntr + i) % BUFFER_SIZE] * eventBuffer[(eventCntr + i) % BUFFER_SIZE]);
+        }
+
+        final double amplitude = sum / BUFFER_SIZE;
+        int rmsAmplitude = (int) Math.sqrt(amplitude);
+
+        rmsAmplitude = (rmsAmplitude <= mVolumeRange) ? rmsAmplitude : mVolumeRange;
+
+        //Get the amplitude as a percentage in the range 0-100
+        final int percentAmplitude = (int) ((float) (rmsAmplitude) / mVolumeRange * 100);
+
         final long currentTime = System.currentTimeMillis();
 
         if (currentTime - lastUpdateTime > VOLUME_UPDATE_INTERVAL) {
@@ -141,7 +160,7 @@ public class LightMonitor implements SensorEventListener {
             mListener.onLightUpdate(percentAmplitude);
         }
 
-        if (percentAmplitude > mThreshold && mIsThresholdEnabled) {
+        if (percentAmplitude > mThreshold && mIsThresholdEnabled)
             if (currentTime - lastTriggerTime > PhotoSniperApp.getInstance(null).getSensorResetDelay()) {
                 lastTriggerTime = currentTime;
 
@@ -153,7 +172,6 @@ public class LightMonitor implements SensorEventListener {
                 }, PhotoSniperApp.getInstance(null).getSensorDelay());
 
             }
-        }
 
     }
 

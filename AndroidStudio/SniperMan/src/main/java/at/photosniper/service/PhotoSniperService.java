@@ -135,7 +135,7 @@ public class PhotoSniperService extends Service implements OutputListener, MicVo
 
         // TODO Create a factory here to get Correct ZeroConf Implementation
         mMicVolumeMonitor = new MicVolumeMonitor(this);
-
+        mLightMonitor = new LightMonitor(getApplication(), this);
         mPowerManager = (PowerManager) getSystemService(POWER_SERVICE);
 
 

@@ -28,7 +28,8 @@
         style="@style/TTBangTitleText"
         android:layout_gravity="center"
         android:layout_marginBottom="5dp"
-        android:text="@string/bang"/>
+        android:text="@string/bang"
+        android:keepScreenOn="true"/>
 
     <at.photosniper.widget.SeekArc
         android:id="@+id/bangThreshold"
