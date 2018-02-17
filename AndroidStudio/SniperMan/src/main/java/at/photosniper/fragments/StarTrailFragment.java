@@ -115,6 +115,7 @@ public class StarTrailFragment extends PulseSequenceFragment {
     @Override
     public void onStop() {
         super.onStop();
+
         //Persist the state of the star trail mode
         PhotoSniperApp.getInstance(getActivity()).setStarTrailIterations(mNrOfPicturesInput.getValue());
         PhotoSniperApp.getInstance(getActivity()).setStarTrailExposure(mExposureTimeInput.getTime());

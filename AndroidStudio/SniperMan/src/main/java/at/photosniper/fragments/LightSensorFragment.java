@@ -72,7 +72,6 @@ public class LightSensorFragment extends PhotoSniperBaseFragment implements Ligh
         mLightSensorSensitivity = (SeekBar) rootView.findViewById(R.id.bangSensitivity);
         SeekArc mThreshold = (SeekArc) rootView.findViewById(R.id.bangThreshold);
 
-//thresholdIndicator = (ImageButton) rootView.findViewById(R.id.thresholdIndicator);
         mBangText = (TextView) rootView.findViewById(R.id.bangText);
 
         mButton = (OngoingButton) rootView.findViewById(R.id.bangButton);
@@ -108,13 +107,12 @@ public class LightSensorFragment extends PhotoSniperBaseFragment implements Ligh
         mLightSensorSensitivity.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-//micSensValue.setText(String.valueOf(progress));
+
                 if (mListener != null) {
-//volMonitor.setMicSensitivity(mLightSensorSensitivity.getProgress());
                     mListener.onSetLightSensorSensitivity(mLightSensorSensitivity.getProgress());
                     mSensitivityProgress = mLightSensorSensitivity.getProgress();
                 }
-//mProgressBar.setMax(volMonitor.getSensorRange());
+
             }
 
             @Override
@@ -178,35 +176,41 @@ public class LightSensorFragment extends PhotoSniperBaseFragment implements Ligh
     @Override
     public void onDestroy() {
         super.onDestroy();
-//volMonitor.release();
+
     }
 
     private void startSensorMonitor() {
         if (mListener != null) {
-//volMonitor.start();
+
             mListener.onStartLightSensor();
         }
     }
 
     private void stopSensorMonitor() {
         if (mListener != null) {
-//volMonitor.stop();
+
             mListener.onStopLightSensor();
         }
         mProgressArc.setProgress(0);
     }
 
+    boolean textUpdated = false;
+
     @Override
     public void onLightUpdate(int amplitude) {
         if (mProgressArc != null) {
             mProgressArc.setProgress(amplitude);
-            getActivity().runOnUiThread(new Runnable() {
-                public void run() {
-                    mBangText.setTextColor(Color.BLACK);
-                }
+            if (textUpdated) {
+                getActivity().runOnUiThread(new Runnable() {
+                    public void run() {
+                        mBangText.setTextColor(Color.BLACK);
+                        textUpdated = false;
+                    }
 
-            });
+                });
+            }
         }
+
     }
 
     @Override
@@ -216,6 +220,7 @@ public class LightSensorFragment extends PhotoSniperBaseFragment implements Ligh
                 mBangText.setTextColor(Color.RED);
             }
         });
+        textUpdated = true;
     }
 
     @Override

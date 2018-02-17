@@ -354,22 +354,30 @@ public class HdrFragment extends PulseSequenceFragment {
 
         if (mState == State.STOPPED) {
 
-
-            mPulseSequence = mPulseGenerator.getHdrSequence(mCurrentMiddleSpeed, mCurrentNumExposures, mCurrentEvValue, 0);
-            if (!validateSequence(mPulseSequence)) {
-                mButton.stopAnimation();
-                HDRErrorDialog hdrDialog = new HDRErrorDialog();
-                hdrDialog.show(getActivity());
-                return;
-            }
-
             mState = State.STARTED;
             mCountDownLayout.setVisibility(View.VISIBLE);
             mCountDownLayout.startAnimation(mSlideInFromTop);
             mCircleTimerView.setPassedTime(0, false);
 
+            if (PhotoSniperApp.getInstance(getActivity()).isSynchroneMode()) {
 
-            mPulseSeqListener.onPulseSequenceCreated(PhotoSniperApp.OnGoingAction.HDR, mPulseSequence, false);
+                mPulseSequence = mPulseGenerator.getHdrSequence(mCurrentMiddleSpeed, mCurrentNumExposures, mCurrentEvValue, 0);
+                if (!validateSequence(mPulseSequence)) {
+                    mButton.stopAnimation();
+                    HDRErrorDialog hdrDialog = new HDRErrorDialog();
+                    hdrDialog.show(getActivity());
+                    return;
+                }
+                mPulseSeqListener.onPulseSequenceCreated(PhotoSniperApp.OnGoingAction.HDR, mPulseSequence, false);
+            } else {
+                String cmdSequence = mPulseGenerator.getHdrSequenceCommand(mCurrentMiddleSpeed, mCurrentNumExposures, mCurrentEvValue, 0);
+                mPulseSeqListener.onRunBatchInsteadPulse(cmdSequence);
+            }
+
+
+
+
+
             logSequence(mPulseSequence);
 
             long mTotaltime = PulseGenerator.getSequenceTime(mPulseSequence);

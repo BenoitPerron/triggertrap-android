@@ -65,14 +65,12 @@ public class PulseGenerator {
         return sequence;
     }
 
-    public String getStarTrailSequenceCommand(int count, long pulseLength, long gap) {
+    private String calcDelayCmds(long delayLength) {
+        String cmd = "";
 
-        int iterations = (int) (pulseLength / 65534);
+        int iterations = (int) (delayLength / 65534);
+        int delay = (int) (delayLength % 65534);
 
-        int delay = (int) (pulseLength % 65534);
-
-
-        String cmd = "<B,0,0;";
         if (iterations > 1) {
             cmd += "D,65535," + iterations + ";";
         }
@@ -80,10 +78,33 @@ public class PulseGenerator {
             cmd += "D," + delay + ",1;";
         }
 
-        cmd += "C,0,0;K" + count + ",0>";
+        return cmd;
+
+    }
+
+    public String getStarTrailSequenceCommand(int count, long pulseLength, long gap) {
+
+        String cmd = "<B,0,0;";
+        cmd += calcDelayCmds(pulseLength);  // Belichtung
+        cmd += "C,0,0";
+        cmd += calcDelayCmds(gap);  // Pause
+        cmd += "K," + count + ",0>";
 
         return cmd;
     }
+
+    public String getTimeWarpSequenceCommand(int count, long sequenceDuration, CubicBezierInterpolator interpolator) {
+        String cmd = "<B,0,0;";
+        cmd += calcDelayCmds(12345);  // Belichtung
+        cmd += "C,0,0";
+        cmd += calcDelayCmds(12345);  // Pause
+        cmd += "K," + count + ",0>";
+
+        return cmd;
+
+    }
+
+
 
     /**
      * Generate a HDR or HDR timelapse sequence
@@ -118,6 +139,17 @@ public class PulseGenerator {
         return sequence;
     }
 
+    public String getHdrSequenceCommand(long middle, int count, float ev, long interval) {
+        String cmd = "<B,0,0;";
+        cmd += calcDelayCmds(12345);  // Belichtung
+        cmd += "C,0,0";
+        cmd += calcDelayCmds(interval);  // Pause
+        cmd += "K," + count + ",0>";
+
+        return cmd;
+
+    }
+
     public long[] getBrampingSequence(int count, long interval, long firstExposure, long lastExposure) {
         long[] sequence = new long[count * 2];
 
@@ -129,6 +161,19 @@ public class PulseGenerator {
 
         }
         return sequence;
+    }
+
+    public String getBrampingSequenceCommand(int count, long interval, long firstExposure, long lastExposure) {
+
+        String cmd = "<B,0,0;";
+        cmd += calcDelayCmds(12345);  // Belichtung
+        cmd += "C,0,0";
+        cmd += calcDelayCmds(interval);  // Pause
+        cmd += "K," + count + ",0>";
+
+        return cmd;
+
+
     }
 
     public long[] getTimeWarpSequence(int count, long sequenceDuration, CubicBezierInterpolator interpolator) {

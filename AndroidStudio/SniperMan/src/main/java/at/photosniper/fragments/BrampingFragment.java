@@ -152,8 +152,17 @@ public class BrampingFragment extends PulseSequenceFragment implements DialpadMa
             mCountDownLayout.startAnimation(mSlideInFromTop);
             mCircleTimerView.setPassedTime(0, false);
 
-            mPulseSequence = mPulseGenerator.getBrampingSequence(mNumericInput.getValue(), mExposureTimeInput.getTime(), mStartExposure, mEndExposure);
-            mPulseSeqListener.onPulseSequenceCreated(mRunningAction, mPulseSequence, false);
+
+            if (PhotoSniperApp.getInstance(getActivity()).isSynchroneMode()) {
+                mPulseSequence = mPulseGenerator.getBrampingSequence(mNumericInput.getValue(), mExposureTimeInput.getTime(), mStartExposure, mEndExposure);
+                mPulseSeqListener.onPulseSequenceCreated(mRunningAction, mPulseSequence, false);
+            } else {
+                String cmdSequence = mPulseGenerator.getBrampingSequenceCommand(mNumericInput.getValue(), mExposureTimeInput.getTime(), mStartExposure, mEndExposure);
+                mPulseSeqListener.onRunBatchInsteadPulse(cmdSequence);
+            }
+
+
+
 
             long totaltime = PulseGenerator.getSequenceTime(mPulseSequence);
             Log.d(TAG, "Total time Circle: " + totaltime);

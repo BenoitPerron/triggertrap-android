@@ -477,9 +477,18 @@ public class TimeWarpFragment extends TimeFragment implements DialpadManager.Inp
             mCountDownLayout.startAnimation(mSlideInFromTop);
             mCircleTimerView.setPassedTime(0, false);
 
-            //mInterpolator.setControlPoints(0.98f, 0.01f, 0.01f, 0.98f);
-            mPulseSequence = mPulseGenerator.getTimeWarpSequence(mTimewarpIterationsView.getValue(), mTimewarpDurationView.getTime(), mInterpolator);
-            mPulseSeqListener.onPulseSequenceCreated(mRunningAction, mPulseSequence, false);
+
+            if (PhotoSniperApp.getInstance(getActivity()).isSynchroneMode()) {
+                //mInterpolator.setControlPoints(0.98f, 0.01f, 0.01f, 0.98f);
+                mPulseSequence = mPulseGenerator.getTimeWarpSequence(mTimewarpIterationsView.getValue(), mTimewarpDurationView.getTime(), mInterpolator);
+                mPulseSeqListener.onPulseSequenceCreated(mRunningAction, mPulseSequence, false);
+            } else {
+                String cmdSequence = mPulseGenerator.getTimeWarpSequenceCommand(mTimewarpIterationsView.getValue(), mTimewarpDurationView.getTime(), mInterpolator);
+                mPulseSeqListener.onRunBatchInsteadPulse(cmdSequence);
+            }
+
+
+
 
             long totaltime = PulseGenerator.getSequenceTime(mPulseSequence);
             Log.d(TAG, "Total time Circle: " + totaltime);
@@ -540,7 +549,7 @@ public class TimeWarpFragment extends TimeFragment implements DialpadManager.Inp
 
     public void onPulseUpdate(long[] sequence, int exposures, long timeToNext, long remainingPulseTime, long remainingSequenceTime) {
 //		Log.d(TAG,"Pulse update exposures: " +exposures);
-        int currentSeq = exposures - 1;
+        int currentSeq = exposures;// - 1;
         long currentExposure = sequence[currentSeq * 2];
         long currentGap = sequence[(currentSeq * 2) + 1];
         long remainingExposure = 0;

@@ -82,6 +82,7 @@
     <!-- Shutter (Settings) -->
     <string name="flash_shutter">30 ms - Blitz</string>
 
+    <string name="four_seconds">4 Sekunden</string>
 
     <!-- Preferences (Settings) -->
     <string name="general">ALLGEMEIN</string>
@@ -108,6 +109,12 @@
     <string name="if_you_get_stuck">Wenn Sie nicht weiterkommen, wenn Sie irgendwelche Ideen haben, die Sie uns mitteilen möchten, oder wenn Sie einfach nur reden möchten, dann erinnern Sie sich daran, dass Sie uns Tag und Nacht unter hello@tri.gg erreichen können.</string>
     <string name="in">in</string>
 
+
+    <string name="in_triggertrap_mobile">In PhotoSniper finden Sie eine Auswahl toller Auslöse-Modi. Experimentieren Sie ruhig damit und klicken Sie Ihre kreative Fotografie in den nächsten Gang!</string>
+
+
+    <string name="installed_app_verison">Installierte App-Version</string>
+
     <!-- Bramping -->
     <string name="interval_">Intervall:</string>
     <string name="kilometers_per_hour">Kilometer pro Stunde</string>
@@ -121,7 +128,6 @@
     <!-- Beta -->
     <string name="let_s_get_triggering_">Aber genug mit dem Gerede; fangen wir an, auszulösen!</string>
     <string name="lets_get_started">So, dann fangen wir jetzt gleich an, oder?</string>
-    <string name="listening_for_pebble_trigger">Warte auf Pebble-Auslöser</string>
     <string name="loc_not_found">Überprüfen Sie die Lokalisierungsdienste und versuchen Sie es erneut.</string>
 
     <!-- HDR modes sub text -->
@@ -144,7 +150,6 @@
     <string name="mins">Minuten und</string>
     <string name="minutes_label">m</string>
     <string name="mph">mph</string>
-
     <string name="nav_drawer_open">PhotoSniper</string>
     <string name="navigating_the_app">Die App nutzen</string>
     <string name="nd_calculator">ND-Rechner</string>
@@ -173,7 +178,6 @@
     <string name="next_sunrise">Sonnenaufgang morgen</string>
     <string name="next_sunset">Sonnenuntergang morgen</string>
     <string name="no">Nein</string>
-
     <string name="number_of_exposures">Anzahl der Belichtungen</string>
     <string name="of_course_given_that_this_is_a">Da dies eine Betaversion ist, kann es hier und da natürlich noch ein paar Macken geben. Wenn Sie uns beim Verbessern der Android-App helfen möchten, dann berichten Sie bitte alle auftretenden Fehler und machen Sie Verbesserungsvorschläge in unserem speziellen Android-Forum (http://tri.gg/betaforum)\n</string>
     <string name="oh_hi_there">Hallo! Schön Sie hier zu sehen!</string>

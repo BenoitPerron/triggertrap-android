@@ -13,12 +13,11 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
-import at.photosniper.PhotoSniperApp;
-import at.photosniper.R;
-
 import antistatic.spinnerwheel.AbstractWheel;
 import antistatic.spinnerwheel.OnWheelScrollListener;
 import antistatic.spinnerwheel.adapters.ArrayWheelAdapter;
+import at.photosniper.PhotoSniperApp;
+import at.photosniper.R;
 import at.photosniper.util.DialpadManager;
 import at.photosniper.util.PulseGenerator;
 import at.photosniper.view.CircleTimerView;
@@ -399,9 +398,15 @@ public class HdrTimeLapseFragment extends PulseSequenceFragment {
             mCountDownLayout.startAnimation(mSlideInFromTop);
             mCircleTimerView.setPassedTime(0, false);
 
-            mPulseSequence = mPulseGenerator.getHdrSequence(mCurrentMiddleSpeed, mCurrentNumExposures, mCurrentEvValue, mIntervalTimeInput.getTime());
-            mPulseSeqListener.onPulseSequenceCreated(PhotoSniperApp.OnGoingAction.HDR_TIMELAPSE, mPulseSequence, true);
-            //logSequence(mPulseSequence);
+
+            if (PhotoSniperApp.getInstance(getActivity()).isSynchroneMode()) {
+                mPulseSequence = mPulseGenerator.getHdrSequence(mCurrentMiddleSpeed, mCurrentNumExposures, mCurrentEvValue, mIntervalTimeInput.getTime());
+                mPulseSeqListener.onPulseSequenceCreated(PhotoSniperApp.OnGoingAction.HDR_TIMELAPSE, mPulseSequence, true);
+                // logSequence(mPulseSequence);
+            } else {
+                String cmdSequence = mPulseGenerator.getHdrSequenceCommand(mCurrentMiddleSpeed, mCurrentNumExposures, mCurrentEvValue, mIntervalTimeInput.getTime());
+                mPulseSeqListener.onRunBatchInsteadPulse(cmdSequence);
+            }
 
             long totaltime = PulseGenerator.getSequenceTime(mPulseSequence);
             Log.d(TAG, "Total time Circle: " + totaltime);

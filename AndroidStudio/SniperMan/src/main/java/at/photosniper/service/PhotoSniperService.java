@@ -1247,19 +1247,15 @@ public class PhotoSniperService extends Service implements OutputListener, MicVo
         String cmd = "";
 
         if (useCase.equalsIgnoreCase("SimpleRelease")) {
-            cmd = (start ? "<B,0,0;D,100,0;C,0,0>" : "<B,0,0;D,100,0;C,0,0>");
+            cmd = (start ? "<B,0,0;D,100,1;C,0,0>" : "<B,0,0;D,100,1;C,0,0>");
         } else if (useCase.equalsIgnoreCase("PressHold")) {
-
             cmd = (start ? "<B,0,0>" : "<C,0,0>");
         } else if (useCase.equalsIgnoreCase("StartStop")) {
-
             cmd = (start ? "<B,0,0>" : "<C,0,0>");
         } else if (useCase.equalsIgnoreCase("Distance")) {
-
-            cmd = (start ? "<B,0,0;D,100,0;C,0,0>" : "<B,0,0;D,100,0;C,0,0>");
+            cmd = (start ? "<B,0,0;D,100,1;C,0,0>" : "<B,0,0;D,100,1;C,0,0>");
         } else if (useCase.equalsIgnoreCase("Sound")) {
-
-            cmd = (start ? "<B,0,0;D,100,0;C,0,0>" : "<B,0,0;D,100,0;C,0,0>");
+            cmd = (start ? "<B,0,0;D,100,1;C,0,0>" : "<B,0,0;D,100,1;C,0,0>");
         }
 
 

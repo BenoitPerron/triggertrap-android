@@ -91,11 +91,13 @@ public class LightMonitor implements SensorEventListener {
 
         long sum = 0;
 
-        for (int i = 0; i < BUFFER_SIZE; i++) {
+        int filledBufferSize = (eventCntr < BUFFER_SIZE) ? eventCntr + 1 : BUFFER_SIZE;
+
+        for (int i = 0; i < filledBufferSize; i++) {
             sum += (eventBuffer[(eventCntr + i) % BUFFER_SIZE] * eventBuffer[(eventCntr + i) % BUFFER_SIZE]);
         }
 
-        final double amplitude = sum / BUFFER_SIZE;
+        final double amplitude = sum / filledBufferSize;
         int rmsAmplitude = (int) Math.sqrt(amplitude);
 
         rmsAmplitude = (rmsAmplitude <= mVolumeRange) ? rmsAmplitude : mVolumeRange;

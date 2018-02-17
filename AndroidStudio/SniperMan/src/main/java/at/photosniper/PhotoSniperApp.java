@@ -876,7 +876,7 @@ public class PhotoSniperApp {
 //    }
 
     public boolean isSynchroneMode() {
-        return (getSonyWiFiRpc() != null);
+        return isSonyRPCAvailable();
     }
 
 

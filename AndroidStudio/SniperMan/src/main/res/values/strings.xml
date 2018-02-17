@@ -175,8 +175,6 @@
 
     <!-- Pebble -->
     <string name="trigger">Trigger</string>
-    <string name="listening_for_pebble_trigger">Listening for Pebble Trigger</string>
-    <string name="install_pebble_app">Install Pebble App</string>
 
     <!-- Solar Event Calendar -->
     <string name="first_light_at">First light at</string>

@@ -200,14 +200,17 @@ public class SoundSensorFragment extends PhotoSniperBaseFragment implements Volu
         mProgressArc.setProgress(0);
     }
 
+    boolean textUpdated = false;
+
     @Override
     public void onVolumeUpdate(int amplitude) {
         if (mProgressArc != null) {
             mProgressArc.setProgress(amplitude);
+            if (textUpdated)
             getActivity().runOnUiThread(new Runnable() {
                 public void run() {
-                    // thresholdIndicator.setBackgroundColor(Color.GREEN);
                     mBangText.setTextColor(Color.BLACK);
+                    textUpdated = false;
                 }
             });
         }
@@ -218,9 +221,8 @@ public class SoundSensorFragment extends PhotoSniperBaseFragment implements Volu
     public void onExceedVolumeThreshold(int amplitude) {
         getActivity().runOnUiThread(new Runnable() {
             public void run() {
-                //thresholdIndicator.setBackgroundColor(Color.RED);
-                //Log.d(TAG, "BANG!!!!");
                 mBangText.setTextColor(Color.RED);
+                textUpdated = true;
             }
         });
     }
