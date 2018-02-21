@@ -355,11 +355,13 @@ public class HdrFragment extends PulseSequenceFragment {
         if (mState == State.STOPPED) {
 
             mState = State.STARTED;
-            mCountDownLayout.setVisibility(View.VISIBLE);
-            mCountDownLayout.startAnimation(mSlideInFromTop);
-            mCircleTimerView.setPassedTime(0, false);
 
             if (PhotoSniperApp.getInstance(getActivity()).isSynchroneMode()) {
+                mCountDownLayout.setVisibility(View.VISIBLE);
+                mCountDownLayout.startAnimation(mSlideInFromTop);
+                mCircleTimerView.setPassedTime(0, false);
+
+                long mTotaltime = 0;
 
                 mPulseSequence = mPulseGenerator.getHdrSequence(mCurrentMiddleSpeed, mCurrentNumExposures, mCurrentEvValue, 0);
                 if (!validateSequence(mPulseSequence)) {
@@ -369,33 +371,32 @@ public class HdrFragment extends PulseSequenceFragment {
                     return;
                 }
                 mPulseSeqListener.onPulseSequenceCreated(PhotoSniperApp.OnGoingAction.HDR, mPulseSequence, false);
+
+                logSequence(mPulseSequence);
+                mTotaltime = PulseGenerator.getSequenceTime(mPulseSequence);
+                mExposureTimerText.setTime(mPulseSequence[0]);
+                mGapTimerText.setTime(mPulseSequence[1]);
+                Log.d(TAG, "Total time Circle: " + mTotaltime);
+                mCircleTimerView.setIntervalTime(mTotaltime);
+
+                mCircleTimerView.startIntervalAnimation();
+                mTimerText.setTime(mTotaltime, false);
+
             } else {
                 String cmdSequence = mPulseGenerator.getHdrSequenceCommand(mCurrentMiddleSpeed, mCurrentNumExposures, mCurrentEvValue, 0);
                 mPulseSeqListener.onRunBatchInsteadPulse(cmdSequence);
             }
-
-
-
-
-
-            logSequence(mPulseSequence);
-
-            long mTotaltime = PulseGenerator.getSequenceTime(mPulseSequence);
-            Log.d(TAG, "Total time Circle: " + mTotaltime);
-            mCircleTimerView.setIntervalTime(mTotaltime);
-
-            mExposureTimerText.setTime(mPulseSequence[0]);
-            mGapTimerText.setTime(mPulseSequence[1]);
-            mCircleTimerView.startIntervalAnimation();
-            mTimerText.setTime(mTotaltime, false);
         }
     }
 
     private void onStopTimer() {
         if (mState == State.STARTED) {
-            mCircleTimerView.abortIntervalAnimation();
-            mCountDownLayout.startAnimation(mSlideOutToTop);
-            mCountDownLayout.setVisibility(View.GONE);
+
+            if (PhotoSniperApp.getInstance(getActivity()).isSynchroneMode()) {
+                mCircleTimerView.abortIntervalAnimation();
+                mCountDownLayout.startAnimation(mSlideOutToTop);
+                mCountDownLayout.setVisibility(View.GONE);
+            }
             mButton.stopAnimation();
             mState = State.STOPPED;
             mPulseSeqListener.onPulseSequenceCancelled();

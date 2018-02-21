@@ -1069,9 +1069,15 @@ public class PhotoSniperService extends Service implements OutputListener, MicVo
 
         if ((cmdSentence != null) && (cmdSentence.length() > 2)) {
             // ... and for BLE
+
+            Log.d(TAG, "ori CMD: " + cmdSentence);
+
             if (PhotoSniperApp.getInstance(this).getBLEgattClient() != null) {
+
+                byte[] translatedCmd = translateCmd(cmdSentence);
+
                 PhotoSniperApp.getInstance(this).getBLEgattClient().writeCommand(CMD_START_TAG);
-                PhotoSniperApp.getInstance(this).getBLEgattClient().writeCommand(translateCmd(cmdSentence));
+                PhotoSniperApp.getInstance(this).getBLEgattClient().writeCommand(translatedCmd);
                 PhotoSniperApp.getInstance(this).getBLEgattClient().writeCommand(CMD_END_TAG);
             }
 
@@ -1128,10 +1134,12 @@ public class PhotoSniperService extends Service implements OutputListener, MicVo
             data[x++] = Byte.parseByte(tokenizer.nextToken());
         }
 
-        bytes usedBuffer[] = Arrays.copyOf(data, x);
-        // log bytesToHex(usedBuffer);
-        
-        return usedBuffer
+        byte usedBuffer[] = Arrays.copyOf(data, x);
+
+        Log.d(TAG, "CMD: " + bytesToHex(usedBuffer));
+
+
+        return usedBuffer;
 
     }
 

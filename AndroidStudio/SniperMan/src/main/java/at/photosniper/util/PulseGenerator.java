@@ -86,7 +86,7 @@ public class PulseGenerator {
 
         String cmd = "<B,0,0;";
         cmd += calcDelayCmds(pulseLength);  // Belichtung
-        cmd += "C,0,0";
+        cmd += "C,0,0;";
         cmd += calcDelayCmds(gap);  // Pause
         cmd += "K," + count + ",0>";
 
@@ -96,7 +96,7 @@ public class PulseGenerator {
     public String getTimeWarpSequenceCommand(int count, long sequenceDuration, CubicBezierInterpolator interpolator) {
         String cmd = "<B,0,0;";
         cmd += calcDelayCmds(12345);  // Belichtung
-        cmd += "C,0,0";
+        cmd += "C,0,0;";
         cmd += calcDelayCmds(12345);  // Pause
         cmd += "K," + count + ",0>";
 
@@ -142,7 +142,7 @@ public class PulseGenerator {
     public String getHdrSequenceCommand(long middle, int count, float ev, long interval) {
         String cmd = "<B,0,0;";
         cmd += calcDelayCmds(12345);  // Belichtung
-        cmd += "C,0,0";
+        cmd += "C,0,0;";
         cmd += calcDelayCmds(interval);  // Pause
         cmd += "K," + count + ",0>";
 
@@ -167,7 +167,7 @@ public class PulseGenerator {
 
         String cmd = "<B,0,0;";
         cmd += calcDelayCmds(12345);  // Belichtung
-        cmd += "C,0,0";
+        cmd += "C,0,0;";
         cmd += calcDelayCmds(interval);  // Pause
         cmd += "K," + count + ",0>";
 

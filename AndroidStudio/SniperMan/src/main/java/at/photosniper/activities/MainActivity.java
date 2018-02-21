@@ -49,12 +49,11 @@ import java.util.List;
 import at.photosniper.PhotoSniperApp;
 import at.photosniper.R;
 import at.photosniper.fragments.BrampingFragment;
-import at.photosniper.fragments.LightSensorFragment;
-import at.photosniper.fragments.SimpleReleaseFragment;
 import at.photosniper.fragments.DistanceLapseFragment;
 import at.photosniper.fragments.GettingStartedFragment;
 import at.photosniper.fragments.HdrFragment;
 import at.photosniper.fragments.HdrTimeLapseFragment;
+import at.photosniper.fragments.LightSensorFragment;
 import at.photosniper.fragments.NdCalculatorFragment;
 import at.photosniper.fragments.PhotoSniperBaseFragment;
 import at.photosniper.fragments.PlaceHolderFragment;
@@ -62,6 +61,7 @@ import at.photosniper.fragments.PressHoldFragment;
 import at.photosniper.fragments.PulseSequenceFragment;
 import at.photosniper.fragments.QuickReleaseFragment;
 import at.photosniper.fragments.SelfTimerFragment;
+import at.photosniper.fragments.SimpleReleaseFragment;
 import at.photosniper.fragments.SoundSensorFragment;
 import at.photosniper.fragments.StarTrailFragment;
 import at.photosniper.fragments.StartStopFragment;
@@ -173,14 +173,13 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
 
         boolean hasBeenRotated = false;
         // Check for a saved instance (Created when the device is rotated)
-        if (savedInstanceState != null) {
-//            Log.d(TAG, "onCreate Saved Instance state:" + savedInstanceState);
+//        if (savedInstanceState != null) {
+////            Log.d(TAG, "onCreate Saved Instance state:" + savedInstanceState);
 //            mInitialFragmentTag = savedInstanceState.getString(FRAGMENT_TAG);
-//            mInitialFragmentState = savedInstanceState
-//                    .getBundle(FRAGMENT_STATE);
-
-            hasBeenRotated = true;
-        }
+//            mInitialFragmentState = savedInstanceState.getBundle(FRAGMENT_STATE);
+//
+//            hasBeenRotated = true;
+//        }
 
 
         // For some reason launching from the history does not clear previous
@@ -206,7 +205,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
                 }
             }
         } else {
-//       !!!!!!!!!!!!!!!!     mInitialFragmentTag = PhotoSniperApp.getInstance(getApplicationContext()).getLastFragmentTag();
+            mInitialFragmentTag = PhotoSniperApp.getInstance(getApplicationContext()).getLastFragmentTag();
         }
 
         Log.d(TAG, "onCreate mInitialFragmentState: " + mInitialFragmentState);
@@ -240,12 +239,6 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
         }
 
         // getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_IS_FORWARD_NAVIGATION);
-//        setVolumeControlStream(AudioManager.STREAM_MUSIC);
-//
-//        AudioManager audio = (AudioManager) getSystemService(this.AUDIO_SERVICE);
-
-//        // audio.setStreamVolume(AudioManager.STREAM_MUSIC,
-//        // audio.getStreamMaxVolume(AudioManager.STREAM_MUSIC), 0);
 
         mSlideUpFromBottom = AnimationUtils.loadAnimation(this, R.anim.slide_in_from_bottom);
         mSlideUpFromBottom.setInterpolator(new OvershootInterpolator(0.5f));
@@ -322,9 +315,10 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
     protected void onStop() {
         super.onStop();
 
-        PhotoSniperApp.getInstance(this).getSonyWiFiRpc().unregisterInitCallback(this);
-        PhotoSniperApp.getInstance(this).getSonyWiFiRpc().stopLiveView();
-
+        if (PhotoSniperApp.getInstance(this).getSonyWiFiRpc() != null) {
+            PhotoSniperApp.getInstance(this).getSonyWiFiRpc().unregisterInitCallback(this);
+            PhotoSniperApp.getInstance(this).getSonyWiFiRpc().stopLiveView();
+        }
         // Save the last shown Fragment Tag
         PhotoSniperApp.getInstance(this).setLastFragmentTag(mDrawerFragHandler.getCurrentFragmentTag());
         PhotoSniperApp.getInstance(this).setLastActionBarLabel(mSelectedItemName);
