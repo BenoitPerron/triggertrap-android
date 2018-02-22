@@ -27,7 +27,7 @@
         <item>@string/cable_selector</item>
         -->
     </string-array>
-    <string-array name="ps_cable_modes">
+    <string-array name="ps_simple_modes">
         <item>@string/simple_cable_release</item>
         <item>@string/quick_release</item>
         <item>@string/press_and_hold</item>
@@ -40,17 +40,20 @@
         <item>@string/timewarp</item>
         <item>@string/star_trail</item>
         <item>@string/bramping</item>
-        
     </string-array>
     <string-array name="ps_sensor_modes">
         <item>@string/sound_sensor</item>
         <item>@string/light_sensor</item>
         <item>@string/distancelapse</item>
+        <item>@string/script</item>
     </string-array>
+
     <string-array name="ps_hdr_modes">
         <item>@string/le_hdr</item>
         <item>@string/le_hdr_timelapse</item>
     </string-array>
+
+
     <!--
     <string-array name="ps_remote_trigger_modes">
         <item>@string/wifi_slave</item>
@@ -95,6 +98,7 @@
         <item>@string/clap_whistle_or_tap</item>
         <item>@string/blink</item>
         <item>@string/perfect_for_roadtrips</item>
+        <item>@string/script_subtext</item>
     </string-array>
     <!--
     <string-array name="ps_remote_trigger_modes_sub_text">
@@ -505,6 +509,7 @@
         <item>@drawable/icon_mic</item>
         <item>@drawable/icon_lightbulb</item>
         <item>@drawable/icon_compass</item>
+        <item>@drawable/icon_cart</item>
 
     </string-array>
     <string-array name="ps_hdr_mode_icons">

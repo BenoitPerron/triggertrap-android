@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest package="at.photosniper"
           xmlns:android="http://schemas.android.com/apk/res/android"
-          android:versionCode="201802201"
-          android:versionName="0.0.14 Green Elephant">
+          android:versionCode="201802202"
+          android:versionName="0.0.15 Blue Funghi">
 
     <uses-sdk
         android:minSdkVersion="18"

@@ -273,8 +273,8 @@ public class PhotoSniperService extends Service implements OutputListener, MicVo
         return isInProgress;
     }
 
-    public void runBatchInsteadPulse(final String cmdSequence) {
-        trigger(cmdSequence);
+    public boolean runBatchInsteadPulse(final String cmdSequence) {
+        return trigger(cmdSequence);
     }
 
     public void startPulseSequence(int onGoingAction, long[] sequence, boolean repeat) {
@@ -1043,11 +1043,12 @@ public class PhotoSniperService extends Service implements OutputListener, MicVo
     }
 
     final static byte[] CMD_START_TAG = {0x00, 0x01, 0x02, 0x03};
-    final static byte[] CMD_END_TAG = {(byte) 0xff, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF};
+    final static byte[] CMD_END_TAG = {(byte) 0x0F, (byte) 0x0F, (byte) 0x0F, (byte) 0x0F};
 
 
-    private void trigger(final String cmdSentence) {
+    private boolean trigger(final String cmdSentence) {
 
+        boolean triggered = true;
         mOutputDispatcher.trigger(0);
 
         // this is a quick hack for SONY ...........
@@ -1074,17 +1075,25 @@ public class PhotoSniperService extends Service implements OutputListener, MicVo
 
             if (PhotoSniperApp.getInstance(this).getBLEgattClient() != null) {
 
-                byte[] translatedCmd = translateCmd(cmdSentence);
+                try {
+                    byte[] translatedCmd = translateCmd(cmdSentence);
+                    Log.d(TAG, "hex CMD: " + translatedCmd);
 
-                PhotoSniperApp.getInstance(this).getBLEgattClient().writeCommand(CMD_START_TAG);
-                PhotoSniperApp.getInstance(this).getBLEgattClient().writeCommand(translatedCmd);
-                PhotoSniperApp.getInstance(this).getBLEgattClient().writeCommand(CMD_END_TAG);
+                    PhotoSniperApp.getInstance(this).getBLEgattClient().writeCommand(CMD_START_TAG);
+                    PhotoSniperApp.getInstance(this).getBLEgattClient().writeCommand(translatedCmd);
+                    PhotoSniperApp.getInstance(this).getBLEgattClient().writeCommand(CMD_END_TAG);
+
+                } catch (Exception x) {
+                    Log.e(TAG, "BLE CMD parsing failed: ", x);
+                    triggered = false;
+                }
             }
 
         }
+        return triggered;
     }
 
-    private byte[] translateCmd(final String cmdSequence) {
+    private byte[] translateCmd(final String cmdSequence) throws Exception {
         byte[] data = new byte[1024];
 
         StringTokenizer tokenizer = new StringTokenizer(cmdSequence, ",;<>!");
@@ -1099,24 +1108,31 @@ public class PhotoSniperService extends Service implements OutputListener, MicVo
             byte cmdId;
             // see https://github.com/H3153nb3rg/triggertrap-android/wiki/The-SniperBox
             switch (cmd) {
+                case 'b':
                 case 'B':
                     cmdId = 0x01;
                     break;
+                case 'c':
                 case 'C':
                     cmdId = 0x02;
                     break;
+                case 'd':
                 case 'D':
                     cmdId = 0x03;
                     break;
+                case 'k':
                 case 'K':
                     cmdId = 0x04;
                     break;
+                case 'h':
                 case 'H':
                     cmdId = 0x05;
                     break;
+                case 'i':
                 case 'I':
                     cmdId = 0x06;
                     break;
+                case 'j':
                 case 'J':
                     cmdId = 0x07;
                     break;
@@ -1170,6 +1186,39 @@ public class PhotoSniperService extends Service implements OutputListener, MicVo
 
 
     //mSequenceStartStopTime getters and setters
+
+
+    // BLE
+    private String getBLECommand(String useCase, boolean start) {
+
+        String cmd = "";
+
+        if (useCase.equalsIgnoreCase("SimpleRelease")) {
+            cmd = (start ? "<B,0,0;D,100,1;C,0,0>" : "<B,0,0;D,100,1;C,0,0>");
+        } else if (useCase.equalsIgnoreCase("PressHold")) {
+            cmd = (start ? "<B,0,0>" : "<C,0,0>");
+        } else if (useCase.equalsIgnoreCase("StartStop")) {
+            cmd = (start ? "<B,0,0>" : "<C,0,0>");
+        } else if (useCase.equalsIgnoreCase("Distance")) {
+            cmd = (start ? "<B,0,0;D,100,1;C,0,0>" : "<B,0,0;D,100,1;C,0,0>");
+        } else if (useCase.equalsIgnoreCase("Sound")) {
+            cmd = (start ? "<B,0,0;D,100,1;C,0,0>" : "<B,0,0;D,100,1;C,0,0>");
+        }
+
+        return cmd;
+    }
+
+    private final static char[] hexArray = "0123456789ABCDEF".toCharArray();
+    
+    public static String bytesToHex(byte[] bytes) {
+        char[] hexChars = new char[bytes.length * 2];
+        for ( int j = 0; j < bytes.length; j++ ) {
+            int v = bytes[j] & 0xFF;
+            hexChars[j * 2] = hexArray[v >>> 4];
+            hexChars[j * 2 + 1] = hexArray[v & 0x0F];
+        }
+        return new String(hexChars);
+    }
 
     /**
      * Listener for service updates (used by activity)
@@ -1252,38 +1301,4 @@ public class PhotoSniperService extends Service implements OutputListener, MicVo
         }
     }
 
-    // BLE
-    private String getBLECommand(String useCase, boolean start) {
-
-        String cmd = "";
-
-        if (useCase.equalsIgnoreCase("SimpleRelease")) {
-            cmd = (start ? "<B,0,0;D,100,1;C,0,0>" : "<B,0,0;D,100,1;C,0,0>");
-        } else if (useCase.equalsIgnoreCase("PressHold")) {
-            cmd = (start ? "<B,0,0>" : "<C,0,0>");
-        } else if (useCase.equalsIgnoreCase("StartStop")) {
-            cmd = (start ? "<B,0,0>" : "<C,0,0>");
-        } else if (useCase.equalsIgnoreCase("Distance")) {
-            cmd = (start ? "<B,0,0;D,100,1;C,0,0>" : "<B,0,0;D,100,1;C,0,0>");
-        } else if (useCase.equalsIgnoreCase("Sound")) {
-            cmd = (start ? "<B,0,0;D,100,1;C,0,0>" : "<B,0,0;D,100,1;C,0,0>");
-        }
-
-
-        return cmd;
-    }
-
-    private final static char[] hexArray = "0123456789ABCDEF".toCharArray();
-    
-    public static String bytesToHex(byte[] bytes) {
-        char[] hexChars = new char[bytes.length * 2];
-        for ( int j = 0; j < bytes.length; j++ ) {
-            int v = bytes[j] & 0xFF;
-            hexChars[j * 2] = hexArray[v >>> 4];
-            hexChars[j * 2 + 1] = hexArray[v & 0x0F];
-        }
-        return new String(hexChars);
-    }
-    
-    
 }

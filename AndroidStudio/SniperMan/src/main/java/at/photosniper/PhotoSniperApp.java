@@ -905,6 +905,7 @@ public class PhotoSniperApp {
         String PLACEHOLDER = "placeholder";
         String SUNRISESUNSET = "sunrise_sunset";
         String ND_CALCULATOR = "nd_calculator";
+        String SCRIPT = "script";
     }
 
     public interface OnGoingAction {
@@ -927,6 +928,7 @@ public class PhotoSniperApp {
         //        int PEBBLE = 13;
         int SELF_TIMER = 14;
         int QUICK_RELEASE = 15;
+        int SCRIPT = 16;
     }
 
 }

@@ -14,6 +14,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -60,6 +61,7 @@ import at.photosniper.fragments.PlaceHolderFragment;
 import at.photosniper.fragments.PressHoldFragment;
 import at.photosniper.fragments.PulseSequenceFragment;
 import at.photosniper.fragments.QuickReleaseFragment;
+import at.photosniper.fragments.ScriptExecuteFragment;
 import at.photosniper.fragments.SelfTimerFragment;
 import at.photosniper.fragments.SimpleReleaseFragment;
 import at.photosniper.fragments.SoundSensorFragment;
@@ -89,7 +91,7 @@ import no.nordicsemi.android.support.v18.scanner.ScanResult;
 import no.nordicsemi.android.support.v18.scanner.ScanSettings;
 
 
-public class MainActivity extends Activity implements PulseSequenceFragment.PulseSequenceListener, PhotoSniperServiceListener, TimedFragment.TimedListener, StartStopListener, SoundSensorFragment.SoundSensorListener, LightSensorFragment.LightSensorListener, SelfTimerFragment.SelfTimerListener, PressHoldFragment.PressHoldListener, SimpleReleaseFragment.SimpleModeListener, QuickReleaseFragment.QuickReleaseListener, DialpadManager.InputSelectionListener, DistanceLapseFragment.DistanceLapseListener, SonyWiFiRPC.SonyWiFiConnectionListener, SonyWiFiRPC.ResponseHandler, SonyWiFiRPC.LiveViewCallback {
+public class MainActivity extends Activity implements PulseSequenceFragment.PulseSequenceListener, PhotoSniperServiceListener, TimedFragment.TimedListener, StartStopListener, SoundSensorFragment.SoundSensorListener, LightSensorFragment.LightSensorListener, SelfTimerFragment.SelfTimerListener, PressHoldFragment.PressHoldListener, SimpleReleaseFragment.SimpleModeListener, QuickReleaseFragment.QuickReleaseListener, DialpadManager.InputSelectionListener, DistanceLapseFragment.DistanceLapseListener, SonyWiFiRPC.SonyWiFiConnectionListener, SonyWiFiRPC.ResponseHandler, SonyWiFiRPC.LiveViewCallback, ScriptExecuteFragment.ScriptExecutionListener {
 
     // Saved instance keys
     public static final String FRAGMENT_STATE = "fragment_state";
@@ -257,6 +259,8 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
         PhotoSniperApp.getInstance(this).setSonyWiFiRpc(new SonyWiFiRPC());
         PhotoSniperApp.getInstance(this).getSonyWiFiRpc().registerInitCallback(this);
 
+        attemptSonyConnect();
+
         // Bind to the PhotoSniper service when the actvity is shown.
         Log.d(TAG, "Service bound is: " + mPhotoSniperServiceBound);
 
@@ -268,7 +272,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
             setFragmentTransientState();
         }
 
-        attemptSonyConnect();
+
     }
 
     private void attemptSonyConnect() {
@@ -389,6 +393,17 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
 
         switch (requestCode) {
 
+            case PhotoSniperApp.OnGoingAction.SCRIPT:
+                // this is the response of filechooser
+                if (resultCode == RESULT_OK) {
+                    Uri selectedFile = data.getData();
+
+                    ScriptExecuteFragment scriptFragment = (ScriptExecuteFragment) getFragmentManager().findFragmentByTag(PhotoSniperApp.FragmentTags.SCRIPT);
+                    scriptFragment.setScriptFile(selectedFile);
+                }
+
+                break;
+
             case REQUEST_ENABLE_BT:
 
                 if (resultCode == Activity.RESULT_CANCELED) {
@@ -488,6 +503,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
         mDrawerFragHandler.addDrawerPane(PhotoSniperApp.FragmentTags.BANG, SoundSensorFragment.class, mInitialFragmentState);
         mDrawerFragHandler.addDrawerPane(PhotoSniperApp.FragmentTags.BANG2, LightSensorFragment.class, mInitialFragmentState);
         mDrawerFragHandler.addDrawerPane(PhotoSniperApp.FragmentTags.DISTANCE_LAPSE, DistanceLapseFragment.class, mInitialFragmentState);
+        mDrawerFragHandler.addDrawerPane(PhotoSniperApp.FragmentTags.SCRIPT, ScriptExecuteFragment.class, mInitialFragmentState);
 
         mDrawerFragHandler.addDrawerPane(PhotoSniperApp.FragmentTags.HDR, HdrFragment.class, mInitialFragmentState);
         mDrawerFragHandler.addDrawerPane(PhotoSniperApp.FragmentTags.HDR_LAPSE, HdrTimeLapseFragment.class, mInitialFragmentState);
@@ -507,7 +523,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
         mModesGroups = getResources().getStringArray(R.array.ps_mode_groups);
 
         mModes.add(getResources().getStringArray(R.array.ps_welcome_modes));
-        mModes.add(getResources().getStringArray(R.array.ps_cable_modes));
+        mModes.add(getResources().getStringArray(R.array.ps_simple_modes));
         mModes.add(getResources().getStringArray(R.array.ps_timer_modes));
         mModes.add(getResources().getStringArray(R.array.ps_sensor_modes));
         mModes.add(getResources().getStringArray(R.array.ps_hdr_modes));
@@ -672,7 +688,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
 //                            PhotoSniperApp.FragmentTags.BUY_DONGLE, true, false);
                 }
                 break;
-            case DrawerGroups.CABLE_MODES:
+            case DrawerGroups.SIMPLE_MODES:
                 if (position == 0) {
                     mDrawerFragHandler.onDrawerSelected(this, PhotoSniperApp.FragmentTags.SIMPLE, true, false);
                 } else if (position == 1) {
@@ -714,6 +730,8 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
                             distanceFragment.setDistanceLapseState();
                         }
                     }
+                } else if (position == 3) {
+                    mDrawerFragHandler.onDrawerSelected(this, PhotoSniperApp.FragmentTags.SCRIPT, true, false);
                 }
 
                 break;
@@ -861,12 +879,27 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
     }
 
     /*
+     * Listener for Script Execution
+     */
+    @Override
+    public void onExecuteScript(final String cmdSequence) {
+
+        if (!mService.runBatchInsteadPulse(cmdSequence)) {
+            Toast.makeText(this, "BLE Cmd Parsing failed!", Toast.LENGTH_LONG).show();
+        }
+
+    }
+
+
+    /*
      * Listener for Simple mode
      */
     @Override
     public void onPressSimple() {
         mService.startSimple();
     }
+
+
 
     /*
      * Listener for PulseSequence Fragments
@@ -1887,7 +1920,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
 
     private interface DrawerGroups {
         int WELCOME = 0;
-        int CABLE_MODES = 1;
+        int SIMPLE_MODES = 1;
         int TIME_MODE = 2;
         int SENSOR_MODES = 3;
         int HDR_MODES = 4;
@@ -2019,5 +2052,6 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
         }
 
     }
+
 
 }

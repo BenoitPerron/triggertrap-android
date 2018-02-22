@@ -190,6 +190,9 @@
     <string name="pause">Pausieren:</string>
 
     <string name="perfect_for_roadtrips">Perfekt für Roadtrips</string>
+    <string name="script_subtext">eigenes Skript ausführen</string>
+    <string name="script">Batch Modus</string>
+    <string name="script_load">Skript laden</string>
     <string name="point_eight_seconds">0,8 Sekunden</string>
     <string name="point_five_seconds">0,5 Sekunden</string>
     <string name="point_four_seconds">0,4 Sekunden</string>
