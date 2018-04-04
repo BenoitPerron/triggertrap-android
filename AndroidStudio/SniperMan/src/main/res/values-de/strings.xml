@@ -193,6 +193,7 @@
     <string name="script_subtext">eigenes Skript ausführen</string>
     <string name="script">Batch Modus</string>
     <string name="script_load">Skript laden</string>
+    <string name="script_save">Skript speichern</string>
     <string name="point_eight_seconds">0,8 Sekunden</string>
     <string name="point_five_seconds">0,5 Sekunden</string>
     <string name="point_four_seconds">0,4 Sekunden</string>
@@ -235,7 +236,7 @@
     <string name="scope_dialog_title">Wie gefällt Ihnen PhotoSniper?</string>
     <string name="scope_negative">Nicht gut</string>
     <string name="scope_neutral">Gefällt mir</string>
-    <string name="scope_positive">Liebe es!</string>
+    <string name="scope_positive">Top!</string>
     <string name="sec">Sek</string>
     <string name="seconds_label">s</string>
     <string name="self_timer">Selbstauslöser</string>

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import at.photosniper.PhotoSniperApp;
@@ -23,12 +26,18 @@ public class ScriptExecuteFragment extends PhotoSniperBaseFragment {
 
     private static final String TAG = ScriptExecuteFragment.class.getSimpleName();
     private OngoingButton mShutterButton;
-    private Button mFileButton;
+    private Button mFileOpenButton;
+    private Button mFileSaveButton;
     private EditText mScript;
     private ScriptExecutionListener mListener = null;
 
     public ScriptExecuteFragment() {
 
+    }
+
+    static String convertStreamToString(java.io.InputStream is) {
+        java.util.Scanner s = new java.util.Scanner(is).useDelimiter("\\A");
+        return s.hasNext() ? s.next() : "";
     }
 
     @Override
@@ -52,15 +61,26 @@ public class ScriptExecuteFragment extends PhotoSniperBaseFragment {
 //        TextView title = (TextView) rootView.findViewById(R.id.releaseTitle);
 //        title.setTypeface(SAN_SERIF_LIGHT);
 
-        mFileButton = (Button) rootView.findViewById(R.id.button);
+        mFileOpenButton = (Button) rootView.findViewById(R.id.button1);
+        mFileSaveButton = (Button) rootView.findViewById(R.id.button2);
+
         mScript = (EditText) rootView.findViewById(R.id.editText);
 
-        mFileButton.setOnClickListener(new View.OnClickListener() {
+        mFileOpenButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // try to load file
-                Intent intent = new Intent().setType("*/*").setAction(Intent.ACTION_GET_CONTENT);
+                Intent intent = new Intent().setType("*/*").setAction(Intent.ACTION_OPEN_DOCUMENT); // Intent.ACTION_GET_CONTENT);
                 startActivityForResult(Intent.createChooser(intent, "Select a script"), PhotoSniperApp.OnGoingAction.SCRIPT);
+
+            }
+        });
+        mFileSaveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // try to save file
+//                Intent intent = new Intent().setType("*/*").setAction(Intent.ACTION_);
+//                startActivityForResult(Intent.createChooser(intent, "Save script as..."), PhotoSniperApp.OnGoingAction.SCRIPT);
 
             }
         });
@@ -81,6 +101,10 @@ public class ScriptExecuteFragment extends PhotoSniperBaseFragment {
             }
         });
 
+        Editable text = mScript.getText();
+        if ((text == null) || (text.length() < 2)) {
+            mScript.setText("<        // start tag\n" + "B,0,0    // close shutter\n" + "D,100,1  // for 1 x 100ms\n" + "C,0,0    // open shutter again\n" + "D,1000,5 // wait for 5 x 1000 ms = 5 sec\n" + "K,10,0   // loop 10x\n" + ">        ");
+        }
 
         return rootView;
     }
@@ -114,25 +138,21 @@ public class ScriptExecuteFragment extends PhotoSniperBaseFragment {
         String text = mScript.getText().toString();
 
         // validate
-
-        return text;
-
-    }
-
-    public void setScriptFile(Uri selectedFile) {
+        String cmd = "";
         try {
-            InputStreamReader inputStreamReader = new InputStreamReader(getActivity().getContentResolver().openInputStream(selectedFile));
+            InputStream is = new ByteArrayInputStream(text.getBytes("UTF-8"));
+            InputStreamReader inputStreamReader = new InputStreamReader(is);
 
             BufferedReader br = new BufferedReader(inputStreamReader);
 
-            String cmd = "";
+
             String line;
             boolean inCode = false;
 
             while ((line = br.readLine()) != null) {
                 line = line.replace(" ", "");
                 if (!inCode) {
-                    inCode = (line.indexOf("<") > 0);
+                    inCode = (line.indexOf("<") >= 0);
                 }
                 if (inCode) {
                     int cmmt = line.indexOf("//");
@@ -142,19 +162,63 @@ public class ScriptExecuteFragment extends PhotoSniperBaseFragment {
                     }
                     cmd += line + ";";
                 }
-                if (line.indexOf(">") > 0) {
+                if (line.indexOf(">") >= 0) {
                     break;
                 }
             }
 
             br.close();
+        } catch (Exception x) {
+            Log.d(TAG, "script parsing failed");
+        }
+        cmd = cmd.replace(";;", ";");
+        cmd = cmd.replace(">;", ">");
+        cmd = cmd.replace("<;", "<");
 
-            cmd = cmd.replace(";;", ";");
+        return cmd;
+
+    }
+
+    public void setScriptFile(Uri selectedFile) {
+        try {
+//            InputStreamReader inputStreamReader = new InputStreamReader(getActivity().getContentResolver().openInputStream(selectedFile));
+
+
+//            BufferedReader br = new BufferedReader(inputStreamReader);
+//
+            String cmd = "";
+//            String line;
+//            boolean inCode = false;
+//
+//            while ((line = br.readLine()) != null) {
+//                line = line.replace(" ", "");
+//                if (!inCode) {
+//                    inCode = (line.indexOf("<") > 0);
+//                }
+//                if (inCode) {
+//                    int cmmt = line.indexOf("//");
+//
+//                    if (cmmt >= 0) {
+//                        line = line.substring(0, cmmt);
+//                    }
+//                    cmd += line + ";";
+//                }
+//                if (line.indexOf(">") > 0) {
+//                    break;
+//                }
+//            }
+//
+//            br.close();
+//
+//            cmd = cmd.replace(";;", ";");
+
+            cmd = convertStreamToString(getActivity().getContentResolver().openInputStream(selectedFile));
 
             mScript.setText(cmd);
 
         } catch (Exception x) {
 
+            Log.d(TAG, "file parsing failed");
 
         }
 

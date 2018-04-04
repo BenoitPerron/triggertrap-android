@@ -357,6 +357,9 @@ public class HdrFragment extends PulseSequenceFragment {
             mState = State.STARTED;
 
             if (PhotoSniperApp.getInstance(getActivity()).isSynchroneMode()) {
+                String cmdSequence = mPulseGenerator.getHdrSequenceCommand(mCurrentMiddleSpeed, mCurrentNumExposures, mCurrentEvValue, 0);
+                mPulseSeqListener.onRunBatchInsteadPulse(cmdSequence);
+            }
                 mCountDownLayout.setVisibility(View.VISIBLE);
                 mCountDownLayout.startAnimation(mSlideInFromTop);
                 mCircleTimerView.setPassedTime(0, false);
@@ -382,10 +385,6 @@ public class HdrFragment extends PulseSequenceFragment {
                 mCircleTimerView.startIntervalAnimation();
                 mTimerText.setTime(mTotaltime, false);
 
-            } else {
-                String cmdSequence = mPulseGenerator.getHdrSequenceCommand(mCurrentMiddleSpeed, mCurrentNumExposures, mCurrentEvValue, 0);
-                mPulseSeqListener.onRunBatchInsteadPulse(cmdSequence);
-            }
         }
     }
 

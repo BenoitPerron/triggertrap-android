@@ -43,6 +43,7 @@
     <string name="distancelapse">DistanceLapse</string>
     <string name="script">Run Script</string>
     <string name="script_load">load script</string>
+    <string name="script_save">save script</string>
 
     <!-- HDR modes -->
     <string name="le_hdr">LE HDR</string>
@@ -303,7 +304,7 @@
     <!-- App rating Dialog strings -->
     <string name="scope_dialog_title">How\'s the PhotoSniper experience?</string>
     <string name="scope_dialog_message">Tell us what you think.</string>
-    <string name="scope_positive">Love it!</string>
+    <string name="scope_positive">Coool!</string>
     <string name="scope_neutral">Like it</string>
     <string name="scope_negative">Not Great</string>
     <string name="to_play_title">Wow! Would you like to review PhotoSniper?</string>

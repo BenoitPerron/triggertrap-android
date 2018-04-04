@@ -188,16 +188,22 @@ public class GattClient {
     }
 
     public void writeCommand(byte[] command) {
-        BluetoothGattCharacteristic interactor = mBluetoothGatt.getService(UUID_SERVICE).getCharacteristic(UUID_HM_RX_TX);
 
-        interactor.setValue(command);
+        if (mBluetoothGatt != null) {
+            BluetoothGattCharacteristic interactor = mBluetoothGatt.getService(UUID_SERVICE).getCharacteristic(UUID_HM_RX_TX);
 
-        if (!mBluetoothGatt.writeCharacteristic(interactor)) {
-            Log.w(TAG, "writeCharacteristic failed!!");
-        } else {
-            mBluetoothGatt.setCharacteristicNotification(interactor, true);
+            interactor.setValue(command);
+
+            if (!mBluetoothGatt.writeCharacteristic(interactor)) {
+                Log.w(TAG, "writeCharacteristic failed!!");
+            } else {
+                mBluetoothGatt.setCharacteristicNotification(interactor, true);
+            }
         }
-
+        else
+        {
+            Log.w(TAG, "writeCommand failed: mBluetoothGatt is NULL !!");
+        }
     }
 
     private boolean checkBluetoothSupport(BluetoothAdapter bluetoothAdapter) {

@@ -1077,7 +1077,6 @@ public class PhotoSniperService extends Service implements OutputListener, MicVo
 
                 try {
                     byte[] translatedCmd = translateCmd(cmdSentence);
-                    Log.d(TAG, "hex CMD: " + translatedCmd);
 
                     PhotoSniperApp.getInstance(this).getBLEgattClient().writeCommand(CMD_START_TAG);
                     PhotoSniperApp.getInstance(this).getBLEgattClient().writeCommand(translatedCmd);
@@ -1087,6 +1086,10 @@ public class PhotoSniperService extends Service implements OutputListener, MicVo
                     Log.e(TAG, "BLE CMD parsing failed: ", x);
                     triggered = false;
                 }
+            }
+            else
+            {
+                Log.i(TAG, "BLE CMD not sent - not connected");
             }
 
         }
@@ -1152,7 +1155,9 @@ public class PhotoSniperService extends Service implements OutputListener, MicVo
 
         byte usedBuffer[] = Arrays.copyOf(data, x);
 
-        Log.d(TAG, "CMD: " + bytesToHex(usedBuffer));
+        Log.d(TAG, "hex START CMD: " + bytesToHex(CMD_START_TAG));
+        Log.d(TAG, "hex CMD   CMD: " + bytesToHex(usedBuffer));
+        Log.d(TAG, "hex STOP  CMD: " + bytesToHex(CMD_END_TAG));
 
 
         return usedBuffer;

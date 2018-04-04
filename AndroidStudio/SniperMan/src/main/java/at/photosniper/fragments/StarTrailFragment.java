@@ -13,9 +13,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
-import at.photosniper.R;
-
 import at.photosniper.PhotoSniperApp;
+import at.photosniper.R;
 import at.photosniper.util.DialpadManager;
 import at.photosniper.util.PulseGenerator;
 import at.photosniper.view.CircleTimerView;
@@ -288,34 +287,32 @@ public class StarTrailFragment extends PulseSequenceFragment {
             mState = State.STARTED;
 
             if (PhotoSniperApp.getInstance(getActivity()).isSynchroneMode()) {
-
-                mCountDownLayout.setVisibility(View.VISIBLE);
-                mCountDownLayout.startAnimation(mSlideInFromTop);
-                mCircleTimerView.setPassedTime(0, false);
-
-                long totaltime = 0;
-
-
-                mPulseSequence = mPulseGenerator.getStarTrailSequence(mNrOfPicturesInput.getValue(), mExposureTimeInput.getTime(), mGapTimeInput.getTime());
-                mPulseSeqListener.onPulseSequenceCreated(PhotoSniperApp.OnGoingAction.STAR_TRAIL, mPulseSequence, false);
-
-                totaltime = PulseGenerator.getSequenceTime(mPulseSequence);
-                mExposureTimerText.setTime(mPulseSequence[0]);
-                mGapTimerText.setTime(mPulseSequence[1]);
-                String sequenceProgress = 1 + "/" + (mPulseSequence.length / 2);
-                mSequenceCountText.setText(sequenceProgress);
-
-                Log.d(TAG, "Total time Circle: " + totaltime);
-                mCircleTimerView.setIntervalTime(totaltime);
-                mTimerText.setTime(totaltime, false);
-                mCircleTimerView.startIntervalAnimation();
-                mTimerText.setTime(totaltime, false);
-
-
-            } else {
                 String cmdSequence = mPulseGenerator.getStarTrailSequenceCommand(mNrOfPicturesInput.getValue(), mExposureTimeInput.getTime(), mGapTimeInput.getTime());
                 mPulseSeqListener.onRunBatchInsteadPulse(cmdSequence);
+
             }
+
+            mCountDownLayout.setVisibility(View.VISIBLE);
+            mCountDownLayout.startAnimation(mSlideInFromTop);
+            mCircleTimerView.setPassedTime(0, false);
+
+            long totaltime = 0;
+
+
+            mPulseSequence = mPulseGenerator.getStarTrailSequence(mNrOfPicturesInput.getValue(), mExposureTimeInput.getTime(), mGapTimeInput.getTime());
+            mPulseSeqListener.onPulseSequenceCreated(PhotoSniperApp.OnGoingAction.STAR_TRAIL, mPulseSequence, false);
+
+            totaltime = PulseGenerator.getSequenceTime(mPulseSequence);
+            mExposureTimerText.setTime(mPulseSequence[0]);
+            mGapTimerText.setTime(mPulseSequence[1]);
+            String sequenceProgress = 1 + "/" + (mPulseSequence.length / 2);
+            mSequenceCountText.setText(sequenceProgress);
+
+            Log.d(TAG, "Total time Circle: " + totaltime);
+            mCircleTimerView.setIntervalTime(totaltime);
+            mTimerText.setTime(totaltime, false);
+            mCircleTimerView.startIntervalAnimation();
+            mTimerText.setTime(totaltime, false);
 
         }
     }

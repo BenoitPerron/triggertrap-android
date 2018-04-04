@@ -102,15 +102,16 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
     private static final int REQUEST_PERMISSION_LOCATION = 1;
     private final BluetoothLeScannerCompat mScanner = BluetoothLeScannerCompat.getScanner();
     private final Handler mStopScanHandler = new Handler();
+    private final ArrayList<String[]> mModes = new ArrayList<>();
+    private final ArrayList<String[]> mModesSubText = new ArrayList<>();
+    private final ArrayList<TypedArray> mModeIcons = new ArrayList<>();
+    private final Bundle mInitialFragmentState = null;
     private Animation mSlideUpFromBottom;
     private Animation mSlideDownToBottom;
     private int mShotsTakenCount = 0;
     private String mAppName;
     private String mSelectedItemName;
     private String[] mModesGroups;
-    private final ArrayList<String[]> mModes = new ArrayList<>();
-    private final ArrayList<String[]> mModesSubText = new ArrayList<>();
-    private final ArrayList<TypedArray> mModeIcons = new ArrayList<>();
     private ExpandableListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
@@ -119,18 +120,11 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
     private PhotoSniperLocationService mLocationService = null;
     private DrawerFragmentHandler mDrawerFragHandler = null;
     private String mInitialFragmentTag = PhotoSniperApp.FragmentTags.GETTING_STARTED;
-    private final Bundle mInitialFragmentState = null;
-
-
     // BLE --- start
     // Service params
     private Dialog serviceErrorDialog = null;
     private PhotoSniperService mService;
     private boolean mPhotoSniperServiceBound = false;
-    private DialpadManager mDialPadManager = null;
-    private WarningMessageManager mWarningMessageManager;
-    private boolean mScanning;
-
     /*
      * Service binding and handling code
      */
@@ -163,6 +157,44 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
         public void onServiceDisconnected(ComponentName name) {
             Log.d(TAG, "onService Disconnected ");
             mPhotoSniperServiceBound = false;
+        }
+    };
+    private DialpadManager mDialPadManager = null;
+    private WarningMessageManager mWarningMessageManager;
+    private boolean mScanning;
+    private final ScanCallback mScanCallback = new ScanCallback() {
+        @Override
+        public void onScanResult(int callbackType, ScanResult result) {
+            // We scan with report delay > 0. This will never be called.
+            Log.i(TAG, "onScanResult: " + result.getDevice().getAddress());
+            stopLeScan();
+            connectBLE(result.getDevice());
+        }
+
+        @Override
+        public void onBatchScanResults(List<ScanResult> results) {
+
+            if (!results.isEmpty()) {
+                Log.i(TAG, "onBatchScanResults: " + results.toString());
+                ScanResult result = results.get(0);
+                stopLeScan();
+                connectBLE(result.getDevice());
+            } else {
+                Log.i(TAG, "onBatchScanResults: EMPTY");
+            }
+        }
+
+        @Override
+        public void onScanFailed(int errorCode) {
+            Log.w(TAG, "Scan failed: " + errorCode);
+            stopLeScan();
+        }
+    };
+    private final Runnable mStopScanRunnable = new Runnable() {
+        @Override
+        public void run() {
+            Toast.makeText(getApplicationContext(), "No devices found", Toast.LENGTH_SHORT).show();
+            stopLeScan();
         }
     };
 
@@ -323,6 +355,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
             PhotoSniperApp.getInstance(this).getSonyWiFiRpc().unregisterInitCallback(this);
             PhotoSniperApp.getInstance(this).getSonyWiFiRpc().stopLiveView();
         }
+
         // Save the last shown Fragment Tag
         PhotoSniperApp.getInstance(this).setLastFragmentTag(mDrawerFragHandler.getCurrentFragmentTag());
         PhotoSniperApp.getInstance(this).setLastActionBarLabel(mSelectedItemName);
@@ -408,7 +441,9 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
 
                 if (resultCode == Activity.RESULT_CANCELED) {
                     Toast.makeText(this, "You must turn Bluetooth on, to use this app", Toast.LENGTH_LONG).show();
-                    finish();  // ?? sure ?!
+//                    finish();  // ?? sure ?!
+                } else {
+                    prepareForScan();
                 }
                 break;
 
@@ -810,7 +845,6 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
         }
     }
 
-
     private void displaySatusBar() {
         if (mService.getState() == PhotoSniperService.State.IN_PROGRESS) {
             Log.d(TAG, "Service State is IN_PROGRESS");
@@ -878,6 +912,12 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
+
+
+    /*
+     * Listener for PulseSequence Fragments
+     */
+
     /*
      * Listener for Script Execution
      */
@@ -890,7 +930,6 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
 
     }
 
-
     /*
      * Listener for Simple mode
      */
@@ -898,12 +937,6 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
     public void onPressSimple() {
         mService.startSimple();
     }
-
-
-
-    /*
-     * Listener for PulseSequence Fragments
-     */
 
     @Override
     public void onRunBatchInsteadPulse(final String cmdSequence) {
@@ -1055,7 +1088,6 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
 
     }
 
-
     @Override
     public void onStopSoundSensor() {
         if (mService != null) {
@@ -1093,7 +1125,6 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
         }
     }
 
-
     /*
      * Listener for LightSensor (Bang2) Fragment
      */
@@ -1105,7 +1136,6 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
         }
 
     }
-
 
     @Override
     public void onStopLightSensor() {
@@ -1143,7 +1173,6 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
             mService.setLightThreshold(threshold);
         }
     }
-
 
     /*
      * Listener for DistanceLapse Fragment
@@ -1183,6 +1212,9 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
         RunningActionDialog runningActionDialog = new RunningActionDialog();
         runningActionDialog.show(this, action);
     }
+    /*
+    * Listener for quick release Fragment
+     */
 
     @Override
     public void onServiceStartSimple() {
@@ -1193,9 +1225,6 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
     public void onQuickPressStarted(final String command) {
         mService.onQuickPressStart(command);
     }
-    /*
-    * Listener for quick release Fragment
-     */
 
     public void onQuickPressStopped(final String command) {
         mService.onQuickPressStop(command);
@@ -1643,7 +1672,6 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
         }
     }
 
-
     @Override
     public void onInputSelected(DialpadManager.DialPadInput dialPadInput) {
         Log.d(TAG, "onInputSelected");
@@ -1659,10 +1687,18 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
 
     }
 
+
+	/*
+     * Listener for Wifi Master Fragment
+	 */
+
     @Override
     public void inputSetSize(int height, int width) {
         mDialPadManager.setKeyboardDimensions(height, width);
     }
+
+
+    // S O N Y           --------------> Connection  Stuff <--------------
 
     @Override
     public void onSonyWiFiConnected() {
@@ -1671,11 +1707,6 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
 
     }
 
-
-	/*
-     * Listener for Wifi Master Fragment
-	 */
-
     @Override
     public void onSonyWiFiConnectionFailed(Throwable e) {
 
@@ -1683,9 +1714,6 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
         PhotoSniperApp.getInstance(getApplicationContext()).getSonyWiFiRpc().unregisterInitCallback(this);
         PhotoSniperApp.getInstance(getApplicationContext()).setSonyWiFiRpc(null);
     }
-
-
-    // S O N Y           --------------> Connection  Stuff <--------------
 
     @Override
     public void onSuccess(BaseResponse response) {
@@ -1717,6 +1745,9 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
         }
     }
 
+
+    // BLE        --------------> Connection  Stuff <--------------
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -1730,47 +1761,6 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
 
     }
 
-
-    // BLE        --------------> Connection  Stuff <--------------
-
-    private final Runnable mStopScanRunnable = new Runnable() {
-        @Override
-        public void run() {
-            Toast.makeText(getApplicationContext(), "No devices found", Toast.LENGTH_SHORT).show();
-            stopLeScan();
-        }
-    };
-
-    private final ScanCallback mScanCallback = new ScanCallback() {
-        @Override
-        public void onScanResult(int callbackType, ScanResult result) {
-            // We scan with report delay > 0. This will never be called.
-            Log.i(TAG, "onScanResult: " + result.getDevice().getAddress());
-            stopLeScan();
-            connectBLE(result.getDevice());
-        }
-
-        @Override
-        public void onBatchScanResults(List<ScanResult> results) {
-
-            if (!results.isEmpty()) {
-                Log.i(TAG, "onBatchScanResults: " + results.toString());
-                ScanResult result = results.get(0);
-                stopLeScan();
-                connectBLE(result.getDevice());
-            } else {
-                Log.i(TAG, "onBatchScanResults: EMPTY");
-            }
-        }
-
-        @Override
-        public void onScanFailed(int errorCode) {
-            Log.w(TAG, "Scan failed: " + errorCode);
-            stopLeScan();
-        }
-    };
-
-
     private void prepareForScan() {
 
         if (isBleSupported() && (PhotoSniperApp.getInstance(this).getBLEgattClient() == null)) {
@@ -1782,6 +1772,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
             if (!btAdapter.isEnabled()) {
                 Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                 startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+                return;
             }
 
             if (btAdapter.isEnabled()) {
@@ -1796,10 +1787,11 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
 //                        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_PERMISSION_LOCATION);
 //                    }
 //                }
-            } else {
-                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
             }
+//            else {
+//                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+//                startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+//            }
         } else {
             Toast.makeText(this, "BLE is not enabled/supported", Toast.LENGTH_LONG).show();
         }

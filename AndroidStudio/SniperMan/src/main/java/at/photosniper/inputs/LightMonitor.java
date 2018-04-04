@@ -12,10 +12,10 @@ import at.photosniper.PhotoSniperApp;
 public class LightMonitor implements SensorEventListener {
 
 
-    private static final int MAX_VOL_RANGE = Short.MAX_VALUE;
-    private static final int MIN_VOL_RANGE = 500;
-    private static final int DEFAULT_VOL_RANGE = 5000;
-    private static final int SAMPLE_RATE = 16000;
+    private static final int MAX_VOL_RANGE = 3000;
+    private static final int MIN_VOL_RANGE = 2;
+    private static final int DEFAULT_VOL_RANGE = 1000;
+
     private static final String TAG = LightMonitor.class.getSimpleName();
     private static final int VOLUME_UPDATE_INTERVAL = 10;
     private static final int TRIGGER_UPDATE_INTERVAL = 10;
