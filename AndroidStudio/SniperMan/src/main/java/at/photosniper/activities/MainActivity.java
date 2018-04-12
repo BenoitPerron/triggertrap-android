@@ -162,6 +162,7 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
     private DialpadManager mDialPadManager = null;
     private WarningMessageManager mWarningMessageManager;
     private boolean mScanning;
+
     private final ScanCallback mScanCallback = new ScanCallback() {
         @Override
         public void onScanResult(int callbackType, ScanResult result) {
@@ -1793,7 +1794,9 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
 //                startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
 //            }
         } else {
-            Toast.makeText(this, "BLE is not enabled/supported", Toast.LENGTH_LONG).show();
+            if (!isBleSupported()) {
+                Toast.makeText(this, "BLE is not enabled/supported", Toast.LENGTH_LONG).show();
+            }
         }
     }
 
@@ -1804,39 +1807,40 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
 
     private void startLeScan() {
 
-        mScanning = true;
+        if (!mScanning) {
 
-        ScanSettings settings = new ScanSettings.Builder().setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY).setReportDelay(0).build();
-        List<ScanFilter> filters = new ArrayList<>();
+            ScanSettings settings = new ScanSettings.Builder().setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY).setReportDelay(0).build();
+            List<ScanFilter> filters = new ArrayList<>();
 //        filters.add(new ScanFilter.Builder().setServiceUuid(new ParcelUuid(GattClient.SERVICE_UUID)).build());
 
-        // get profile here
-        String ourBLEDevice = "";
-        try {
-            SharedPreferences sharedPref = getSharedPreferences("BLE", Context.MODE_PRIVATE);
-            ourBLEDevice = sharedPref.getString(getString(R.string.BLE_Device), "");
+            // get profile here
+            String ourBLEDevice = "";
+            try {
+                SharedPreferences sharedPref = getSharedPreferences("BLE", Context.MODE_PRIVATE);
+                ourBLEDevice = sharedPref.getString(getString(R.string.BLE_Device), "");
 
-        } catch (Exception x) {
-            Log.i(TAG, "no BLE Device stored ");
-        }
-
-        if ((ourBLEDevice != null) && (ourBLEDevice.length() > 1)) {
-            filters.add(new ScanFilter.Builder().setDeviceAddress(ourBLEDevice).build());
-
-            if (isBleSupported()) {
-                mScanner.startScan(filters, settings, mScanCallback);
-                // Stops scanning after a pre-defined scan period.
-                mStopScanHandler.postDelayed(mStopScanRunnable, SCAN_TIMEOUT_MS);
+            } catch (Exception x) {
+                Log.i(TAG, "no BLE Device stored ");
             }
 
-        } else {
+            if ((ourBLEDevice != null) && (ourBLEDevice.length() > 1)) {
+                filters.add(new ScanFilter.Builder().setDeviceAddress(ourBLEDevice).build());
+
+                if (isBleSupported()) {
+                    mScanner.startScan(filters, settings, mScanCallback);
+                    mScanning = true;
+                    // Stops scanning after a pre-defined scan period.
+                    mStopScanHandler.postDelayed(mStopScanRunnable, SCAN_TIMEOUT_MS);
+                }
+
+            } else {
 //            filters.add(new ScanFilter.Builder().setServiceUuid(new ParcelUuid(UUID_SERVICE)).build());
 
-            Intent intent = new Intent(this, BLEDeviceScanActivity.class);
-            startActivity(intent);
+                Intent intent = new Intent(this, BLEDeviceScanActivity.class);
+                startActivity(intent);
 
+            }
         }
-
 
 //        invalidateOptionsMenu();
     }
@@ -1860,45 +1864,49 @@ public class MainActivity extends Activity implements PulseSequenceFragment.Puls
 
     private void connectBLE(BluetoothDevice device) {
 
-        final GattClient mGattClient = new GattClient();
+        if (PhotoSniperApp.getInstance(MainActivity.this).getBLEgattClient() == null) {
 
-        mGattClient.onCreate(this, device.getAddress(), new GattClient.OnCharacteristicReadListener() {
+            final GattClient mGattClient = new GattClient();
+            PhotoSniperApp.getInstance(MainActivity.this).setBLEgattClient(mGattClient);
 
-            //            @Override
-            public void onBLECharacteristicRead(final String value) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Log.i(TAG, "Characteristic read: " + value);
+            mGattClient.onCreate(this, device.getAddress(), new GattClient.OnCharacteristicReadListener() {
+
+                //            @Override
+                public void onBLECharacteristicRead(final String value) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Log.i(TAG, "Characteristic read: " + value);
 
 //                        Toast.makeText(MainActivity.this, value, Toast.LENGTH_LONG).show();
 
-                    }
-                });
-            }
-
-
-            @Override
-            public void onBLEConnected(final boolean success) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (!success) {
-                            Toast.makeText(MainActivity.this, R.string.BLEConnectionError, Toast.LENGTH_LONG).show();
-                            if (mGattClient != null) {
-                                mGattClient.onDestroy();
-                            }
-                            PhotoSniperApp.getInstance(MainActivity.this).setBLEgattClient(null);
-                            // start to listen again ?
-                        } else {
-                            PhotoSniperApp.getInstance(MainActivity.this).setBLEgattClient(mGattClient);
                         }
+                    });
+                }
 
-                    }
-                });
-            }
-        });
 
+                @Override
+                public void onBLEConnected(final boolean success) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (!success) {
+                                Toast.makeText(MainActivity.this, R.string.BLEConnectionError, Toast.LENGTH_LONG).show();
+                                if (mGattClient != null) {
+                                    mGattClient.onDestroy();
+                                }
+                                PhotoSniperApp.getInstance(MainActivity.this).setBLEgattClient(null);
+                                // start to listen again ?
+                            }
+//                            else {
+//                                PhotoSniperApp.getInstance(MainActivity.this).setBLEgattClient(mGattClient);
+//                            }
+
+                        }
+                    });
+                }
+            });
+        }
 //        PhotoSniperApp.getInstance(this).setBLEgattClient(mGattClient);
 
 //        Intent intent = new Intent(this, InteractActivity.class);
